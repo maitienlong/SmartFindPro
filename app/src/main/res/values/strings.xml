@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SmartFind</string>
+
+    <string name="common_notify">Thông báo</string>
+    <string name="common_close">Đóng</string>
+    <string name="common_cancel">Hủy</string>
+    <string name="common_accept">Đồng ý</string>
+    <string name="common_error_no_internet">Không có Internet</string>
+
+
+</resources>
