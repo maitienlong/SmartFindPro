@@ -7,5 +7,19 @@
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
 
+    <string name="str_user">Người dùng</string>
+    <string name="setting">Cài đặt</string>
+    <string name="rules">Điều khoản</string>
+    <string name="asistent_and_feedback">Trợ giúp và phản hồi</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="account">Tên tài khoản</string>
+    <string name="change">thay đổi</string>
+    <string name="Name">Họ và tên</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="adress">Địa chỉ</string>
+    <string name="email">Thư điện thử</string>
+    <string name="avata">Ảnh đại diện</string>
+    <string name="change_">Thay đổi</string>
+
 
 </resources>

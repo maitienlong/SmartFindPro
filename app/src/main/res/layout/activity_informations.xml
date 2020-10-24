@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:orientation="vertical"
+    tools:context=".ui.Informations">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/account"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edtAccount"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle_editext" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="@string/Name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle_editext" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="@string/phone_number"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edtPhoneNumer"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle_editext" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="@string/adress"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle_editext" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="@string/email"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle_editext" />
+
+    <TextView
+        android:id="@+id/tvAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="@string/avata"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle_editext" />
+
+    <LinearLayout
+
+        android:layout_width="260dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="74dp"
+        android:background="@drawable/bg_blue_round_15_selector"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:color="@color/white"
+            android:text="@string/change_"
+            android:textAlignment="center"
+            android:textSize="@dimen/_13sdp" />
+    </LinearLayout>
+
+
+</LinearLayout>
