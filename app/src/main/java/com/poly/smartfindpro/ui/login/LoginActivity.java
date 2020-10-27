@@ -1,11 +1,5 @@
 package com.poly.smartfindpro.ui.login;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 
 import com.poly.smartfindpro.R;
@@ -59,7 +53,7 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
             mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background_login));
             mBinding.tipRePassword.setVisibility(View.VISIBLE);
-            mBinding.btnAction.setText(this.getString(R.string.tv_dang_ky));
+            mBinding.btnAction.setText(this.getString(R.string.tv_registrer));
         }
     }
 

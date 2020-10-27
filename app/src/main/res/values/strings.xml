@@ -6,14 +6,25 @@
     <string name="common_cancel">Hủy</string>
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
-    <string name="tv_the_loai">Thể loại</string>
-    <string name="btn_o_ghep">Ở ghép</string>
-    <string name="btn_nha_tro">Nhà trọ</string>
-    <string name="btn_chung_cu">Chung cư</string>
-    <string name="btn_nguyen_can">Nguyên căn</string>
-    <string name="tv_thong_tin">Thông tin</string>
-    <string name="tv_dang_nhap">Đăng nhập</string>
-    <string name="tv_dang_ky">Đăng ký</string>
-
+    <string name="tv_category">Thể loại</string>
+    <string name="btn_pairing">Ở ghép</string>
+    <string name="btn_rental_hous">Nhà trọ</string>
+    <string name="btn_apartment">Chung cư</string>
+    <string name="btn_whole_house">Nguyên căn</string>
+    <string name="tv_infor">Thông tin</string>
+    <string name="tv_login">Đăng nhập</string>
+    <string name="tv_registrer">Đăng ký</string>
+    <string name="tv_amount_room">Số lượng phòng </string>
+    <string name="tv_price">Giá </string>
+    <string name="tv_deposit">Đặt cọc</string>
+    <string name="tv_gender">Giới tính </string>
+    <string name="tv_electricity_bill">Tiền điện</string>
+    <string name="tv_water_bill">Tiền nước</string>
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="tv_address">Địa chỉ</string>
+    <string name="tv_province">Tỉnh/Thành phố </string>
+    <string name="tv_distric">Huyện/Thị xã </string>
+    <string name="tv_commune">Xã/Phường/Thị trấn </string>
+    <string name="tv_detail_address">Địa chỉ chi tiết </string>
 
 </resources>

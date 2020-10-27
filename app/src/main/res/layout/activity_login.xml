@@ -91,7 +91,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/tv_dang_ky"
+                            android:text="@string/tv_registrer"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
