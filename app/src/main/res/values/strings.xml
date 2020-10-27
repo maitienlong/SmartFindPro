@@ -12,4 +12,8 @@
     <string name="btn_chung_cu">Chung cư</string>
     <string name="btn_nguyen_can">Nguyên căn</string>
     <string name="tv_thong_tin">Thông tin</string>
+    <string name="tv_dang_nhap">Đăng nhập</string>
+    <string name="tv_dang_ky">Đăng ký</string>
+
+
 </resources>
