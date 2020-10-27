@@ -7,16 +7,72 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/_8sdp"
         android:orientation="vertical"
         tools:context=".ui.MainActivity">
-        <TextView
-            android:gravity="center"
-            android:text="HELLO ANH EM"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_110sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_launcher_background" />
+
+        <Button
+            android:background="@drawable/backround_button_post"
+            android:textAllCaps="false"
+            android:id="@+id/btnPost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/home_postButtonBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/tvHighlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/home_highlightTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPost" />
+
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/btnRentalRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/home_rentalRoomBtn"
+            app:layout_constraintStart_toStartOf="@+id/tvHighlight"
+            app:layout_constraintTop_toBottomOf="@+id/tvHighlight" />
+
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/btnShareRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/home_shareRoomBtn"
+            app:layout_constraintBottom_toBottomOf="@+id/btnRentalRoom"
+            app:layout_constraintStart_toEndOf="@+id/btnRentalRoom"
+            app:layout_constraintTop_toTopOf="@+id/btnRentalRoom" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvList"
+            android:layout_width="393dp"
+            android:layout_height="412dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRentalRoom" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

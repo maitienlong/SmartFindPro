@@ -7,5 +7,9 @@
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
 
-
+<!--HomeScreen-->
+    <string name="home_postButtonBtn">Đăng bài ngay ...</string>
+    <string name="home_highlightTv">Nổi bật</string>
+    <string name="home_rentalRoomBtn">Cho thuê</string>
+    <string name="home_shareRoomBtn">Ở ghép</string>gay
 </resources>
