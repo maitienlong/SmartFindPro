@@ -1,16 +1,12 @@
 package com.poly.smartfindpro.ui.login;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
+import com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;
+import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
 
 public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.ViewModel {
 
@@ -51,15 +47,18 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
 
     private void checkViewLogin() {
         if (isLogin) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new LoginFragment(),null);
+//
+            goToFragmentReplace(R.id.fl_Login, new LoginFragment(), null);
             mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background_login));
             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.black));
-            mBinding.tipRePassword.setVisibility(View.GONE);
-            mBinding.btnAction.setText(this.getString(R.string.tv_dang_nhap));
         } else {
-            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new RegisterFragment(),null);
+            goToFragmentReplace(R.id.fl_Login, new RegisterFragment(), null);
             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background_login));
-            mBinding.tipRePassword.setVisibility(View.VISIBLE);
-            mBinding.btnAction.setText(this.getString(R.string.tv_dang_ky));
+            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
         }
     }
 
