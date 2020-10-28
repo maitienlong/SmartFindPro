@@ -44,17 +44,17 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
     }
 
     private void checkViewLogin() {
-        if (isLogin) {
-            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background));
-            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.black));
-            mBinding.tipRePassword.setVisibility(View.GONE);
-            mBinding.btnAction.setText(this.getString(R.string.tv_dang_nhap));
-        } else {
-            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
-            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background));
-            mBinding.tipRePassword.setVisibility(View.VISIBLE);
-            mBinding.btnAction.setText(this.getString(R.string.tv_registrer));
-        }
+//        if (isLogin) {
+//            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background));
+//            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.black));
+//            mBinding.tipRePassword.setVisibility(View.GONE);
+//            mBinding.btnAction.setText(this.getString(R.string.tv_dang_nhap));
+//        } else {
+//            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
+//            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background));
+//            mBinding.tipRePassword.setVisibility(View.VISIBLE);
+//            mBinding.btnAction.setText(this.getString(R.string.tv_registrer));
+//        }
     }
 
 

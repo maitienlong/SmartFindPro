@@ -81,7 +81,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/tv_dang_nhap"
+                            android:text="@string/tv_login"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -168,7 +168,7 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_below="@id/ln_edt_user_pass"
                         android:background="@color/background"
-                        android:text="@string/tv_dang_nhap"
+                        android:text="@string/tv_login"
                         android:textColor="#fff" />
 
 
