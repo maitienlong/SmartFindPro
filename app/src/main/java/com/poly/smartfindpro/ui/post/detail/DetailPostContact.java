@@ -1,9 +1,9 @@
-package com.poly.smartfindpro.ui.post.infor;
+package com.poly.smartfindpro.ui.post.detail;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 
-public interface InformationPostContact {
+public interface DetailPostContact {
     interface ViewModel extends BaseView{
 
     }
