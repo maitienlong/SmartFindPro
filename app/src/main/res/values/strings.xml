@@ -25,6 +25,9 @@
     <string name="change_pass_new">Mật khẩu mới</string>
     <string name="text_change">Thay đổi</string>
     <string name="change_pass_confirm">Xác nhân mật khẩu mới</string>
+    <string name="user_permission_camera">Máy ảnh</string>
+    <string name="user_permission_mic">Mic</string>
+    <string name="user_permission_internet">Mạng cục bộ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
