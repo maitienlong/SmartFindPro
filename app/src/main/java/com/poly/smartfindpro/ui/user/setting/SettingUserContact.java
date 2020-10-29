@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.user;
+package com.poly.smartfindpro.ui.user.setting;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;

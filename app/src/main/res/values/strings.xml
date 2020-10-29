@@ -21,6 +21,10 @@
     <string name="setting_infor_user">Thông tin cá nhân</string>
     <string name="setting_change_pass">Đổi mật khẩu</string>
     <string name="setting_permission">Quyền truy cập</string>
+    <string name="change_pass_old">Mật khẩu cũ</string>
+    <string name="change_pass_new">Mật khẩu mới</string>
+    <string name="text_change">Thay đổi</string>
+    <string name="change_pass_confirm">Xác nhân mật khẩu mới</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
