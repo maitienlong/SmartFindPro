@@ -7,9 +7,18 @@
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
 
-<!--HomeScreen-->
-    <string name="home_postButtonBtn">Đăng bài ngay ...</string>
+    <!--HomeScreen-->
+    <string name="home_postBtn">Đăng bài ngay ...</string>
     <string name="home_highlightTv">Nổi bật</string>
     <string name="home_rentalRoomBtn">Cho thuê</string>
-    <string name="home_shareRoomBtn">Ở ghép</string>gay
+    <string name="home_shareRoomBtn">Ở ghép</string>
+
+    <!--SelectAreaActivity-->
+    <string name="slArea_welcomeTv">Welcome to Smart Find</string>
+    <string name="slArea_titleTv">Chọn khu vực</string>
+    <string name="slArea_selectAreaBtn">Tiếp tục</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
