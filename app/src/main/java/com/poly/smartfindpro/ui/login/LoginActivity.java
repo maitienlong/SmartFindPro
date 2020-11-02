@@ -1,10 +1,12 @@
 package com.poly.smartfindpro.ui.login;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
+import com.poly.smartfindpro.ui.login.forgotPassword.ForgotPasswordFragment;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;
 import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
 
@@ -26,6 +28,8 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
             public void onClick(View v) {
                 isLogin = false;
                 checkViewLogin();
+
+
             }
         });
 
@@ -43,6 +47,14 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
     @Override
     protected void initData() {
 
+        mBinding.btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void checkViewLogin() {
@@ -53,12 +65,14 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
             goToFragmentReplace(R.id.fl_Login, new LoginFragment(), null);
             mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background_login));
             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.black));
+            mBinding.btnForgotPassword.setVisibility(View.VISIBLE);
         } else {
 //            FragmentManager fragmentManager = getSupportFragmentManager();
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new RegisterFragment(),null);
             goToFragmentReplace(R.id.fl_Login, new RegisterFragment(), null);
             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background_login));
             mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
+            mBinding.btnForgotPassword.setVisibility(View.GONE);
         }
     }
 

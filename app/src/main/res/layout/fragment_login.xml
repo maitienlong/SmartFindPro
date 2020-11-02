@@ -28,7 +28,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_Account_Number"
                 style="@style/EditText"
-                android:inputType="number" />
+                android:inputType="number"
+                android:gravity="center"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -38,7 +39,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_Password"
                 style="@style/EditText"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:gravity="center"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

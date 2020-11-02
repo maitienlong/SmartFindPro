@@ -156,9 +156,12 @@
     </style>
 
     <style name="LayoutEditText">
+
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:paddingRight">@dimen/_8sdp</item>
+        <item name="android:paddingLeft">@dimen/_8sdp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
