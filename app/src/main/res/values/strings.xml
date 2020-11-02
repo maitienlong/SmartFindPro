@@ -16,10 +16,20 @@
     <string name="change">thay đổi</string>
     <string name="Name">Họ và tên</string>
     <string name="phone_number">Số điện thoại</string>
-    <string name="adress">Địa chỉ</string>
+    <string name="address">Địa chỉ</string>
     <string name="email">Thư điện thử</string>
-    <string name="avata">Ảnh đại diện</string>
+    <string name="avatar">Ảnh đại diện</string>
     <string name="change_">Thay đổi</string>
+    <string name="name_uesr">Phạm Hồng Thái</string>
+    <string name="title_layout">Trang cá nhân</string>
+    <string name="user_image">User image</string>
+    <string name="content_layout">Quản lí hồ sơ cá nhân, bảo mật</string>
+    <string name="content_layout1">Điều khoản người dùng và ứng dụng</string>
+    <string name="contact">Mọi vấn đề xin liên hệ với chúng tôi</string>
+    <string name="evaluate">Đánh giá ứng dụng</string>
+    <string name="hotline">Hotline</string>
+    <string name="str_rateing_app">Đánh giá ứng dụng</string>
+    <string name="str_mail">Mail</string>
 
 
 </resources>

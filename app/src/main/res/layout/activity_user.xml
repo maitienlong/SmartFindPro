@@ -8,7 +8,6 @@
             name="userActivity"
             type="com.poly.smartfindpro.ui.user.ui.UserActivity" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,15 +44,16 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp"
-                android:contentDescription="User image"
+                android:contentDescription="@string/user_image"
                 android:src="@drawable/bg_circle_progress" />
 
             <TextView
+
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Phạm Hồng Thái"
+                android:text="@string/name_uesr"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Trang cá nhân"
+                android:text="@string/title_layout"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -93,7 +93,7 @@
                 android:id="@+id/tvSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imgSetting"
+                android:layout_alignStart="@+id/imgSetting"
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/setting"
@@ -106,10 +106,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSetting"
-                android:layout_alignLeft="@+id/imgSetting"
+                android:layout_alignStart="@+id/imgSetting"
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="2dp"
-                android:text="Quản lí hồ sơ cá nhân, bảo mật"
+                android:text="@string/content_layout"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintTop_toBottomOf="@+id/tvSetting" />
@@ -140,7 +140,7 @@
 
             <TextView
                 android:id="@+id/tvRules"
-                android:layout_alignLeft="@+id/imgRules"
+                android:layout_alignStart="@+id/imgRules"
                 android:layout_marginStart="65dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,12 +152,12 @@
 
             <TextView
                 android:layout_below="@+id/tvRules"
-                android:layout_alignLeft="@+id/imgRules"
+                android:layout_alignStart="@+id/imgRules"
                 android:layout_marginStart="65dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Điều khoản người dùng và ứng dụng"
+                android:text="@string/content_layout1"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -186,7 +186,7 @@
 
             <TextView
                 android:id="@+id/tvFeedback"
-                android:layout_alignLeft="@+id/imgFeedback"
+                android:layout_alignStart="@+id/imgFeedback"
                 android:layout_marginStart="65dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_alignLeft="@+id/imgFeedback"
+                android:layout_alignStart="@+id/imgFeedback"
                 android:layout_below="@+id/tvFeedback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
                 android:src="@drawable/bg_circle_progress" />
 
             <TextView
-                android:layout_alignLeft="@+id/imgLogout"
+                android:layout_alignStart="@+id/imgLogout"
                 android:layout_marginStart="65dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
