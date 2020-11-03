@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
 
     private AlertFragment alertFragment;
 
-    private int showUserGuide = 0;
+    private final int showUserGuide = 0;
 
     private LocalBroadcastReceiver showLoadingReceiver = null;
 

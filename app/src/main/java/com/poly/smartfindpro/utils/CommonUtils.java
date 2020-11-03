@@ -51,7 +51,7 @@ public class CommonUtils {
         if (money == "0" || money.equals(""))
             return "";
         ArrayList<String> words = new ArrayList<String>();
-        String f = String.valueOf(money);
+        String f = money;
         StringTokenizer tokens = new StringTokenizer(f, ".");
         while (tokens.hasMoreTokens())
             words.add(tokens.nextToken());

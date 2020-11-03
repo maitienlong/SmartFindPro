@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -56,8 +56,8 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:padding="@dimen/_7sdp"
             app:srcCompat="@drawable/ic_baseline_home_24"
-            android:tint="@color/black"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            app:tint="@color/black" />
     </FrameLayout>
 
 </RelativeLayout>

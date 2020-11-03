@@ -129,7 +129,8 @@
                 android:layout_width="@dimen/_1sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_weight="1"
-                android:src="@drawable/icons8_male_user_48" />
+                android:src="@drawable/user" />
+
 
             <LinearLayout
                 android:layout_width="@dimen/_1sdp"
@@ -210,105 +211,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tvUtilities"
             app:layout_constraintVertical_bias="0.588" />
 
-        <TextView
-            android:id="@+id/tvPrice2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_price"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.808"
-            app:layout_constraintStart_toEndOf="@+id/tvPrice"
-            app:layout_constraintTop_toTopOf="@+id/tvPrice"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/tvLocation2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_location"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toTopOf="@+id/tvGender"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.745"
-            app:layout_constraintStart_toEndOf="@+id/tvLocation"
-            app:layout_constraintTop_toTopOf="@+id/tvLocation"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/tvGender2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_gender"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvGender"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.808"
-            app:layout_constraintStart_toEndOf="@+id/tvGender"
-            app:layout_constraintTop_toTopOf="@+id/tvGender"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/tvQuantity2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:text="@string/text_infor_quantity"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.824"
-            app:layout_constraintStart_toEndOf="@+id/tvQuantity"
-            app:layout_constraintTop_toTopOf="@+id/tvQuantity"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/tvPriceElectric2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_infor_price_electric"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvPriceElectric"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.83"
-            app:layout_constraintStart_toEndOf="@+id/tvPriceElectric"
-            app:layout_constraintTop_toTopOf="@+id/tvPriceElectric"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/tvPriceWater2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_price_water"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvPriceWater"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.852"
-            app:layout_constraintStart_toEndOf="@+id/tvPriceWater"
-            app:layout_constraintTop_toTopOf="@+id/tvPriceWater"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/tvUtilities2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_utilities"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvUtilities"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.813"
-            app:layout_constraintStart_toEndOf="@+id/tvUtilities"
-            app:layout_constraintTop_toTopOf="@+id/tvUtilities"
-            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

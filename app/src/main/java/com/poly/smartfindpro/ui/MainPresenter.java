@@ -9,8 +9,8 @@ import com.poly.smartfindpro.R;
 
 public class MainPresenter implements MainContract.Presenter {
 
-    private Context mContext;
-    private MainContract.ViewModel mViewModel;
+    private final Context mContext;
+    private final MainContract.ViewModel mViewModel;
 
     public ObservableField<String> title;
 

@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.post.detail;
+package com.poly.smartfindpro.ui.detailpost;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
