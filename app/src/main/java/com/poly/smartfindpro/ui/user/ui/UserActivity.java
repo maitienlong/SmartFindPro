@@ -25,7 +25,7 @@ public class UserActivity extends BaseDataBindActivity<ActivityUserBinding,
     @Override
     protected void initView() {
         ArrayList<View> listViewClick = new ArrayList<View>();
-        listViewClick.add(mBinding.layoutttt);
+//        listViewClick.add(mBinding.);
         setListViewOnClick(listViewClick);
     }
 

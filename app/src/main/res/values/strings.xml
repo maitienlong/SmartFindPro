@@ -30,6 +30,12 @@
     <string name="hotline">Hotline</string>
     <string name="str_rateing_app">Đánh giá ứng dụng</string>
     <string name="str_mail">Mail</string>
+    <string name="hongthai2">Phạm Hồng Thái</string>
+    <string name="hired">Chuyển sang đã cho thuê</string>
+    <string name="comment">Nhà trọ mới đây các bạn bạn</string>
+    <string name="price">5.000.000</string>
+    <string name="cancel">Hủy</string>
+    <string name="edit">Sửa</string>
 
 
 </resources>
