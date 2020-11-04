@@ -40,12 +40,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUserTitle">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp"
-                android:contentDescription="@string/user_image"
-                android:src="@drawable/bg_circle_progress" />
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"
+                android:src="@color/white"/>
 
             <TextView
 

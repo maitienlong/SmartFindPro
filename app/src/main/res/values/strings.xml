@@ -36,6 +36,13 @@
     <string name="price">5.000.000</string>
     <string name="cancel">Hủy</string>
     <string name="edit">Sửa</string>
+    <string name="str_userName">Phạm Hồng Thái</string>
+    <string name="time">1 giờ</string>
+    <string name="str_status">Chuyển sang đã cho thuê</string>
+    <string name="str_location">Tràng tiền, Hoàn Kiếm, Hà Nội</string>
+    <string name="str_price_to_rent">50.000.000</string>
+    <string name="cancel2">Hủy</string>
+    <string name="edit2">Sửa</string>
 
 
 </resources>

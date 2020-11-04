@@ -2,6 +2,8 @@ package com.poly.smartfindpro.ui.user.ui;
 
 import androidx.annotation.RequiresApi;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 
@@ -25,7 +27,12 @@ public class UserActivity extends BaseDataBindActivity<ActivityUserBinding,
     @Override
     protected void initView() {
         ArrayList<View> listViewClick = new ArrayList<View>();
-//        listViewClick.add(mBinding.);
+        listViewClick.add(mBinding.displayUser);
+        listViewClick.add(mBinding.displaySettings);
+        listViewClick.add(mBinding.displayRules);
+        listViewClick.add(mBinding.displayAsistentAndFeedback);
+        listViewClick.add(mBinding.displayLogOut);
+
         setListViewOnClick(listViewClick);
     }
 
@@ -37,5 +44,15 @@ public class UserActivity extends BaseDataBindActivity<ActivityUserBinding,
     @Override
     public void openFragment() {
 
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.display_user:
+                startActivity(new Intent(this, UserDetailActivity.class));
+                break;
+        }
     }
 }
