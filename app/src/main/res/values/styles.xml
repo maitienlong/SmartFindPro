@@ -75,18 +75,21 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="TextViewStyle.Title">
         <item name="android:textSize">@dimen/_10sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="TextViewStyle.Title2">
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="TextViewStyle.Bold.End">
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
@@ -108,6 +111,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="TextViewStyle.Vnd">
         <item name="android:textSize">@dimen/_8sdp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -149,6 +153,29 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/grey_three_trans</item>
+    </style>
+
+    <style name="LayoutEditText">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_40sdp</item>
+        <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:paddingRight">@dimen/_8sdp</item>
+        <item name="android:paddingLeft">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>

@@ -35,12 +35,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1">
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -52,7 +55,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="4"
+                android:background="#00000000" />
 
 
             <androidx.cardview.widget.CardView
@@ -105,71 +109,13 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_30sdp"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_10sdp">
+                        android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <FrameLayout
+                            android:id="@+id/fl_Login"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:hint="Nhập số điện thoại"
-                            app:boxStrokeColor="@color/actionbar_background"
-                            app:boxStrokeErrorColor="@color/red">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edt_Account_Number"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:textColor="@color/black" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:hint="Nhập mật khẩu"
-                            app:boxStrokeColor="@color/actionbar_background"
-                            app:boxStrokeErrorColor="@color/red">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:inputType="textPassword"
-                                android:id="@+id/edt_Password"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:textColor="@color/black" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tip_RePassword"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:hint="Nhập lại mật khẩu"
-                            app:boxStrokeColor="@color/actionbar_background"
-                            app:boxStrokeErrorColor="@color/red">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:inputType="textPassword"
-                                android:id="@+id/edt_RePassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:textColor="@color/black" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="match_parent" />
                     </LinearLayout>
-
-
-                    <Button
-                        android:id="@+id/btn_Action"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_below="@id/ln_edt_user_pass"
-                        android:background="@color/background"
-                        android:text="@string/tv_login"
-                        android:textColor="#fff" />
 
 
                 </RelativeLayout>
@@ -182,8 +128,21 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="4"
+                android:background="#00000000" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_forgot_password"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Quên mật khẩu ?"
+            android:textColor="@color/background_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
