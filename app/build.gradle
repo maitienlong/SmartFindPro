@@ -49,5 +49,7 @@ dependencies {
     // Load Image
     implementation "com.github.bumptech.glide:glide:4.9.0"
     // GSON
-    k
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'com.google.android.material:material:1.2.0'
 }

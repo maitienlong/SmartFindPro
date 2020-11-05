@@ -6,6 +6,8 @@
     <string name="common_cancel">Hủy</string>
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
+    <string name="tv_dang_nhap">Đăng nhập</string>
+    <string name="tv_dang_ky">Đăng ký</string>
 
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>

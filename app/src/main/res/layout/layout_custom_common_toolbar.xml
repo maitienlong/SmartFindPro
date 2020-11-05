@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_43sdp"
-    android:background="@drawable/bg_grey_separator_bottom"
+    android:background="@color/background_login"
     android:paddingTop="@dimen/_5sdp"
     android:paddingBottom="@dimen/_5sdp">
 
     <FrameLayout
+
         android:id="@+id/fl_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,14 +23,15 @@
             android:padding="@dimen/_7sdp"
             style="@style/MainToolbar.LeftMenu"
             app:srcCompat="@drawable/ic_arrow_left_24"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            app:tint="@color/white" />
     </FrameLayout>
 
     <TextView
         android:id="@+id/tv_title"
         android:textSize="@dimen/_13sdp"
         android:text="Hello"
-        android:textColor="@color/gray_7C"
+        android:textColor="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
