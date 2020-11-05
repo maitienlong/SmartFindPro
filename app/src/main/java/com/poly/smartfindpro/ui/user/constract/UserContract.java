@@ -1,10 +1,10 @@
-package com.poly.smartfindpro.ui;
+package com.poly.smartfindpro.ui.user.constract;
 
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 
-public interface MainContract {
+public interface UserContract {
     interface ViewModel extends BaseView {
         void openFragment();
     }

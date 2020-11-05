@@ -1,20 +1,22 @@
-package com.poly.smartfindpro.ui;
+package com.poly.smartfindpro.ui.user.presenter;
 
 import android.content.Context;
 
 import androidx.databinding.ObservableField;
 
-import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.ui.user.constract.UserContract;
 
 
-public class MainPresenter implements MainContract.Presenter {
+public class UserPresenter implements UserContract.Presenter {
 
+    private Context mContext;
+    private UserContract.ViewModel mViewModel;
     private final Context mContext;
     private final MainContract.ViewModel mViewModel;
 
     public ObservableField<String> title;
 
-    public MainPresenter(Context context, MainContract.ViewModel viewModel) {
+    public UserPresenter(Context context, UserContract.ViewModel viewModel) {
         mContext = context;
         mViewModel = viewModel;
 

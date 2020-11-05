@@ -72,6 +72,43 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="str_user">Người dùng</string>
+    <string name="setting">Cài đặt</string>
+    <string name="rules">Điều khoản</string>
+    <string name="asistent_and_feedback">Trợ giúp và phản hồi</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="account">Tên tài khoản</string>
+    <string name="change">thay đổi</string>
+    <string name="Name">Họ và tên</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="address">Địa chỉ</string>
+    <string name="email">Thư điện thử</string>
+    <string name="avatar">Ảnh đại diện</string>
+    <string name="change_">Thay đổi</string>
+    <string name="name_uesr">Phạm Hồng Thái</string>
+    <string name="title_layout">Trang cá nhân</string>
+    <string name="user_image">User image</string>
+    <string name="content_layout">Quản lí hồ sơ cá nhân, bảo mật</string>
+    <string name="content_layout1">Điều khoản người dùng và ứng dụng</string>
+    <string name="contact">Mọi vấn đề xin liên hệ với chúng tôi</string>
+    <string name="evaluate">Đánh giá ứng dụng</string>
+    <string name="hotline">Hotline</string>
+    <string name="str_rateing_app">Đánh giá ứng dụng</string>
+    <string name="str_mail">Mail</string>
+    <string name="hongthai2">Phạm Hồng Thái</string>
+    <string name="hired">Chuyển sang đã cho thuê</string>
+    <string name="comment">Nhà trọ mới đây các bạn bạn</string>
+    <string name="price">5.000.000</string>
+    <string name="cancel">Hủy</string>
+    <string name="edit">Sửa</string>
+    <string name="str_userName">Phạm Hồng Thái</string>
+    <string name="time">1 giờ</string>
+    <string name="str_status">Chuyển sang đã cho thuê</string>
+    <string name="str_location">Tràng tiền, Hoàn Kiếm, Hà Nội</string>
+    <string name="str_price_to_rent">50.000.000</string>
+    <string name="cancel2">Hủy</string>
+    <string name="edit2">Sửa</string>
+
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
     <string name="home_highlightTv">Nổi bật</string>
