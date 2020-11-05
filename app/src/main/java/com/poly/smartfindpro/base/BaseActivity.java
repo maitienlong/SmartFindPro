@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
 
     private AlertFragment alertFragment;
 
-    private int showUserGuide = 0;
+    private final int showUserGuide = 0;
 
     private LocalBroadcastReceiver showLoadingReceiver = null;
 
@@ -193,6 +193,27 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
             mFragStack.push(mBaseFragment);
 
         trans.add(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
+        trans.commitAllowingStateLoss();
+        mFrgManager.executePendingTransactions();
+    }
+
+    public void goToFragmentReplace(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
+        if (mFragStack == null && mFrgManager == null) {
+            mFragStack = new ArrayDeque<>();
+            mFrgManager = getSupportFragmentManager();
+        }
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mBundle != null) {
+            mBaseFragment.setArguments(mBundle);
+        }
+        if (mFragStack != null && mFragStack.size() >= 1) {
+            trans.hide(mFragStack.getLast());
+        }
+
+        if (mFragStack != null)
+            mFragStack.push(mBaseFragment);
+
+        trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
         mFrgManager.executePendingTransactions();
     }
