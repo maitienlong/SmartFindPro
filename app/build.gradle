@@ -10,7 +10,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -39,10 +38,12 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    //noinspection GradleDeprecatedConfiguration
     compile 'org.sufficientlysecure:html-textview:4.0'
     // Đa màn hình
     implementation 'com.intuit.sdp:sdp-android:1.0.6'

@@ -47,6 +47,30 @@
     <string name="tv_confirm">Xác nhận</string>
     <string name="tv_dang_nhap">Đăng nhập</string>
     <string name="tv_dang_ky">Đăng ký</string>
+    <string name="text_infor_name">Nguyễn Văn Quân</string>
+    <string name="text_infor_time">1 Giờ</string>
+    <string name="text_infor_title">Nhà trọ mới xây ngày hôm qua đây các bạn ạ. Ai thuê thì alo cho Mình nha.</string>
+    <string name="text_infor_price">Mức giá:</string>
+    <string name="text_infor_location">Vị trí:</string>
+    <string name="text_infor_gender">Giới tính:</string>
+    <string name="text_infor_quantity">Số lượng:</string>
+    <string name="text_infor_price_electric">Tiền điện:</string>
+    <string name="text_infor_price_water">Tiền nước:</string>
+    <string name="text_infor_utilities">Tiện ích:</string>
+    <string name="text_infor_chat">Nhắn tin</string>
+    <string name="text_infor_call">Gọi điện</string>
+    <string name="setting_infor_user">Thông tin cá nhân</string>
+    <string name="setting_change_pass">Đổi mật khẩu</string>
+    <string name="setting_permission">Quyền truy cập</string>
+    <string name="change_pass_old">Mật khẩu cũ</string>
+    <string name="change_pass_new">Mật khẩu mới</string>
+    <string name="text_change">Thay đổi</string>
+    <string name="change_pass_confirm">Xác nhân mật khẩu mới</string>
+    <string name="user_permission_camera">Máy ảnh</string>
+    <string name="user_permission_mic">Mic</string>
+    <string name="user_permission_internet">Mạng cục bộ</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
