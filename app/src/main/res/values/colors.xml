@@ -111,4 +111,6 @@
     <color name="gray2">#cccccc</color>
 
     <color name="color_button">#b2bec3</color>
+
+    <color name="background_login">#1C58C9</color>
 </resources>
