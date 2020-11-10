@@ -28,8 +28,6 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
             public void onClick(View v) {
                 isLogin = false;
                 checkViewLogin();
-
-
             }
         });
 

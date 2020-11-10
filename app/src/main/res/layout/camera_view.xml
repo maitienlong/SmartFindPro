@@ -1,9 +1,12 @@
+<!--suppress ALL -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.lpb.lienviet.lpbtradesell.ui.sellproduct.payments.facepay.internal.PreviewView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/surfaceView"/>
+        android:id="@+id/surfaceView"
+        tools:ignore="MissingClass" />
 </FrameLayout>

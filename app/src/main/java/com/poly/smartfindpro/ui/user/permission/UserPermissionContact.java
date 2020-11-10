@@ -1,12 +1,11 @@
-package com.poly.smartfindpro.ui;
-
+package com.poly.smartfindpro.ui.user.permission;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 
-public interface MainContract {
+public class UserPermissionContact {
     interface ViewModel extends BaseView {
-        void openFragment();
+
     }
 
     interface Presenter extends BasePresenter {

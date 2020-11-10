@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.poly.smartfindpro.R;
@@ -29,6 +30,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     protected void initData() {
+
 
     }
 

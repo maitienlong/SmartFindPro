@@ -133,6 +133,12 @@
         <item name="android:background">@color/bg_color</item>
     </style>
 
+    <style name="ViewSettingLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/grey_dove</item>
+    </style>
+
     <style name="ViewLine.margin">
         <item name="android:layout_margin">@dimen/_10sdp</item>
     </style>
@@ -172,5 +178,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
+    <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
 
 </resources>

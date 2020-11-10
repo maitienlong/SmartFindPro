@@ -2,6 +2,7 @@ package com.poly.smartfindpro.basedatabind;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,12 +10,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 import com.poly.smartfindpro.base.BaseActivity;
 
-public abstract class BaseDataBindActivity<T extends ViewDataBinding, K> extends BaseActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class BaseDataBindActivity<T extends ViewDataBinding, K> extends BaseActivity implements View.OnClickListener {
 
     protected T mBinding;
     protected K mPresenter;
@@ -62,9 +67,23 @@ public abstract class BaseDataBindActivity<T extends ViewDataBinding, K> extends
         }
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
+
     protected abstract int getLayoutId();
 
     protected abstract void initView();
 
     protected abstract void initData();
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void setListViewOnClick(ArrayList<View> listV){
+        if(listV != null && listV.size() > 0){
+            listV.forEach((n) -> {
+                n.setOnClickListener(this);
+            });
+        }
+    }
 }

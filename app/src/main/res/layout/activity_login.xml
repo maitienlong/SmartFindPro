@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/background_login" />
+                android:background="@color/background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/tv_dang_nhap"
+                            android:text="@string/tv_login"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/tv_dang_ky"
+                            android:text="@string/tv_registrer"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
 
@@ -106,6 +106,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ln_tv_login"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_30sdp"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
@@ -123,6 +125,7 @@
 
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
