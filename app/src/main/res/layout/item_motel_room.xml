@@ -28,7 +28,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/user" />
+                app:srcCompat="@mipmap/user" />
 
             <TextView
                 android:id="@+id/tvAccountName"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/tvType"
                 app:layout_constraintTop_toBottomOf="@+id/tvAccountName"
-                app:srcCompat="@drawable/female"
+                app:srcCompat="@mipmap/female"
                 app:tint="@color/white" />
 
             <TextView
@@ -125,7 +125,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imgShare"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddress"
-                app:srcCompat="@drawable/comment" />
+                app:srcCompat="@mipmap/comment" />
 
             <ImageButton
                 android:id="@+id/imgShare"
@@ -136,7 +136,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imgComment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imgComment"
-                app:srcCompat="@drawable/share" />
+                app:srcCompat="@mipmap/share" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvListImage"
@@ -155,7 +155,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvAddress"
                 app:layout_constraintStart_toStartOf="@+id/imgPrice"
                 app:layout_constraintTop_toTopOf="@+id/tvAddress"
-                app:srcCompat="@drawable/marker" />
+                app:srcCompat="@mipmap/marker" />
 
             <ImageView
                 android:id="@+id/imgPrice"
@@ -164,7 +164,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvPrice"
                 app:layout_constraintStart_toStartOf="@+id/rvListImage"
                 app:layout_constraintTop_toTopOf="@+id/tvPrice"
-                app:srcCompat="@drawable/price" />
+                app:srcCompat="@mipmap/price" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

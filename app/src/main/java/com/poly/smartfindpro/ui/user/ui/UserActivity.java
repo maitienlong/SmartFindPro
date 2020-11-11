@@ -51,7 +51,7 @@ public class UserActivity extends BaseDataBindActivity<ActivityUserBinding,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.display_user:
-                startActivity(new Intent(this, UserDetailActivity.class));
+//                startActivity(new Intent(this, UserDetailActivity.class));
                 break;
         }
     }
