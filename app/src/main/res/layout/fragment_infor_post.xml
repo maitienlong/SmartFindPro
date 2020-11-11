@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,21 +24,22 @@
             android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <Button
 
                 android:id="@+id/btn_nha_tro"
-                android:background="@color/white"
-                android:textColor="@color/blue"
+                android:layout_width="118dp"
+                android:layout_height="match_parent"
 
-                android:text="@string/btn_rental_hous"
                 android:layout_marginRight="20dp"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="wrap_content">
+                android:background="@drawable/bg_circle_editext"
+                android:text="@string/btn_rental_hous"
+                android:textColor="@color/blue">
 
             </Button>
             <Button
                 android:id="@+id/btn_chung_cu"
-                android:background="@color/white"
+                android:background="@drawable/bg_circle_editext"
                 android:textColor="@color/blue"
                 android:text="@string/btn_apartment"
                 android:layout_width="@dimen/_100sdp"
@@ -50,7 +52,7 @@
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btn_nguyen_can"
-                android:background="@color/white"
+                android:background="@drawable/bg_circle_editext"
                 android:textColor="@color/blue"
                 android:layout_marginRight="20dp"
                 android:text="@string/btn_whole_house"
@@ -60,7 +62,7 @@
             </Button>
             <Button
                 android:id="@+id/btn_o_ghep"
-                android:background="@color/white"
+                android:background="@drawable/bg_circle_editext"
                 android:textColor="@color/blue"
                 android:text="@string/btn_pairing"
                 android:layout_width="@dimen/_100sdp"
@@ -75,7 +77,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textStyle="bold"
             android:text="@string/tv_infor"
+            android:textSize="@dimen/_18sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -97,8 +101,10 @@
                 </TextView>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_40sdp">
+                    android:layout_height="@dimen/_40sdp"
+                    tools:ignore="MissingClass">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:background="@drawable/bg_circle_editext"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
 
@@ -121,6 +127,8 @@
                     android:layout_width="@dimen/_200sdp"
                     android:layout_height="@dimen/_40sdp">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/bg_circle_editext"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
 
@@ -148,6 +156,7 @@
                     android:layout_width="@dimen/_150sdp"
                     android:layout_height="@dimen/_40sdp">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:background="@drawable/bg_circle_editext"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
 
@@ -211,6 +220,7 @@
                     android:layout_height="@dimen/_40sdp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:hint="Số"
+                        android:background="@drawable/bg_circle_editext"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
 
@@ -235,6 +245,7 @@
                     android:layout_height="@dimen/_40sdp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:hint="Khối"
+                        android:background="@drawable/bg_circle_editext"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
 
