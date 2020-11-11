@@ -31,7 +31,8 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     @Override
     protected void initData() {
-
+        mPresenter = new SearchProductPresenter(this,this);
+        mBinding.setPresenter(mPresenter);
     }
 
     @Override
