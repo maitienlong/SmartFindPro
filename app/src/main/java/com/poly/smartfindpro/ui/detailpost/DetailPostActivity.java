@@ -1,7 +1,4 @@
 package com.poly.smartfindpro.ui.detailpost;
-
-import android.media.Image;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 

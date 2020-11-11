@@ -34,8 +34,4 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     }
 
-    @Override
-    public void openFragment() {
-
-    }
 }

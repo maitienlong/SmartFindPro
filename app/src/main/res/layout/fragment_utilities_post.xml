@@ -30,8 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <Button
-
-
                     android:background="@drawable/ic_baseline_wifi_24"
                     android:textColor="@color/blue"
                     android:layout_marginRight="20dp"
@@ -55,8 +53,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <Button
-
-
                     android:background="@drawable/ic_baseline_security_24"
                     android:textColor="@color/blue"
                     android:layout_marginRight="20dp"

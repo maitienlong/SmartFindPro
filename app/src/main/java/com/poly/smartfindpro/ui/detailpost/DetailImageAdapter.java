@@ -45,7 +45,7 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(R.drawable.user);
+        holder.imageView.setImageResource(R.mipmap.user);
     }
 
     @Override
