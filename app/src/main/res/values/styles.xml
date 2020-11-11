@@ -156,9 +156,12 @@
     </style>
 
     <style name="LayoutEditText">
+
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:layout_marginTop">@dimen/_8sdp</item>
+        <item name="android:paddingRight">@dimen/_8sdp</item>
+        <item name="android:paddingLeft">@dimen/_8sdp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -169,5 +172,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
+    <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
 
 </resources>
