@@ -224,6 +224,10 @@ app.get('/updateAdAc', async function (request, response) {
     });
 
 });
+app.get('/postManage', async  function (request, response) {
+response.render('postManage')
+})
+
 
 // phần kết nối sever với app
 app.get('/getDL', async function (request, response) {
