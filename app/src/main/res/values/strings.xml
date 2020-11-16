@@ -122,4 +122,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="error_edt_dont_match">Không khớp</string>
 </resources>
