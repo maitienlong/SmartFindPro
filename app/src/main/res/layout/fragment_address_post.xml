@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.post.adressPost.AddressPostPresenter" />
+
+        <import type="android.view.View" />
+    </data>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -31,14 +43,14 @@
 
 
     <TextView
-        android:text="@string/tv_distric"
+        android:text="@string/tv_district"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     </TextView>
     <Spinner
-        android:id = "@+id/spnDistric"
+        android:id = "@+id/spnDistrict"
         android:layout_width = "match_parent"
         android:layout_height = "@dimen/_50sdp"
         android:prompt = "@string/app_name"
@@ -68,13 +80,14 @@
         android:layout_height="@dimen/_100sdp">
         <com.google.android.material.textfield.TextInputEditText
             android:background="@drawable/bg_circle_editext"
+            android:id="@+id/edtDetialAdress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
     <Button
-
+        android:id="@+id/btnContinue"
         android:layout_gravity="right"
         android:text="@string/btn_continue"
         android:textColor="@color/white"
@@ -82,3 +95,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>
+</layout>
