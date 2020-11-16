@@ -11,6 +11,7 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
+import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 
 public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel{
 
