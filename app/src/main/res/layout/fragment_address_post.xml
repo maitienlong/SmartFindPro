@@ -56,11 +56,12 @@
         android:layout_height = "@dimen/_50sdp"
         android:prompt = "@string/app_name"
         />
+
     <TextView
-        android:text="@string/tv_detail_address"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/tv_detail_address">
 
     </TextView>
     <com.google.android.material.textfield.TextInputLayout
@@ -73,12 +74,13 @@
 
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <Button
 
-        android:layout_gravity="right"
-        android:text="@string/btn_continue"
-        android:textColor="@color/white"
-        android:background="@color/background"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@color/background"
+        android:text="@string/btn_continue"
+        android:textColor="@color/white" />
 </LinearLayout>
