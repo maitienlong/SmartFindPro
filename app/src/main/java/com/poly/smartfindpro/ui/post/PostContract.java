@@ -1,14 +1,15 @@
-package com.poly.smartfindpro.ui.login.forgotPassword;
+package com.poly.smartfindpro.ui.post;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 
-public interface ForgotPasswordContract {
+public interface PostContract {
+
     interface ViewModel extends BaseView {
-        void OnBackClick();
+
     }
 
     interface Presenter extends BasePresenter {
-        void OnBackClick();
+
     }
 }

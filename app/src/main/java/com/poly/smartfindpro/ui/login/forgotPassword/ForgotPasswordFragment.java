@@ -17,15 +17,25 @@ public class ForgotPasswordFragment extends BaseDataBindFragment<FragmentForgotP
     @Override
     protected void initView() {
 
+        mBinding.cmtb.setTitle("Quên Mật Khẩu");
     }
 
     @Override
     protected void initData() {
+
+        mPresenter = new ForgotPasswordPresenter(mActivity, this);
+        mBinding.setPresenter(mPresenter);
+
         mBinding.btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getBaseActivity().goToFragment(R.id.fl_forgot_password,new ReCreatePasswordFragment(), null);
+                getBaseActivity().goToFragment(R.id.fl_forgot_password, new ReCreatePasswordFragment(), null);
             }
         });
+    }
+
+    @Override
+    public void OnBackClick() {
+        mActivity.finish();
     }
 }
