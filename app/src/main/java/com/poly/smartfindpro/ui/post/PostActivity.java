@@ -34,6 +34,10 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         viewPagerPostAdapter = new ViewPagerPostAdapter(fragmentManager);
 
         viewPager.setAdapter(viewPagerPostAdapter);
+
+        viewPager.setCurrentItem(0);
+
+        //viewPager.addOnPageChangeListener();
     }
 
     @Override
