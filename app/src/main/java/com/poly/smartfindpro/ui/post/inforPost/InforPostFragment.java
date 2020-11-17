@@ -16,7 +16,7 @@ import com.poly.smartfindpro.ui.MainPresenter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
-implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener{
+implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_infor_post;
@@ -113,14 +113,13 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
         return true;
     }
 
+
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnContinue){
             mAmountPeople = mBinding.edtAmountPerson.getText().toString();
             mPrice = mBinding.edtPrice.getText().toString();
             mDeposit = mBinding.edtDeposit.getText().toString();
-            int selectedGender = mBinding.rgGender.getCheckedRadioButtonId();
-            RadioButton rb = view.findViewById(selectedGender);
 
             //check The loai phong
             if (category == null){
@@ -128,15 +127,12 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
                 return;
             }
 
-            //check gioi tinh
-            if (rb == null){
-                onErrorGender();
-                return;
-            } else {
-                mGender = rb.getText().toString();
+            //gioi tinh
+            if (mBinding.rbFemale.isChecked()){
+                mGender = mBinding.rbFemale.getText().toString();
+            } else if (mBinding.rbMale.isChecked()){
+                mGender = mBinding.rbMale.getText().toString();
             }
-
-
             mElectricityBill = mBinding.edtElectricityBill.getText().toString();
             mWaterBill = mBinding.edtWaterBill.getText().toString();
             mDescription = mBinding.edtDescription.getText().toString();
