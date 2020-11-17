@@ -27,9 +27,9 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
     String mPrice = "";
     String mDeposit = "";
     String mGender = "";
-    String mElectricityBill;
-    String mWaterBill;
-    String mDescription;
+    String mElectricityBill = "";
+    String mWaterBill = "";
+    String mDescription = "";
 
     InforPostPresenter presenter;
 
@@ -51,7 +51,6 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
     protected void initData() {
 
     }
-
 
 
     @Override
