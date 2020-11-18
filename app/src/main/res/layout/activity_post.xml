@@ -22,9 +22,9 @@
             android:id="@+id/tl_post"
             app:tabMode="fixed"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"/>
+            android:layout_height="@dimen/_40sdp"/>
 
-        <FrameLayout
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_post"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
