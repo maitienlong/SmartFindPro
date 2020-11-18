@@ -12,6 +12,7 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
 public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel{
 
@@ -28,7 +29,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     @Override
     protected void initView() {
-    goToFragment(R.id.vp_post, new AddressPostFragment(), null);
+    goToFragment(R.id.vp_post, new UtilitiesPostFragment(), null);
     }
 
     @Override
