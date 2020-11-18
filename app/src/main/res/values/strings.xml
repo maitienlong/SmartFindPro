@@ -15,11 +15,12 @@
     <string name="tv_login">Đăng nhập</string>
     <string name="tv_registrer">Đăng ký</string>
     <string name="tv_amount_room">Số lượng phòng </string>
-    <string name="tv_price">Giá </string>
+    <string name="tv_amount_person">Số người</string>
+    <string name="tv_price">Giá / Tháng </string>
     <string name="tv_deposit">Đặt cọc</string>
     <string name="tv_gender">Giới tính </string>
-    <string name="tv_electricity_bill">Tiền điện</string>
-    <string name="tv_water_bill">Tiền nước</string>
+    <string name="tv_electricity_bill">Tiền điện / Tháng</string>
+    <string name="tv_water_bill">Tiền nước / Tháng</string>
     <string name="btn_continue">Tiếp tục</string>
     <string name="tv_address">Địa chỉ</string>
     <string name="tv_province">Tỉnh/Thành phố </string>
@@ -122,6 +123,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="text_category_empty">Bạn phải chọn một thể loại phòng</string>
+    <string name="text_gender_empty">Bạn phải chọn giới tính</string>
+    <string name="text_infor_error_empty">Bạn hãy điền đầy đủ thông tin số người, giá tiền, tiền cọc, tiền điện, tiền nước</string>
 
     <string name="error_edt_dont_match">Không khớp</string>
     <string-array name="province_array">

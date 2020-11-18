@@ -4,20 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View" />
-        <import type="android.text.TextUtils" />
+
     </data>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.user.ui.UserActivity">
-        <TextView
-            android:gravity="center"
-            android:text="HELLO ANH EM"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 </layout>
