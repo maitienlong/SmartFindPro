@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.post.inforPost;
 import android.content.Context;
 
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
 public class InforPostPresenter{
@@ -11,7 +12,7 @@ public class InforPostPresenter{
 
     private InforPostContract.ViewModel mViewModel;
 
-    private PostRequest postRequest;
+
 
     public InforPostPresenter(Context context, InforPostContract.ViewModel mViewModel) {
         this.context = context;
@@ -20,7 +21,7 @@ public class InforPostPresenter{
 
     public void handleData(String mCategory, String mAmountPeople, String mPrice, String mDeposit,
                            String mGender, String mElectricityBill, String mWaterBill, String mDescription) {
-        if (mCategory== "") {
+        if (mCategory.isEmpty()) {
             mViewModel.onErrorCategory();
         } else if (mGender.isEmpty()) {
             mViewModel.onErrorGender();
@@ -29,13 +30,10 @@ public class InforPostPresenter{
                 mWaterBill.isEmpty()) {
             mViewModel.onErrorInfor();
         } else {
+
+
+
             mViewModel.onNextFragment();
         }
-    }
-
-    public void onSubmit(){
-        postRequest = new PostRequest();
-
-
     }
 }
