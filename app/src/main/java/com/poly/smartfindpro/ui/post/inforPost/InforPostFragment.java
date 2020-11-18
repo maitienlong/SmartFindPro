@@ -1,10 +1,16 @@
 package com.poly.smartfindpro.ui.post.inforPost;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.base.BaseFragment;
@@ -16,7 +22,7 @@ import com.poly.smartfindpro.ui.MainPresenter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
-implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
+        implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_infor_post;
@@ -55,8 +61,9 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
 
     @Override
     public void onNextFragment() {
-        Toast.makeText(getContext() ,category + "\n" + mGender + "\n" + mAmountPeople + "\n" +
-                mPrice + "\n" + mDeposit + "\n" + mElectricityBill +"\n" + mWaterBill
+
+        Toast.makeText(getContext(), category + "\n" + mGender + "\n" + mAmountPeople + "\n" +
+                mPrice + "\n" + mDeposit + "\n" + mElectricityBill + "\n" + mWaterBill
                 + "\n" + mDescription, Toast.LENGTH_SHORT).show();
     }
 
@@ -116,21 +123,26 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnContinue){
+        if (view.getId() == R.id.btnContinue) {
+            onNext();
+            final Intent intent = new Intent();
+            intent.putExtra("demo", "demo");
+            setResult(Activity.RESULT_OK, intent);
+
             mAmountPeople = mBinding.edtAmountPerson.getText().toString();
             mPrice = mBinding.edtPrice.getText().toString();
             mDeposit = mBinding.edtDeposit.getText().toString();
 
             //check The loai phong
-            if (category == null){
+            if (category == null) {
                 onErrorCategory();
                 return;
             }
 
             //gioi tinh
-            if (mBinding.rbFemale.isChecked()){
+            if (mBinding.rbFemale.isChecked()) {
                 mGender = mBinding.rbFemale.getText().toString();
-            } else if (mBinding.rbMale.isChecked()){
+            } else if (mBinding.rbMale.isChecked()) {
                 mGender = mBinding.rbMale.getText().toString();
             }
             mElectricityBill = mBinding.edtElectricityBill.getText().toString();
@@ -138,5 +150,13 @@ implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListen
             mDescription = mBinding.edtDescription.getText().toString();
             presenter.handleData(category, mAmountPeople, mPrice, mDeposit, mGender, mElectricityBill, mWaterBill, mDescription);
         }
+    }
+
+    public void onNext(){
+
+        FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fl_post, new AddressPostFragment());
+        fragmentTransaction.addToBackStack("addresspost");
+        fragmentTransaction.commit();
     }
 }

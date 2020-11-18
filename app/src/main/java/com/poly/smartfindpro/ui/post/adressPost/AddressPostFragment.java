@@ -7,12 +7,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentTransaction;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginContract;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginPresenter;
+import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
 public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPostBinding, AddressPostPresenter> implements AddressPostContract.ViewModel {
     @Override
@@ -50,6 +53,11 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
             @Override
             public void onClick(View view) {
                 Toast.makeText(mActivity, edtDetailAdress.getText().toString() + spinner2.getSelectedItem().toString() + spinner1.getSelectedItem().toString() + spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.fl_post, new UtilitiesPostFragment());
+                fragmentTransaction.addToBackStack("utilitiespost");
+                fragmentTransaction.commit();
+
             }
         });
     }
