@@ -9,41 +9,41 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
+import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
-public class ViewPagerPostAdapter extends FragmentStateAdapter {
+public class ViewPagerPostAdapter extends FragmentStatePagerAdapter {
 
-    public ViewPagerPostAdapter(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+
+    public ViewPagerPostAdapter(@NonNull FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return super.getItemPosition(object);
     }
 
     @NonNull
     @Override
-    public Fragment createFragment(int position) {
-        Fragment fragment = null;
-
+    public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                fragment = new AddressPostFragment();
-                break;
+                return new InforPostFragment();
             case 1:
-                fragment = new InforPostFragment();
-
-
-                break;
+                return new AddressPostFragment();
             case 2:
-
-                break;
+                return new UtilitiesPostFragment();
             case 3:
-
-                break ;
+                break;
             default:
+                new InforPostFragment();
 
         }
-        return fragment;
+        return null;
     }
 
     @Override
-    public int getItemCount() {
+    public int getCount() {
         return 4;
     }
 }
