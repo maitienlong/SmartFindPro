@@ -1,12 +1,20 @@
 package com.poly.smartfindpro.ui.post.inforPost;
 
+import android.content.Context;
+
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.ui.post.model.PostRequest;
 
 public class InforPostPresenter{
 
+    private Context context;
+
     private InforPostContract.ViewModel mViewModel;
 
-    public InforPostPresenter(InforPostContract.ViewModel mViewModel) {
+    private PostRequest postRequest;
+
+    public InforPostPresenter(Context context, InforPostContract.ViewModel mViewModel) {
+        this.context = context;
         this.mViewModel = mViewModel;
     }
 
@@ -23,5 +31,11 @@ public class InforPostPresenter{
         } else {
             mViewModel.onNextFragment();
         }
+    }
+
+    public void onSubmit(){
+        postRequest = new PostRequest();
+
+
     }
 }
