@@ -42,7 +42,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
     @Override
     protected void initView() {
-        presenter = new InforPostPresenter(this);
+        presenter = new InforPostPresenter(mActivity, this);
 
         //chon the loai
         mBinding.btnNhaTro.setOnTouchListener(this);
