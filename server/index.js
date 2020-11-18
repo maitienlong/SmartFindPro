@@ -30,7 +30,7 @@ app.engine('.hbs', hbs({
     layoutsDir: ''
 }))
 app.set('view engine', '.hbs')
-app.listen(9090);
+app.listen(9091);
 // phần sever
 
 // đăng nhập
