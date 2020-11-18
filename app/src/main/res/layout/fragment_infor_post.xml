@@ -1,271 +1,347 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
 
-        android:orientation="vertical"
+    </data>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<TextView
-    android:text="@string/tv_category"
-    android:textSize="@dimen/_20sdp"
-    android:textStyle="bold"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-</TextView>
-        <LinearLayout
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-
-                android:id="@+id/btn_nha_tro"
-                android:background="@color/white"
-                android:textColor="@color/blue"
-
-                android:text="@string/btn_rental_hous"
-                android:layout_marginRight="20dp"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="wrap_content">
-
-            </Button>
-            <Button
-                android:id="@+id/btn_chung_cu"
-                android:background="@color/white"
-                android:textColor="@color/blue"
-                android:text="@string/btn_apartment"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="wrap_content">
-
-            </Button>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_nguyen_can"
-                android:background="@color/white"
-                android:textColor="@color/blue"
-                android:layout_marginRight="20dp"
-                android:text="@string/btn_whole_house"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="wrap_content">
-
-            </Button>
-            <Button
-                android:id="@+id/btn_o_ghep"
-                android:background="@color/white"
-                android:textColor="@color/blue"
-                android:text="@string/btn_pairing"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="wrap_content">
-
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/tv_infor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </TextView>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/tv_amount_room"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_40sdp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/tv_price"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="@dimen/_200sdp"
-                    android:layout_height="@dimen/_40sdp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/tv_deposit"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="@dimen/_150sdp"
-                    android:layout_height="@dimen/_40sdp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/tv_gender"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-               <RadioGroup
-                   android:orientation="horizontal"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content">
-                   <RadioButton
-                       android:text="@string/tv_male"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content">
-
-                   </RadioButton>
-                   <RadioButton
-                       android:text="@string/tv_female"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content">
-
-                   </RadioButton>
-                   <RadioButton
-                       android:text="@string/tv_all"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content">
-
-                   </RadioButton>
-               </RadioGroup>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/tv_electricity_bill"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_40sdp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:hint="Số"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/tv_water_bill"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_40sdp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:hint="Khối"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:hint="Thêm mô tả ..."
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_category"
+                    android:textSize="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+                    <Button
+                        android:id="@+id/btn_nha_tro"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/btn_rental_hous"
+                        android:background="@drawable/btn_category_selector"
+                        android:textColor="@drawable/btn_category_textcolor_selector">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btn_chung_cu"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_category_selector"
+                        android:textColor="@drawable/btn_category_textcolor_selector"
+                        android:text="@string/btn_apartment">
+
+                    </Button>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_nguyen_can"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/btn_category_selector"
+                        android:textColor="@drawable/btn_category_textcolor_selector"
+                        android:text="@string/btn_whole_house">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btn_o_ghep"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_category_selector"
+                        android:textColor="@drawable/btn_category_textcolor_selector"
+                        android:text="@string/btn_pairing">
+
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:text="@string/tv_infor">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_amount_person">
+                        </TextView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_amount_person"
+                                android:inputType="number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:layout_gravity="right"
-            android:text="@string/btn_continue"
-            android:textColor="@color/white"
-            android:background="@color/background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</LinearLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_price">
+
+                        </TextView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_200sdp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_price"
+                                android:inputType="number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_deposit">
+
+                        </TextView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_deposit"
+                                android:inputType="number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_gender">
+
+                        </TextView>
+
+                        <RadioGroup
+                            android:id="@+id/rgGender"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbMale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_male">
+
+                            </RadioButton>
+
+                            <RadioButton
+                                android:id="@+id/rbFemale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_female">
+
+                            </RadioButton>
+
+                            <!--                        <RadioButton-->
+                            <!--                            android:layout_width="wrap_content"-->
+                            <!--                            android:layout_height="wrap_content"-->
+                            <!--                            android:text="@string/tv_all">-->
+
+                            <!--                        </RadioButton>-->
+                        </RadioGroup>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_electricity_bill">
+
+                        </TextView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_electricity_bill"
+                                android:inputType="number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Số" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_water_bill">
+
+                        </TextView>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edt_water_bill"
+                                android:inputType="number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Khối" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_description"
+                        android:layout_width="match_parent"
+                        android:gravity="start"
+                        android:layout_height="match_parent"
+                        android:hint="Thêm mô tả ..." />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:background="@drawable/custom_button_infor"
+                    android:text="@string/btn_continue"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
