@@ -1,218 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TextView
-        android:text="@string/tv_confirm"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    </TextView>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <data>
+
+        <variable
+            name="Confirm"
+            type="com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostPresenter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_confirm"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
             android:text="@string/tv_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-        </TextView>
         <TextView
-
+            android:id="@+id/str_catergory"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@{Confirm.category}"
+            app:layout_constraintStart_toStartOf="@+id/tv_category" />
 
-        </TextView>
-    </LinearLayout>
+        <GridLayout
+            android:id="@+id/layoutLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategory">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:src="@drawable/bg_barcode"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp">
+            <ImageView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:src="@drawable/jerry" />
 
-        </ImageView>
-        <ImageView
-            android:src="@drawable/bg_barcode"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp">
-        </ImageView>
+            <ImageView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:src="@drawable/jerry" />
 
-        <ImageView
-            android:src="@drawable/bg_barcode"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp">
-        </ImageView>
-    </LinearLayout>
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
-      <TextView
-          android:layout_marginRight="@dimen/_20sdp"
-          android:text="@string/tv_amount_room"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:src="@drawable/jerry" />
 
-      </TextView>
-      <TextView
+        </GridLayout>
 
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="142dp" />
 
-      </TextView>
-  </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="@dimen/_20sdp"
+            android:id="@+id/tvAmountRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/tv_amount_room"
+            app:layout_constraintTop_toBottomOf="@+id/layoutLinear" />
+
+        <TextView
+            android:id="@+id/str_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@{Confirm.amount}"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/layoutLinear" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="@string/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@+id/tvAmountRoom" />
 
-        </TextView>
         <TextView
+            android:id="@+id/str_price"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_amount" />
 
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="@dimen/_20sdp"
+            android:id="@+id/tvDeposit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="@string/tv_deposit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
 
-        </TextView>
         <TextView
-
+            android:id="@+id/str_deposit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@{Confirm.deposit}"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_price" />
 
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="@dimen/_20sdp"
+            android:id="@+id/tvGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="@string/tv_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@+id/tvDeposit" />
 
-        </TextView>
         <TextView
-
+            android:id="@+id/str_gender"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@{Confirm.gender}"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_deposit" />
 
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="@dimen/_20sdp"
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:text="@string/tv_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@+id/tvGender" />
 
-        </TextView>
         <TextView
-
+            android:id="@+id/str_address"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@{Confirm.addess}"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_gender" />
 
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="@dimen/_20sdp"
-            android:text="@string/tv_electricity_bill"
+            android:id="@+id/tvElectricBill"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/tv_electricitybill"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
 
-        </TextView>
         <TextView
-
+            android:id="@+id/str_electricbill"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@{Confirm.electricbill}"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_address" />
 
-        </TextView>
-    </LinearLayout><LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_marginRight="@dimen/_20sdp"
-        android:text="@string/tv_water_bill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvWaterBill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/tv_waterbill"
+            app:layout_constraintTop_toBottomOf="@+id/tvElectricBill" />
 
-    </TextView>
-    <TextView
+        <TextView
+            android:id="@+id/str_waterbill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@{Confirm.waterbill}"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_electricbill" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvUtil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/tv_utilities"
+            app:layout_constraintTop_toBottomOf="@+id/tvWaterBill" />
 
-    </TextView>
-</LinearLayout><LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_marginRight="@dimen/_20sdp"
-        android:text="@string/tv_utilities"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/str_utilities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_waterbill" />
 
-    </TextView>
-    <TextView
+        <TextView
+            android:id="@+id/tvDetailDesciption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/tv_detailed_description"
+            app:layout_constraintTop_toBottomOf="@+id/tvUtil" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </TextView>
-</LinearLayout><LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_marginRight="@dimen/_20sdp"
-        android:text="@string/tv_detailed_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </TextView>
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </TextView>
-</LinearLayout>
+        <TextView
+            android:id="@+id/str_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/str_utilities" />
 
 
-
-
-</LinearLayout>
-    <Button
-        android:layout_gravity="right"
-        android:text="@string/btn_post"
-        android:textColor="@color/white"
-        android:background="@color/background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:layout_marginBottom="67dp"
+            android:background="@drawable/bg_blue_round_15_selector"
+            android:text="@string/btn_post"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/androidx.constraintlayout.widget.ConstraintLayout2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

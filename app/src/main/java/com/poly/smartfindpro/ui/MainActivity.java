@@ -10,7 +10,7 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
 
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
-        MainPresenter> implements MainContract.ViewModel  {
+        MainPresenter> implements MainContract.ViewModel {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
