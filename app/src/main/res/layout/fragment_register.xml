@@ -23,12 +23,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/LayoutEditText"
-            android:hint="Nhập số điện thoại">
+            android:hint="Nhập số điện thoại"
+            app:counterEnabled="true"
+            app:counterMaxLength="10">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_Account_Number"
                 style="@style/EditText"
-                android:inputType="number"/>
+                android:gravity="center"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

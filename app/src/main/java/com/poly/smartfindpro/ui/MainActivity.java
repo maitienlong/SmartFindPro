@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
@@ -27,13 +28,12 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     protected void initView() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container, new InforPostFragment(), null).commit();
+
     }
 
     @Override
     protected void initData() {
+
 
     }
 

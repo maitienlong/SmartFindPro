@@ -18,6 +18,11 @@ public class CreatePasswordFragment extends BaseDataBindFragment<FragmentCreateP
 
     @Override
     protected void initData() {
+        mPresenter = new CreatePasswordPresenter(mActivity, this);
+        mBinding.setPresenter(mPresenter);
+    }
 
+    public void OnBackClick() {
+        getBaseActivity().onBackFragment();
     }
 }
