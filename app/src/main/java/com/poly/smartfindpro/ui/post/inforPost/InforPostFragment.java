@@ -9,17 +9,22 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.base.BaseFragment;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.MainContract;
 import com.poly.smartfindpro.ui.MainPresenter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.model.Information;
+import com.poly.smartfindpro.ui.post.model.PostRequest;
 
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
         implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
@@ -37,12 +42,15 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     String mWaterBill = "";
     String mDescription = "";
 
+    private PostRequest postRequest;
+    private Information information;
+
     InforPostPresenter presenter;
 
 
     @Override
     protected void initView() {
-        presenter = new InforPostPresenter(this);
+        presenter = new InforPostPresenter(getContext(), this);
 
         //chon the loai
         mBinding.btnNhaTro.setOnTouchListener(this);
@@ -62,9 +70,25 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     @Override
     public void onNextFragment() {
 
-        Toast.makeText(getContext(), category + "\n" + mGender + "\n" + mAmountPeople + "\n" +
-                mPrice + "\n" + mDeposit + "\n" + mElectricityBill + "\n" + mWaterBill
-                + "\n" + mDescription, Toast.LENGTH_SHORT).show();
+        postRequest = new PostRequest();
+        information = new Information();
+
+        information.setAmountPeople(Integer.valueOf(mAmountPeople));
+        information.setPrice(Integer.valueOf(mPrice));
+        information.setGender(mGender);
+        information.setUnit("VNĐ");
+        information.setDeposit(Integer.valueOf(mDeposit));
+        information.setElectricBill(Integer.valueOf(mElectricityBill));
+        information.setElectricUnit("Số");
+        information.setWaterBill(Integer.valueOf(mWaterBill));
+        information.setWaterUnit("Khối");
+        information.setDescribe(mDescription);
+
+        postRequest.setCategory(category);
+        postRequest.setInformation(information);
+
+        onNext(new Gson().toJson(postRequest));
+
     }
 
     @Override
@@ -124,10 +148,6 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnContinue) {
-            onNext();
-            final Intent intent = new Intent();
-            intent.putExtra("demo", "demo");
-            setResult(Activity.RESULT_OK, intent);
 
             mAmountPeople = mBinding.edtAmountPerson.getText().toString();
             mPrice = mBinding.edtPrice.getText().toString();
@@ -144,18 +164,27 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 mGender = mBinding.rbFemale.getText().toString();
             } else if (mBinding.rbMale.isChecked()) {
                 mGender = mBinding.rbMale.getText().toString();
+            } else if (mBinding.rbAll.isChecked()){
+                mGender = mBinding.rbAll.getText().toString();
             }
             mElectricityBill = mBinding.edtElectricityBill.getText().toString();
             mWaterBill = mBinding.edtWaterBill.getText().toString();
             mDescription = mBinding.edtDescription.getText().toString();
             presenter.handleData(category, mAmountPeople, mPrice, mDeposit, mGender, mElectricityBill, mWaterBill, mDescription);
+
+
+
+
         }
     }
 
-    public void onNext(){
-
+    public void onNext(String jsonData){
+        Fragment fragment = new AddressPostFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.POST_BUNDEL_RES, jsonData);
         FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fl_post, new AddressPostFragment());
+        fragment.setArguments(bundle);
+        fragmentTransaction.add(R.id.fl_post, fragment);
         fragmentTransaction.addToBackStack("addresspost");
         fragmentTransaction.commit();
     }
