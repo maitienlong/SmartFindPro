@@ -28,6 +28,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_otp"
                 style="@style/EditText"
+                android:gravity="center"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 

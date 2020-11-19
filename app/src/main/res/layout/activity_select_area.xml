@@ -51,7 +51,7 @@
             app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/vietnam" />
+            app:srcCompat="@mipmap/vietnam" />
 
 
 
@@ -85,7 +85,7 @@
             android:layout_marginTop="45dp"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2"
-            app:srcCompat="@drawable/ellipse" />
+            app:srcCompat="@mipmap/ellipse" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -95,7 +95,7 @@
             android:layout_marginTop="95dp"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:srcCompat="@drawable/ellipse" />
+            app:srcCompat="@mipmap/ellipse" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -105,7 +105,7 @@
             android:layout_marginTop="140dp"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            app:srcCompat="@drawable/ellipse" />
+            android:src="@mipmap/ellipse" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

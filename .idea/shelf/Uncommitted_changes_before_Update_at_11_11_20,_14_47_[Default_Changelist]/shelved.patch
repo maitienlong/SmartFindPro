@@ -1,0 +1,184 @@
+Index: app/src/main/res/layout/fragment_create_password.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n\n        <variable\n            name=\"presenter\"\n            type=\"com.poly.smartfindpro.ui.login.loginFragment.LoginPresenter\" />\n\n        <import type=\"android.view.View\" />\n    </data>\n\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:clickable=\"true\"\n        android:focusable=\"true\"\n        android:orientation=\"vertical\">\n\n\n        <com.google.android.material.textfield.TextInputLayout\n            style=\"@style/LayoutEditText\"\n            android:hint=\"Nhập mật khẩu mới\">\n\n            <com.google.android.material.textfield.TextInputEditText\n                android:id=\"@+id/edt_Account_Number\"\n                style=\"@style/EditText\"\n                android:inputType=\"textPassword\" />\n        </com.google.android.material.textfield.TextInputLayout>\n\n        <com.google.android.material.textfield.TextInputLayout\n            style=\"@style/LayoutEditText\"\n            android:hint=\"Xác nhận mật khẩu\">\n\n            <com.google.android.material.textfield.TextInputEditText\n                android:id=\"@+id/edt_Password\"\n                style=\"@style/EditText\"\n                android:inputType=\"textPassword\" />\n        </com.google.android.material.textfield.TextInputLayout>\n\n\n        <Button\n            android:id=\"@+id/btn_Action\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"@dimen/_40sdp\"\n            android:layout_marginTop=\"@dimen/_20sdp\"\n            android:background=\"@color/background_login\"\n            android:text=\"@string/tv_dang_ky\"\n            android:textColor=\"#fff\" />\n\n\n    </LinearLayout>\n\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_create_password.xml	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/res/layout/fragment_create_password.xml	(date 1603875171000)
+@@ -7,7 +7,7 @@
+ 
+         <variable
+             name="presenter"
+-            type="com.poly.smartfindpro.ui.login.loginFragment.LoginPresenter" />
++            type="com.poly.smartfindpro.ui.login.createPassword.CreatePasswordPresenter" />
+ 
+         <import type="android.view.View" />
+     </data>
+@@ -47,8 +47,8 @@
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/_40sdp"
+             android:layout_marginTop="@dimen/_20sdp"
+-            android:background="@color/background_login"
+-            android:text="@string/tv_dang_ky"
++            android:background="@color/background"
++            android:text="@string/tv_registrer"
+             android:textColor="#fff" />
+ 
+ 
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n\n        <variable\n            name=\"presenter\"\n            type=\"com.poly.smartfindpro.ui.login.LoginPresenter\" />\n\n        <import type=\"android.view.View\" />\n    </data>\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <LinearLayout\n            android:id=\"@+id/linearLayout3\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"match_parent\"\n            android:orientation=\"vertical\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\">\n\n            <LinearLayout\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:layout_weight=\"1\"\n                android:background=\"@color/background\" />\n\n            <LinearLayout\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:layout_weight=\"1\" />\n\n\n        </LinearLayout>\n\n        <LinearLayout\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            android:orientation=\"horizontal\"\n            app:layout_constraintBottom_toBottomOf=\"@+id/linearLayout3\"\n            app:layout_constraintEnd_toEndOf=\"@+id/linearLayout3\"\n            app:layout_constraintStart_toStartOf=\"@+id/linearLayout3\"\n            app:layout_constraintTop_toTopOf=\"@+id/linearLayout3\">\n\n            <LinearLayout\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_weight=\"3\"\n                android:background=\"#00000000\" />\n\n\n            <androidx.cardview.widget.CardView\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_weight=\"1\"\n                app:cardBackgroundColor=\"#CCffffff\"\n                app:cardCornerRadius=\"@dimen/_15sdp\"\n                app:cardElevation=\"@dimen/_80sdp\">\n\n                <RelativeLayout\n\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"wrap_content\"\n                    android:orientation=\"vertical\">\n\n                    <LinearLayout\n                        android:id=\"@+id/ln_tv_login\"\n                        android:layout_width=\"match_parent\"\n                        android:layout_height=\"@dimen/_40sdp\"\n                        android:orientation=\"horizontal\">\n\n                        <TextView\n                            android:id=\"@+id/btn_Change_Login\"\n                            android:layout_width=\"match_parent\"\n                            android:layout_height=\"match_parent\"\n                            android:layout_weight=\"1\"\n                            android:gravity=\"center\"\n                            android:text=\"@string/tv_login\"\n                            android:textSize=\"@dimen/_12sdp\"\n                            android:textStyle=\"bold\" />\n\n                        <TextView\n                            android:id=\"@+id/btn_Change_Resign\"\n                            android:layout_width=\"match_parent\"\n                            android:layout_height=\"match_parent\"\n                            android:layout_weight=\"1\"\n                            android:gravity=\"center\"\n                            android:text=\"@string/tv_registrer\"\n                            android:textSize=\"@dimen/_12sdp\"\n                            android:textStyle=\"bold\" />\n\n                    </LinearLayout>\n\n                    <LinearLayout\n                        android:id=\"@+id/ln_edt_user_pass\"\n                        android:layout_width=\"match_parent\"\n                        android:layout_height=\"wrap_content\"\n                        android:layout_below=\"@id/ln_tv_login\"\n                        android:gravity=\"center_horizontal\"\n                        android:orientation=\"vertical\">\n\n                        <FrameLayout\n                            android:id=\"@+id/fl_Login\"\n                            android:layout_width=\"match_parent\"\n                            android:layout_height=\"match_parent\" />\n                    </LinearLayout>\n\n\n                </RelativeLayout>\n\n\n            </androidx.cardview.widget.CardView>\n\n\n            <LinearLayout\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"wrap_content\"\n                android:layout_weight=\"3\"\n                android:background=\"#00000000\" />\n        </LinearLayout>\n    </androidx.constraintlayout.widget.ConstraintLayout>\n\n\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_login.xml	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/res/layout/activity_login.xml	(date 1603875171000)
+@@ -8,7 +8,6 @@
+         <variable
+             name="presenter"
+             type="com.poly.smartfindpro.ui.login.LoginPresenter" />
+-
+         <import type="android.view.View" />
+     </data>
+ 
+Index: app/src/main/res/layout/fragment_register.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n\n        <variable\n            name=\"presenter\"\n            type=\"com.poly.smartfindpro.ui.login.registerFragment.RegisterPresenter\" />\n\n        <import type=\"android.view.View\" />\n    </data>\n\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:clickable=\"true\"\n        android:focusable=\"true\"\n        android:orientation=\"vertical\">\n\n\n        <com.google.android.material.textfield.TextInputLayout\n            style=\"@style/LayoutEditText\"\n            android:hint=\"Nhập số điện thoại\">\n\n            <com.google.android.material.textfield.TextInputEditText\n                android:id=\"@+id/edt_Account_Number\"\n                style=\"@style/EditText\"\n                android:inputType=\"number\"/>\n        </com.google.android.material.textfield.TextInputLayout>\n\n\n        <Button\n            android:id=\"@+id/btn_Action\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"@dimen/_40sdp\"\n            android:layout_marginTop=\"@dimen/_20sdp\"\n            android:background=\"@color/background_login\"\n            android:text=\"Tiếp tục\"\n            android:textColor=\"#fff\" />\n\n\n    </LinearLayout>\n\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_register.xml	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/res/layout/fragment_register.xml	(date 1603874804000)
+@@ -37,7 +37,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/_40sdp"
+             android:layout_marginTop="@dimen/_20sdp"
+-            android:background="@color/background_login"
++            android:background="@color/background"
+             android:text="Tiếp tục"
+             android:textColor="#fff" />
+ 
+Index: app/src/main/java/com/poly/smartfindpro/ui/login/LoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.poly.smartfindpro.ui.login;\n\nimport androidx.annotation.RequiresApi;\nimport androidx.appcompat.app.AppCompatActivity;\n\nimport android.content.Context;\nimport android.os.Build;\nimport android.os.Bundle;\nimport android.view.View;\n\nimport com.poly.smartfindpro.R;\nimport com.poly.smartfindpro.basedatabind.BaseDataBindActivity;\nimport com.poly.smartfindpro.databinding.ActivityLoginBinding;\nimport com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;\nimport com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;\n\npublic class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.ViewModel {\n\n    private boolean isLogin = true;\n\n\n    @Override\n    protected int getLayoutId() {\n        return R.layout.activity_login;\n    }\n\n    @Override\n    protected void initView() {\n        checkViewLogin();\n        mBinding.btnChangeResign.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View v) {\n                isLogin = false;\n                checkViewLogin();\n            }\n        });\n\n        mBinding.btnChangeLogin.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View v) {\n                isLogin = true;\n                checkViewLogin();\n            }\n        });\n\n\n    }\n\n    @Override\n    protected void initData() {\n\n    }\n\n    private void checkViewLogin() {\n        if (isLogin) {\n//            FragmentManager fragmentManager = getSupportFragmentManager();\n//            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new LoginFragment(),null);\n//\n            goToFragmentReplace(R.id.fl_Login, new LoginFragment(), null);\n            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background_login));\n            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.black));\n        } else {\n//            FragmentManager fragmentManager = getSupportFragmentManager();\n//            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new RegisterFragment(),null);\n            goToFragmentReplace(R.id.fl_Login, new RegisterFragment(), null);\n            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background_login));\n            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));\n        }\n    }\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/poly/smartfindpro/ui/login/LoginActivity.java	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/java/com/poly/smartfindpro/ui/login/LoginActivity.java	(date 1603877487000)
+@@ -7,7 +7,6 @@
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.view.View;
+-
+ import com.poly.smartfindpro.R;
+ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+ import com.poly.smartfindpro.databinding.ActivityLoginBinding;
+@@ -57,13 +56,13 @@
+ //            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new LoginFragment(),null);
+ //
+             goToFragmentReplace(R.id.fl_Login, new LoginFragment(), null);
+-            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background_login));
++            mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.background));
+             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.black));
+         } else {
+ //            FragmentManager fragmentManager = getSupportFragmentManager();
+ //            getSupportFragmentManager().beginTransaction().replace(R.id.fl_Login,new RegisterFragment(),null);
+             goToFragmentReplace(R.id.fl_Login, new RegisterFragment(), null);
+-            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background_login));
++            mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background));
+             mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
+         }
+     }
+Index: app/src/main/res/layout/fragment_confirm_otp.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n\n        <variable\n            name=\"presenter\"\n            type=\"com.poly.smartfindpro.ui.login.registerFragment.RegisterPresenter\" />\n\n        <import type=\"android.view.View\" />\n    </data>\n\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:clickable=\"true\"\n        android:focusable=\"true\"\n        android:orientation=\"vertical\">\n\n\n        <com.google.android.material.textfield.TextInputLayout\n            style=\"@style/LayoutEditText\"\n            android:hint=\"Nhập mã OTP\">\n\n            <com.google.android.material.textfield.TextInputEditText\n                android:id=\"@+id/edt_otp\"\n                style=\"@style/EditText\"\n                android:inputType=\"number\"/>\n        </com.google.android.material.textfield.TextInputLayout>\n\n\n        <Button\n            android:id=\"@+id/btn_Action\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"@dimen/_40sdp\"\n            android:layout_marginTop=\"@dimen/_20sdp\"\n            android:background=\"@color/background_login\"\n            android:text=\"Tiếp tục\"\n            android:textColor=\"#fff\" />\n\n\n    </LinearLayout>\n\n</layout>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_confirm_otp.xml	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/res/layout/fragment_confirm_otp.xml	(date 1603875171000)
+@@ -7,7 +7,7 @@
+ 
+         <variable
+             name="presenter"
+-            type="com.poly.smartfindpro.ui.login.registerFragment.RegisterPresenter" />
++            type="com.poly.smartfindpro.ui.login.otp.ConfirmOTPPresenter" />
+ 
+         <import type="android.view.View" />
+     </data>
+@@ -37,7 +37,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/_40sdp"
+             android:layout_marginTop="@dimen/_20sdp"
+-            android:background="@color/background_login"
++            android:background="@color/background"
+             android:text="Tiếp tục"
+             android:textColor="#fff" />
+ 
+Index: app/src/main/res/layout/fragment_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n\n        <variable\n            name=\"presenter\"\n            type=\"com.poly.smartfindpro.ui.login.loginFragment.LoginPresenter\" />\n\n        <import type=\"android.view.View\" />\n    </data>\n\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:clickable=\"true\"\n        android:focusable=\"true\"\n        android:orientation=\"vertical\">\n\n\n        <com.google.android.material.textfield.TextInputLayout\n            style=\"@style/LayoutEditText\"\n            android:hint=\"Nhập số điện thoại\">\n\n            <com.google.android.material.textfield.TextInputEditText\n                android:id=\"@+id/edt_Account_Number\"\n                style=\"@style/EditText\"\n                android:inputType=\"number\" />\n        </com.google.android.material.textfield.TextInputLayout>\n\n        <com.google.android.material.textfield.TextInputLayout\n            style=\"@style/LayoutEditText\"\n            android:hint=\"Nhập mật khẩu\">\n\n            <com.google.android.material.textfield.TextInputEditText\n                android:id=\"@+id/edt_Password\"\n                style=\"@style/EditText\"\n                android:inputType=\"textPassword\" />\n        </com.google.android.material.textfield.TextInputLayout>\n\n\n        <Button\n            android:id=\"@+id/btn_Action\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"@dimen/_40sdp\"\n            android:layout_marginTop=\"@dimen/_20sdp\"\n            android:background=\"@color/background_login\"\n            android:text=\"@string/tv_dang_nhap\"\n            android:textColor=\"#fff\" />\n\n\n    </LinearLayout>\n\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_login.xml	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/res/layout/fragment_login.xml	(date 1603874804000)
+@@ -47,8 +47,8 @@
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/_40sdp"
+             android:layout_marginTop="@dimen/_20sdp"
+-            android:background="@color/background_login"
+-            android:text="@string/tv_dang_nhap"
++            android:background="@color/background"
++            android:text="@string/tv_registrer"
+             android:textColor="#fff" />
+ 
+ 
+Index: app/src/main/java/com/poly/smartfindpro/ui/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.poly.smartfindpro.ui;\n\nimport androidx.appcompat.app.AppCompatActivity;\n\nimport android.os.Bundle;\n\nimport com.poly.smartfindpro.R;\nimport com.poly.smartfindpro.basedatabind.BaseDataBindActivity;\nimport com.poly.smartfindpro.databinding.ActivityMainBinding;\n\npublic class MainActivity extends BaseDataBindActivity<ActivityMainBinding,\n        MainPresenter> implements MainContract.ViewModel  {\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n    }\n\n    @Override\n    protected int getLayoutId() {\n        return R.layout.activity_main;\n    }\n\n    @Override\n    protected void initView() {\n\n    }\n\n    @Override\n    protected void initData() {\n\n    }\n\n    @Override\n    public void openFragment() {\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/poly/smartfindpro/ui/MainActivity.java	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/java/com/poly/smartfindpro/ui/MainActivity.java	(date 1603876978000)
+@@ -3,7 +3,7 @@
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+ import android.os.Bundle;
+-
++import androidx.databinding.library.baseAdapters.BR;
+ import com.poly.smartfindpro.R;
+ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+ import com.poly.smartfindpro.databinding.ActivityMainBinding;
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n        <import type=\"android.view.View\" />\n        <import type=\"android.text.TextUtils\" />\n    </data>\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\"\n        android:orientation=\"vertical\"\n        tools:context=\".ui.MainActivity\">\n        <TextView\n            android:gravity=\"center\"\n            android:text=\"HELLO ANH EM\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"match_parent\"/>\n\n    </LinearLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(revision 52b4577c7a8e08db02deeb453c1753ae3a14cf20)
++++ app/src/main/res/layout/activity_main.xml	(date 1603875171000)
+@@ -4,8 +4,11 @@
+     xmlns:tools="http://schemas.android.com/tools">
+ 
+     <data>
++
++        <variable
++            name="presenter"
++            type="com.poly.smartfindpro.ui.MainPresenter" />
+         <import type="android.view.View" />
+-        <import type="android.text.TextUtils" />
+     </data>
+ 
+     <LinearLayout

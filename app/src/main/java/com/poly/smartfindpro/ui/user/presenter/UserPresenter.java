@@ -11,8 +11,6 @@ public class UserPresenter implements UserContract.Presenter {
 
     private Context mContext;
     private UserContract.ViewModel mViewModel;
-    private final Context mContext;
-    private final MainContract.ViewModel mViewModel;
 
     public ObservableField<String> title;
 

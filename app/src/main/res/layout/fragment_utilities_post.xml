@@ -1,343 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:text="@string/tv_utilities"
-        android:layout_width="wrap_content"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold"
-        android:layout_height="wrap_content">
+    <data>
 
-    </TextView>
-    <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPresenter" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_marginRight="@dimen/_20sdp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_utilities"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-
-                    android:background="@drawable/ic_baseline_wifi_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:layout_gravity=""
-                    android:text="@string/tv_wifi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-
-
-            <LinearLayout
-
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_security_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-
-                    android:text="@string/tv_security"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_marginRight="@dimen/_20sdp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_bathtub_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:text="@string/tv_bathroom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_two_wheeler_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:text="@string/tv_parking"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
-
-    <LinearLayout
-
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             <Button
-
-
-                android:background="@drawable/ic_baseline_vpn_key_24"
-                android:textColor="@color/blue"
-                android:layout_marginRight="20dp"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp">
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="right"
+                android:text="@string/btn_continue">
 
             </Button>
-            <TextView
-                android:text="@string/tv_key"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
         </LinearLayout>
 
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-
-
-                android:background="@drawable/ic_baseline_alarm_24"
-                android:textColor="@color/blue"
-                android:layout_marginRight="20dp"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp">
-
-            </Button>
-            <TextView
-                android:text="@string/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_marginRight="@dimen/_20sdp"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-
-
-                android:background="@drawable/ic_baseline_wc_24"
-                android:textColor="@color/blue"
-                android:layout_marginRight="20dp"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp">
-
-            </Button>
-            <TextView
-                android:text="@string/tv_wc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-
-
-                android:background="@drawable/ic_baseline_pets_24"
-                android:textColor="@color/blue"
-                android:layout_marginRight="20dp"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp">
-
-            </Button>
-            <TextView
-                android:text="@string/tv_pet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </LinearLayout>
-
-    </LinearLayout>
-        <LinearLayout
-
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_marginRight="@dimen/_20sdp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_airline_seat_flat_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:text="@string/tv_bed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_restaurant_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:text="@string/tv_kitchen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout
-
-            android:layout_marginBottom="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_marginRight="@dimen/_20sdp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_wb_iridescent_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:text="@string/tv_air_conditioner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-
-
-                    android:background="@drawable/ic_baseline_child_care_24"
-                    android:textColor="@color/blue"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp">
-
-                </Button>
-                <TextView
-                    android:text="@string/tv_baby"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-    <Button
-        android:layout_gravity="right"
-        android:text="@string/btn_continue"
-        android:textColor="@color/white"
-        android:background="@color/background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+    </ScrollView>
+</layout>

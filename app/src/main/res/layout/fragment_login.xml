@@ -23,24 +23,28 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/LayoutEditText"
-            android:hint="Nhập số điện thoại">
+            android:hint="Nhập số điện thoại"
+            app:counterEnabled="true"
+            app:counterMaxLength="10">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_Account_Number"
                 style="@style/EditText"
-                android:inputType="number"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/LayoutEditText"
-            android:hint="Nhập mật khẩu">
+            android:hint="Nhập mật khẩu"
+            app:counterEnabled="true"
+            app:counterMaxLength="10">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_Password"
                 style="@style/EditText"
-                android:inputType="textPassword"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

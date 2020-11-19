@@ -242,6 +242,24 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
         }
     }
 
+    public boolean onBackFragment(BaseFragment mBaseFragment) {
+        if (mFrgManager == null)
+            return false;
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mFragStack.size() > 0) {
+            trans.addToBackStack(mBaseFragment.getClass().getSimpleName());
+            if (mFragStack.size() > 0) {
+                trans.show(mFragStack.getLast());
+                mFragStack.getLast().onResume();
+            }
+            trans.commitAllowingStateLoss();
+            ActivityUtils.hideSoftInput(this);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void onBackAllFragments() {
         dismissAlertDialog();
         if (mFrgManager == null) {

@@ -6,7 +6,7 @@
     <string name="common_cancel">Hủy</string>
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
-    <string name="tv_category">Thể loại:</string>
+    <string name="tv_category">Thể loại</string>
     <string name="btn_pairing">Ở ghép</string>
     <string name="btn_rental_hous">Nhà trọ</string>
     <string name="btn_apartment">Chung cư</string>
@@ -14,19 +14,20 @@
     <string name="tv_infor">Thông tin</string>
     <string name="tv_login">Đăng nhập</string>
     <string name="tv_registrer">Đăng ký</string>
-    <string name="tv_amount_room">Số lượng phòng:</string>
-    <string name="tv_price">Giá:</string>
-    <string name="tv_deposit">Đặt cọc:</string>
-    <string name="tv_gender">Giới tính:</string>
-    <string name="tv_electricitybill">Tiền điện:</string>
-    <string name="tv_waterbill">Tiền nước:</string>
+    <string name="tv_amount_room">Số lượng phòng </string>
+    <string name="tv_amount_person">Số người</string>
+    <string name="tv_price">Giá / Tháng </string>
+    <string name="tv_deposit">Đặt cọc</string>
+    <string name="tv_gender">Giới tính </string>
+    <string name="tv_electricity_bill">Tiền điện / Tháng</string>
+    <string name="tv_water_bill">Tiền nước / Tháng</string>
     <string name="btn_continue">Tiếp tục</string>
-    <string name="tv_address">Địa chỉ:</string>
+    <string name="tv_address">Địa chỉ</string>
     <string name="tv_province">Tỉnh/Thành phố </string>
-    <string name="tv_distric">Huyện/Thị xã </string>
+    <string name="tv_district">Huyện/Thị xã </string>
     <string name="tv_commune">Xã/Phường/Thị trấn </string>
     <string name="tv_detail_address">Địa chỉ chi tiết </string>
-    <string name="tv_utilities">Tiện ích:</string>
+    <string name="tv_utilities">Tiện ích</string>
     <string name="tv_wc">Vệ sinh</string>
     <string name="tv_bathroom">Nhà tắm</string>
     <string name="tv_parking">Chỗ để xe </string>
@@ -39,7 +40,7 @@
     <string name="tv_time">thoải mái giờ </string>
     <string name="tv_air_conditioner">Điều hoà </string>
     <string name="tv_bed">Giường </string>
-    <string name="tv_detailed_description">Mô tả:</string>
+    <string name="tv_detailed_description">Mô tả chi </string>
     <string name="btn_post">Đăng</string>
     <string name="tv_male">Nam</string>
     <string name="tv_female">Nữ</string>
@@ -120,7 +121,25 @@
     <string name="slArea_titleTv">Chọn khu vực</string>
     <string name="slArea_selectAreaBtn">Tiếp tục</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="text_category_empty">Bạn phải chọn một thể loại phòng</string>
+    <string name="text_gender_empty">Bạn phải chọn giới tính</string>
+    <string name="text_infor_error_empty">Bạn hãy điền đầy đủ thông tin số người, giá tiền, tiền cọc, tiền điện, tiền nước</string>
+
+    <string name="error_edt_dont_match">Không khớp</string>
+    <string-array name="province_array">
+        <item>Hà Nội</item>
+        <item>Hải Dương</item>
+        <item>Nghệ An</item>
+        <item>Ninh Bình</item>
+
+    </string-array>
+    <string-array name="district_array">
+        <item>Ba Đình</item>
+        <item>Bắc Từ Liêm</item>
+        <item>Cầu Giấy</item>
+        <item>Đống Đa</item>
+
+    </string-array>
 </resources>
