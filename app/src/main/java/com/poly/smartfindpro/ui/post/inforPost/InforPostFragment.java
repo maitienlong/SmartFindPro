@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.base.BaseFragment;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.MainContract;
@@ -85,6 +87,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         postRequest.setCategory(category);
         postRequest.setInformation(information);
 
+        onNext(new Gson().toJson(postRequest));
 
     }
 
@@ -145,10 +148,6 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnContinue) {
-//            onNext();
-//            final Intent intent = new Intent();
-//            intent.putExtra("demo", "demo");
-//            setResult(Activity.RESULT_OK, intent);
 
             mAmountPeople = mBinding.edtAmountPerson.getText().toString();
             mPrice = mBinding.edtPrice.getText().toString();
@@ -179,12 +178,13 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         }
     }
 
-    public void onNext(){
+    public void onNext(String jsonData){
         Fragment fragment = new AddressPostFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Config);
+        bundle.putString(Config.POST_BUNDEL_RES, jsonData);
         FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fl_post, new AddressPostFragment());
+        fragment.setArguments(bundle);
+        fragmentTransaction.add(R.id.fl_post, fragment);
         fragmentTransaction.addToBackStack("addresspost");
         fragmentTransaction.commit();
     }
