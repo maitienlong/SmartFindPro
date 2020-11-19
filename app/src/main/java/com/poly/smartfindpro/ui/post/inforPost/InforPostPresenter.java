@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.post.inforPost;
 import android.content.Context;
 
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
 public class InforPostPresenter{
@@ -35,6 +36,9 @@ public class InforPostPresenter{
 
     public void onSubmit(){
         postRequest = new PostRequest();
+
+        Information information = new Information();
+
 
 
     }
