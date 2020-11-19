@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -67,13 +68,9 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     @Override
     public void onNextFragment() {
 
-//        Toast.makeText(getContext(), category + "\n" + mGender + "\n" + mAmountPeople + "\n" +
-//                mPrice + "\n" + mDeposit + "\n" + mElectricityBill + "\n" + mWaterBill
-//                + "\n" + mDescription, Toast.LENGTH_SHORT).show();
-
         postRequest = new PostRequest();
         information = new Information();
-        postRequest.setCategory(category);
+
         information.setAmountPeople(Integer.valueOf(mAmountPeople));
         information.setPrice(Integer.valueOf(mPrice));
         information.setGender(mGender);
@@ -85,7 +82,10 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         information.setWaterUnit("Khối");
         information.setDescribe(mDescription);
 
-        Toast.makeText(getContext(), postRequest.getCategory() + "\n" + information.toString(), Toast.LENGTH_SHORT).show();
+        postRequest.setCategory(category);
+        postRequest.setInformation(information);
+
+
     }
 
     @Override
@@ -180,6 +180,9 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     }
 
     public void onNext(){
+        Fragment fragment = new AddressPostFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Config);
         FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fl_post, new AddressPostFragment());
         fragmentTransaction.addToBackStack("addresspost");
