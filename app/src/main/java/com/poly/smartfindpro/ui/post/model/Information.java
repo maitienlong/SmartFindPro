@@ -13,6 +13,9 @@ public class Information {
     @SerializedName("price")
     @Expose
     private Integer price;
+    @SerializedName("deposit")
+    @Expose
+    private Integer deposit;
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -34,8 +37,28 @@ public class Information {
     @SerializedName("describe")
     @Expose
     private String describe;
+
+    @Override
+    public String toString() {
+        return "Information{" +
+                "\n" +"amountPeople=" + amountPeople +
+                "\n" +"price=" + price +
+                "\n" +"deposit=" + deposit +
+                "\n" +"gender='" + gender + '\'' +
+                "\n" +"unit='" + unit + '\'' +
+                "\n" +"electricBill=" + electricBill +
+                "\n" +"electricUnit='" + electricUnit + '\'' +
+                "\n" +"waterBill=" + waterBill +
+                "\n" +"waterUnit='" + waterUnit + '\'' +
+                "\n" +"describe='" + describe + '\'' +
+                "\n" +"image=" + image +
+                '}';
+    }
+
     @SerializedName("image")
     @Expose
+
+
     private List<String> image = null;
 
     public Integer getAmountPeople() {
@@ -52,6 +75,14 @@ public class Information {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Integer deposit) {
+        this.deposit = deposit;
     }
 
     public String getGender() {
