@@ -29,12 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitiesPostBinding, UtilitiesPresenter> implements UtilitiesContract.ViewModel {
-private PostRequest postRequest;
+    private PostRequest postRequest;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_utilities_post;
     }
+
     private void ReciData() {
         Type type = new TypeToken<PostRequest>() {
         }.getType();
@@ -42,6 +43,7 @@ private PostRequest postRequest;
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
 
     }
+
     @Override
     protected void initView() {
         ReciData();
@@ -52,7 +54,7 @@ private PostRequest postRequest;
     protected void initData() {
         mPresenter = new UtilitiesPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
-mPresenter.setPostRequest(postRequest);
+        mPresenter.setPostRequest(postRequest);
 
         mPresenter.CreateData();
         UtilitiesAdapter utilitiesAdapter = new UtilitiesAdapter(mActivity, this);
@@ -71,6 +73,6 @@ mPresenter.setPostRequest(postRequest);
 
     @Override
     public void onNext(String jsonData) {
-        Log.d("CheckLog", jsonData  );
+        Log.d("CheckLog", jsonData);
     }
 }
