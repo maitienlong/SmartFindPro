@@ -19,6 +19,7 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
         this.context = context;
         this.mViewModel = mViewModel;
     }
+
     @Override
     public void subscribe() {
 
@@ -61,6 +62,6 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
         mListUtilities.add(giuong1);
         mListUtilities.add(baby1);
 
-return mListUtilities;
+        return mListUtilities;
     }
 }
