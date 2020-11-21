@@ -364,6 +364,32 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:text="@string/add_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:weightSum="10"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvImages"
+                        android:layout_width="0dp"
+                        android:layout_weight="8"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:id="@+id/imgAddImages"
+                        android:src="@drawable/icon_add"
+                        android:layout_weight="2"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"/>
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     app:hintAnimationEnabled="false"
@@ -378,7 +404,6 @@
                         android:layout_height="match_parent"
                         android:gravity="start"
                         android:hint="Thêm mô tả ..." />
-
 
                 </com.google.android.material.textfield.TextInputLayout>
 

@@ -128,6 +128,7 @@
     <string name="text_infor_error_empty">Bạn hãy điền đầy đủ thông tin số người, giá tiền, tiền cọc, tiền điện, tiền nước</string>
 
     <string name="error_edt_dont_match">Không khớp</string>
+    <string name="add_images">Thêm ảnh</string>
     <string-array name="province_array">
         <item>Hà Nội</item>
         <item>Hải Dương</item>
