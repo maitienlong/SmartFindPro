@@ -39,7 +39,8 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-
+    implementation "com.squareup.retrofit2:retrofit:1.8"
+    implementation "com.squareup.retrofit2:converter-scalars:1.8"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

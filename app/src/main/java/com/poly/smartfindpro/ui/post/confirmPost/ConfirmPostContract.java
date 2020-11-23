@@ -5,5 +5,6 @@ public interface ConfirmPostContract {
     }
 
     interface Presenter extends BasePresenter {
+
     }
 }

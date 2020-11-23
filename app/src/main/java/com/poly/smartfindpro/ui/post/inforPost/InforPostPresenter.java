@@ -6,12 +6,11 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
-public class InforPostPresenter{
+public class InforPostPresenter {
 
     private Context context;
 
     private InforPostContract.ViewModel mViewModel;
-
 
 
     public InforPostPresenter(Context context, InforPostContract.ViewModel mViewModel) {
@@ -25,17 +24,12 @@ public class InforPostPresenter{
             mViewModel.onErrorCategory();
         } else if (mGender.isEmpty()) {
             mViewModel.onErrorGender();
-        } else if (mAmountPeople.isEmpty()|| mPrice.isEmpty() ||
+        } else if (mAmountPeople.isEmpty() || mPrice.isEmpty() ||
                 mDeposit.isEmpty() || mElectricityBill.isEmpty() ||
                 mWaterBill.isEmpty()) {
             mViewModel.onErrorInfor();
         } else {
-
-
-        Information information = new Information();
-
-
-
+         Information information = new Information();
             mViewModel.onNextFragment();
         }
     }

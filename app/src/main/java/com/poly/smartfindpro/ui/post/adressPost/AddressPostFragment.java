@@ -40,7 +40,6 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         }.getType();
 
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-
     }
 
     @Override
