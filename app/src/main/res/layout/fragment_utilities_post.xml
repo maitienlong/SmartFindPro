@@ -28,6 +28,7 @@
                 android:layout_height="match_parent" />
 
             <Button
+                android:id="@+id/btnContinue"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_gravity="right"

@@ -23,13 +23,19 @@ import com.poly.smartfindpro.databinding.ActivityPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
+import com.poly.smartfindpro.ui.post.model.InforModel;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
+import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel{
-
+    private InforModel inforModel = null;
     private boolean isStatusInfor = false, isStatusAddress = false, isStatusTools = false, isStatusConfirm = false;
 
     private ViewPagerPostAdapter viewPagerPostAdapter;
+    private List<UtilitiesModel> utilitiesModels = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -53,6 +59,22 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     protected void initData() {
 
 
+    }
+
+    public void setDataInforModel(InforModel inforModel){
+        this.inforModel = inforModel;
+    }
+
+    public InforModel getDataInforModel(){
+        return inforModel;
+    }
+
+    public void setListUtilitiesModel(List<UtilitiesModel> utilitiesModels) {
+        this.utilitiesModels  = utilitiesModels;
+    }
+
+    public List<UtilitiesModel> getListUtilitiesModel(){
+        return utilitiesModels;
     }
 
     @Override
@@ -96,7 +118,4 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
             }
         }
     }
-
-
-
 }

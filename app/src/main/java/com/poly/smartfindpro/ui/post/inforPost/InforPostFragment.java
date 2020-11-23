@@ -22,11 +22,14 @@ import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.MainContract;
 import com.poly.smartfindpro.ui.MainPresenter;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.model.InforModel;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
-public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
+public class
+InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
         implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
     @Override
     protected int getLayoutId() {
@@ -38,6 +41,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     String mPrice = "";
     String mDeposit = "";
     String mGender = "";
+    String mAddress = "";
     String mElectricityBill = "";
     String mWaterBill = "";
     String mDescription = "";
@@ -172,9 +176,9 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
             mDescription = mBinding.edtDescription.getText().toString();
             presenter.handleData(category, mAmountPeople, mPrice, mDeposit, mGender, mElectricityBill, mWaterBill, mDescription);
 
-
-
-
+            ((PostActivity) getActivity())
+                    .setDataInforModel(new InforModel(category, mAmountPeople,
+                            mPrice, mDeposit, mGender, mAddress, mElectricityBill, mWaterBill, mDescription));
         }
     }
 

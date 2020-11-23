@@ -1,27 +1,26 @@
 package com.poly.smartfindpro.ui.post.utilitiesPost;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
-import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
 import com.poly.smartfindpro.databinding.FragmentUtilitiesPostBinding;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.UtilitiesAdapter;
-import com.poly.smartfindpro.ui.post.adressPost.AddressPostContract;
-import com.poly.smartfindpro.ui.post.adressPost.AddressPostPresenter;
+import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
+import com.poly.smartfindpro.utils.AppUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitiesPostBinding, UtilitiesPresenter> implements UtilitiesContract.ViewModel, View.OnClickListener {
+public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitiesPostBinding, UtilitiesPresenter> implements UtilitiesContract.ViewModel, View.OnClickListener
+, UtilitiesAdapter.OnOptionClick{
+
+    private List<UtilitiesModel> listOptions = new ArrayList<>();
+    private UtilitiesAdapter utilitiesAdapter = null;
 
     @Override
     protected int getLayoutId() {
@@ -30,7 +29,7 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
 
     @Override
     protected void initView() {
-
+        mBinding.btnContinue.setOnClickListener(this);
 
     }
 
@@ -39,9 +38,10 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
         mPresenter = new UtilitiesPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
 
-        mPresenter.CreateData();
-        UtilitiesAdapter utilitiesAdapter = new UtilitiesAdapter(mActivity);
-        utilitiesAdapter.setListItem(mPresenter.CreateData());
+        mPresenter.createData();
+        utilitiesAdapter = new UtilitiesAdapter(mActivity);
+        utilitiesAdapter.setListItem(mPresenter.createData());
+        utilitiesAdapter.setOnOptionClick(this);
 
         GridLayoutManager linearLayoutManager = new GridLayoutManager(mActivity,2);
         mBinding.rcUtilities.setAdapter(utilitiesAdapter);
@@ -50,6 +50,24 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnContinue:
+                AppUtils.replaceFragmentToActivity(getActivity().getSupportFragmentManager(),
+                        new ConfirmPostFragment(), R.id.fl_post, false, "ConfirmPostFragment");
+                break;
+        }
+    }
 
+    @Override
+    public void onOptionClick() {
+        ((PostActivity) getActivity()).setListUtilitiesModel(utilitiesAdapter.getListUltilities());
+    }
+
+    public List<UtilitiesModel> getUtilitiesWereChoosen(){
+        if (utilitiesAdapter != null){
+            return utilitiesAdapter.getListUltilities();
+        } else {
+            return null;
+        }
     }
 }
