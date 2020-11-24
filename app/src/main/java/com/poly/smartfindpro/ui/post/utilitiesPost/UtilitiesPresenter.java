@@ -30,7 +30,7 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
 
     }
 
-    public List<UtilitiesModel> CreateData() {
+    public List<UtilitiesModel> createData() {
         mListUtilities = new ArrayList<>();
         UtilitiesModel wifi = new UtilitiesModel(R.drawable.ic_baseline_wifi_24, "Wifi", false);
         UtilitiesModel anninh = new UtilitiesModel(R.drawable.ic_baseline_security_24, "An Ninh", false);

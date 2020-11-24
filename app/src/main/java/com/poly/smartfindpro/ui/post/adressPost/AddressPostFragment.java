@@ -30,6 +30,11 @@ import java.lang.reflect.Type;
 public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPostBinding, AddressPostPresenter> implements AddressPostContract.ViewModel {
     private PostRequest postRequest;
 
+    String mProvine = "";
+    String mDistric = "";
+    String mComune = "";
+    String mDetailAdress = "";
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_address_post;
@@ -40,7 +45,6 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         }.getType();
 
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-
     }
 
     @Override

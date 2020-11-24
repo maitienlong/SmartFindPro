@@ -70,7 +70,6 @@ public abstract class BaseDataBindActivity<T extends ViewDataBinding, K> extends
 
     @Override
     public void onClick(View v) {
-
     }
 
     protected abstract int getLayoutId();
@@ -82,7 +81,7 @@ public abstract class BaseDataBindActivity<T extends ViewDataBinding, K> extends
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setListViewOnClick(ArrayList<View> listV){
         if(listV != null && listV.size() > 0){
-            listV.forEach((n) -> {
+            listV.forEach((n) -> { 
                 n.setOnClickListener(this);
             });
         }
