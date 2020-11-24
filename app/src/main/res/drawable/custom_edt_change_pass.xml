@@ -8,10 +8,10 @@
         android:radius="@dimen/_7sdp" />
 
     <padding
-        android:left="1dp"
-        android:right="1dp"
-        android:top="1dp"
-        android:bottom="1dp"/>
+        android:left="@dimen/_5sdp"
+        android:right="@dimen/_5sdp"
+        android:top="@dimen/_5sdp"
+        android:bottom="@dimen/_5sdp"/>
 
 <!--    <solid android:color="#1C58C9"/>-->
 

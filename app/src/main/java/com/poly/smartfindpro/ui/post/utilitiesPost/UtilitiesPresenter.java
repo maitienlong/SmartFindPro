@@ -19,6 +19,7 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
         this.context = context;
         this.mViewModel = mViewModel;
     }
+
     @Override
     public void subscribe() {
 
