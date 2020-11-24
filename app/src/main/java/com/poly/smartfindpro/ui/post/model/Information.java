@@ -58,6 +58,8 @@ public class Information {
     @SerializedName("image")
     @Expose
 
+    private List<ImageInforPost> imageInforPost;
+
 
     private List<String> image = null;
 
@@ -149,4 +151,11 @@ public class Information {
         this.image = image;
     }
 
+    public List<ImageInforPost> getImageInforPost() {
+        return imageInforPost;
+    }
+
+    public void setImageInforPost(List<ImageInforPost> imageInforPost) {
+        this.imageInforPost = imageInforPost;
+    }
 }

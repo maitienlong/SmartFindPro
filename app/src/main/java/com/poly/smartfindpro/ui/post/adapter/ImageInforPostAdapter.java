@@ -2,8 +2,10 @@ package com.poly.smartfindpro.ui.post.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,11 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.ui.post.model.ImageInforPost;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,7 +52,10 @@ public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.tvTitle.setText(mList.get(position).getmName());
-        holder.img_infor_post.setImageURI(mList.get(position).getUri());
+
+        holder.img_infor_post.setImageBitmap(mList.get(position).getBitmap());
+
+
     }
 
     @Override
@@ -65,6 +74,51 @@ public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAd
             img_infor_post = itemView.findViewById(R.id.img_infor_post);
             tvTitle = itemView.findViewById(R.id.tvTitle);
         }
+    }
+
+
+    public Bitmap loadBitmap(String url)
+    {
+        Bitmap bm = null;
+        InputStream is = null;
+        BufferedInputStream bis = null;
+        try
+        {
+            URLConnection conn = new URL(url).openConnection();
+            conn.connect();
+            is = conn.getInputStream();
+            bis = new BufferedInputStream(is, 1080);
+            bm = BitmapFactory.decodeStream(bis);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if (bis != null)
+            {
+                try
+                {
+                    bis.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            if (is != null)
+            {
+                try
+                {
+                    is.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bm;
     }
 }
 

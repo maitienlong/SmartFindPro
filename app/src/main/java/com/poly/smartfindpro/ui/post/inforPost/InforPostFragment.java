@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -38,7 +39,12 @@ import com.poly.smartfindpro.ui.post.model.ImageInforPost;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
@@ -104,8 +110,14 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 for (int i = 0; i < totalItem; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
                     String imageName = getFileName(imageUri);
-                    ImageInforPost item = new ImageInforPost(imageName, imageUri);
-                    imageList.add(item);
+                    try {
+                        ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
+
+                        imageList.add(item);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
                     mBinding.rvImages.setAdapter(imagePostAdapter);
                 }
@@ -113,15 +125,27 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 Log.e("TAG", "onActivityResult: " + data.getData());
                 Uri imageUri = data.getData();
                 String imageName = getFileName(imageUri);
-                ImageInforPost item = new ImageInforPost(imageName, imageUri);
-                imageList.add(item);
+
+                try {
+                    ImageInforPost    item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
+
+                    imageList.add(item);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
                 mBinding.rvImages.setAdapter(imagePostAdapter);
+
+
+
+
 
 
             }
         }
     }
+
 
     public String getFileName(Uri uri){
         String result = null;
@@ -143,6 +167,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
             }
         }
         return  result;
+
     }
 
     @Override
@@ -161,6 +186,8 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         information.setWaterBill(Integer.valueOf(mWaterBill));
         information.setWaterUnit("Khối");
         information.setDescribe(mDescription);
+
+        information.setImageInforPost(imageList);
 
         postRequest.setCategory(category);
         postRequest.setInformation(information);
@@ -268,4 +295,6 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         fragmentTransaction.addToBackStack("addresspost");
         fragmentTransaction.commit();
     }
+
+
 }

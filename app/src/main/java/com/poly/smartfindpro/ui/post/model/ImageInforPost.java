@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.post.model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 
@@ -15,9 +16,12 @@ public class ImageInforPost {
     public String mName;
     public Uri uri;
 
-    public ImageInforPost(String mName, Uri uri) {
+    private Bitmap bitmap;
+
+    public ImageInforPost(String mName, Uri uri, Bitmap bitmap) {
         this.mName = mName;
         this.uri = uri;
+        this.bitmap = bitmap;
     }
 
     public Uri getUri() {
@@ -42,4 +46,14 @@ public class ImageInforPost {
     public void setmName(String mName) {
         this.mName = mName;
     }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+
 }
