@@ -219,10 +219,7 @@
             app:layout_constraintStart_toEndOf="@+id/tvUtilities"
             app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
             app:layout_constraintTop_toBottomOf="@+id/str_waterbill"
-            
-            android:maxLines="5"
-            android:ellipsize="end"
-            />
+            android:maxEms="10"/>
 
         <TextView
             android:id="@+id/tvDescriptionDetail"

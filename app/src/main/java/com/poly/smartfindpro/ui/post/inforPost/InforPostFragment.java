@@ -24,6 +24,7 @@ import com.poly.smartfindpro.ui.MainContract;
 import com.poly.smartfindpro.ui.MainPresenter;
 import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.model.Address;
 import com.poly.smartfindpro.ui.post.model.InforModel;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
@@ -179,6 +180,7 @@ InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPo
             ((PostActivity) getActivity())
                     .setDataInforModel(new InforModel(category, mAmountPeople,
                             mPrice, mDeposit, mGender, mAddress, mElectricityBill, mWaterBill, mDescription));
+            ((PostActivity) getActivity()).setDataAddressModel(new Address());
         }
     }
 
