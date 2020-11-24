@@ -73,7 +73,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnComnune.setAdapter(adapter2);
 
-        EditText edtDetailAdress = mBinding.edtDetialAdress;
+//        EditText edtDetailAdress = mBinding.edtDetialAdress;
 
         Button btnContinue = mBinding.btnContinue;
         btnContinue.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +84,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
                 address.setProvinceCity(mSpnProvince.getSelectedItem().toString());
                 address.setDistrictsTowns(mSpnDistrict.getSelectedItem().toString());
                 address.setCommuneWardTown(mSpnComnune.getSelectedItem().toString());
-                address.setDetailAddress(edtDetailAdress.getText().toString());
+//                address.setDetailAddress(edtDetailAdress.getText().toString());
 
                 postRequest.setAddress(address);
 

@@ -66,17 +66,17 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         this.inforModel = inforModel;
     }
 
-    public void setDataAddressModel(Address addressModel) {
-        this.addressModel = addressModel;
-    }
+//    public void setDataAddressModel(Address addressModel) {
+//        this.addressModel = addressModel;
+//    }
 
     public InforModel getDataInforModel() {
         return inforModel;
     }
 
-    public Address getDataAddress() {
-        return addressModel;
-    }
+//    public Address getDataAddress() {
+//        return addressModel;
+//    }
 
     public void setListUtilitiesModel(List<UtilitiesModel> utilitiesModels) {
         this.utilitiesModels = utilitiesModels;
