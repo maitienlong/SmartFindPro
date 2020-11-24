@@ -49,11 +49,12 @@
             app:layout_constraintStart_toEndOf="@id/tvCategory"
             app:layout_constraintTop_toBottomOf="@id/tvConfirm" />
 
-        <GridLayout
+        <LinearLayout
             android:id="@+id/gridlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
+            android:orientation=""
             app:layout_constraintTop_toBottomOf="@+id/tvCategory">
 
             <ImageView
@@ -70,7 +71,7 @@
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 android:src="@mipmap/bg_barcode" />
-        </GridLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvAmount"

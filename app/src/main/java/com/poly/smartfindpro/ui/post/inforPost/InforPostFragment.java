@@ -88,7 +88,6 @@ InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPo
         information.setWaterBill(Integer.valueOf(mWaterBill));
         information.setWaterUnit("Khối");
         information.setDescribe(mDescription);
-
         postRequest.setCategory(category);
         postRequest.setInformation(information);
 
