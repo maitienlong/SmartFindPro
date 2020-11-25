@@ -39,4 +39,6 @@ public class InforPostPresenter{
             mViewModel.onNextFragment();
         }
     }
+
+
 }

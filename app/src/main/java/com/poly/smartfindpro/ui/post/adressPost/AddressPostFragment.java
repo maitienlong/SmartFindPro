@@ -1,8 +1,10 @@
 package com.poly.smartfindpro.ui.post.adressPost;
 
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +19,14 @@ import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.area.req.BodyReq;
+import com.poly.smartfindpro.data.model.area.result.ListArea;
+import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginContract;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginPresenter;
+import com.poly.smartfindpro.ui.post.adapter.SpinnerAreaAdapter;
 import com.poly.smartfindpro.ui.post.model.Address;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
@@ -45,56 +51,72 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
     @Override
     protected void initView() {
+
         ReciData();
-        Spinner mSpnProvince = mBinding.spnProvince;
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mActivity,
-                R.array.province_array, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnProvince.setAdapter(adapter);
+        mPresenter = new AddressPostPresenter(mActivity, this);
+        mBinding.setPresenter(mPresenter);
 
 
-        Spinner mSpnDistrict = mBinding.spnDistrict;
+//        Button btnContinue = mBinding.btnContinue;
+//        btnContinue.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Address address = new Address();
+//
+//                address.setDetailAddress(edtDetailAdress.getText().toString());
+//
+//                postRequest.setAddress(address);
+//
+//                onNext(new Gson().toJson(postRequest));
+//
+//
+//            }
+//        });
 
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(mActivity,
-                R.array.district_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnDistrict.setAdapter(adapter1);
-
-        Spinner mSpnComnune = mBinding.spnComune;
-
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(mActivity,
-                R.array.district_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnComnune.setAdapter(adapter2);
-
-        EditText edtDetailAdress = mBinding.edtDetialAdress;
-
-        Button btnContinue = mBinding.btnContinue;
-        btnContinue.setOnClickListener(new View.OnClickListener() {
+        mBinding.btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Address address = new Address();
-
-                address.setProvinceCity(mSpnProvince.getSelectedItem().toString());
-                address.setDistrictsTowns(mSpnDistrict.getSelectedItem().toString());
-                address.setCommuneWardTown(mSpnComnune.getSelectedItem().toString());
-                address.setDetailAddress(edtDetailAdress.getText().toString());
-
-                postRequest.setAddress(address);
-
-                onNext(new Gson().toJson(postRequest));
-
-
+                BodyReq bodyReq = new BodyReq("D", "HNO");
+                String jsonData = new Gson().toJson(bodyReq);
+                Log.d("CheckBase", new String(Base64.decode(jsonData.getBytes(),1)));
+                mPresenter.getDataApiArea("D",jsonData);
             }
         });
+//        mBinding.spnDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
+//                BodyReq bodyReq = new BodyReq("C", listArea.getParentCode());
+//                String jsonData = new Gson().toJson(bodyReq);
+//                Log.d("CheckJson", jsonData);
+//                mPresenter.getDataApiArea("C",jsonData);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
     }
 
     @Override
     protected void initData() {
 
 
+    }
+
+    public void onShowDistrict(ResultArea resultArea) {
+        SpinnerAreaAdapter adDistrict = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+
+        mBinding.spnDistrict.setAdapter(adDistrict);
+    }
+
+    public void onShowCommune(ResultArea resultArea) {
+
+        SpinnerAreaAdapter adDistrict = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+
+        mBinding.spnComune.setAdapter(adDistrict);
     }
 
     public void onNext(String jsonData) {
