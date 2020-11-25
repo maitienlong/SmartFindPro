@@ -13,7 +13,7 @@ public interface AddressPostContract {
 
     interface Presenter extends BasePresenter {
 
-        void getDataApiArea(String type, String jsonData);
+        void getDataApiArea(int areaType, String jsonData);
 
     }
 }

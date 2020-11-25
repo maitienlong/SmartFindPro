@@ -37,8 +37,7 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
 
     private void initData() {
         resultArea = new ResultArea();
-        BodyReq bodyReq = new BodyReq("D","HNO");
-        getDataApiArea("D",new Gson().toJson(bodyReq));
+
     }
 
     @Override
@@ -76,14 +75,23 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
 
 
     @Override
-    public void getDataApiArea(String areaType,String jsonData) {
+    public void getDataApiArea(int areaType, String jsonData) {
         AreaRequest request = new AreaRequest();
         request.setAreaReqHeader(areaReqHeader());
 
+        String base64demo = "eyJhcmVhVHlwZSI6IkQiLCJwYXJlbnRDb2RlIjoiSE5PIn0=";
         byte[] jsonByte = jsonData.getBytes();
-        String base64 = new String(Base64.encode(jsonByte,1));
+        String base64 = new String(Base64.encode(jsonByte, 1));
 
-        request.setBody(base64);
+        Log.d("CheckJson",jsonData);
+
+
+
+//        request.setBody("eyJhcmVhVHlwZSI6IkQiLCJwYXJlbnRDb2RlIjoiSE5PIn0=");
+
+        request.setBody(new String(Base64.encode(jsonByte, 0)));
+
+        Log.d("CheckJson",new Gson().toJson(request));
 
         Type type = new TypeToken<ResultArea>() {
         }.getType();
@@ -93,25 +101,29 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
             public void onResponse(Call<AreaResponse> call, Response<AreaResponse> response) {
                 if (response.code() == 200) {
 
-                    String jsonData = new String(Base64.decode(response.body().getBody(),1));
+                    String jsonData = new String(Base64.decode(response.body().getBody(), 1));
 
                     resultArea = new Gson().fromJson(jsonData, type);
 
                     Log.d("CheckJson", new Gson().toJson(resultArea));
 
-                    if(areaType.equals("D")){
+                    Log.d("CheckJson", String.valueOf(areaType));
+
+                    if (areaType == 0) {
                         mViewModel.onShowDistrict(resultArea);
-                    }else if (areaType.equals("C")){
+                    } else if (areaType == 1) {
                         mViewModel.onShowCommune(resultArea);
                     }
 
 
+                } else {
+                    Log.d("CheckJson", response.message() + "");
                 }
             }
 
             @Override
             public void onFailure(Call<AreaResponse> call, Throwable t) {
-
+                Log.d("CheckJson", t.toString());
             }
         });
     }

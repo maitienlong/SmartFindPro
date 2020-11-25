@@ -58,39 +58,18 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         mBinding.setPresenter(mPresenter);
 
 
-//        Button btnContinue = mBinding.btnContinue;
-//        btnContinue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Address address = new Address();
-//
-//                address.setDetailAddress(edtDetailAdress.getText().toString());
-//
-//                postRequest.setAddress(address);
-//
-//                onNext(new Gson().toJson(postRequest));
-//
-//
-//            }
-//        });
+        BodyReq bodyReq = new BodyReq("D", "HNO");
 
-        mBinding.btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BodyReq bodyReq = new BodyReq("D", "HNO");
-                String jsonData = new Gson().toJson(bodyReq);
-                Log.d("CheckBase", new String(Base64.decode(jsonData.getBytes(),1)));
-                mPresenter.getDataApiArea("D",jsonData);
-            }
-        });
+        mPresenter.getDataApiArea(0, new Gson().toJson(bodyReq));
+
 //        mBinding.spnDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 //                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
-//                BodyReq bodyReq = new BodyReq("C", listArea.getParentCode());
+//                BodyReq bodyReq = new BodyReq("C", listArea.getDistrict());
 //                String jsonData = new Gson().toJson(bodyReq);
 //                Log.d("CheckJson", jsonData);
-//                mPresenter.getDataApiArea("C",jsonData);
+//                mPresenter.getDataApiArea(1,jsonData);
 //            }
 //
 //            @Override
