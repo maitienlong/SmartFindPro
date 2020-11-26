@@ -2,6 +2,7 @@ let mongoose = require('mongoose');
 const informationSchema = mongoose.Schema({
     amountPeople: {type: Number},
     price: {type: Number},
+    deposit: {type: Number},
     gender: {type: String},
     unit: {type: String},
     electricBill: {type: Number},

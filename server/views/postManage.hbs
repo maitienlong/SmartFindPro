@@ -82,10 +82,10 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td>{{data.lengthOfUnapprovedPost}}</td>
+                    <td>{{data.lengthOfProcessingPost}}</td>
+                    <td>{{data.lengthOfSuccessPost}}</td>
+                    <td>{{data.lengthOfAllPost }}</td>
                 </tr>
             </table>
 
@@ -96,47 +96,47 @@
                     <th colspan="5">Danh sách số bài chưa duyệt</th>
                 </tr>
                 <tr>
-                    <th scope="col">Thời gian</th>
-                    <th scope="col">Thông tin bài đăng</th>
-                    <th scope="col">Thông tin người đăng</th>
-                    <th scope="col">Thao tác</th>
+                    <th scope="col" style="width: 10%">Thời gian</th>
+                    <th scope="col" style="width: 80%">Thông tin bài đăng</th>
+                    <th scope="col" style="width: 10%">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>27/10/2019</td>
-                    <td>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                    </td>
-                    <td>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                        <br>
-                        <div>_id</div>
-                    </td>
-                    <td>
-                        <button style="margin-bottom: 10px" type="submit" name="update" value="1"
-                                class="btn btn-warning">Duyệt
-                        </button>
-                        <br>
-                        <button style="margin-bottom: 10px" type="submit" name="update" value="1"
-                                class="btn btn-warning">Xóa
-                        </button>
-                    </td>
-                </tr>
+                {{#each data.unapprovedPost}}
+                    <tr>
+                        <td>
+                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                            <br>
+                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                            <br>
+                            <div><b>Xóa:</b> {{this.deleteAt}}</div>
+                        </td>
+                        <td>
+                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}</div>
+                            <br>
+                            <div><b>Loại bài đăng: </b> {{this.category}}</div>
+                            <br>
+                            <div><b>Nội dung: </b> {{this.content}}</div>
+                            <br>
+                            <div><b>Người đăng: </b> {{this.userId}}</div>
+                            <br>
+                            <div><b>Giá phòng: </b> {{this.information.price}} {{this.information.unit}}</div>
+                        </td>
+                        <td>
+
+                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                <div class="form-group" style="display: none">
+                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
+                                </div>
+                                <button type="submit" name="update" value="1" class="btn btn-warning">Duyệtt</button>
+
+                            </form>
+                            <button style="margin-bottom: 10px" type="submit" name="update" value="1"
+                                    class="btn btn-warning">Xóa
+                            </button>
+                        </td>
+                    </tr>
+                {{/each}}
             </table>
 
             <table class="table table-bordered table-info">
@@ -203,7 +203,6 @@
                     </td>
                 </tr>
             </table>
-
             <table class="table table-bordered table-info">
                 <thead class="thead-dark ">
                 <tr>
@@ -254,9 +253,13 @@
                         <div>_id</div>
                     </td>
                     <td>
-                        <button style="margin-bottom: 10px" type="submit" name="update" value="1"
-                                class="btn btn-warning">Sửa
-                        </button>
+                        <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                            <div class="form-group" style="display: none">
+                                <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
+                            </div>
+                            <button type="submit" name="update" value="1" class="btn btn-warning">Duyệtt</button>
+
+                        </form>
                         <br>
                         <button style="margin-bottom: 10px" type="submit" name="update" value="1"
                                 class="btn btn-warning">Xóa
@@ -266,14 +269,16 @@
             </table>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
 </html>

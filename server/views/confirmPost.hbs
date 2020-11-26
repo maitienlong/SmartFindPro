@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý bài đăng</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <div style="padding-left: 3%;padding-right: 3%">
+        <div class="header">
+            <div class="row">
+                <div class="col">
+                    <h1>Duyệt phòng trọ</h1>
+                </div>
+                <div class=" column border" style="padding: 2%">
+                    <h6>Thời gian đăng bài: {{product.createAt}}</h6>
+                    <h6>Tài khoản duyệt: {{nameDN}}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <h>Ngày khảo sát</h>
+            <input type="date" style="margin-left: 4%">
+
+            <h3>Thông tin người đăng</h3>
+            <div class="column" style="margin-left: 4%">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width: 20%">Thông tin</th>
+                        <th style="width: 80%">Chi tiết</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>Họ và tên</th>
+                        <td>{{userProduct.identityCard.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ</th>
+                        <td>{{userProduct.address.detailAddress}}, {{userProduct.address.communeWardTown}}
+                            , {{userProduct.address.districtsTowns}}, {{userProduct.address.provinceCity}}</td>
+                    </tr>
+                    <tr>
+                        <th>Điện thoại</th>
+                        <td>{{userProduct.phoneNumber}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Thông tin phòng</h3>
+            <div class="column" style="margin-left: 4%">
+                <table class="table  table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width: 15%">Loại</th>
+                        <th style="width: 70%">Chi tiết</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Địa chỉ</th>
+                        <td>
+                            <input class="form-control"
+                                   value="{{product.address.detailAddress}}, {{product.address.communeWardTown}}, {{product.address.districtsTowns}}, {{product.address.provinceCity}}"
+                                   type="text" id="ipAddress"
+                                   placeholder="Nhập địa chỉ ..." disabled>
+                            <div class="d-flex flex-row-reverse">
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-success" onclick="updateAddress()">Sửa</button>
+                                </div>
+                                <div class="p-2">
+                                    <button type="button" class="btn btn-primary" onclick="cancelUpdateAddress()">Hủy
+                                    </button>
+                                </div>
+                                <script>
+                                    function updateAddress() {
+                                        let id = document.getElementById("ipAddress");
+                                        id.disabled = false;
+                                    }
+
+                                    function cancelUpdateAddress() {
+                                        document.getElementById("ipAddress").disabled = true;
+                                    }
+                                </script>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Thông tin phòng</th>
+                        <td>
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Loại</th>
+                                    <td scope="col">
+                                        <select id="slType" class="form-control" disabled>
+                                            <option>Ở ghép</option>
+                                            <option>Chung cư</option>
+                                            <option>Nguyên căn</option>
+                                            <option>Nhà trọ</option>
+                                        </select>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success" onclick="updateType()">
+                                                    Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateType()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateType() {
+                                                    let id = document.getElementById("slType");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateType() {
+                                                    document.getElementById("slType").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Số người</th>
+                                    <td scope="col">
+                                        <input class="form-control" type="number"
+                                               value="{{product.information.amountPeople}}" id="ipAmountPeople" min="1"
+                                               max="100" disabled>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success"
+                                                        onclick="updateAmountPeople()">Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateAmountPeople()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateAmountPeople() {
+                                                    let id = document.getElementById("ipAmountPeople");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateAmountPeople() {
+                                                    document.getElementById("ipAmountPeople").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Giới tính</th>
+                                    <td scope="col">
+                                        <select id="slGender" class="form-control" disabled>
+                                            <option>Nam</option>
+                                            <option>Nữ</option>
+                                            <option>Tất cả</option>
+                                        </select>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success" onclick="updateGender()">
+                                                    Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateGender()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateGender() {
+                                                    let id = document.getElementById("slGender");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateGender() {
+                                                    document.getElementById("slGender").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Tiện ích</th>
+                                    <td scope="col">First</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Giá phòng({{product.information.unit}})</th>
+                                    <td scope="col">
+                                        <input class="form-control"
+                                               value="{{product.information.price}}"
+                                               step="10000" type="number"
+                                               id="ipPrice"
+                                               placeholder="Nhập giá ..." disabled>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success" onclick="updatePrice()">
+                                                    Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdatePrice()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updatePrice() {
+                                                    let id = document.getElementById("ipPrice");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdatePrice() {
+                                                    document.getElementById("ipPrice").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Tiền cọc({{product.information.unit}})</th>
+                                    <td scope="col">
+                                        <input class="form-control"
+                                               value="{{product.information.deposit}}"
+                                               step="10000" type="number"
+                                               id="ipDeposit"
+                                               placeholder="Nhập giá ..." disabled>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success" onclick="updateDeposit()">
+                                                    Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateDeposit()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateDeposit() {
+                                                    let id = document.getElementById("ipDeposit");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateDeposit() {
+                                                    document.getElementById("ipDeposit").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Tiền điện (Đơn
+                                        vị:1 {{product.information.electricUnit}})
+                                    </th>
+                                    <td scope="col">
+
+                                        <div class="row align-items-center">
+                                            <input class="col-11 form-control"
+                                                   value="{{product.information.electricBill}}"
+                                                   step="10000" type="number"
+                                                   id="ipWater"
+                                                   placeholder="Nhập giá ..." disabled>
+                                            <b class="col-1">{{product.information.unit}}</b>
+                                        </div>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success"
+                                                        onclick="updateElectricBill()">Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateElectricBill()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateElectricBill() {
+                                                    let id = document.getElementById("ipElectric");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateElectricBill() {
+                                                    document.getElementById("ipElectric").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Tiền nước(Đơn
+                                        vị: {{product.information.waterUnit}})
+                                    </th>
+                                    <td scope="col">
+                                        <div class="row align-items-center">
+                                            <input class="col-11 form-control"
+                                                   value="{{product.information.waterBill}}"
+                                                   step="10000" type="number"
+                                                   id="ipWater"
+                                                   placeholder="Nhập giá ..." disabled>
+                                            <b class="col-1">{{product.information.unit}}</b>
+
+                                        </div>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success"
+                                                        onclick="updateWaterBill()">Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateWaterBill()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateWaterBill() {
+                                                    let id = document.getElementById("ipWater");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateWaterBill() {
+                                                    document.getElementById("ipWater").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" style="width: 30%">Nội dung</th>
+                                    <td scope="col">
+                                        <textarea class="form-control" id="txtDescribe" rows="5"
+                                                  disabled>{{product.information.describe}}</textarea>
+                                        <div class="d-flex flex-row-reverse">
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-success"
+                                                        onclick="updateDescribe()">Sửa
+                                                </button>
+                                            </div>
+                                            <div class="p-2">
+                                                <button type="button" class="btn btn-primary"
+                                                        onclick="cancelUpdateDescribe()">Hủy
+                                                </button>
+                                            </div>
+                                            <script>
+                                                function updateDescribe() {
+                                                    let id = document.getElementById("txtDescribe");
+                                                    id.disabled = false;
+                                                }
+
+                                                function cancelUpdateDescribe() {
+                                                    document.getElementById("txtDescribe").disabled = true;
+                                                }
+                                            </script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ảnh phòng</th>
+                        <td>
+                            <table class="table table-borderless">
+                                <tbody>
+                                {{#each product.information.image}}
+                                    <tr>
+                                        <td style="width: 60%">
+                                            <img id="blah" src="./public/images/aibiet.jpg" alt="...">
+                                        </td>
+                                        <td style="width: 40%">
+                                            <div style="margin-bottom: 10px" class="custom-file">
+                                                <input type="file" class="custom-file-input" id="ipChangeImage"
+                                                       onchange="readURL(this);" multiple>
+                                                <label id="ipChooseImage" class="custom-file-label" for="ipChangeImage"
+                                                       data-browse="Sửa ảnh">Chọn
+                                                    ảnh...</label>
+                                                <script>
+                                                    function getExtension(filename) {
+                                                        let parts = filename.split('.');
+                                                        return parts[parts.length - 1];
+                                                    }
+
+                                                    function isImage(filename) {
+                                                        let ext = getExtension(filename);
+                                                        switch (ext.toLowerCase()) {
+                                                            case 'jpg':
+                                                            case 'gif':
+                                                            case 'bmp':
+                                                            case 'png':
+                                                                //etc
+                                                                return true;
+                                                        }
+                                                        return false;
+                                                    }
+
+                                                    function readURL(input) {
+                                                        if (input.files && input.files[0]) {
+                                                            var reader = new FileReader();
+                                                            if (isImage(input.files[0].name)) {
+                                                                reader.onload = function (e) {
+                                                                    $('#blah')
+                                                                            .attr('src', e.target.result);
+                                                                    $("#ipChooseImage").text(input.files[0].name)
+                                                                };
+                                                                reader.readAsDataURL(input.files[0]);
+                                                            } else {
+                                                                alert('File không phải là ảnh!')
+                                                            }
+                                                        }
+                                                    }
+                                                </script>
+                                            </div>
+                                            <br>
+                                            <button type="button" class="btn btn-primary">Xóa ảnh</button>
+
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="footer">
+            <div class='row justify-content-center'>
+                <div class="row mx-lg-n5">
+                    <div class=" py-3 px-lg-5  bg-light">
+                        <button type="button" class="btn btn-success">Xác nhận duyệt</button>
+                    </div>
+                    <div class=" py-3 px-lg-5  bg-light">
+                        <button type="button" class="btn btn-danger">Từ chối duyệt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>

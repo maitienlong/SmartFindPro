@@ -1,8 +1,17 @@
 let mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
-    phone: {type: String},
-    fullName: {type: String},
+    userName: {type: String},
     password: {type: String},
-    password2: {type: String}
+    phoneNumber: {type: String},
+    identityCard: {
+        type: Object,
+        required: false,
+        ref: 'IdentityCard',
+    },
+    address: {
+        type: Object,
+        required: false,
+        ref: 'Address',
+    }
 });
 module.exports = userSchema;

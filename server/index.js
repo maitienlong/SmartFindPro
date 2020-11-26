@@ -4,19 +4,30 @@ let db = require('mongoose');
 let multer = require('multer');
 let body = require('body-parser');
 let fs = require('fs');
-
+var moment = require('moment');
 
 let userSchema = require('./model/userSchema');
 let adminSchema = require('./model/adminSchema');
 let postSchema = require('./model/postSchema');
+let addressSchema = require('./model/addressSchema')
+let informationSchema = require('./model/informationSchema')
+let identityCardSchema = require('./model/identityCardSchema')
 
+let IdentityCard = db.model('IdentityCard', identityCardSchema);
+let Information = db.model('Information', informationSchema);
+let Address = db.model('Address', addressSchema);
 let User = db.model('User', userSchema, 'users');
 let Admin = db.model('Admin', adminSchema, 'admins');
 let Product = db.model('Product', postSchema, 'postProduct');
 
-db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.net/TimtroDatabase?retryWrites=true&w=majority', {}).then(function (res) {
-    console.log('conected');
-})
+
+db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.net/TimtroDatabase?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(function () {
+    console.log('Mongoose is connected');
+});
 
 let app = express();
 
@@ -30,9 +41,21 @@ app.engine('.hbs', hbs({
     layoutsDir: ''
 }))
 app.set('view engine', '.hbs')
-app.listen(9090);
+
+//chạy lên local host với port là 9090
+let localNumber = 9090
+app.listen(localNumber);
+console.log('Localhost: ' + localNumber);
 // phần sever
 
+var log = console.log;
+console.log = function () {
+    log.apply(console, arguments);
+    // Print the stack trace
+    console.trace();
+};
+//tk Admin
+let adminNow = ''
 // đăng nhập
 app.get('/', function (request, response) {
     response.render('login', {status: 'none', user: '', pass: ''});
@@ -45,7 +68,6 @@ app.get('/index', async function (request, response) {
     let listAdmin = await Admin.find({}).lean();   //dk
 
     allAdmin = listAdmin.length;
-
 
     let user = request.query.user;
     let pass = request.query.pass;
@@ -66,6 +88,16 @@ app.get('/index', async function (request, response) {
             pass: ''
         });
     } else {
+        try {
+            adminNow = admins[0]
+
+            function foo() {
+                console.log('Foobar');
+            }
+
+            foo();
+        } catch (e) {
+        }
         response.render('index', {
             status: 'none',
             user: nameDN,
@@ -218,15 +250,45 @@ app.get('/updateAdAc', async function (request, response) {
         // name:admins.name,
         // phone:admins.phone,
         // address:admins.address,
-        name:nName,
-        phone:nPhone,
-        address:nAddress,
+        name: nName,
+        phone: nPhone,
+        address: nAddress,
     });
 
 });
-app.get('/postManage', async  function (request, response) {
-response.render('postManage')
-})
+app.get('/postManage', async function (request, response) {
+
+    const PostManage = require('./model/confirmPost/PostManage');
+    let unapprovedPost = await Product.find({status: '-1'}).lean();
+    let processingPost = await Product.find({status: '0'}).lean();
+    let successPost = await Product.find({status: '1'}).lean();
+    let data = new PostManage(unapprovedPost, processingPost, successPost)
+    response.render('postManage', {
+        status: 'none',
+        data: data,
+    });
+});
+
+app.get('/confirmPost', async function (request, response) {
+    let _id = request.query.idProduct;
+    try {
+        let productFind = await Product.find({_id: _id}).lean();
+        let product = productFind[0]
+        let findUserProduct = await User.find({_id: product.userId}).lean();
+        let userProduct = findUserProduct[0]
+
+        console.log('[GET LIST FIND] Product\n' + JSON.stringify(product) + '\n User \n' + JSON.stringify(userProduct) + '\n AdminNow: ' + adminNow + '\n------------------->')
+        response.render('confirmPost', {
+            product: product,
+            userProduct: userProduct,
+            nameDN: nameDN
+        });
+    } catch (e) {
+        console.log('Lỗi: ' + e)
+        response.render('login', {status: 'none', user: '', pass: ''});
+    }
+
+});
 
 
 // phần kết nối sever với app
@@ -283,48 +345,73 @@ app.post('/postUpdateUserPass', async function (request, response) {
 app.get('/getAlluser', async function (request, response) {
     let users = await User.find({});
     response.send(users);
-});// đăng nhập
-app.get('/getAllproduct', async function (request, response) {
-    let products = await Product.find({});
-    response.send(products);
-});// tìm kiếm các bài đăng
-
-
+});
+//trả ve danh sách bài đăng
+app.get('/getAllProduct', async function (request, response) {
+    let successPost = await Product.find({status: '1'});
+    response.send(successPost);
+});
 // dang bai
 app.post('/init-product', async function (request, response) {
+
     let category = request.body.category;
     let information = request.body.information;
-    let address = request.body.address;
+    let mAddress = request.body.address;
     let utilities = request.body.utilities;
     let content = request.body.content;
     let idUser = request.body.idUser;
     let status = request.body.status;
-    let time = request.body.time;
+    let createAt = request.body.createAt;
+    let updateAt = request.body.updateAt;
+    let deleteAt = request.body.deleteAt;
     let linkProduct = request.body.linkProduct;
 
-    if (status == null && status != ""){
+    if (status == null || status == "") {
         status = null
     }
-
-    if (linkProduct == null && linkProduct != ""){
+    if (linkProduct == null || linkProduct == "") {
         linkProduct = null
     }
-    let newProduct = new Product({
-        category: category,
-        information: information,
-        address: address,
-        utilities: utilities,
-        content: content,
-        idUser: idUser,
-        status: status,
-        time: time,
-        linkProduct: linkProduct
-    });
-    let product = await newProduct.save();
-    if (product) {
-        response.send(newProduct);
-    } else {
-        response.send('Them thất bại.',200);
+    if (createAt == null || createAt == "") {
+        createAt = null
     }
-
+    if (updateAt == null || updateAt == "") {
+        updateAt = null
+    }
+    if (deleteAt == null || deleteAt == "") {
+        deleteAt = null
+    }
+    try {
+        let dateNow = Date.now()
+        createAt = moment(dateNow).format('YYYY-MM-DD hh:mm:ss');
+        status = '-1'
+        let newProduct = new Product({
+            category: category,
+            information: information,
+            address: mAddress,
+            utilities: utilities,
+            content: content,
+            userId: idUser,
+            status: status,
+            createAt: createAt,
+            updateAt: updateAt,
+            deleteAt: deleteAt,
+            linkProduct: linkProduct
+        });
+        console.log(newProduct);
+        if (!newProduct) {
+            response.status(500).json({
+                message: 'Fail'
+            })
+        } else {
+            let product = await newProduct.save();
+            response.status(200).json({
+                message: 'OK'
+            })
+        }
+    } catch (e) {
+        response.status(400).json({
+            message: 'Lỗi: ' + e
+        })
+    }
 });

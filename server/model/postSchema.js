@@ -1,16 +1,37 @@
-const informationSchema = require('../model/informationSchema')
-const addressSchema = require('../model/addressSchema')
 let mongoose = require('mongoose');
 
-const postSchema = mongoose.Schema({
+const postSchema = new mongoose.Schema({
     category: {type: String},
-    information: {type: informationSchema},
-    address: {type: addressSchema},
+    information: {
+        type: Object,
+        required: false,
+        ref: 'Information'
+    },
+    address: {
+        type: Object,
+        required: false,
+        ref: 'Address'
+    },
     utilities: {type: [String]},
     content: {type: String},
-    idUser: {type: String},
+    userId: {
+        type: mongoose.Types.ObjectId,
+        required: false,
+        ref: 'User'
+    },
     status: {type: String},
-    time: {type: Date},
+    deleteAt: {
+        type: String,
+        default: Date
+    },
+    updateAt: {
+        type: String,
+        default: Date
+    },
+    createAt: {
+        type: String,
+        default: Date
+    },
     linkProduct: {type: String}
 });
 module.exports = postSchema;
