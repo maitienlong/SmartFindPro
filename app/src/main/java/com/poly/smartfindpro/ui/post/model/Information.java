@@ -38,6 +38,7 @@ public class Information {
     @Expose
     private String describe;
 
+
     @Override
     public String toString() {
         return "Information{" +
@@ -51,15 +52,14 @@ public class Information {
                 "\n" +"waterBill=" + waterBill +
                 "\n" +"waterUnit='" + waterUnit + '\'' +
                 "\n" +"describe='" + describe + '\'' +
-                "\n" +"image=" + image +
+//                "\n" +"image=" + image +
                 '}';
     }
 
     @SerializedName("image")
     @Expose
-
-
-    private List<String> image = null;
+//    private List<ImageInforPost> imageInforPost;
+    private List<String> image;
 
     public Integer getAmountPeople() {
         return amountPeople;
@@ -149,4 +149,11 @@ public class Information {
         this.image = image;
     }
 
+//    public List<ImageInforPost> getImageInforPost() {
+//        return imageInforPost;
+//    }
+//
+//    public void setImageInforPost(List<ImageInforPost> imageInforPost) {
+//        this.imageInforPost = imageInforPost;
+//    }
 }

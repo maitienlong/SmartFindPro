@@ -1,29 +1,60 @@
 package com.poly.smartfindpro.ui.post.inforPost;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.base.BaseFragment;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
+import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.model.ImageInforPost;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
+
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
         implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_infor_post;
-    }
 
+    private static final int IMAGE_CODE = 1;
     String category;
     String mAmountPeople = "";
     String mPrice = "";
@@ -36,12 +67,25 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     private PostRequest postRequest;
     private Information information;
 
+    private ArrayList<ImageInforPost> imageList;
+    private ArrayList<String> imageListString;
+    private ImageInforPostAdapter imagePostAdapter;
+
+
     InforPostPresenter presenter;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_infor_post;
+    }
 
 
     @Override
     protected void initView() {
         presenter = new InforPostPresenter(getContext(), this);
+
+        imageList = new ArrayList<>();
+        imageListString = new ArrayList<>();
 
         //chon the loai
         mBinding.btnNhaTro.setOnTouchListener(this);
@@ -49,14 +93,84 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         mBinding.btnNguyenCan.setOnTouchListener(this);
         mBinding.btnChungCu.setOnTouchListener(this);
         mBinding.btnContinue.setOnClickListener(this);
-
+        mBinding.imgAddImages.setOnClickListener(this);
     }
+
 
     @Override
     protected void initData() {
+        mBinding.rvImages.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mBinding.rvImages.setHasFixedSize(true);
 
     }
 
+    //lay du lieu cua anh de hien thi
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMAGE_CODE && resultCode == RESULT_OK) {
+            if (data.getClipData() != null) {
+                int totalItem = data.getClipData().getItemCount();
+                for (int i = 0; i < totalItem; i++) {
+                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    String imageName = getFileName(imageUri);
+                    try {
+                        ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
+
+                        imageList.add(item);
+                        imageListString.add(String.valueOf(item.getBitmap()));
+                        Log.d("checkImageString", "onActivityResult: " + String.valueOf(item.getBitmap()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
+                    mBinding.rvImages.setAdapter(imagePostAdapter);
+                }
+            } else if (data.getData() != null) {
+                Log.e("TAG", "onActivityResult: " + data.getData());
+                Uri imageUri = data.getData();
+                String imageName = getFileName(imageUri);
+
+                try {
+                    ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
+                    imageList.add(item);
+                    imageListString.add(String.valueOf(item.getBitmap()));
+                    Log.d("checkImageString", "onActivityResult: " + String.valueOf(item.getBitmap()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
+                mBinding.rvImages.setAdapter(imagePostAdapter);
+
+            }
+        }
+    }
+
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+            if (result == null) {
+                result = uri.getPath();
+                int cut = result.lastIndexOf('/');
+                if (cut != -1) {
+                    result = result.substring(cut + 1);
+                }
+            }
+        }
+        return result;
+
+    }
 
     @Override
     public void onNextFragment() {
@@ -75,9 +189,12 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         information.setWaterUnit("Khối");
         information.setDescribe(mDescription);
 
+//        information.setImageInforPost(imageList);
+        information.setImage(imageListString);
+
         postRequest.setCategory(category);
         postRequest.setInformation(information);
-
+        Log.d("checkListImage", String.valueOf(imageListString));
         onNext(new Gson().toJson(postRequest));
 
     }
@@ -139,7 +256,6 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnContinue) {
-
             mAmountPeople = mBinding.edtAmountPerson.getText().toString();
             mPrice = mBinding.edtPrice.getText().toString();
             mDeposit = mBinding.edtDeposit.getText().toString();
@@ -162,13 +278,18 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
             mWaterBill = mBinding.edtWaterBill.getText().toString();
             mDescription = mBinding.edtDescription.getText().toString();
             presenter.handleData(category, mAmountPeople, mPrice, mDeposit, mGender, mElectricityBill, mWaterBill, mDescription);
-
-
+        } else if (view.getId() == R.id.imgAddImages) {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            startActivityForResult(intent, IMAGE_CODE);
 
         }
     }
 
     public void onNext(String jsonData) {
+        Log.d("CheckLog", jsonData);
         Fragment fragment = new AddressPostFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
@@ -178,4 +299,6 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         fragmentTransaction.addToBackStack("addresspost");
         fragmentTransaction.commit();
     }
+
+
 }

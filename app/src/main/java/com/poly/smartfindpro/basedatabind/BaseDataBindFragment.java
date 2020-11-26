@@ -31,7 +31,6 @@ public abstract class BaseDataBindFragment<T extends ViewDataBinding, K> extends
                 false);
 
         initView();
-
         return mBinding.getRoot();
     }
 
@@ -39,9 +38,7 @@ public abstract class BaseDataBindFragment<T extends ViewDataBinding, K> extends
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
-
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

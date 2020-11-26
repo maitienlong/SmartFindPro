@@ -1,9 +1,9 @@
 package com.poly.smartfindpro.ui.post.utilitiesPost.model;
 
 public class UtilitiesModel {
-private int image;
-private String title;
-private boolean status;
+    private int image;
+    private String title;
+    private boolean status;
 
     public UtilitiesModel(int image, String title, boolean status) {
         this.image = image;

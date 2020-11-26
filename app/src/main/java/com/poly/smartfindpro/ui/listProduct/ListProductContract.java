@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.listProduct;
+                     package com.poly.smartfindpro.ui.listProduct;
 
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;

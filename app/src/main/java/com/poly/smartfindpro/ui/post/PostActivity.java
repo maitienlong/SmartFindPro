@@ -23,13 +23,20 @@ import com.poly.smartfindpro.databinding.ActivityPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
+import com.poly.smartfindpro.ui.post.model.Address;
+import com.poly.smartfindpro.ui.post.model.InforModel;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
+import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 
-public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel{
+import java.util.ArrayList;
+import java.util.List;
 
+public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel {
+    private InforModel inforModel = null;
     private boolean isStatusInfor = false, isStatusAddress = false, isStatusTools = false, isStatusConfirm = false;
 
     private ViewPagerPostAdapter viewPagerPostAdapter;
+    private List<UtilitiesModel> utilitiesModels = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -55,6 +62,30 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     }
 
+    public void setDataInforModel(InforModel inforModel) {
+        this.inforModel = inforModel;
+    }
+
+//    public void setDataAddressModel(Address addressModel) {
+//        this.addressModel = addressModel;
+//    }
+
+    public InforModel getDataInforModel() {
+        return inforModel;
+    }
+
+//    public Address getDataAddress() {
+//        return addressModel;
+//    }
+
+    public void setListUtilitiesModel(List<UtilitiesModel> utilitiesModels) {
+        this.utilitiesModels = utilitiesModels;
+    }
+
+    public List<UtilitiesModel> getListUtilitiesModel() {
+        return utilitiesModels;
+    }
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -64,18 +95,14 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         switch (v.getId()) {
             case R.id.btn_infor:
 
-                fragmentManager.popBackStack("inforpost",0);
-
+                fragmentManager.popBackStack("inforpost", 0);
                 break;
 
             case R.id.btn_address:
-
-                fragmentManager.popBackStack("addresspost",0);
-
+                fragmentManager.popBackStack("addresspost", 0);
                 break;
 
             case R.id.btn_tool:
-
                 break;
 
             case R.id.btn_confirm:
@@ -96,7 +123,4 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
             }
         }
     }
-
-
-
 }
