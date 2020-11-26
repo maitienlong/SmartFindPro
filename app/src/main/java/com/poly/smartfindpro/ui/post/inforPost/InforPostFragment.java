@@ -287,6 +287,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     }
 
     public void onNext(String jsonData) {
+        Log.d("CheckLog", jsonData);
         Fragment fragment = new AddressPostFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
