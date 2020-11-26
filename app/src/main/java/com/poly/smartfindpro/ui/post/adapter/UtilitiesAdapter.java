@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
+import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesContract;
 
 import java.util.List;
 
