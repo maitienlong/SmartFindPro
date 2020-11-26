@@ -66,6 +66,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     private Information information;
 
     private ArrayList<ImageInforPost> imageList;
+    private ArrayList<String> imageListString;
     private ImageInforPostAdapter imagePostAdapter;
 
 
@@ -82,6 +83,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         presenter = new InforPostPresenter(getContext(), this);
 
         imageList = new ArrayList<>();
+        imageListString = new ArrayList<>();
 
         //chon the loai
         mBinding.btnNhaTro.setOnTouchListener(this);
@@ -114,6 +116,8 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                         ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
 
                         imageList.add(item);
+                        imageListString.add(String.valueOf(item.getBitmap()));
+                        Log.d("checkImageString", "onActivityResult: " + String.valueOf(item.getBitmap()));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -127,9 +131,10 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 String imageName = getFileName(imageUri);
 
                 try {
-                    ImageInforPost    item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
-
+                    ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
                     imageList.add(item);
+                    imageListString.add(String.valueOf(item.getBitmap()));
+                    Log.d("checkImageString", "onActivityResult: " + String.valueOf(item.getBitmap()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -137,36 +142,31 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
                 mBinding.rvImages.setAdapter(imagePostAdapter);
 
-
-
-
-
-
             }
         }
     }
 
 
-    public String getFileName(Uri uri){
+    public String getFileName(Uri uri) {
         String result = null;
-        if (uri.getScheme().equals("content")){
+        if (uri.getScheme().equals("content")) {
             Cursor cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
             try {
-                if (cursor != null && cursor.moveToFirst()){
+                if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 }
             } finally {
-                    cursor.close();
+                cursor.close();
             }
-            if (result == null){
+            if (result == null) {
                 result = uri.getPath();
                 int cut = result.lastIndexOf('/');
-                if (cut != -1){
+                if (cut != -1) {
                     result = result.substring(cut + 1);
                 }
             }
         }
-        return  result;
+        return result;
 
     }
 
@@ -187,11 +187,12 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         information.setWaterUnit("Khối");
         information.setDescribe(mDescription);
 
-        information.setImageInforPost(imageList);
+//        information.setImageInforPost(imageList);
+        information.setImage(imageListString);
 
         postRequest.setCategory(category);
         postRequest.setInformation(information);
-
+        Log.d("checkListImage", String.valueOf(imageListString));
         onNext(new Gson().toJson(postRequest));
 
     }

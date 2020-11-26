@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.ui.post.model.ImageInforPost;
-import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
