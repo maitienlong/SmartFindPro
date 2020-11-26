@@ -1,27 +1,18 @@
 package com.poly.smartfindpro.ui.post.inforPost;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.base.BaseFragment;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
-import com.poly.smartfindpro.ui.MainActivity;
-import com.poly.smartfindpro.ui.MainContract;
-import com.poly.smartfindpro.ui.MainPresenter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
@@ -164,7 +155,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 mGender = mBinding.rbFemale.getText().toString();
             } else if (mBinding.rbMale.isChecked()) {
                 mGender = mBinding.rbMale.getText().toString();
-            } else if (mBinding.rbAll.isChecked()){
+            } else if (mBinding.rbAll.isChecked()) {
                 mGender = mBinding.rbAll.getText().toString();
             }
             mElectricityBill = mBinding.edtElectricityBill.getText().toString();
@@ -174,11 +165,10 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
 
 
-
         }
     }
 
-    public void onNext(String jsonData){
+    public void onNext(String jsonData) {
         Fragment fragment = new AddressPostFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);

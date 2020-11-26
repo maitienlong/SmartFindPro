@@ -128,6 +128,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_amount_person"
                                 android:inputType="number"
+                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
@@ -155,6 +156,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_price"
                                 android:inputType="number"
+                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
@@ -189,6 +191,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_deposit"
                                 android:inputType="number"
+                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
@@ -270,6 +273,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_electricity_bill"
                                 android:inputType="number"
+                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:hint="Số" />
@@ -300,6 +304,7 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_water_bill"
                                 android:inputType="number"
+                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:hint="Khối" />
@@ -325,6 +330,7 @@
                         android:id="@+id/edt_description"
                         android:layout_width="match_parent"
                         android:gravity="start"
+                        android:text="1"
                         android:layout_height="match_parent"
                         android:hint="Thêm mô tả ..." />
 

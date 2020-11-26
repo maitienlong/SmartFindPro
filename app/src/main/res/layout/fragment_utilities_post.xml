@@ -28,10 +28,13 @@
                 android:layout_height="match_parent" />
 
             <Button
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:onClick="@{()-> presenter.onSubmit()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="@string/btn_continue">
+                android:background="@drawable/custom_button_infor"
+                android:text="@string/btn_continue"
+                android:textColor="@color/white">
 
             </Button>
         </LinearLayout>

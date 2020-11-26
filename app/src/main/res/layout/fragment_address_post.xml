@@ -86,18 +86,21 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtDetialAdress"
                 android:layout_width="match_parent"
+                android:gravity="start"
                 android:layout_height="match_parent"
+
                 android:background="@drawable/bg_circle_editext" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:onClick="@{()->presenter.onNext()}"
             android:id="@+id/btnContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:background="@color/background"
+            android:background="@drawable/custom_button_infor"
             android:text="@string/btn_continue"
             android:textColor="@color/white" />
     </LinearLayout>

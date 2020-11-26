@@ -2,23 +2,42 @@ package com.poly.smartfindpro.ui.post.utilitiesPost;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.ui.login.createPassword.CreatePasswordContract;
+import com.poly.smartfindpro.ui.post.model.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UtilitiesPresenter implements UtilitiesContract.Presenter {
-    List<UtilitiesModel> mListUtilities;
+    private  List<UtilitiesModel> mListUtilities;
+
+   private List<String> utilitiesModelList;
+    private List<UtilitiesModel> mListUpdate;
+
     private Context context;
 
     private UtilitiesContract.ViewModel mViewModel;
+
+    private PostRequest postRequest;
+
+
 
     public UtilitiesPresenter(Context context, UtilitiesContract.ViewModel mViewModel) {
         this.context = context;
         this.mViewModel = mViewModel;
     }
+
+    public void setmListUpdate(List<UtilitiesModel> mListUpdate) {
+        this.mListUpdate = mListUpdate;
+    }
+
+    public void setPostRequest(PostRequest postRequest) {
+        this.postRequest = postRequest;
+    }
+
     @Override
     public void subscribe() {
 
@@ -41,10 +60,6 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
         UtilitiesModel key = new UtilitiesModel(R.drawable.ic_baseline_vpn_key_24, "Phòng riêng", false);
         UtilitiesModel giuong = new UtilitiesModel(R.drawable.ic_baseline_airline_seat_flat_24, "Giường", false);
         UtilitiesModel baby = new UtilitiesModel(R.drawable.ic_baseline_child_care_24, "Trẻ em", false);
-        UtilitiesModel nhaan1 = new UtilitiesModel(R.drawable.ic_baseline_restaurant_24, "Nhà ăn", false);
-        UtilitiesModel key1 = new UtilitiesModel(R.drawable.ic_baseline_vpn_key_24, "Phòng riêng", false);
-        UtilitiesModel giuong1 = new UtilitiesModel(R.drawable.ic_baseline_airline_seat_flat_24, "Giường", false);
-        UtilitiesModel baby1 = new UtilitiesModel(R.drawable.ic_baseline_child_care_24, "Trẻ em", false);
 
         mListUtilities.add(wifi);
         mListUtilities.add(anninh);
@@ -56,11 +71,19 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
         mListUtilities.add(key);
         mListUtilities.add(giuong);
         mListUtilities.add(baby);
-        mListUtilities.add(nhaan1);
-        mListUtilities.add(key1);
-        mListUtilities.add(giuong1);
-        mListUtilities.add(baby1);
 
-return mListUtilities;
+        return mListUtilities;
+    }
+
+    public void onSubmit() {
+        utilitiesModelList = new ArrayList<>();
+        for (UtilitiesModel item : mListUpdate) {
+            if (item.isStatus()) {
+                utilitiesModelList.add(item.getTitle());
+            }
+        }
+        postRequest.setUtilities(utilitiesModelList);
+
+        mViewModel.onNext(new Gson().toJson(postRequest));
     }
 }
