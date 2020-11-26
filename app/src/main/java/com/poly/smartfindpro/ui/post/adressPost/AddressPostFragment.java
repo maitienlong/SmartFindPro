@@ -30,11 +30,6 @@ import java.lang.reflect.Type;
 public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPostBinding, AddressPostPresenter> implements AddressPostContract.ViewModel {
     private PostRequest postRequest;
 
-    String mProvine = "";
-    String mDistric = "";
-    String mComune = "";
-    String mDetailAdress = "";
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_address_post;
@@ -45,51 +40,63 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         }.getType();
 
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
+
     }
 
     @Override
     protected void initView() {
+
         ReciData();
-        Spinner mSpnProvince = mBinding.spnProvince;
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mActivity,
-                R.array.province_array, android.R.layout.simple_spinner_item);
+        address = new Address();
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnProvince.setAdapter(adapter);
+        mPresenter = new AddressPostPresenter(mActivity, this);
+        mBinding.setPresenter(mPresenter);
 
+        BodyReq proviceReq = new BodyReq("P", "");
+        mPresenter.getDataApiArea(0, new Gson().toJson(proviceReq));
 
-        Spinner mSpnDistrict = mBinding.spnDistrict;
-
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(mActivity,
-                R.array.district_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnDistrict.setAdapter(adapter1);
-
-        Spinner mSpnComnune = mBinding.spnComune;
-
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(mActivity,
-                R.array.district_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnComnune.setAdapter(adapter2);
-
-//        EditText edtDetailAdress = mBinding.edtDetialAdress;
-
-        Button btnContinue = mBinding.btnContinue;
-        btnContinue.setOnClickListener(new View.OnClickListener() {
+        mBinding.spnProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Address address = new Address();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
+                BodyReq bodyReq = new BodyReq("D", listArea.getAreaCode());
+                mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
+                P = listArea.getAreaName();
+            }
 
-                address.setProvinceCity(mSpnProvince.getSelectedItem().toString());
-                address.setDistrictsTowns(mSpnDistrict.getSelectedItem().toString());
-                address.setCommuneWardTown(mSpnComnune.getSelectedItem().toString());
-//                address.setDetailAddress(edtDetailAdress.getText().toString());
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-                postRequest.setAddress(address);
+            }
+        });
 
-                onNext(new Gson().toJson(postRequest));
 
+        mBinding.spnDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
+                BodyReq bodyReq = new BodyReq("C", listArea.getAreaCode());
+                mPresenter.getDataApiArea(2, new Gson().toJson(bodyReq));
+
+                D = listArea.getAreaName();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        mBinding.spnComune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ListArea listArea = (ListArea) parent.getItemAtPosition(position);
+                C = listArea.getAreaName();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -98,7 +105,34 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
     @Override
     protected void initData() {
 
+    }
 
+    public void onSubmitData(){
+        address.setProvinceCity(P);
+        address.setDistrictsTowns(D);
+        address.setCommuneWardTown(C);
+        address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
+        postRequest.setAddress(address);
+        onNext(new Gson().toJson(postRequest));
+    }
+
+    public void onShowProvince(ResultArea resultArea) {
+        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+
+        mBinding.spnProvince.setAdapter(adapter);
+    }
+
+    public void onShowDistrict(ResultArea resultArea) {
+        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+
+        mBinding.spnDistrict.setAdapter(adapter);
+    }
+
+    public void onShowCommune(ResultArea resultArea) {
+
+        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+
+        mBinding.spnComune.setAdapter(adapter);
     }
 
     public void onNext(String jsonData) {
