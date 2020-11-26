@@ -13,12 +13,12 @@ public class Information {
     @SerializedName("price")
     @Expose
     private Integer price;
-    @SerializedName("deposit")
-    @Expose
-    private Integer deposit;
     @SerializedName("gender")
     @Expose
     private String gender;
+    @SerializedName("deposit")
+    @Expose
+    private Integer deposit;
     @SerializedName("unit")
     @Expose
     private String unit;
@@ -37,29 +37,9 @@ public class Information {
     @SerializedName("describe")
     @Expose
     private String describe;
-
-
-    @Override
-    public String toString() {
-        return "Information{" +
-                "\n" +"amountPeople=" + amountPeople +
-                "\n" +"price=" + price +
-                "\n" +"deposit=" + deposit +
-                "\n" +"gender='" + gender + '\'' +
-                "\n" +"unit='" + unit + '\'' +
-                "\n" +"electricBill=" + electricBill +
-                "\n" +"electricUnit='" + electricUnit + '\'' +
-                "\n" +"waterBill=" + waterBill +
-                "\n" +"waterUnit='" + waterUnit + '\'' +
-                "\n" +"describe='" + describe + '\'' +
-//                "\n" +"image=" + image +
-                '}';
-    }
-
     @SerializedName("image")
     @Expose
-//    private List<ImageInforPost> imageInforPost;
-    private List<String> image;
+    private List<String> image = null;
 
     public Integer getAmountPeople() {
         return amountPeople;
@@ -77,20 +57,20 @@ public class Information {
         this.price = price;
     }
 
-    public Integer getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(Integer deposit) {
-        this.deposit = deposit;
-    }
-
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Integer getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Integer deposit) {
+        this.deposit = deposit;
     }
 
     public String getUnit() {
@@ -149,11 +129,4 @@ public class Information {
         this.image = image;
     }
 
-//    public List<ImageInforPost> getImageInforPost() {
-//        return imageInforPost;
-//    }
-//
-//    public void setImageInforPost(List<ImageInforPost> imageInforPost) {
-//        this.imageInforPost = imageInforPost;
-//    }
 }

@@ -1,7 +1,14 @@
 package com.poly.smartfindpro.ui.post.confirmPost;
 
-public class ConfirmPostPresenter  {
+public class ConfirmPostPresenter implements ConfirmPostContract.Presenter  {
+    @Override
+    public void subscribe() {
 
-// thực hiện lệnh lấy dữ liệu từ các feild ở các layout khác
+    }
+
+    @Override
+    public void unSubscribe() {
+
+    }
 
 }
