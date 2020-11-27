@@ -68,7 +68,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     private Information information;
 
     private ArrayList<ImageInforPost> imageList;
-    private ArrayList<String> imageListString;
+    private ArrayList<Bitmap> imageListString;
     private ImageInforPostAdapter imagePostAdapter;
 
 
@@ -118,7 +118,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                         ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
 
                         imageList.add(item);
-                        imageListString.add(String.valueOf(item.getBitmap()));
+                        imageListString.add(item.getBitmap());
                         Log.d("checkImageString", "onActivityResult: " + String.valueOf(item.getBitmap()));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -135,7 +135,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 try {
                     ImageInforPost item = new ImageInforPost(imageName, imageUri, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
                     imageList.add(item);
-                    imageListString.add(String.valueOf(item.getBitmap()));
+                    imageListString.add(item.getBitmap());
                     Log.d("checkImageString", "onActivityResult: " + String.valueOf(item.getBitmap()));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -190,7 +190,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         information.setDescribe(mDescription);
 
 //        information.setImageInforPost(imageList);
-        information.setImage(imageListString);
+        information.setImageShow(imageListString);
 
         postRequest.setCategory(category);
         postRequest.setInformation(information);

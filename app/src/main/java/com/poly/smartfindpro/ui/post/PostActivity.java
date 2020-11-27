@@ -81,6 +81,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case R.id.btn_tool:
+                fragmentManager.popBackStack("utilitiespost", 0);
                 break;
 
             case R.id.btn_confirm:

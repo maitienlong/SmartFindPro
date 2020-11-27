@@ -2,11 +2,14 @@ package com.poly.smartfindpro.ui.post.utilitiesPost;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
@@ -21,6 +24,7 @@ import com.poly.smartfindpro.databinding.FragmentUtilitiesPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.UtilitiesAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostContract;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostPresenter;
+import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 
@@ -74,5 +78,23 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
     @Override
     public void onNext(String jsonData) {
         Log.d("CheckLog", jsonData);
+
+        Fragment fragment = new ConfirmPostFragment();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString(Config.POST_BUNDEL_RES, jsonData);
+
+        FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
+
+        fragment.setArguments(bundle);
+
+        fragmentTransaction.add(R.id.fl_post, fragment);
+
+        fragmentTransaction.addToBackStack("confirm");
+
+        fragmentTransaction.commit();
+
+
     }
 }
