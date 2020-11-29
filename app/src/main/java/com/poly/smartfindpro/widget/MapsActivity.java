@@ -19,7 +19,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.mappp);
+                .findFragmentById(R.id.maps);
         mapFragment.getMapAsync(this);
     }
 
