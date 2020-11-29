@@ -5,6 +5,7 @@ let multer = require('multer');
 let body = require('body-parser');
 let fs = require('fs');
 var moment = require('moment');
+var crypto = require('crypto');
 
 let userSchema = require('./model/userSchema');
 let adminSchema = require('./model/adminSchema');
@@ -57,6 +58,21 @@ console.log = function () {
 //tk Admin
 let adminNow = ''
 // đăng nhập
+
+
+//new khoi tao noi luu tru
+storage = multer.diskStorage({
+    destination: './uploads/',
+    filename: function(req, file, cb) {
+        return crypto.pseudoRandomBytes(16, function(err, raw) {
+            if (err) {
+                return cb(err);
+            }
+            return cb(null, "" + (raw.toString('hex')) + (path.extname(file.originalname)));
+        });
+    }
+});
+
 app.get('/', function (request, response) {
     response.render('login', {status: 'none', user: '', pass: ''});
 });
@@ -351,6 +367,16 @@ app.get('/getAllProduct', async function (request, response) {
     let successPost = await Product.find({status: '1'});
     response.send(successPost);
 });
+
+//post anh
+app.post("/upload-photo",multer({storage: storage }).single('upload'), function(req, res) {
+    console.log(req.file);
+    console.log(req.body);
+   // res.redirect("/uploads/" + req.file.filename);
+    console.log(req.file.filename);
+    return res.status(200).end();
+});
+
 // dang bai
 app.post('/init-product', async function (request, response) {
 
