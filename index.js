@@ -43,17 +43,18 @@ app.engine('.hbs', hbs({
 app.set('view engine', '.hbs')
 
 //chạy lên local host với port là 9090
-let localNumber = 9090
+let localNumber = 9080
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
 // phần sever
 
-var log = console.log;
-console.log = function () {
-    log.apply(console, arguments);
-    // Print the stack trace
-    console.trace();
-};
+// var log = console.log;
+// console.log = function () {
+//     log.apply(console, arguments);
+//     // Print the stack trace
+//     console.trace();
+// };
+
 //tk Admin
 let adminNow = ''
 // đăng nhập
@@ -88,16 +89,6 @@ app.get('/index', async function (request, response) {
             pass: ''
         });
     } else {
-        try {
-            adminNow = admins[0]
-
-            function foo() {
-                console.log('Foobar');
-            }
-
-            foo();
-        } catch (e) {
-        }
         response.render('index', {
             status: 'none',
             user: nameDN,
@@ -257,11 +248,68 @@ app.get('/updateAdAc', async function (request, response) {
 
 });
 app.get('/postManage', async function (request, response) {
-
     const PostManage = require('./model/confirmPost/PostManage');
-    let unapprovedPost = await Product.find({status: '-1'}).lean();
-    let processingPost = await Product.find({status: '0'}).lean();
-    let successPost = await Product.find({status: '1'}).lean();
+    // let unapprovedPost = await Product.find({status: '-1'}).lean();
+    // let processingPost = await Product.find({status: '0'}).lean();
+    // let successPost = await Product.find({status: '1'}).lean();
+
+    var product = await Product.find().lean();
+    var a = product.filter(function (el) {
+        return el.deleteAt === "";
+    });
+
+    var unapprovedPost = a.filter(function (el) {
+        return el.status === '-1';
+    });
+
+    var processingPost = a.filter(function (el) {
+        return el.status === '0';
+    });
+    var successPost = a.filter(function (el) {
+        return el.status === '1';
+    });
+    console.log('a: \n' + JSON.stringify(a))
+    console.log('unapprovedPost: \n' + JSON.stringify(unapprovedPost))
+    console.log('processingPost: \n' + JSON.stringify(processingPost))
+    console.log('successPost: \n' + JSON.stringify(successPost))
+    try {
+
+        if (request.query.idProduct != undefined) {
+            let _id = request.query.idProduct
+            console.log('_id: ' + _id)
+            if (_id != undefined || _id != null || _id != '') {
+                let dateNow = Date.now()
+                let date = moment(dateNow).format('YYYY-MM-DD hh:mm:ss');
+                console.log(date)
+                let update = await Product.findByIdAndUpdate(_id, {
+                    deleteAt: date,
+                });
+                if (update) {
+                    console.log('[Delete] OK')
+                    product = await Product.find().lean();
+                    a = product.filter(function (el) {
+                        return el.deleteAt === "";
+                    });
+
+                    unapprovedPost = a.filter(function (el) {
+                        return el.status === '-1';
+                    });
+
+                    processingPost = a.filter(function (el) {
+                        return el.status === '0';
+                    });
+                    successPost = a.filter(function (el) {
+                        return el.status === '1';
+                    });
+                } else {
+                    console.log('[Delete] Fail')
+                }
+            }
+        }
+
+    } catch (e) {
+        console.log('[Delete] Error: ' + e)
+    }
     let data = new PostManage(unapprovedPost, processingPost, successPost)
     response.render('postManage', {
         status: 'none',
@@ -367,19 +415,19 @@ app.post('/init-product', async function (request, response) {
     let linkProduct = request.body.linkProduct;
 
     if (status == null || status == "") {
-        status = null
+        status = ""
     }
     if (linkProduct == null || linkProduct == "") {
-        linkProduct = null
+        linkProduct = ""
     }
     if (createAt == null || createAt == "") {
-        createAt = null
+        createAt = ""
     }
     if (updateAt == null || updateAt == "") {
-        updateAt = null
+        updateAt = ""
     }
     if (deleteAt == null || deleteAt == "") {
-        deleteAt = null
+        deleteAt = ""
     }
     try {
         let dateNow = Date.now()
