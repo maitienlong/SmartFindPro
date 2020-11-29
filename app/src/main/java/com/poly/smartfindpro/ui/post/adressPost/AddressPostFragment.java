@@ -1,15 +1,9 @@
 package com.poly.smartfindpro.ui.post.adressPost;
 
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,9 +17,6 @@ import com.poly.smartfindpro.data.model.area.req.BodyReq;
 import com.poly.smartfindpro.data.model.area.result.ListArea;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
-import com.poly.smartfindpro.databinding.FragmentLoginBinding;
-import com.poly.smartfindpro.ui.login.loginFragment.LoginContract;
-import com.poly.smartfindpro.ui.login.loginFragment.LoginPresenter;
 import com.poly.smartfindpro.ui.post.adapter.SpinnerAreaAdapter;
 import com.poly.smartfindpro.ui.post.model.Address;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
@@ -40,6 +31,8 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
     private String P, D, C;
 
+    private String jsonPhoto;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_address_post;
@@ -50,7 +43,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         }.getType();
 
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-
+        jsonPhoto = getArguments().getString(Config.POST_BUNDEL_RES_PHOTO);
     }
 
     @Override
@@ -117,7 +110,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
     }
 
-    public void onSubmitData(){
+    public void onSubmitData() {
         address.setProvinceCity(P);
         address.setDistrictsTowns(D);
         address.setCommuneWardTown(C);
@@ -151,6 +144,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         Bundle bundle = new Bundle();
 
         bundle.putString(Config.POST_BUNDEL_RES, new Gson().toJson(postRequest));
+        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
 
         FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
 

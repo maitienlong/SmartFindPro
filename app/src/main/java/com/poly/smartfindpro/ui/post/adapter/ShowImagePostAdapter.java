@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.post.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,14 +29,14 @@ import java.util.List;
 public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdapter.ViewHolder> {
 
     private Context context;
-    private List<Bitmap> mList;
+    private List<ImageInforPost> mList;
 
     public ShowImagePostAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setItemView(List<Bitmap> mList) {
+    public void setItemView(List<ImageInforPost> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
@@ -50,9 +51,9 @@ public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Bitmap item = mList.get(position);
+        ImageInforPost item = mList.get(position);
 
-        holder.img_infor_post.setImageBitmap(item);
+        holder.img_infor_post.setImageBitmap(item.getBitmap());
 
 
     }

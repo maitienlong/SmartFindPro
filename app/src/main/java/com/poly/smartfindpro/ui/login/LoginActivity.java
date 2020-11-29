@@ -10,9 +10,12 @@ import android.view.View;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.data.retrofit.MyRetrofit;
+import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;
 import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
+
 
 public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.ViewModel {
 

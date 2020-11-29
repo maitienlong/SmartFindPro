@@ -34,6 +34,7 @@ import java.util.List;
 
 public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitiesPostBinding, UtilitiesPresenter> implements UtilitiesContract.ViewModel {
     private PostRequest postRequest;
+    private String jsonPhoto;
 
     @Override
     protected int getLayoutId() {
@@ -45,7 +46,7 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
         }.getType();
 
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-
+        jsonPhoto = getArguments().getString(Config.POST_BUNDEL_RES_PHOTO);
     }
 
     @Override
@@ -84,6 +85,8 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
         Bundle bundle = new Bundle();
 
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
+
+        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
 
         FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
 

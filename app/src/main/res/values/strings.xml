@@ -127,6 +127,8 @@
     <string name="text_gender_empty">Bạn phải chọn giới tính</string>
     <string name="text_infor_error_empty">Bạn hãy điền đầy đủ thông tin số người, giá tiền, tiền cọc, tiền điện, tiền nước</string>
 
+    <string name="services_not_avail">Dịch vụ không sẵn sàng, vui lòng thử lại sau</string>
+
     <string name="error_edt_dont_match">Không khớp</string>
     <string name="add_images">Thêm ảnh</string>
     <string-array name="province_array">

@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.post.model;
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -40,8 +41,6 @@ public class Information {
     @SerializedName("image")
     @Expose
     private List<String> image = null;
-
-    private List<Bitmap> imageShow = null;
 
     public Integer getAmountPeople() {
         return amountPeople;
@@ -131,11 +130,4 @@ public class Information {
         this.image = image;
     }
 
-    public List<Bitmap> getImageShow() {
-        return imageShow;
-    }
-
-    public void setImageShow(List<Bitmap> imageShow) {
-        this.imageShow = imageShow;
-    }
 }

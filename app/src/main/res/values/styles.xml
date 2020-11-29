@@ -22,7 +22,7 @@
     </style>
 
     <style name="CustomProgress">
-        <item name="colorAccent">@color/orange_three</item>
+        <item name="colorAccent">@color/background_login</item>
     </style>
 
     <style name="RoundMenuItem">

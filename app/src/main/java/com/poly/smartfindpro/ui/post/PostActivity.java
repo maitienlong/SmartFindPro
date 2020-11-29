@@ -90,16 +90,16 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Log.d("CheckValue", String.valueOf(requestCode));
-        if (resultCode == Activity.RESULT_OK) {
-            if (data.hasExtra("demo")) {
-                String name = data.getStringExtra("demo");
-                Log.d("CheckValue", name);
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        Log.d("CheckValue", String.valueOf(requestCode));
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (data.hasExtra("demo")) {
+//                String name = data.getStringExtra("demo");
+//                Log.d("CheckValue", name);
+//            }
+//        }
+//    }
 }

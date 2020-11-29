@@ -9,13 +9,9 @@ import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.data.model.area.Location;
 import com.poly.smartfindpro.data.model.area.req.AreaReqHeader;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
-import com.poly.smartfindpro.data.model.area.req.BodyReq;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
-import com.poly.smartfindpro.data.model.area.result.ListArea;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
-import com.poly.smartfindpro.ui.login.forgotPassword.ForgotPasswordContract;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
 
 import java.lang.reflect.Type;
 
