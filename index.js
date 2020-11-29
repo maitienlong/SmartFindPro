@@ -33,9 +33,10 @@ db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.ne
 let app = express();
 
 let path = require('path');
+const { json } = require('body-parser');
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use(body.json());
-app.use(body.urlencoded({extended: true}));
+app.use(body.urlencoded({ extended: true }));
 app.engine('.hbs', hbs({
     extname: 'hbs',
     defaultLayout: '',
@@ -44,7 +45,7 @@ app.engine('.hbs', hbs({
 app.set('view engine', '.hbs')
 
 //chạy lên local host với port là 9090
-let localNumber = 9080
+let localNumber = 9090
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
 // phần sever
@@ -63,9 +64,9 @@ let adminNow = ''
 
 //new khoi tao noi luu tru
 storage = multer.diskStorage({
-    destination: './uploads/',
-    filename: function(req, file, cb) {
-        return crypto.pseudoRandomBytes(16, function(err, raw) {
+    destination: './public/uploads/',
+    filename: function (req, file, cb) {
+        return crypto.pseudoRandomBytes(16, function (err, raw) {
             if (err) {
                 return cb(err);
             }
@@ -75,7 +76,7 @@ storage = multer.diskStorage({
 });
 
 app.get('/', function (request, response) {
-    response.render('login', {status: 'none', user: '', pass: ''});
+    response.render('login', { status: 'none', user: '', pass: '' });
 });
 
 let nameDN = '', allAdmin = '';
@@ -95,7 +96,7 @@ app.get('/index', async function (request, response) {
         console.log(user + " " + sm);
     }
 
-    let admins = await Admin.find({username: user, password: pass}).lean();   //dk
+    let admins = await Admin.find({ username: user, password: pass }).lean();   //dk
 
     if (admins.length <= 0 && sm == 1) {
         response.render('login', {
@@ -120,7 +121,7 @@ app.get('/createAdAc', async function (request, response) {
     let search = request.query.search;
     let nameSP = request.query.nameSP;
     if (search == 1 && nameSP) {
-        let seachAdmin = await Admin.find({username: nameSP}).lean();
+        let seachAdmin = await Admin.find({ username: nameSP }).lean();
         response.render('createAdAc', {
             status: 'none',
             data: seachAdmin,
@@ -136,7 +137,7 @@ app.get('/createAdAc', async function (request, response) {
             let nPhone = request.query.nPhone;
             let nAddress = request.query.nAddress;
 
-            let findAdmin = await Admin.find({username: nUser}).lean();   //dk
+            let findAdmin = await Admin.find({ username: nUser }).lean();   //dk
 
             if (findAdmin.length <= 0) {
                 let newAdmin = new Admin({
@@ -196,7 +197,7 @@ app.get('/createAdAc', async function (request, response) {
 
             console.log('edit ad ' + request.query.nId);
 
-            let admins = await Admin.find({username: nUser, password: nPass}).lean();   //dk
+            let admins = await Admin.find({ username: nUser, password: nPass }).lean();   //dk
 
             if (admins.length >= 0) {
                 // console.log(nId + "edit ad");
@@ -336,9 +337,9 @@ app.get('/postManage', async function (request, response) {
 app.get('/confirmPost', async function (request, response) {
     let _id = request.query.idProduct;
     try {
-        let productFind = await Product.find({_id: _id}).lean();
+        let productFind = await Product.find({ _id: _id }).lean();
         let product = productFind[0]
-        let findUserProduct = await User.find({_id: product.userId}).lean();
+        let findUserProduct = await User.find({ _id: product.userId }).lean();
         let userProduct = findUserProduct[0]
 
         console.log('[GET LIST FIND] Product\n' + JSON.stringify(product) + '\n User \n' + JSON.stringify(userProduct) + '\n AdminNow: ' + adminNow + '\n------------------->')
@@ -349,7 +350,7 @@ app.get('/confirmPost', async function (request, response) {
         });
     } catch (e) {
         console.log('Lỗi: ' + e)
-        response.render('login', {status: 'none', user: '', pass: ''});
+        response.render('login', { status: 'none', user: '', pass: '' });
     }
 
 });
@@ -389,7 +390,7 @@ app.post('/postUpdateUserPass', async function (request, response) {
     let nPhone = request.body.nPhone;
     let nPassword = request.body.nPassword;
 
-    let searchUser = await User.find({phone: nPhone}).lean();
+    let searchUser = await User.find({ phone: nPhone }).lean();
 
     let update = await User.findByIdAndUpdate(searchUser[0]._id, {
         password: nPassword,
@@ -412,17 +413,32 @@ app.get('/getAlluser', async function (request, response) {
 });
 //trả ve danh sách bài đăng
 app.get('/getAllProduct', async function (request, response) {
-    let successPost = await Product.find({status: '1'});
+    let successPost = await Product.find({ status: '1' });
     response.send(successPost);
 });
 
 //post anh
-app.post("/upload-photo",multer({storage: storage }).single('upload'), function(req, res) {
-    console.log(req.file);
-    console.log(req.body);
-   // res.redirect("/uploads/" + req.file.filename);
-    console.log(req.file.filename);
-    return res.status(200).end();
+app.post("/upload-photo", multer({ storage: storage }).single('photo'), function (req, res) {
+
+    var jsonResult = [];
+    jsonResult.push(req.file.path)
+
+    return res.status(200).json({
+        addressImage: jsonResult
+    })
+});
+
+app.post("/upload-photo-array", multer({ storage: storage }).array('photo', 5), function (req, res) {
+
+    var jsonResult = [];
+
+    for (var i in req.files) {
+        jsonResult.push(req.files[i].path)
+    }
+
+    return res.status(200).json({
+        addressImage: jsonResult
+    })
 });
 
 // dang bai
