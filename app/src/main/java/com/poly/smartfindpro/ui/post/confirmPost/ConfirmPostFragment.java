@@ -68,7 +68,7 @@ public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPos
 
         mPresenter.setTienDien(postRequest.getInformation().getElectricBill());
 
-        mPresenter.setTienNuoc(postRequest.getInformation().getElectricBill());
+        mPresenter.setTienNuoc(postRequest.getInformation().getWaterBill());
 
         mPresenter.setTienIch(postRequest.getUtilities());
 
