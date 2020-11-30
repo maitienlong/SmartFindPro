@@ -6,6 +6,7 @@ let body = require('body-parser');
 let fs = require('fs');
 var moment = require('moment');
 var crypto = require('crypto');
+let request = require('request');
 
 let userSchema = require('./model/userSchema');
 let adminSchema = require('./model/adminSchema');
@@ -13,7 +14,9 @@ let postSchema = require('./model/postSchema');
 let addressSchema = require('./model/addressSchema')
 let informationSchema = require('./model/informationSchema')
 let identityCardSchema = require('./model/identityCardSchema')
+let imageProductSchema = require('./model/imageProductSchema')
 
+let ImageProductSchema = db.model('ImageProductSchema', imageProductSchema);
 let IdentityCard = db.model('IdentityCard', identityCardSchema);
 let Information = db.model('Information', informationSchema);
 let Address = db.model('Address', addressSchema);
@@ -44,7 +47,7 @@ app.engine('.hbs', hbs({
 app.set('view engine', '.hbs')
 
 //chạy lên local host với port là 9090
-let localNumber = 9080
+let localNumber = 9090
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
 // phần sever
@@ -60,12 +63,17 @@ console.log('Localhost: ' + localNumber);
 let adminNow = ''
 // đăng nhập
 
-
+//lay danh sach dia chi
+request('https://lifecardtest.viviet.vn/lifecard-app/area/def', { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log(body.url);
+    console.log(body.explanation);
+});
 //new khoi tao noi luu tru
 storage = multer.diskStorage({
     destination: './uploads/',
-    filename: function(req, file, cb) {
-        return crypto.pseudoRandomBytes(16, function(err, raw) {
+    filename: function (req, file, cb) {
+        return crypto.pseudoRandomBytes(16, function (err, raw) {
             if (err) {
                 return cb(err);
             }
@@ -417,10 +425,10 @@ app.get('/getAllProduct', async function (request, response) {
 });
 
 //post anh
-app.post("/upload-photo",multer({storage: storage }).single('upload'), function(req, res) {
+app.post("/upload-photo", multer({storage: storage}).single('upload'), function (req, res) {
     console.log(req.file);
     console.log(req.body);
-   // res.redirect("/uploads/" + req.file.filename);
+    // res.redirect("/uploads/" + req.file.filename);
     console.log(req.file.filename);
     return res.status(200).end();
 });

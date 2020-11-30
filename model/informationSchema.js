@@ -10,6 +10,10 @@ const informationSchema = mongoose.Schema({
     waterBill: {type: Number},
     waterUnit: {type: String},
     describe: {type: String},
-    image: {type: [String]}
+    image: {
+        type: Object,
+        required: false,
+        ref: 'ImageProductSchema'
+    }
 });
 module.exports = informationSchema;
