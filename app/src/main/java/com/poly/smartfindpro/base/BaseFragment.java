@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.callback.OnFragmentCloseCallback;
+import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -22,6 +23,8 @@ public abstract class BaseFragment extends Fragment implements BaseScreen {
     private Deque<BaseFragment> mFragStack;
 
     private OnFragmentCloseCallback onFragmentCloseCallback;
+
+    private OnFragmentDataCallBack onFragmentDataCallBack;
 
     private int resultCode = Activity.RESULT_CANCELED;
     private Intent resultData;
@@ -221,6 +224,13 @@ public abstract class BaseFragment extends Fragment implements BaseScreen {
     public void setOnFragmentCloseCallback(OnFragmentCloseCallback onFragmentCloseCallback) {
         this.onFragmentCloseCallback = onFragmentCloseCallback;
     }
+    public void setOnFragmentDataCallback(OnFragmentDataCallBack onFragmentDataCallback) {
+        this.onFragmentDataCallBack = onFragmentDataCallback;
+    }
+
+    public OnFragmentDataCallBack getOnFragmentDataCallBack() {
+        return onFragmentDataCallBack;
+    }
 
     public void setResult(int resultCode, Intent resultData) {
         this.resultCode = resultCode;
@@ -230,6 +240,16 @@ public abstract class BaseFragment extends Fragment implements BaseScreen {
     public void setResult(int resultCode) {
         this.resultCode = resultCode;
     }
+
+
+    public void onBackData(){
+        if(getActivity() != null && getActivity() instanceof BaseActivity){
+            if(onFragmentDataCallBack != null){
+              onFragmentDataCallBack.onResult(resultCode, resultData);
+            }
+        }
+    }
+
 
     public void finish() {
         if (getActivity() != null && getActivity() instanceof BaseActivity) {

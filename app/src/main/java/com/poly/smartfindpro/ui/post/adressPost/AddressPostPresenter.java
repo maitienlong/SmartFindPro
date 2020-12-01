@@ -12,6 +12,7 @@ import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
+import com.poly.smartfindpro.ui.post.model.Address;
 
 import java.lang.reflect.Type;
 
@@ -26,6 +27,8 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
 
     private ResultArea resultArea;
 
+    private Address address;
+
     public AddressPostPresenter(Context context, AddressPostContract.ViewModel mViewModel) {
         this.context = context;
         this.mViewModel = mViewModel;
@@ -34,7 +37,7 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
 
     private void initData() {
         resultArea = new ResultArea();
-
+        address = new Address();
     }
 
     @Override
@@ -45,6 +48,18 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
     @Override
     public void unSubscribe() {
 
+    }
+
+    public void setP(String p) {
+        address.setProvinceCity(p);
+    }
+
+    public void setD(String d) {
+        address.setDistrictsTowns(d);
+    }
+
+    public void setC(String c) {
+        address.setCommuneWardTown(c);
     }
 
     private AreaReqHeader areaReqHeader() {
@@ -120,6 +135,6 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
     }
 
     public void onNext(){
-        mViewModel.onSubmitData();
+        mViewModel.onSubmitData(address);
     }
 }

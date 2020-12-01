@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.post.utilitiesPost;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,8 @@ import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitiesPostBinding, UtilitiesPresenter> implements UtilitiesContract.ViewModel {
     private PostRequest postRequest;
@@ -79,25 +82,24 @@ public class UtilitiesPostFragment extends BaseDataBindFragment<FragmentUtilitie
     @Override
     public void onNext(String jsonData) {
         Log.d("CheckLog", jsonData);
+        Log.d("CheckLog", new Gson().toJson(postRequest));
 
-        Fragment fragment = new ConfirmPostFragment();
+        Intent intent = new Intent();
+
+        intent.putExtra(Config.DATA_CALL_BACK, "4");
+
+        intent.putExtra(Config.POST_BUNDEL_RES, jsonData);
+
+        intent.putExtra(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
+
+        setResult(RESULT_OK, intent);
 
         Bundle bundle = new Bundle();
-
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
+        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
 
-        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
+        onBackData();
 
-        FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-
-        fragment.setArguments(bundle);
-
-        fragmentTransaction.add(R.id.fl_post, fragment);
-
-        fragmentTransaction.addToBackStack("confirm");
-
-        fragmentTransaction.commit();
-
-
+        getBaseActivity().goToFragmentCallBackData(R.id.fl_post, new ConfirmPostFragment(), bundle, getOnFragmentDataCallBack());
     }
 }

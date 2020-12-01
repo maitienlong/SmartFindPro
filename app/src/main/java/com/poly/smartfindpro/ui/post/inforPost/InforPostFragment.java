@@ -2,7 +2,6 @@ package com.poly.smartfindpro.ui.post.inforPost;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -19,8 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
@@ -28,14 +26,13 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.model.ImageInforPost;
 import com.poly.smartfindpro.ui.post.model.Information;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -303,15 +300,26 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         Log.d("CheckLog", jsonData);
         Log.d("CheckLog", jsonPhoto);
 
-        Fragment fragment = new AddressPostFragment();
         Bundle bundle = new Bundle();
+
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
+
         bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
-        FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-        fragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.fl_post, fragment);
-        fragmentTransaction.addToBackStack("addresspost");
-        fragmentTransaction.commit();
+
+        Intent intent = new Intent();
+
+        intent.putExtra(Config.DATA_CALL_BACK, "2");
+
+        intent.putExtra(Config.POST_BUNDEL_RES, jsonData);
+
+        intent.putExtra(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
+
+        setResult(RESULT_OK, intent);
+
+        onBackData();
+
+        getBaseActivity().goToFragmentCallBackData(R.id.fl_post, new AddressPostFragment(), bundle, getOnFragmentDataCallBack());
+
     }
 
     private void showImageGallery() {

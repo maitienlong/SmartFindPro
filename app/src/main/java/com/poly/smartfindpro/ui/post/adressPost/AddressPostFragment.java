@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.post.adressPost;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.poly.smartfindpro.data.model.area.req.BodyReq;
 import com.poly.smartfindpro.data.model.area.result.ListArea;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.SpinnerAreaAdapter;
 import com.poly.smartfindpro.ui.post.model.Address;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
@@ -24,12 +26,10 @@ import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
 import java.lang.reflect.Type;
 
+import static android.app.Activity.RESULT_OK;
+
 public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPostBinding, AddressPostPresenter> implements AddressPostContract.ViewModel {
     private PostRequest postRequest;
-
-    private Address address;
-
-    private String P, D, C;
 
     private String jsonPhoto;
 
@@ -43,15 +43,12 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         }.getType();
 
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-        jsonPhoto = getArguments().getString(Config.POST_BUNDEL_RES_PHOTO);
     }
 
     @Override
     protected void initView() {
 
         ReciData();
-
-        address = new Address();
 
         mPresenter = new AddressPostPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
@@ -65,7 +62,9 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
                 ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
                 BodyReq bodyReq = new BodyReq("D", listArea.getAreaCode());
                 mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
-                P = listArea.getAreaName();
+
+                mPresenter.setP(listArea.getAreaName());
+
             }
 
             @Override
@@ -82,7 +81,8 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
                 BodyReq bodyReq = new BodyReq("C", listArea.getAreaCode());
                 mPresenter.getDataApiArea(2, new Gson().toJson(bodyReq));
 
-                D = listArea.getAreaName();
+                mPresenter.setD(listArea.getAreaName());
+
             }
 
             @Override
@@ -95,7 +95,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ListArea listArea = (ListArea) parent.getItemAtPosition(position);
-                C = listArea.getAreaName();
+                mPresenter.setC(listArea.getAreaName());
             }
 
             @Override
@@ -110,10 +110,8 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
     }
 
-    public void onSubmitData() {
-        address.setProvinceCity(P);
-        address.setDistrictsTowns(D);
-        address.setCommuneWardTown(C);
+    public void onSubmitData(Address address) {
+
         address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
         postRequest.setAddress(address);
         onNext(new Gson().toJson(postRequest));
@@ -139,24 +137,28 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
     }
 
     public void onNext(String jsonData) {
-        Fragment fragment = new UtilitiesPostFragment();
-
-        Bundle bundle = new Bundle();
-
-        bundle.putString(Config.POST_BUNDEL_RES, new Gson().toJson(postRequest));
-        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
-
-        FragmentTransaction fragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
-
-        fragment.setArguments(bundle);
-
-        fragmentTransaction.add(R.id.fl_post, fragment);
-
-        fragmentTransaction.addToBackStack("utilitiespost");
-
-        fragmentTransaction.commit();
 
         Log.d("CheckLog", new Gson().toJson(postRequest));
+
+        Intent intent = new Intent();
+
+        intent.putExtra(Config.DATA_CALL_BACK, "3");
+
+        intent.putExtra(Config.POST_BUNDEL_RES, jsonData);
+
+        intent.putExtra(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
+
+
+        setResult(RESULT_OK, intent);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.POST_BUNDEL_RES, jsonData);
+        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
+
+        onBackData();
+
+        getBaseActivity().goToFragmentCallBackData(R.id.fl_post, new UtilitiesPostFragment(), bundle, getOnFragmentDataCallBack());
+
     }
 
 
