@@ -20,7 +20,7 @@ let Information = db.model('Information', informationSchema);
 let Address = db.model('Address', addressSchema);
 let User = db.model('User', userSchema, 'users');
 let Admin = db.model('Admin', adminSchema, 'admins');
-let Product = db.model('Product', postSchema, 'postProduct');
+let Product = db.model('Product', postSchema, 'products');
 
 
 db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.net/TimtroDatabase?retryWrites=true&w=majority', {
@@ -34,10 +34,10 @@ db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.ne
 let app = express();
 
 let path = require('path');
-const { json } = require('body-parser');
+const {json} = require('body-parser');
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use(body.json());
-app.use(body.urlencoded({ extended: true }));
+app.use(body.urlencoded({extended: true}));
 app.engine('.hbs', hbs({
     extname: 'hbs',
     defaultLayout: '',
@@ -58,13 +58,29 @@ console.log('Localhost: ' + localNumber);
 //     console.trace();
 // };
 
+
+function checkData(data) {
+    if (data == undefined) {
+        return false
+    }
+    if (data == null) {
+        return false
+    }
+    if (data == '') {
+        return false
+    }
+    return true
+}
+
 //tk Admin
 let adminNow = ''
 // đăng nhập
 
 //lay danh sach dia chi
-request('https://lifecardtest.viviet.vn/lifecard-app/area/def', { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
+request('https://lifecardtest.viviet.vn/lifecard-app/area/def', {json: true}, (err, res, body) => {
+    if (err) {
+        return console.log(err);
+    }
     console.log(body.url);
     console.log(body.explanation);
 });
@@ -82,7 +98,7 @@ storage = multer.diskStorage({
 });
 
 app.get('/', function (request, response) {
-    response.render('login', { status: 'none', user: '', pass: '' });
+    response.render('login', {status: 'none', user: '', pass: ''});
 });
 
 let nameDN = '', allAdmin = '';
@@ -102,7 +118,7 @@ app.get('/index', async function (request, response) {
         console.log(user + " " + sm);
     }
 
-    let admins = await Admin.find({ username: user, password: pass }).lean();   //dk
+    let admins = await Admin.find({username: user, password: pass}).lean();   //dk
 
     if (admins.length <= 0 && sm == 1) {
         response.render('login', {
@@ -127,7 +143,7 @@ app.get('/createAdAc', async function (request, response) {
     let search = request.query.search;
     let nameSP = request.query.nameSP;
     if (search == 1 && nameSP) {
-        let seachAdmin = await Admin.find({ username: nameSP }).lean();
+        let seachAdmin = await Admin.find({username: nameSP}).lean();
         response.render('createAdAc', {
             status: 'none',
             data: seachAdmin,
@@ -143,7 +159,7 @@ app.get('/createAdAc', async function (request, response) {
             let nPhone = request.query.nPhone;
             let nAddress = request.query.nAddress;
 
-            let findAdmin = await Admin.find({ username: nUser }).lean();   //dk
+            let findAdmin = await Admin.find({username: nUser}).lean();   //dk
 
             if (findAdmin.length <= 0) {
                 let newAdmin = new Admin({
@@ -203,7 +219,7 @@ app.get('/createAdAc', async function (request, response) {
 
             console.log('edit ad ' + request.query.nId);
 
-            let admins = await Admin.find({ username: nUser, password: nPass }).lean();   //dk
+            let admins = await Admin.find({username: nUser, password: nPass}).lean();   //dk
 
             if (admins.length >= 0) {
                 // console.log(nId + "edit ad");
@@ -343,9 +359,9 @@ app.get('/postManage', async function (request, response) {
 app.get('/confirmPost', async function (request, response) {
     let _id = request.query.idProduct;
     try {
-        let productFind = await Product.find({ _id: _id }).lean();
+        let productFind = await Product.find({_id: _id}).lean();
         let product = productFind[0]
-        let findUserProduct = await User.find({ _id: product.userId }).lean();
+        let findUserProduct = await User.find({_id: product.userId}).lean();
         let userProduct = findUserProduct[0]
 
         console.log('[GET LIST FIND] Product\n' + JSON.stringify(product) + '\n User \n' + JSON.stringify(userProduct) + '\n AdminNow: ' + adminNow + '\n------------------->')
@@ -356,7 +372,7 @@ app.get('/confirmPost', async function (request, response) {
         });
     } catch (e) {
         console.log('Lỗi: ' + e)
-        response.render('login', { status: 'none', user: '', pass: '' });
+        response.render('login', {status: 'none', user: '', pass: ''});
     }
 
 });
@@ -396,7 +412,7 @@ app.post('/postUpdateUserPass', async function (request, response) {
     let nPhone = request.body.nPhone;
     let nPassword = request.body.nPassword;
 
-    let searchUser = await User.find({ phone: nPhone }).lean();
+    let searchUser = await User.find({phone: nPhone}).lean();
 
     let update = await User.findByIdAndUpdate(searchUser[0]._id, {
         password: nPassword,
@@ -412,19 +428,9 @@ app.post('/postUpdateUserPass', async function (request, response) {
 
 });
 
-// trả về dữ liệu trong database
-app.get('/getAlluser', async function (request, response) {
-    let users = await User.find({});
-    response.send(users);
-});
-//trả ve danh sách bài đăng
-app.get('/getAllProduct', async function (request, response) {
-    let successPost = await Product.find({ status: '1' });
-    response.send(successPost);
-});
 
 //post anh
-app.post("/upload-photo", multer({ storage: storage }).single('photo'), function (req, res) {
+app.post("/upload-photo", multer({storage: storage}).single('photo'), function (req, res) {
 
     var jsonResult = [];
     jsonResult.push(req.file.path)
@@ -434,7 +440,7 @@ app.post("/upload-photo", multer({ storage: storage }).single('photo'), function
     })
 });
 
-app.post("/upload-photo-array", multer({ storage: storage }).array('photo', 5), function (req, res) {
+app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), function (req, res) {
 
     var jsonResult = [];
 
@@ -447,7 +453,114 @@ app.post("/upload-photo-array", multer({ storage: storage }).array('photo', 5), 
     })
 });
 
-// dang bai
+// trả về dữ liệu trong database
+app.get('/getAlluser', async function (request, response) {
+    let users = await User.find({});
+    response.send(users);
+});
+
+//trả ve danh sách bài đăng cua nguoi dung
+app.post('/user-product', async function (request, response) {
+
+    let userId = request.body.userId;
+    try {
+        if (!checkData(userId)) {
+            let mess = 'insufficient data'
+            response.status(501).json({
+                message: mess.toUpperCase()
+            })
+        } else {
+            let successPost = await Product.find({userId: userId}).lean();
+            console.log(successPost);
+            if (!successPost) {
+                response.status(501).json({
+                    message: 'Fail'
+                })
+            } else {
+                response.status(200).json({
+                    message: 'OK',
+                    response: {
+                        count: successPost.length,
+                        products: successPost
+                    }
+                })
+            }
+        }
+    } catch (e) {
+        console.log("[Catch] " + e)
+        response.status(500).json({
+            message: 'Server error'
+        })
+    }
+
+});
+//trả ve danh sách bài đăng
+app.post('/list-product', async function (request, response) {
+    try {
+        let successPost = await Product.find({status: '1'}).lean();
+        console.log(successPost);
+        if (!successPost) {
+            console.log('successPost = Fail')
+            response.status(501).json({
+                message: 'Fail'
+            })
+        } else {
+            if (successPost === undefined || successPost === null || successPost.length <= 0) {
+                console.log('successPost === undefined || successPost === null || successPost.length <= 0');
+                response.status(501).json({
+                    message: 'Fail'
+                })
+            } else {
+                response.status(200).json({
+                    message: 'OK',
+                    response: {
+                        count: successPost.length,
+                        products: successPost
+                    }
+                })
+            }
+        }
+    } catch (e) {
+        console.log("[Catch] " + e)
+        response.status(500).json({
+            message: 'Server error'
+        })
+    }
+
+});
+
+//tim kiem nguoi dung
+app.post('/find-user', async function (request, response) {
+    let id = request.body.id;
+    try {
+        if (id == undefined || id == null || id == "") {
+            response.status(501).json({
+                message: 'PRODUCT NOT FOUND'
+            })
+            return
+        }
+        let user = await User.find({_id: id}).lean();
+        console.log(user);
+        if (!user) {
+            response.status(501).json({
+                message: 'Fail'
+            })
+        } else {
+            response.status(200).json({
+                message: 'OK',
+                response: {
+                    user: user[0]
+                }
+            })
+        }
+    } catch (e) {
+        response.status(500).json({
+            message: 'Server error'
+        })
+    }
+});
+
+// them bai dang
 app.post('/init-product', async function (request, response) {
 
     let category = request.body.category;
@@ -456,31 +569,11 @@ app.post('/init-product', async function (request, response) {
     let utilities = request.body.utilities;
     let content = request.body.content;
     let idUser = request.body.idUser;
-    let status = request.body.status;
-    let createAt = request.body.createAt;
-    let updateAt = request.body.updateAt;
-    let deleteAt = request.body.deleteAt;
     let linkProduct = request.body.linkProduct;
 
-    if (status == null || status == "") {
-        status = ""
-    }
-    if (linkProduct == null || linkProduct == "") {
-        linkProduct = ""
-    }
-    if (createAt == null || createAt == "") {
-        createAt = ""
-    }
-    if (updateAt == null || updateAt == "") {
-        updateAt = ""
-    }
-    if (deleteAt == null || deleteAt == "") {
-        deleteAt = ""
-    }
     try {
-        let dateNow = Date.now()
-        createAt = moment(dateNow).format('YYYY-MM-DD hh:mm:ss');
-        status = '-1'
+        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+        let status = '-1'
         let newProduct = new Product({
             category: category,
             information: information,
@@ -490,24 +583,57 @@ app.post('/init-product', async function (request, response) {
             userId: idUser,
             status: status,
             createAt: createAt,
-            updateAt: updateAt,
-            deleteAt: deleteAt,
-            linkProduct: linkProduct
+            updateAt: "",
+            deleteAt: "",
+            linkProduct: ""
         });
-        console.log(newProduct);
         if (!newProduct) {
-            response.status(500).json({
+            response.status(501).json({
                 message: 'Fail'
             })
         } else {
             let product = await newProduct.save();
+            console.log('[ADD-PRODUCT] _id: ' + product._id + ' --------->')
             response.status(200).json({
                 message: 'OK'
             })
         }
     } catch (e) {
-        response.status(400).json({
-            message: 'Lỗi: ' + e
+        response.status(500).json({
+            message: 'Server error'
         })
     }
+});
+// sua bai dang
+app.post('/update-product', async function (request, response) {
+    let _id = request.body._id;
+    let idUser = request.body.idUser;
+
+    let category = request.body.category;
+    let information = request.body.information;
+    let mAddress = request.body.address;
+    let utilities = request.body.utilities;
+    let content = request.body.content;
+    let linkProduct = request.body.linkProduct;
+    //validate các thứ
+    //kiểm tra trong danh sách các sản phẩm của thằng user này xem có bài đăng nào trùng không
+    //Nếu đúng thì cho phép xóa
+    //Nếu sai thì trả về là bạn đéo có tuổi để xóa sản phẩm này
+
+    let status = await Product.findByIdAndUpdate(request.query.nId, {
+        username: nUser,
+        password: nPass,
+        name: nName,
+        phone: nPhone,
+        address: nAddress,
+    });
+});
+// xoa bai dang
+app.post('/delete-product', async function (request, response) {
+    let _id = request.body._id;
+    let idUser = request.body.idUser;
+    //kiểm tra trong danh sách các sản phẩm của thằng user này xem có bài đăng nào trùng không
+    //Nếu đúng thì cho phép xóa
+    //Nếu sai thì trả về là bạn đéo có tuổi để xóa sản phẩm này
+    let status = await Admin.findByIdAndDelete(_id);
 });
