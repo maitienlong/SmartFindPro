@@ -11,9 +11,7 @@ const informationSchema = mongoose.Schema({
     waterUnit: {type: String},
     describe: {type: String},
     image: {
-        type: Object,
-        required: false,
-        ref: 'ImageProductSchema'
+        type: [String]
     }
 });
 module.exports = informationSchema;

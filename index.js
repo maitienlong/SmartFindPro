@@ -14,9 +14,7 @@ let postSchema = require('./model/postSchema');
 let addressSchema = require('./model/addressSchema')
 let informationSchema = require('./model/informationSchema')
 let identityCardSchema = require('./model/identityCardSchema')
-let imageProductSchema = require('./model/imageProductSchema')
 
-let ImageProductSchema = db.model('ImageProductSchema', imageProductSchema);
 let IdentityCard = db.model('IdentityCard', identityCardSchema);
 let Information = db.model('Information', informationSchema);
 let Address = db.model('Address', addressSchema);
