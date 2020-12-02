@@ -11,6 +11,7 @@ import com.poly.smartfindpro.data.model.area.req.AreaReqHeader;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.req.BodyReq;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.area.result.ListArea;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.ui.login.forgotPassword.ForgotPasswordContract;
@@ -79,19 +80,10 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
         AreaRequest request = new AreaRequest();
         request.setAreaReqHeader(areaReqHeader());
 
-        String base64demo = "eyJhcmVhVHlwZSI6IkQiLCJwYXJlbnRDb2RlIjoiSE5PIn0=";
         byte[] jsonByte = jsonData.getBytes();
-        String base64 = new String(Base64.encode(jsonByte, 1));
+        String base64 = new String(Base64.encode(jsonByte, 2));
 
-        Log.d("CheckJson",jsonData);
-
-
-
-//        request.setBody("eyJhcmVhVHlwZSI6IkQiLCJwYXJlbnRDb2RlIjoiSE5PIn0=");
-
-        request.setBody(new String(Base64.encode(jsonByte, 0)));
-
-        Log.d("CheckJson",new Gson().toJson(request));
+        request.setBody(base64);
 
         Type type = new TypeToken<ResultArea>() {
         }.getType();
@@ -105,13 +97,16 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
 
                     resultArea = new Gson().fromJson(jsonData, type);
 
-                    Log.d("CheckJson", new Gson().toJson(resultArea));
-
-                    Log.d("CheckJson", String.valueOf(areaType));
-
                     if (areaType == 0) {
-                        mViewModel.onShowDistrict(resultArea);
+                        for (int i = 0; i < resultArea.getListArea().size(); i++) {
+                            if(!resultArea.getListArea().get(i).getProvince().equals("HNO")){
+                                resultArea.getListArea().remove(i);
+                            }
+                        }
+                        mViewModel.onShowProvince(resultArea);
                     } else if (areaType == 1) {
+                        mViewModel.onShowDistrict(resultArea);
+                    } else if(areaType == 2){
                         mViewModel.onShowCommune(resultArea);
                     }
 
@@ -126,5 +121,9 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
                 Log.d("CheckJson", t.toString());
             }
         });
+    }
+
+    public void onNext(){
+        mViewModel.onSubmitData();
     }
 }

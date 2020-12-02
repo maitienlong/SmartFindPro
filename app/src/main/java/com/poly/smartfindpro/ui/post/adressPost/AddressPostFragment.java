@@ -36,6 +36,10 @@ import java.lang.reflect.Type;
 public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPostBinding, AddressPostPresenter> implements AddressPostContract.ViewModel {
     private PostRequest postRequest;
 
+    private Address address;
+
+    private String P, D, C;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_address_post;
@@ -54,48 +58,91 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
         ReciData();
 
+        address = new Address();
+
         mPresenter = new AddressPostPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
 
+        BodyReq proviceReq = new BodyReq("P", "");
+        mPresenter.getDataApiArea(0, new Gson().toJson(proviceReq));
 
-        BodyReq bodyReq = new BodyReq("D", "HNO");
+        mBinding.spnProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
+                BodyReq bodyReq = new BodyReq("D", listArea.getAreaCode());
+                mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
+                P = listArea.getAreaName();
+            }
 
-        mPresenter.getDataApiArea(0, new Gson().toJson(bodyReq));
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-//        mBinding.spnDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
-//                BodyReq bodyReq = new BodyReq("C", listArea.getDistrict());
-//                String jsonData = new Gson().toJson(bodyReq);
-//                Log.d("CheckJson", jsonData);
-//                mPresenter.getDataApiArea(1,jsonData);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+            }
+        });
+
+
+        mBinding.spnDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
+                BodyReq bodyReq = new BodyReq("C", listArea.getAreaCode());
+                mPresenter.getDataApiArea(2, new Gson().toJson(bodyReq));
+
+                D = listArea.getAreaName();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        mBinding.spnComune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ListArea listArea = (ListArea) parent.getItemAtPosition(position);
+                C = listArea.getAreaName();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
     protected void initData() {
 
+    }
 
+    public void onSubmitData(){
+        address.setProvinceCity(P);
+        address.setDistrictsTowns(D);
+        address.setCommuneWardTown(C);
+        address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
+        postRequest.setAddress(address);
+        onNext(new Gson().toJson(postRequest));
+    }
+
+    public void onShowProvince(ResultArea resultArea) {
+        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+
+        mBinding.spnProvince.setAdapter(adapter);
     }
 
     public void onShowDistrict(ResultArea resultArea) {
-        SpinnerAreaAdapter adDistrict = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
 
-        mBinding.spnDistrict.setAdapter(adDistrict);
+        mBinding.spnDistrict.setAdapter(adapter);
     }
 
     public void onShowCommune(ResultArea resultArea) {
 
-        SpinnerAreaAdapter adDistrict = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
+        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
 
-        mBinding.spnComune.setAdapter(adDistrict);
+        mBinding.spnComune.setAdapter(adapter);
     }
 
     public void onNext(String jsonData) {
