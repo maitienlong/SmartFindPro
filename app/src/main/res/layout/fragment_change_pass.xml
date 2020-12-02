@@ -5,23 +5,38 @@
 
     <data>
 
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.user.setting.changepass.ChangePassPresenter" />
     </data>
 
-
+    <RelativeLayout
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
+
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
 
-
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:onClick="@{()->presenter.onBackClick()}"
+            android:id="@+id/cmtb"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
         <com.google.android.material.textfield.TextInputLayout
             style="@style/LayoutEditText"
             android:hint="@string/change_pass_old">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPassOld"
+                android:background="@drawable/custom_edt_change_pass"
                 style="@style/EditText"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:inputType="textPassword" />
@@ -34,6 +49,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPassNew"
                 style="@style/EditText"
+                android:background="@drawable/custom_edt_change_pass"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -45,6 +61,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPassConfirm"
                 style="@style/EditText"
+                android:background="@drawable/custom_edt_change_pass"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,5 +79,5 @@
 
 
     </LinearLayout>
-
+    </RelativeLayout>
 </layout>
