@@ -1,9 +1,21 @@
 let mongoose = require('mongoose');
 const addressSchema = mongoose.Schema({
-    provinceCity: {type: String},
-    districtsTowns: {type: String},
-    communeWardTown: {type: String},
-    detailAddress: {type: String},
+    provinceCity: {
+        type: String,
+        required: true
+    },
+    districtsTowns: {
+        type: String,
+        required: true
+    },
+    communeWardTown: {
+        type: String,
+        required: true
+    },
+    detailAddress: {
+        type: String,
+        required: true
+    },
     location: {
         latitude: {
             type: String

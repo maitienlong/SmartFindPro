@@ -1,23 +1,24 @@
 let mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    category: {type: String},
-    information: {
-        type: Object,
-        required: false,
-        ref: 'Information'
+    product: {
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: 'InforProduct'
     },
     address: {
-        type: Object,
-        required: false,
+        type: mongoose.Types.ObjectId,
+        required: true,
         ref: 'Address'
     },
-    utilities: {type: [String]},
-    content: {type: String},
     userId: {
         type: mongoose.Types.ObjectId,
-        required: false,
+        required: true,
         ref: 'User'
+    },
+    content: {
+        type: String,
+        required: true
     },
     status: {type: String},
     deleteAt: {

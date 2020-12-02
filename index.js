@@ -14,13 +14,17 @@ let postSchema = require('./model/postSchema');
 let addressSchema = require('./model/addressSchema')
 let informationSchema = require('./model/informationSchema')
 let identityCardSchema = require('./model/identityCardSchema')
+let inforProductSchema = require('./model/inforProductSchema')
+let postResponseSchema = require('./model/PostResponseSchema')
 
+let PostResponseSchema = db.model('PostResponseSchema', postResponseSchema);
 let IdentityCard = db.model('IdentityCard', identityCardSchema);
 let Information = db.model('Information', informationSchema);
-let Address = db.model('Address', addressSchema);
+let Address = db.model('Address', addressSchema, 'address');
+let InforProduct = db.model('InforProduct', inforProductSchema, 'product');
 let User = db.model('User', userSchema, 'users');
 let Admin = db.model('Admin', adminSchema, 'admins');
-let Product = db.model('Product', postSchema, 'products');
+let Product = db.model('Product', postSchema, 'postProduct');
 
 
 db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.net/TimtroDatabase?retryWrites=true&w=majority', {
@@ -64,6 +68,9 @@ function checkData(data) {
         return false
     }
     if (data == null) {
+        return false
+    }
+    if (data == []) {
         return false
     }
     if (data == '') {
@@ -462,10 +469,10 @@ app.get('/getAlluser', async function (request, response) {
 //trả ve danh sách bài đăng cua nguoi dung
 app.post('/user-product', async function (request, response) {
 
-    let userId = request.body.userId;
+    let userId = request.body.id;
     try {
         if (!checkData(userId)) {
-            let mess = 'insufficient data'
+            let mess = 'PRODUCT NOT FOUND'
             response.status(501).json({
                 message: mess.toUpperCase()
             })
@@ -477,11 +484,42 @@ app.post('/user-product', async function (request, response) {
                     message: 'Fail'
                 })
             } else {
+                let product = [];
+                for (let i = 0; i < successPost.length; i++) {
+                    let index = successPost[i]
+                    let inforProduct = await InforProduct.find({_id: index.product}).lean();
+                    let address = await Address.find({_id: index.address}).lean();
+
+                    if (checkData(inforProduct) && checkData(address)) {
+                        inforProduct = inforProduct[0]
+                        address = address[0]
+                        let prd = new PostResponseSchema({
+                            _id: index._id,
+                            category: inforProduct.category,
+                            information: inforProduct.information,
+                            address: address,
+                            utilities: inforProduct.utilities,
+                            content: index.content,
+                            status: index.status,
+                            createAt: index.createAt,
+                            updateAt: index.updateAt,
+                            deleteAt: index.deleteAt,
+                            linkProduct: index.linkProduct
+                        })
+                        if (prd) {
+                            console.log('id: ' + prd._id)
+                            product.push(prd)
+                        }
+                    }
+                }
+                if (product.length <= 0) {
+                    product = null
+                }
                 response.status(200).json({
                     message: 'OK',
                     response: {
                         count: successPost.length,
-                        products: successPost
+                        product
                     }
                 })
             }
@@ -498,42 +536,77 @@ app.post('/user-product', async function (request, response) {
 app.post('/list-product', async function (request, response) {
     try {
         let successPost = await Product.find({status: '1'}).lean();
-        console.log(successPost);
         if (!successPost) {
             console.log('successPost = Fail')
             response.status(501).json({
                 message: 'Fail'
             })
         } else {
-            if (successPost === undefined || successPost === null || successPost.length <= 0) {
+            if (!checkData(successPost)) {
                 console.log('successPost === undefined || successPost === null || successPost.length <= 0');
                 response.status(501).json({
                     message: 'Fail'
                 })
             } else {
+                let product = [];
+                for (let i = 0; i < successPost.length; i++) {
+                    let index = successPost[i]
+                    let inforProduct = await InforProduct.find({_id: index.product}).lean();
+                    let address = await Address.find({_id: index.address}).lean();
+                    let user = await User.find({_id: index.userId}).lean();
+
+                    if (checkData(inforProduct) && checkData(address) && checkData(user)) {
+                        inforProduct = inforProduct[0]
+                        address = address[0]
+                        user = user[0]
+                        let prd = new PostResponseSchema({
+                            _id: index._id,
+                            category: inforProduct.category,
+                            information: inforProduct.information,
+                            address: address,
+                            utilities: inforProduct.utilities,
+                            content: index.content,
+                            user: user,
+                            status: index.status,
+                            createAt: index.createAt,
+                            updateAt: index.updateAt,
+                            deleteAt: index.deleteAt,
+                            linkProduct: index.linkProduct
+                        })
+                        if (prd) {
+                            console.log('id: ' + prd._id)
+                            product.push(prd)
+                        }
+                    }
+                }
+                if (product.length <= 0) {
+                    product = null
+                }
                 response.status(200).json({
                     message: 'OK',
                     response: {
                         count: successPost.length,
-                        products: successPost
+                        product
                     }
                 })
             }
         }
-    } catch (e) {
+    } catch
+        (e) {
         console.log("[Catch] " + e)
         response.status(500).json({
             message: 'Server error'
         })
     }
 
-});
+})
+;
 
 //tim kiem nguoi dung
 app.post('/find-user', async function (request, response) {
     let id = request.body.id;
     try {
-        if (id == undefined || id == null || id == "") {
+        if (!checkData(id)) {
             response.status(501).json({
                 message: 'PRODUCT NOT FOUND'
             })
@@ -562,43 +635,75 @@ app.post('/find-user', async function (request, response) {
 
 // them bai dang
 app.post('/init-product', async function (request, response) {
+    let idUser = request.body.idUser;
 
+    let utilities = request.body.utilities;
     let category = request.body.category;
     let information = request.body.information;
-    let mAddress = request.body.address;
-    let utilities = request.body.utilities;
-    let content = request.body.content;
-    let idUser = request.body.idUser;
-    let linkProduct = request.body.linkProduct;
 
+    let mAddress = request.body.address;
+
+    let content = request.body.content;
+    let linkProduct = request.body.linkProduct;
     try {
-        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-        let status = '-1'
-        let newProduct = new Product({
+        //lưu vào các bảng tương ứng
+        let newInforProduct = new InforProduct({
             category: category,
             information: information,
-            address: mAddress,
-            utilities: utilities,
-            content: content,
-            userId: idUser,
-            status: status,
-            createAt: createAt,
-            updateAt: "",
-            deleteAt: "",
-            linkProduct: ""
+            utilities: utilities
         });
-        if (!newProduct) {
-            response.status(501).json({
-                message: 'Fail'
-            })
+        let newProductAddress = new Address({
+            provinceCity: mAddress.provinceCity,
+            districtsTowns: mAddress.districtsTowns,
+            communeWardTown: mAddress.communeWardTown,
+            detailAddress: mAddress.detailAddress,
+            location: {
+                latitude: "",
+                longitude: ""
+            }
+        });
+
+        if (checkData(idUser) && newInforProduct && newProductAddress) {
+            let user = await User.find({_id: idUser}).lean();
+            if (user.length <= 0) {
+                return
+            }
+            //luu data vao cac bang
+            let product = await newInforProduct.save();
+            let address = await newProductAddress.save();
+
+            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+            let status = '-1'
+            let newProduct = new Product({
+                product: product._id,
+                address: address._id,
+                userId: idUser,
+                content: content,
+                status: status,
+                createAt: createAt,
+                updateAt: "",
+                deleteAt: "",
+                linkProduct: ""
+            });
+            if (!newProduct) {
+                response.status(501).json({
+                    message: 'Fail'
+                })
+            } else {
+                let product = await newProduct.save();
+                console.log('[ADD-PRODUCT] _id: ' + product._id + ' --------->')
+                response.status(200).json({
+                    message: 'OK'
+                })
+            }
         } else {
-            let product = await newProduct.save();
-            console.log('[ADD-PRODUCT] _id: ' + product._id + ' --------->')
-            response.status(200).json({
-                message: 'OK'
+            let mess = 'insufficient data'
+            response.status(501).json({
+                message: mess.toUpperCase()
             })
         }
     } catch (e) {
+        console.log("[Init-product 500]" + e)
         response.status(500).json({
             message: 'Server error'
         })
