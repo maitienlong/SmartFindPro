@@ -5,16 +5,23 @@
 
     <data>
 
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.post.inforPost.InforPostPresenter" />
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingHorizontal="@dimen/_10sdp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -22,30 +29,30 @@
                 android:orientation="vertical">
 
                 <TextView
-                     android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tv_category"
-                    android:textSize="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
+                    android:text="@string/tv_category"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp"
                     android:textStyle="bold">
 
                 </TextView>
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/btn_nha_tro"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="@string/btn_rental_hous"
                         android:background="@drawable/btn_category_selector"
+                        android:text="@string/btn_rental_hous"
                         android:textColor="@drawable/btn_category_textcolor_selector">
 
                     </Button>
@@ -55,16 +62,14 @@
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_category_selector"
-                        android:textColor="@drawable/btn_category_textcolor_selector"
-                        android:text="@string/btn_apartment">
-
-                    </Button>
+                        android:text="@string/btn_apartment"
+                        android:textColor="@drawable/btn_category_textcolor_selector"></Button>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/btn_nguyen_can"
@@ -72,8 +77,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/btn_category_selector"
-                        android:textColor="@drawable/btn_category_textcolor_selector"
-                        android:text="@string/btn_whole_house">
+                        android:text="@string/btn_whole_house"
+                        android:textColor="@drawable/btn_category_textcolor_selector">
 
                     </Button>
 
@@ -82,8 +87,8 @@
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_category_selector"
-                        android:textColor="@drawable/btn_category_textcolor_selector"
-                        android:text="@string/btn_pairing">
+                        android:text="@string/btn_pairing"
+                        android:textColor="@drawable/btn_category_textcolor_selector">
 
                     </Button>
                 </LinearLayout>
@@ -98,47 +103,51 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp"
                     android:layout_marginVertical="@dimen/_10sdp"
-                    android:text="@string/tv_infor">
+                    android:text="@string/tv_infor"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp">
 
                 </TextView>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:text="@string/tv_amount_person">
-                        </TextView>
+                            android:text="@string/tv_amount_person"></TextView>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="@dimen/_100sdp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edt_amount_person"
-                                android:inputType="number"
                                 android:text="1"
+                                android:id="@+id/edt_amount_person"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:inputType="number" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="2.5"
                         android:orientation="vertical">
 
                         <TextView
@@ -150,15 +159,16 @@
                         </TextView>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="@dimen/_200sdp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_price"
-                                android:inputType="number"
                                 android:text="1"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:inputType="number" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -167,13 +177,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:weightSum="2"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:weightSum="2.5">
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -185,24 +195,26 @@
                         </TextView>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="@dimen/_150sdp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_deposit"
-                                android:inputType="number"
                                 android:text="1"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:inputType="number" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="1.5"
                         android:orientation="vertical">
 
                         <TextView
@@ -216,8 +228,8 @@
                         <RadioGroup
                             android:id="@+id/rgGender"
                             android:layout_width="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
                             android:orientation="horizontal">
 
                             <RadioButton
@@ -248,14 +260,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:weightSum="2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:weightSum="3">
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
                         android:orientation="vertical">
 
                         <TextView
@@ -266,28 +278,47 @@
 
                         </TextView>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edt_electricity_bill"
-                                android:inputType="number"
-                                android:text="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:hint="Số" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3.5">
 
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edt_electricity_bill"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="1"
+                                    android:background="@drawable/custom_edt_change_pass"
+                                    android:inputType="number" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="@dimen/_7sdp"
+                                android:layout_weight="1.3"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:gravity="center"
+                                android:padding="@dimen/_7sdp"
+                                android:text="Số" />
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_weight="1.5"
+                        android:orientation="vertical"
+                        android:weightSum="5">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -297,20 +328,40 @@
 
                         </TextView>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edt_water_bill"
-                                android:inputType="number"
-                                android:text="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:hint="Khối" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edt_water_bill"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/custom_edt_change_pass"
+                                    android:text="1"
+                                    android:inputType="number" />
 
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="@dimen/_7sdp"
+                                android:layout_weight="1.3"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:gravity="center"
+                                android:padding="@dimen/_7sdp"
+                                android:text="Khối" />
+
+                        </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -322,18 +373,47 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_images" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:weightSum="10">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvImages"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8" />
+
+                    <ImageView
+                        android:id="@+id/imgAddImages"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="2"
+                        android:onClick="@{()->presenter.openChoosePhoto()}"
+                        android:src="@drawable/icon_add" />
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp">
+                    android:layout_height="@dimen/_100sdp"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_description"
                         android:layout_width="match_parent"
-                        android:gravity="start"
-                        android:text="1"
                         android:layout_height="match_parent"
-                        android:hint="Thêm mô tả ..." />
-
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:gravity="start"
+                        android:hint="Thêm mô tả ..."
+                        android:padding="@dimen/_10sdp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -342,9 +422,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:paddingHorizontal="@dimen/_10sdp"
                     android:background="@drawable/custom_button_infor"
+                    android:paddingHorizontal="@dimen/_30sdp"
                     android:text="@string/btn_continue"
                     android:textColor="@color/white" />
             </LinearLayout>

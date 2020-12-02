@@ -2,11 +2,11 @@
 package com.poly.smartfindpro.ui.post.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PostRequest {
-
     @SerializedName("category")
     @Expose
     private String category;
@@ -25,9 +25,6 @@ public class PostRequest {
     @SerializedName("idUser")
     @Expose
     private String idUser;
-    @SerializedName("time")
-    @Expose
-    private String time;
 
     public String getCategory() {
         return category;
@@ -75,14 +72,6 @@ public class PostRequest {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
 }

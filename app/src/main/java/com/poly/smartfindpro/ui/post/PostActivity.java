@@ -1,102 +1,176 @@
 package com.poly.smartfindpro.ui.post;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.callback.OnFragmentCloseCallback;
+import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
-import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.anim.ProgressBarAnimation;
+import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
+import com.poly.smartfindpro.ui.post.model.ImageInforPost;
+import com.poly.smartfindpro.ui.post.model.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
-public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel{
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
-    private boolean isStatusInfor = false, isStatusAddress = false, isStatusTools = false, isStatusConfirm = false;
+public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, PostPresenter> implements PostContract.ViewModel, OnFragmentDataCallBack {
 
-    private ViewPagerPostAdapter viewPagerPostAdapter;
+    private PostRequest postRequest;
+
+    private List<ImageInforPost> imagePost;
+
+    private Type typeData;
+
+    private Type typePhoto;
+
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_post;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        mBinding.pbTientrinh.setMax(100);
 
-        fragmentTransaction.add(R.id.fl_post, new InforPostFragment());
+        mBinding.pbTientrinh.getIndeterminateDrawable().setTint(R.color.color_progress_loading);
 
-        fragmentTransaction.addToBackStack("inforpost");
+        goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
 
-        fragmentTransaction.commit();
-
+        statusProress("1");
     }
 
     @Override
     protected void initData() {
+        mPresenter = new PostPresenter(this, this);
 
+        mBinding.setPresenter(mPresenter);
 
+        postRequest = new PostRequest();
+
+        imagePost = new ArrayList<>();
+
+        typeData = new TypeToken<PostRequest>() {
+        }.getType();
+
+        typePhoto = new TypeToken<List<ImageInforPost>>() {
+        }.getType();
     }
+
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.POST_BUNDEL_RES, new Gson().toJson(postRequest));
+        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, new Gson().toJson(imagePost));
 
         switch (v.getId()) {
             case R.id.btn_infor:
-
-                fragmentManager.popBackStack("inforpost",0);
-
+                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
+                statusProress("1");
                 break;
 
             case R.id.btn_address:
-
-                fragmentManager.popBackStack("addresspost",0);
-
+                goToFragmentCallBackData(R.id.fl_post, new AddressPostFragment(), bundle, this::onResult);
+                statusProress("2");
                 break;
 
             case R.id.btn_tool:
-
+                goToFragmentCallBackData(R.id.fl_post, new UtilitiesPostFragment(), bundle, this::onResult);
+                statusProress("3");
                 break;
 
             case R.id.btn_confirm:
-                Toast.makeText(PostActivity.this, "A", Toast.LENGTH_SHORT).show();
+                goToFragmentCallBackData(R.id.fl_post, new ConfirmPostFragment(), bundle, this::onResult);
+                statusProress("4");
                 break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d("CheckValue", String.valueOf(requestCode));
-        if (resultCode == Activity.RESULT_OK) {
-            if (data.hasExtra("demo")) {
-                String name = data.getStringExtra("demo");
-                Log.d("CheckValue", name);
-            }
+    public void statusProress(String isStatus) {
+        switch (isStatus) {
+            case "1":
+                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 10);
+                anim.setDuration(1000);
+                mBinding.pbTientrinh.startAnimation(anim);
+                mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgAddress.setImageResource(R.mipmap.btn_rdo_false);
+                mBinding.imgTool.setImageResource(R.mipmap.btn_rdo_false);
+                mBinding.imgConfirm.setImageResource(R.mipmap.btn_rdo_false);
+
+                break;
+
+            case "2":
+                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 10, 50);
+                anim2.setDuration(1000);
+                mBinding.pbTientrinh.startAnimation(anim2);
+                mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgAddress.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgTool.setImageResource(R.mipmap.btn_rdo_false);
+                mBinding.imgConfirm.setImageResource(R.mipmap.btn_rdo_false);
+                break;
+
+            case "3":
+                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 50, 75);
+                anim3.setDuration(1000);
+                mBinding.pbTientrinh.startAnimation(anim3);
+                mBinding.pbTientrinh.setProgress(75);
+                mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgAddress.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgTool.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgConfirm.setImageResource(R.mipmap.btn_rdo_false);
+                break;
+            case "4":
+                ProgressBarAnimation anim4 = new ProgressBarAnimation(mBinding.pbTientrinh, 75, 100);
+                anim4.setDuration(1000);
+                mBinding.pbTientrinh.startAnimation(anim4);
+                mBinding.pbTientrinh.setProgress(100);
+                mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgAddress.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgTool.setImageResource(R.mipmap.btn_rdo_true);
+                mBinding.imgConfirm.setImageResource(R.mipmap.btn_rdo_true);
+                break;
+
+
         }
+
+
     }
 
+
+    @Override
+    public void onResult(int resultCode, Intent intent) {
+        Log.d("onResult", resultCode + "");
+        if (resultCode == RESULT_OK && intent.hasExtra(Config.DATA_CALL_BACK)) {
+            statusProress(intent.getStringExtra(Config.DATA_CALL_BACK));
+            postRequest = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES), typeData);
+            imagePost = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES_PHOTO), typePhoto);
+        } else {
+
+        }
+
+    }
 
 
 }

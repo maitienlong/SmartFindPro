@@ -6,10 +6,10 @@ import com.poly.smartfindpro.basedatabind.BaseView;
 public interface PostContract {
 
     interface ViewModel extends BaseView {
-
+        void statusProress(String isStatus);
     }
 
     interface Presenter extends BasePresenter {
-
+        void nextFragment(String isStatus, String jsonData, String jsonPhoto);
     }
 }
