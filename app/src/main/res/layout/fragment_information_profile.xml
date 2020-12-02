@@ -7,134 +7,139 @@
             name="presenter"
             type="com.poly.smartfindpro.ui.user.setting.information.InforPresenter" />
     </data>
-    <RelativeLayout
-        android:background="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
 
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical">
-
-        <com.poly.smartfindpro.widget.CommonToolbar
-            android:id="@+id/cmtb"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            onBackClick="@{()->presenter.onBackClick()}" />
+        android:focusable="true">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/_30sdp">
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/tv_username"
-                android:textSize="@dimen/_15sdp">
-
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <com.poly.smartfindpro.widget.CommonToolbar
+                android:id="@+id/cmtb"
+                onBackClick="@{()->presenter.onBackClick()}"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp">
+                android:layout_height="@dimen/_40sdp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-
-                    android:id="@+id/edt_telephone_number_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/custom_edt_change_pass" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/tv_telephone_number"
-                android:textSize="@dimen/_15sdp">
-
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_30sdp">
 
-                android:layout_height="@dimen/_40sdp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_username_profile"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_username"
+                    android:textSize="@dimen/_15sdp">
+
+                </TextView>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/custom_edt_change_pass"
-                    android:inputType="number" />
+                    android:layout_height="@dimen/_40sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_telephone_number_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:text="@={presenter.nameInfor}" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/tv_address"
-                android:textSize="@dimen/_15sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_telephone_number"
+                    android:textSize="@dimen/_15sdp">
 
-            </TextView>
+                </TextView>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_address_profile"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/custom_edt_change_pass" />
+
+                    android:layout_height="@dimen/_40sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_username_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:inputType="number"
+                        android:text="@={presenter.phone}" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/tv_email"
-                android:textSize="@dimen/_15sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_address"
+                    android:textSize="@dimen/_15sdp">
 
-            </TextView>
+                </TextView>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_email_profile"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/custom_edt_change_pass" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_address_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:text="@={presenter.addressInfor}" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/custom_button_infor"
-                android:text="@string/btn_change"
-                android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_id_card"
+                    android:textSize="@dimen/_15sdp">
+
+                </TextView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_email_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:text="@={presenter.idCard}" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/custom_button_infor"
+                    android:text="@string/btn_change"
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     </RelativeLayout>
 </layout>

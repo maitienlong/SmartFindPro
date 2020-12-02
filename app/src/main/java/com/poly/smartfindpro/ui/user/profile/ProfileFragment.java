@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 import com.poly.smartfindpro.ui.post.adapter.UtilitiesAdapter;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPresenter;
@@ -13,9 +14,13 @@ import com.poly.smartfindpro.ui.user.adapter.ProfileAdapter;
 import com.poly.smartfindpro.ui.user.setting.SettingContact;
 import com.poly.smartfindpro.ui.user.setting.SettingPresenter;
 import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
+import com.poly.smartfindpro.utils.BindingUtils;
 
-public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding,ProfilePresenter> implements ProfileContact.ViewModel {
+import java.util.List;
 
+public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding, ProfilePresenter> implements ProfileContact.ViewModel {
+
+    ProfileAdapter profileAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -33,17 +38,10 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     protected void initData() {
         mPresenter = new ProfilePresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
-
-
-        ProfileAdapter utilitiesAdapter = new ProfileAdapter(mActivity, this);
-
-
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(mActivity, 1);
-//        mBinding.rcProfile.setNestedScrollingEnabled(false);
-        mBinding.rcProfile.setAdapter(utilitiesAdapter);
-        mBinding.rcProfile.setLayoutManager(linearLayoutManager);
+        profileAdapter = new ProfileAdapter(mActivity);
 
     }
+
 
     @Override
     public void onBackClick() {
@@ -51,7 +49,14 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     }
 
     @Override
+    public void onShow(List<Product> productList) {
+        profileAdapter.setItemList(productList);
+        BindingUtils.setAdapter(mBinding.rcProfile,profileAdapter,true);
+    }
+
+
+    @Override
     public void onClickEditUser() {
-        getBaseActivity().goToFragment(R.id.fl_user,new InforFragment(),null);
+        getBaseActivity().goToFragment(R.id.fl_user, new InforFragment(), null);
     }
 }

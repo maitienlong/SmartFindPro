@@ -86,7 +86,7 @@
     <string name="email">Thư điện thử</string>
     <string name="avatar">Ảnh đại diện</string>
     <string name="change_">Thay đổi</string>
-    <string name="name_uesr">Phạm Hồng Thái</string>
+    <string name="name_uesr">Nguyễn Minh Hiếu</string>
     <string name="title_layout">Trang cá nhân</string>
     <string name="user_image">User image</string>
     <string name="content_layout">Quản lí hồ sơ cá nhân, bảo mật</string>
@@ -112,11 +112,13 @@
 <!--User-->
     <string name="tv_username">Họ và tên</string>
     <string name="tv_telephone_number">Số điện thoại</string>
-    <string name="tv_email">Thư điện tử</string>
+    <string name="tv_id_card">Số CMND</string>
     <string name="btn_change">Thay đổi</string>
     <string name="btn_not_hire">Chưa thuê</string>
     <string name="btn_pending">Chờ duyệt</string>
     <string name="btn_approved">Đã duyệt</string>
+    <string name="btn_delete">Xóa</string>
+    <string name="btn_edit">Sửa</string>
     <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>

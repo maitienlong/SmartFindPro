@@ -85,7 +85,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Nguyễn Minh Hiếu"
+
+                            android:text="@{presenter.nameInfor}"
                             android:textColor="@color/blue"
                             android:textSize="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
