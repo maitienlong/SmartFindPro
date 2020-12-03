@@ -9,9 +9,9 @@ public class Location {
     @SerializedName("latitude")
     @Expose
     private String latitude;
-    @SerializedName("longtitude")
+    @SerializedName("longitude")
     @Expose
-    private String longtitude;
+    private String longitude;
 
     public String getLatitude() {
         return latitude;
@@ -21,12 +21,12 @@ public class Location {
         this.latitude = latitude;
     }
 
-    public String getLongtitude() {
-        return longtitude;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setLongtitude(String longtitude) {
-        this.longtitude = longtitude;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
 }

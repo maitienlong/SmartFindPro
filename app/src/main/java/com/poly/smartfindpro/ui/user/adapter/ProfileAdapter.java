@@ -16,10 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.product.res.Product;
-import com.poly.smartfindpro.ui.post.adapter.UtilitiesAdapter;
-import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesContract;
-import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
-import com.poly.smartfindpro.ui.user.profile.ProfileContact;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,8 +49,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
         Product item = productList.get(position);
-        holder.tv_username_post.setText(item.getContent());
-        holder.tv_adress_profile.setText(item.getAddress().getDetailAddress()+","+item.getAddress().getCommuneWardTown()+","+item.getAddress().getDistrictsTowns()+","+item.getAddress().getProvinceCity());
+        holder.tv_username_post.setText(item.getUser().getUserName());
+        holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
         holder.tv_price_product.setText(item.getInformation().getPrice().toString());
         holder.tv_title_post.setText(item.getContent());
         Log.d("ngay tao", item.getCreateAt());
@@ -106,7 +102,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Button btn_menu;
-        private TextView tv_username_post,tv_adress_profile,tv_price_product,tv_time_post,tv_title_post;
+        private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

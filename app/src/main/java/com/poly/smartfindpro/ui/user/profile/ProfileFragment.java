@@ -1,18 +1,10 @@
 package com.poly.smartfindpro.ui.user.profile;
 
-import android.content.Context;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
-import com.poly.smartfindpro.ui.post.adapter.UtilitiesAdapter;
-import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPresenter;
 import com.poly.smartfindpro.ui.user.adapter.ProfileAdapter;
-import com.poly.smartfindpro.ui.user.setting.SettingContact;
-import com.poly.smartfindpro.ui.user.setting.SettingPresenter;
 import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
 

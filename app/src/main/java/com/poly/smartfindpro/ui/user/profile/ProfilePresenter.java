@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
@@ -37,6 +38,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         getInfor();
         getProduct();
     }
+
     @Override
     public void subscribe() {
 
@@ -66,6 +68,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                 if (response.code() == 200) {
                     mProfile = response.body();
                     Log.d("checkResponse", response.body().getMessage());
+
                     showData(mProfile);
 
                 } else {
@@ -79,16 +82,19 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             }
         });
     }
-    public void getProduct() {
+
+    private void getProduct() {
         ProductRequest request = new ProductRequest();
         request.setId("5fb2073ff69b03b8f8875059");
+
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                if (response.code() == 200) {
-                    Log.d("checkResponse", response.body().getMessage());
+                if(response.code() == 200){
+                    Log.d("CheckResponse", new Gson().toJson(response.body()));
                     mViewModel.onShow(response.body().getResponse().getProducts());
-                } else {
+                }else {
+                    Log.d("CheckResponse", response.code()+"");
 
                 }
             }
@@ -99,6 +105,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             }
         });
     }
+
     private void showData(ProfileResponse mProfile) {
         nameInfor.set(mProfile.getResponse().getUser().getUserName());
 

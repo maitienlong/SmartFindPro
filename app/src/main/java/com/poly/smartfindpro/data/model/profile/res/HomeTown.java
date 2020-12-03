@@ -20,7 +20,7 @@ public class HomeTown {
     private String detailAddress;
     @SerializedName("location")
     @Expose
-    private Location_ location;
+    private Location location;
 
     public String getProvinceCity() {
         return provinceCity;
@@ -54,12 +54,11 @@ public class HomeTown {
         this.detailAddress = detailAddress;
     }
 
-    public Location_ getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location_ location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
-
 }

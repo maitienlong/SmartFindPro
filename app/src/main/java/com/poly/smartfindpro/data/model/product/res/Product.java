@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Product {
 
-    @SerializedName("_id")
-    @Expose
-    private String id;
     @SerializedName("utilities")
     @Expose
     private List<String> utilities = null;
+    @SerializedName("_id")
+    @Expose
+    private String id;
     @SerializedName("category")
     @Expose
     private String category;
@@ -25,9 +25,9 @@ public class Product {
     @SerializedName("content")
     @Expose
     private String content;
-    @SerializedName("userId")
+    @SerializedName("user")
     @Expose
-    private String userId;
+    private User user;
     @SerializedName("status")
     @Expose
     private String status;
@@ -43,17 +43,6 @@ public class Product {
     @SerializedName("linkProduct")
     @Expose
     private String linkProduct;
-    @SerializedName("__v")
-    @Expose
-    private Integer v;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public List<String> getUtilities() {
         return utilities;
@@ -61,6 +50,14 @@ public class Product {
 
     public void setUtilities(List<String> utilities) {
         this.utilities = utilities;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCategory() {
@@ -95,12 +92,12 @@ public class Product {
         this.content = content;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getStatus() {
@@ -141,14 +138,6 @@ public class Product {
 
     public void setLinkProduct(String linkProduct) {
         this.linkProduct = linkProduct;
-    }
-
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
     }
 
 }

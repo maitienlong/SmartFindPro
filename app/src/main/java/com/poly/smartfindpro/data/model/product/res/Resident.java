@@ -4,11 +4,10 @@ package com.poly.smartfindpro.data.model.product.res;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Address {
+import com.poly.smartfindpro.data.model.product.res.Location;
 
-    @SerializedName("_id")
-    @Expose
-    private String id;
+public class Resident {
+
     @SerializedName("provinceCity")
     @Expose
     private String provinceCity;
@@ -24,17 +23,6 @@ public class Address {
     @SerializedName("location")
     @Expose
     private Location location;
-    @SerializedName("__v")
-    @Expose
-    private Integer v;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getProvinceCity() {
         return provinceCity;
@@ -75,13 +63,4 @@ public class Address {
     public void setLocation(Location location) {
         this.location = location;
     }
-
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
-    }
-
 }

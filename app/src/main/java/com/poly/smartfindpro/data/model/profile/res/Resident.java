@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.model.profile.res;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.product.res.Location;
 
 public class Resident {
 
@@ -20,7 +21,7 @@ public class Resident {
     private String detailAddress;
     @SerializedName("location")
     @Expose
-    private Location__ location;
+    private Location location;
 
     public String getProvinceCity() {
         return provinceCity;
@@ -54,12 +55,11 @@ public class Resident {
         this.detailAddress = detailAddress;
     }
 
-    public Location__ getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location__ location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
-
 }

@@ -4,15 +4,15 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ProductRequest {
-    @SerializedName("userId")
+    @SerializedName("id")
     @Expose
-    private String userId;
+    private String id;
 
     public String getId() {
-        return userId;
+        return id;
     }
 
     public void setId(String id) {
-        this.userId = id;
+        this.id = id;
     }
 }
