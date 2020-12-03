@@ -299,27 +299,10 @@ app.get('/postManage', async function (request, response) {
     // let processingPost = await Product.find({status: '0'}).lean();
     // let successPost = await Product.find({status: '1'}).lean();
 
-    var product = await Product.find().lean();
-    var a = product.filter(function (el) {
-        return el.deleteAt === "";
-    });
-
-    var unapprovedPost = a.filter(function (el) {
-        return el.status === '-1';
-    });
-
-    var processingPost = a.filter(function (el) {
-        return el.status === '0';
-    });
-    var successPost = a.filter(function (el) {
-        return el.status === '1';
-    });
-    console.log('a: \n' + JSON.stringify(a))
-    console.log('unapprovedPost: \n' + JSON.stringify(unapprovedPost))
-    console.log('processingPost: \n' + JSON.stringify(processingPost))
-    console.log('successPost: \n' + JSON.stringify(successPost))
+    var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
+    var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
+    var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
     try {
-
         if (request.query.idProduct != undefined) {
             let _id = request.query.idProduct
             console.log('_id: ' + _id)
@@ -332,21 +315,9 @@ app.get('/postManage', async function (request, response) {
                 });
                 if (update) {
                     console.log('[Delete] OK')
-                    product = await Product.find().lean();
-                    a = product.filter(function (el) {
-                        return el.deleteAt === "";
-                    });
-
-                    unapprovedPost = a.filter(function (el) {
-                        return el.status === '-1';
-                    });
-
-                    processingPost = a.filter(function (el) {
-                        return el.status === '0';
-                    });
-                    successPost = a.filter(function (el) {
-                        return el.status === '1';
-                    });
+                    var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
+                    var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
+                    var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
                 } else {
                     console.log('[Delete] Fail')
                 }
@@ -358,8 +329,7 @@ app.get('/postManage', async function (request, response) {
     }
     let data = new PostManage(unapprovedPost, processingPost, successPost)
     response.render('postManage', {
-        status: 'none',
-        data: data,
+        data: data
     });
 });
 
@@ -468,7 +438,6 @@ app.get('/getAlluser', async function (request, response) {
 
 //trả ve danh sách bài đăng cua nguoi dung
 app.post('/user-product', async function (request, response) {
-
     let userId = request.body.id;
     try {
         if (!checkData(userId)) {
@@ -484,7 +453,7 @@ app.post('/user-product', async function (request, response) {
                     message: 'Fail'
                 })
             } else {
-                let product = [];
+                let products = [];
                 for (let i = 0; i < successPost.length; i++) {
                     let index = successPost[i]
                     let inforProduct = await InforProduct.find({_id: index.product}).lean();
@@ -508,18 +477,18 @@ app.post('/user-product', async function (request, response) {
                         })
                         if (prd) {
                             console.log('id: ' + prd._id)
-                            product.push(prd)
+                            products.push(prd)
                         }
                     }
                 }
-                if (product.length <= 0) {
+                if (products.length <= 0) {
                     product = null
                 }
                 response.status(200).json({
                     message: 'OK',
                     response: {
                         count: successPost.length,
-                        product
+                        products
                     }
                 })
             }
@@ -548,7 +517,7 @@ app.post('/list-product', async function (request, response) {
                     message: 'Fail'
                 })
             } else {
-                let product = [];
+                let products = [];
                 for (let i = 0; i < successPost.length; i++) {
                     let index = successPost[i]
                     let inforProduct = await InforProduct.find({_id: index.product}).lean();
@@ -575,18 +544,18 @@ app.post('/list-product', async function (request, response) {
                         })
                         if (prd) {
                             console.log('id: ' + prd._id)
-                            product.push(prd)
+                            products.push(prd)
                         }
                     }
                 }
-                if (product.length <= 0) {
-                    product = null
+                if (products.length <= 0) {
+                    products = null
                 }
                 response.status(200).json({
                     message: 'OK',
                     response: {
                         count: successPost.length,
-                        product
+                        products
                     }
                 })
             }
