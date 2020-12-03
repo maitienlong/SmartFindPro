@@ -50,12 +50,8 @@ public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        holder.tvTitle.setText(mList.get(position).getmName());
-
-        holder.img_infor_post.setImageBitmap(mList.get(position).getBitmap());
-
-
+        ImageInforPost  item = mList.get(position);
+        holder.img_infor_post.setImageBitmap(item.getBitmap());
     }
 
     @Override
@@ -77,43 +73,30 @@ public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAd
     }
 
 
-    public Bitmap loadBitmap(String url)
-    {
+    public Bitmap loadBitmap(String url) {
         Bitmap bm = null;
         InputStream is = null;
         BufferedInputStream bis = null;
-        try
-        {
+        try {
             URLConnection conn = new URL(url).openConnection();
             conn.connect();
             is = conn.getInputStream();
             bis = new BufferedInputStream(is, 1080);
             bm = BitmapFactory.decodeStream(bis);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (bis != null)
-            {
-                try
-                {
+        } finally {
+            if (bis != null) {
+                try {
                     bis.close();
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (is != null)
-            {
-                try
-                {
+            if (is != null) {
+                try {
                     is.close();
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

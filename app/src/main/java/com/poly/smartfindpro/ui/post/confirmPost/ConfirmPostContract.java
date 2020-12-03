@@ -1,5 +1,14 @@
 package com.poly.smartfindpro.ui.post.confirmPost;
 
-public interface ConfirmPostContract {
+import com.poly.smartfindpro.basedatabind.BasePresenter;
+import com.poly.smartfindpro.basedatabind.BaseView;
 
+public interface ConfirmPostContract {
+    interface ViewModel extends BaseView {
+        void showLoadingDialog();
+    }
+
+    interface Presenter extends BasePresenter {
+        void requestUploadSurvey();
+    }
 }
