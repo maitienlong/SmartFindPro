@@ -48,6 +48,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     @SuppressLint("ResourceAsColor")
     @Override
     protected void initView() {
+        mBinding.ctbPost.setTitle("Đăng bài");
 
         mBinding.pbTientrinh.setMax(100);
 
@@ -156,6 +157,11 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         }
 
 
+    }
+
+    @Override
+    public void onBackClick() {
+        finish();
     }
 
 

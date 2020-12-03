@@ -18,6 +18,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:id="@+id/ctb_post"
+            onBackClick="@{()->presenter.onBackClick()}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp">

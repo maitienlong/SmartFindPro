@@ -1,22 +1,31 @@
 package com.poly.smartfindpro.ui.post.adapter;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.poly.smartfindpro.ui.home.HomeFragment;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
+import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
-public class ViewPagerPostAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerPostAdapter extends FragmentPagerAdapter {
 
+    private Context context;
 
-    public ViewPagerPostAdapter(@NonNull FragmentManager fm) {
+    public ViewPagerPostAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
+
 
     @Override
     public int getItemPosition(@NonNull Object object) {
@@ -26,24 +35,27 @@ public class ViewPagerPostAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
+        Fragment fragment = null;
         switch (position) {
             case 0:
-                return new InforPostFragment();
+                fragment = new HomeFragment();
+                break;
             case 1:
-                return new AddressPostFragment();
+                fragment = new InforPostFragment();
+                break;
             case 2:
-                return new UtilitiesPostFragment();
-            case 3:
+                fragment = new InforPostFragment();
                 break;
             default:
-                new InforPostFragment();
+                fragment = new InforPostFragment();
 
         }
-        return null;
+
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 }

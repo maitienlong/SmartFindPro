@@ -7,9 +7,13 @@ public interface PostContract {
 
     interface ViewModel extends BaseView {
         void statusProress(String isStatus);
+
+        void onBackClick();
     }
 
     interface Presenter extends BasePresenter {
         void nextFragment(String isStatus, String jsonData, String jsonPhoto);
+
+        void onBackClick();
     }
 }

@@ -6,10 +6,8 @@ import android.os.Bundle;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
-import com.poly.smartfindpro.databinding.ActivityHomeBinding;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
-import com.poly.smartfindpro.ui.home.HomeContract;
-import com.poly.smartfindpro.ui.home.HomePresenter;
+
 
 public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchProductBinding,
         SearchProductPresenter> implements SearchProductContract.ViewModel  {
