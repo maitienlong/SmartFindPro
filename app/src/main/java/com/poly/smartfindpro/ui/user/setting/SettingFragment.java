@@ -37,16 +37,16 @@ public class SettingFragment extends BaseDataBindFragment<FragmentSettingUserBin
 
     @Override
     public void onClickInformation() {
-        getBaseActivity().goToFragment(R.id.fl_user, new InforFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
     }
 
     @Override
     public void onClickChangePassword() {
-        getBaseActivity().goToFragment(R.id.fl_user, new ChangePassFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new ChangePassFragment(), null);
     }
 
     @Override
     public void onClickPerMission() {
-        getBaseActivity().goToFragment(R.id.fl_user, new PermissionFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new PermissionFragment(), null);
     }
 }

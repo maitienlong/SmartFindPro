@@ -34,7 +34,8 @@
                     android:id="@+id/tv_username_post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nguyễn Minh Hiếu"
+                   android:textSize="@dimen/_15sdp"
+                    android:text="@string/tv_username"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -79,25 +80,31 @@
                 android:layout_height="@dimen/_100sdp">
 
                 <ImageView
+                    android:scaleType="centerInside"
+                    android:id="@+id/img_product_post1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:src="@drawable/babyred" />
+                     />
 
                 <ImageView
+                    android:scaleType="centerInside"
+                    android:id="@+id/img_product_post2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:src="@drawable/chucuongvlog" />
+                    />
 
                 <ImageView
+                    android:scaleType="centerInside"
+                    android:id="@+id/img_product_post3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:src="@drawable/chudan" />
+                     />
             </LinearLayout>
 
             <LinearLayout

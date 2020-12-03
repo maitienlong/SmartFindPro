@@ -28,22 +28,22 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     public void onClickProfile() {
-        getBaseActivity().goToFragment(R.id.fl_user, new ProfileFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new ProfileFragment(), null);
     }
 
     @Override
     public void onClickSetting() {
-        getBaseActivity().goToFragment(R.id.fl_user, new SettingFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new SettingFragment(), null);
     }
 
     @Override
     public void onClickRules() {
-        getBaseActivity().goToFragment(R.id.fl_user, new RulesFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new RulesFragment(), null);
     }
 
     @Override
     public void onClickHelp() {
-        getBaseActivity().goToFragment(R.id.fl_user, new HelpFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new HelpFragment(), null);
     }
 
     @Override

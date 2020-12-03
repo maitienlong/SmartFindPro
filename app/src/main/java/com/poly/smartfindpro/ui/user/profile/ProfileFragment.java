@@ -49,6 +49,6 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onClickEditUser() {
-        getBaseActivity().goToFragment(R.id.fl_user, new InforFragment(), null);
+        getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
     }
 }

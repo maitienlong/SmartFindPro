@@ -93,6 +93,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                 if(response.code() == 200){
                     Log.d("CheckResponse", new Gson().toJson(response.body()));
                     mViewModel.onShow(response.body().getResponse().getProducts());
+
                 }else {
                     Log.d("CheckResponse", response.code()+"");
 
