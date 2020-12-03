@@ -1,25 +1,24 @@
 package com.poly.smartfindpro.ui;
 
-import android.os.Bundle;
-import android.view.WindowManager;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.RadioButton;
+
+import android.content.res.ColorStateList;
+import android.graphics.ColorFilter;
+import android.os.Build;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.annotation.RequiresApi;
+import androidx.viewpager.widget.ViewPager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
-import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
-import com.poly.smartfindpro.ui.post.inforPost.InforPostPresenter;
+import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
+
 
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         MainPresenter> implements MainContract.ViewModel {
 
-
+    private ColorFilter oldColors;
 
     @Override
     protected int getLayoutId() {
@@ -29,6 +28,33 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     @Override
     protected void initView() {
 
+        mPresenter = new MainPresenter(this, this);
+        mBinding.setPresenter(mPresenter);
+
+        oldColors = mBinding.btnHome.getColorFilter();
+        ViewPagerPostAdapter viewPagerPostAdapter = new ViewPagerPostAdapter(getSupportFragmentManager(), this);
+        mBinding.vpNative.setAdapter(viewPagerPostAdapter);
+
+        mBinding.vpNative.setCurrentItem(0);
+        setBottomNaviChange(0);
+
+        mBinding.vpNative.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setBottomNaviChange(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     @Override
@@ -37,4 +63,48 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     }
 
+
+    private void setBottomNaviChange(int positon){
+        switch (positon){
+            case 0:
+                mBinding.btnHome.setImageResource(R.drawable.ic__home_page_full);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
+                mBinding.btnUser.setImageResource(R.drawable.ic_person_outline);
+                break;
+            case 1:
+                mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_message_full);
+                mBinding.btnUser.setImageResource(R.drawable.ic_person_outline);
+                break;
+            case 2:
+                mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
+                mBinding.btnUser.setImageResource(R.drawable.ic_person_full);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onSelectHome() {
+        mBinding.vpNative.setCurrentItem(0);
+        setBottomNaviChange(0);
+    }
+
+    @Override
+    public void onSelecFind() {
+
+    }
+
+    @Override
+    public void onSelectMessager() {
+        mBinding.vpNative.setCurrentItem(1);
+        setBottomNaviChange(1);
+    }
+
+    @Override
+    public void onSelectUser() {
+        mBinding.vpNative.setCurrentItem(2);
+        setBottomNaviChange(2);
+    }
 }

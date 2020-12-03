@@ -30,5 +30,10 @@ public class PostPresenter implements PostContract.Presenter {
 
     }
 
+    @Override
+    public void onBackClick() {
+        mViewModel.onBackClick();
+    }
+
 
 }

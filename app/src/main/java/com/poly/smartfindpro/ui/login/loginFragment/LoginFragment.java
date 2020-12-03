@@ -5,6 +5,8 @@ import android.view.View;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
+import com.poly.smartfindpro.ui.MainActivity;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.user.UserActivity;
 
 public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, LoginPresenter> implements LoginContract.ViewModel {
@@ -19,7 +21,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
         mBinding.btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getBaseActivity().openActivity(UserActivity.class);
+                getBaseActivity().openActivity(MainActivity.class);
             }
         });
 

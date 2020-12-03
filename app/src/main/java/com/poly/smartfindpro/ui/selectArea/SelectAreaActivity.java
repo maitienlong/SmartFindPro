@@ -1,15 +1,11 @@
 package com.poly.smartfindpro.ui.selectArea;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
-import com.poly.smartfindpro.databinding.ActivityHomeBinding;
+import com.poly.smartfindpro.databinding.ActivitySelectAreaBinding;
 import com.poly.smartfindpro.ui.home.HomePresenter;
 
-public class SelectAreaActivity extends BaseDataBindActivity<ActivityHomeBinding,
+public class SelectAreaActivity extends BaseDataBindActivity<ActivitySelectAreaBinding,
         HomePresenter> implements SelectAreaContract.ViewModel{
 
 

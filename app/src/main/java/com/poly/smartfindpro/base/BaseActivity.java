@@ -214,7 +214,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
 
         if (mFragStack != null)
             mFragStack.push(mBaseFragment);
-
+        trans.setCustomAnimations(R.anim.new_fade_in, R.anim.new_fade_out);
         trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
         mFrgManager.executePendingTransactions();
@@ -227,7 +227,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
     }
 
     public void goToFragmentCallBackData(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle,
-                             OnFragmentDataCallBack callback) {
+                                         OnFragmentDataCallBack callback) {
         mBaseFragment.setOnFragmentDataCallback(callback);
         goToFragment(fragmentContainerId, mBaseFragment, mBundle);
     }
