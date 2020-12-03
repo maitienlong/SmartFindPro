@@ -454,14 +454,17 @@ app.post('/user-product', async function (request, response) {
                 })
             } else {
                 let products = [];
+
                 for (let i = 0; i < successPost.length; i++) {
                     let index = successPost[i]
                     let inforProduct = await InforProduct.find({_id: index.product}).lean();
                     let address = await Address.find({_id: index.address}).lean();
+                    let user = await User.find({_id: index.userId}).lean();
 
-                    if (checkData(inforProduct) && checkData(address)) {
+                    if (checkData(inforProduct) && checkData(address) && checkData(user)) {
                         inforProduct = inforProduct[0]
                         address = address[0]
+                        user = user[0]
                         let prd = new PostResponseSchema({
                             _id: index._id,
                             category: inforProduct.category,
@@ -469,6 +472,7 @@ app.post('/user-product', async function (request, response) {
                             address: address,
                             utilities: inforProduct.utilities,
                             content: index.content,
+                            user: user,
                             status: index.status,
                             createAt: index.createAt,
                             updateAt: index.updateAt,
