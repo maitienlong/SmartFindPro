@@ -6,27 +6,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class ProfileResponse {
 
-    @SerializedName("message")
+    @SerializedName("response_header")
     @Expose
-    private String message;
-    @SerializedName("response")
+    private ResponseHeader responseHeader;
+    @SerializedName("response_body")
     @Expose
-    private Response response;
+    private ResponseBody responseBody;
 
-    public String getMessage() {
-        return message;
+    public ResponseHeader getResponseHeader() {
+        return responseHeader;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setResponseHeader(ResponseHeader responseHeader) {
+        this.responseHeader = responseHeader;
     }
 
-    public Response getResponse() {
-        return response;
+    public ResponseBody getResponseBody() {
+        return responseBody;
     }
 
-    public void setResponse(Response response) {
-        this.response = response;
+    public void setResponseBody(ResponseBody responseBody) {
+        this.responseBody = responseBody;
     }
 
 }

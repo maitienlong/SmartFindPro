@@ -1,7 +1,7 @@
 package com.poly.smartfindpro.ui.user.adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,17 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.data.model.product.res.Image;
-import com.poly.smartfindpro.data.model.product.res.Product;
+import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
+import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,13 +36,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     private Context context;
 
-    private List<Product> productList;
+    private FragmentManager mFragmentManager;
 
-    public ProfileAdapter(Context context) {
+    private List<Products> productList;
+
+
+    public ProfileAdapter(Context context, FragmentManager fragmentManager) {
         this.context = context;
+        this.mFragmentManager = fragmentManager;
     }
 
-    public void setItemList(List<Product> productList) {
+    public void setItemList(List<Products> productList) {
         this.productList = productList;
     }
 
@@ -56,7 +62,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
 
-        Product item = productList.get(position);
+        Products item = productList.get(position);
 
         List<String> image = new ArrayList<>();
 
@@ -64,7 +70,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         try {
             Date date = dateFormatter.parse(item.getCreateAt());
-
 
             holder.tv_time_post.setText(getTime(date));
 
@@ -74,16 +79,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         holder.tv_username_post.setText(item.getUser().getUserName());
         holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
-        holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getInformation().getPrice()));
+        holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
         holder.tv_title_post.setText(item.getContent());
 
-        if (item.getInformation().getImage().size() < 4) {
-            for (int i = 0; i < item.getInformation().getImage().size(); i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getInformation().getImage().get(i));
+        if (item.getProduct().getInformation().getImage().size() < 4) {
+            for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
+                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
             }
         } else {
             for (int i = 0; i < 3; i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getInformation().getImage().get(i));
+                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
             }
         }
 
@@ -130,7 +135,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
         Glide.
                 with(context)
-                .load(MyRetrofitSmartFind.smartFind+item.getUser().getAvatar())
+                .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
                 .placeholder(R.drawable.chucuongvlog)
                 .error(R.drawable.babyred)
                 .into(holder.img_avatar);
@@ -159,7 +164,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 popupMenu.show();
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(context, DetailPostActivity.class);
+               intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(item));
+               context.startActivity(intent);
 
+            }
+        });
     }
 
     @Override
@@ -171,13 +184,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         String dateOK = "";
         Date today = Calendar.getInstance().getTime();
         if (!getTime("yyyy", today).equals(getTime("yyyy", datePost))) {
-           return String.valueOf(Integer.valueOf(getTime("yyyy", today)) - Integer.valueOf(getTime("yyyy", datePost))) + " năm";
+            return String.valueOf(Integer.valueOf(getTime("yyyy", today)) - Integer.valueOf(getTime("yyyy", datePost))) + " năm";
         } else if (!getTime("MM", today).equals(getTime("MM", datePost))) {
             return String.valueOf(Integer.valueOf(getTime("MM", today)) - Integer.valueOf(getTime("MM", datePost))) + " tháng";
         } else if (!getTime("dd", today).equals(getTime("dd", datePost))) {
             return String.valueOf(Integer.valueOf(getTime("dd", today)) - Integer.valueOf(getTime("dd", datePost))) + " ngày";
         } else if (!getTime("HH", today).equals(getTime("HH", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("HH", today)) - Integer.valueOf(getTime("HH", datePost))) +" giờ";
+            return String.valueOf(Integer.valueOf(getTime("HH", today)) - Integer.valueOf(getTime("HH", datePost))) + " giờ";
         } else if (!getTime("mm", today).equals(getTime("mm", datePost))) {
             return String.valueOf(Integer.valueOf(getTime("mm", today)) - Integer.valueOf(getTime("mm", datePost))) + " phút";
         } else if (!getTime("ss", today).equals(getTime("ss", datePost))) {
