@@ -26,7 +26,7 @@ public class UserActivity extends BaseDataBindActivity<ActivityUserBinding, User
 
     @Override
     protected void initView() {
-     goToFragment(R.id.fl_user,new UserFragment(),null);
+     goToFragment(R.id.fl_native,new UserFragment(),null);
     }
 
     @Override

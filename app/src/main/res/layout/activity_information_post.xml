@@ -4,112 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.detailpost.DetailPostPresenter" />
 
+        <import type="android.view.View" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-        <Button
-            android:id="@+id/btnCall"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_button_infor"
-            android:paddingHorizontal="@dimen/_30sdp"
-            android:text="@string/text_infor_call"
-            app:layout_constraintBottom_toBottomOf="@+id/btnChat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.702"
-            app:layout_constraintStart_toEndOf="@+id/btnChat"
-            app:layout_constraintTop_toTopOf="@+id/btnChat"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/tvUtilities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_utilities"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.084"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPriceWater"
-            app:layout_constraintVertical_bias="0.072" />
-
-        <TextView
-            android:id="@+id/tvPriceWater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_price_water"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.089"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPriceElectric"
-            app:layout_constraintVertical_bias="0.046" />
-
-        <TextView
-            android:id="@+id/tvPriceElectric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_price_electric"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.087"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvQuantity"
-            app:layout_constraintVertical_bias="0.046" />
-
-        <TextView
-            android:id="@+id/tvQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_quantity"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvGender"
-            app:layout_constraintVertical_bias="0.046" />
-
-        <TextView
-            android:id="@+id/tvLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_location"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.078"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPrice"
-            app:layout_constraintVertical_bias="0.023" />
-
-        <TextView
-            android:id="@+id/tvGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_gender"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLocation"
-            app:layout_constraintVertical_bias="0.041" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -142,7 +47,7 @@
                     android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_infor_name"
+                    android:text="@={presenter.userNameDetail}"
                     android:textColor="@color/black_effective"
                     android:textSize="@dimen/_15sdp" />
 
@@ -150,25 +55,19 @@
                     android:id="@+id/tvTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_infor_time"
+                    android:text="@={presenter.timePostDetail}"
                     android:textSize="@dimen/_13sdp" />
             </LinearLayout>
         </LinearLayout>
-
         <TextView
             android:id="@+id/tvTitle"
             android:textColor="@color/black_opacity_70"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
-            android:text="@string/text_infor_title"
+            android:text="@={presenter.contentDetail}"
             android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.043" />
+   />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvListImage"
@@ -180,40 +79,146 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             app:layout_constraintVertical_bias="0.049" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
 
-        <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_infor_price"
-            android:textColor="@color/black_effective"
-            android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvListImage"
-            app:layout_constraintVertical_bias="0.032" />
+                    android:text="@string/text_infor_price"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.priceDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/tv_address"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.addressDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/tv_gender"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.genderDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/tv_amount_person"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.amountDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/text_infor_price_electric"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.priceElectricDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/text_infor_price_water"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.priceWaterDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/text_infor_utilities"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:text="@={presenter.utilitiesDetail}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_marginRight="@dimen/_10sdp"
+                android:id="@+id/btnCall"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_infor"
+                android:paddingHorizontal="@dimen/_30sdp"
+                android:text="@string/text_infor_call"
+               />
+            <Button
+                android:id="@+id/btnChat"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button_infor"
+                android:paddingHorizontal="@dimen/_30sdp"
+                android:text="@string/text_infor_chat"
+               />
+        </LinearLayout>
 
-
-        <Button
-            android:id="@+id/btnChat"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_button_infor"
-            android:paddingHorizontal="@dimen/_30sdp"
-            android:text="@string/text_infor_chat"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUtilities"
-            app:layout_constraintVertical_bias="0.588" />
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 

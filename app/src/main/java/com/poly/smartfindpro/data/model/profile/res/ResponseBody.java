@@ -1,11 +1,11 @@
 
-package com.poly.smartfindpro.data.model.product.res;
+package com.poly.smartfindpro.data.model.profile.res;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class ResponseBody {
 
     @SerializedName("_id")
     @Expose
@@ -18,7 +18,7 @@ public class User {
     private String password;
     @SerializedName("address")
     @Expose
-    private Address address;
+    private String address;
     @SerializedName("phoneNumber")
     @Expose
     private String phoneNumber;
@@ -62,11 +62,11 @@ public class User {
         this.password = password;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
