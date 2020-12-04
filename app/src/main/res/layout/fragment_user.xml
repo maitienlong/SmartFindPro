@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.user.userFragment.UserPresenter" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvUserTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/str_user"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:onClick="@{()->presenter.onClickProfile()}"
+                android:id="@+id/display_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_blue_round_15_selector"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserTitle">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#FF000000"
+                    android:src="@color/white"/>
+
+                <TextView
+
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/name_uesr"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/title_layout"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/display_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{()->presenter.onClickSetting()}"
+                android:background="@drawable/bg_blue_round_15_selector"
+                android:paddingBottom="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_user">
+
+                <ImageView
+                    android:id="@+id/imgSetting"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="7dp"
+                    android:contentDescription="User image"
+                    android:src="@drawable/ic_baseline_settings_24" />
+
+                <TextView
+                    android:id="@+id/tvSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imgSetting"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/setting"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSetting"
+                    android:layout_alignStart="@+id/imgSetting"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/content_layout"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSetting" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:onClick="@{()->presenter.onClickRules()}"
+                android:id="@+id/display_rules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_blue_round_15_selector"
+
+                android:paddingBottom="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_settings">
+
+                <ImageView
+                    android:id="@+id/imgRules"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="7dp"
+                    android:contentDescription="User image"
+                    android:src="@drawable/ic_baseline_rule_24" />
+
+                <TextView
+                    android:id="@+id/tvRules"
+                    android:layout_alignStart="@+id/imgRules"
+                    android:layout_marginStart="65dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/rules"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_below="@+id/tvRules"
+                    android:layout_alignStart="@+id/imgRules"
+                    android:layout_marginStart="65dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/content_layout1"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:onClick="@{()->presenter.onClickHelp()}"
+                android:id="@+id/display_asistentAndFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_blue_round_15_selector"
+                android:paddingBottom="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_rules">
+
+                <ImageView
+                    android:id="@+id/imgFeedback"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="7dp"
+                    android:contentDescription="User image"
+                    android:src="@drawable/ic_baseline_help_24" />
+
+                <TextView
+                    android:id="@+id/tvFeedback"
+                    android:layout_alignStart="@+id/imgFeedback"
+                    android:layout_marginStart="65dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/asistent_and_feedback"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_alignStart="@+id/imgFeedback"
+                    android:layout_below="@+id/tvFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="65dp"
+                    android:text="Hỗ trợ người dùng và đánh giá ứng dụng"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:onClick="@{()->presenter.onClickLogOut()}"
+                android:id="@+id/display_logOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_blue_round_15_selected"
+
+                android:paddingBottom="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_asistentAndFeedback">
+
+                <ImageView
+                    android:id="@+id/imgLogout"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="7dp"
+                    android:contentDescription="User image"
+                    android:src="@drawable/ic_baseline_logout_24" />
+
+                <TextView
+                    android:layout_alignStart="@+id/imgLogout"
+                    android:layout_marginStart="65dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/log_out"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
