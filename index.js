@@ -494,12 +494,12 @@ app.post('/user-product', async function (request, response) {
     let id = request.body.id;
     if (checkData(id)) {
         try {
-            let user = await User.find({_id: id}).lean();
+            let userNo = await User.find({_id: id}).lean();
             try {
                 let allProduct = await Product.find({
-                    user: user.id,
-                    deleteAt: ''
+                    deleteAt: '', user: id
                 }).populate(['address', 'product', 'user']).lean();
+                console.log(allProduct)
                 let res_body = {products: allProduct}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } catch (e) {
