@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
-import com.poly.smartfindpro.data.model.product.Product_;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
 import com.poly.smartfindpro.ui.listProduct.ProductBottomAdapter;
 import com.poly.smartfindpro.utils.BindingUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchProductBinding,
@@ -41,7 +42,10 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     @Override
     protected void initView() {
-        adapter = new ProductBottomAdapter(getBaseContext());
+
+        mPresenter = new SearchProductPresenter(getBaseContext(), this);
+        mBinding.setPresenter(mPresenter);
+
         bottomSheet = findViewById(R.id.bottomSheet);
         rvProduct = findViewById(R.id.rvProduct);
         bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
@@ -49,45 +53,45 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
             @Override
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                    @Override
-                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                        switch (newState) {
-                            case BottomSheetBehavior.STATE_DRAGGING:
-                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_DRAGGING");
-                                Toast.makeText(getBaseContext(), "STATE_DRAGGING", Toast.LENGTH_SHORT).show();
-                                break;
-                            case BottomSheetBehavior.STATE_SETTLING:
-                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_SETTLING");
-                                Toast.makeText(getBaseContext(), "STATE_SETTLING", Toast.LENGTH_SHORT).show();
-
-                                break;
-                            case BottomSheetBehavior.STATE_EXPANDED:
-                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_EXPANDED");
-                                Toast.makeText(getBaseContext(), "STATE_EXPANDED", Toast.LENGTH_SHORT).show();
-
-                                break;
-                            case BottomSheetBehavior.STATE_COLLAPSED:
-                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_COLLAPSED");
-                                Toast.makeText(getBaseContext(), "STATE_COLLAPSED", Toast.LENGTH_SHORT).show();
-
-                                break;
-                            case BottomSheetBehavior.STATE_HIDDEN:
-                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_HIDDEN");
-                                Toast.makeText(getBaseContext(), "STATE_HIDDEN", Toast.LENGTH_SHORT).show();
-
-                                break;
-
-                        }
-                    }
-
-                    @Override
-                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                        Log.d("BottomSheetCallback", "slideOffset: " + slideOffset);
-//                        boolean drawer = getSupportFragmentManager().getBackStackEntryCount() == 0;
-//                        ObjectAnimator.ofFloat(drawerArrow, "progress", drawer ? 0 : 1).start();
-                    }
-                });
+//                bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+//                    @Override
+//                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
+//                        switch (newState) {
+//                            case BottomSheetBehavior.STATE_DRAGGING:
+//                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_DRAGGING");
+//                                Toast.makeText(getBaseContext(), "STATE_DRAGGING", Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case BottomSheetBehavior.STATE_SETTLING:
+//                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_SETTLING");
+//                                Toast.makeText(getBaseContext(), "STATE_SETTLING", Toast.LENGTH_SHORT).show();
+//
+//                                break;
+//                            case BottomSheetBehavior.STATE_EXPANDED:
+//                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_EXPANDED");
+//                                Toast.makeText(getBaseContext(), "STATE_EXPANDED", Toast.LENGTH_SHORT).show();
+//
+//                                break;
+//                            case BottomSheetBehavior.STATE_COLLAPSED:
+//                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_COLLAPSED");
+//                                Toast.makeText(getBaseContext(), "STATE_COLLAPSED", Toast.LENGTH_SHORT).show();
+//
+//                                break;
+//                            case BottomSheetBehavior.STATE_HIDDEN:
+//                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_HIDDEN");
+//                                Toast.makeText(getBaseContext(), "STATE_HIDDEN", Toast.LENGTH_SHORT).show();
+//
+//                                break;
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+//                        Log.d("BottomSheetCallback", "slideOffset: " + slideOffset);
+////                        boolean drawer = getSupportFragmentManager().getBackStackEntryCount() == 0;
+////                        ObjectAnimator.ofFloat(drawerArrow, "progress", drawer ? 0 : 1).start();
+//                    }
+//                });
             }
         });
 
@@ -112,9 +116,9 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     @Override
     protected void initData() {
-        mPresenter = new SearchProductPresenter(this, this);
+        mPresenter = new SearchProductPresenter(getBaseContext(), this);
         mBinding.setPresenter(mPresenter);
-
+        adapter = new ProductBottomAdapter(getBaseContext());
 
     }
 
@@ -124,8 +128,10 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
     }
 
     @Override
-    public void onShow(List<Product_> products) {
+    public void onShow(List<Products> products) {
+        Log.d("checkList", products.size()+"");
         adapter.setItemList(products);
-        BindingUtils.setAdapter(rvProduct, adapter, true);
+        BindingUtils.setAdapter(rvProduct,adapter,true);
     }
+
 }

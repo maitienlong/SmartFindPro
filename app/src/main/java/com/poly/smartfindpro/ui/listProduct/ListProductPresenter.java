@@ -4,8 +4,6 @@ import android.content.Context;
 
 import androidx.databinding.ObservableField;
 
-import com.poly.smartfindpro.data.model.product.Product;
-
 
 public class ListProductPresenter implements ListProductContract.Presenter {
 
@@ -37,8 +35,8 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     }
 
 
-
-    private void showData(Product mProduct){
-
-    }
+//
+//    private void showData(Product mProduct){
+//
+//    }
 }

@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.databinding.ObservableField;
 
 import com.google.gson.Gson;
-import com.poly.smartfindpro.data.model.product.Product;
+import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.model.product.req.ProductRequest;
+import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 
 import retrofit2.Call;
@@ -29,7 +31,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     }
 
     private void initData() {
-      //  title = new ObservableField<>(mContext.getString(R.string.home_title_sell));
+//        title = new ObservableField<>(mContext.getString(R.string.home_title_sell));
         mViewModel.openFragment();
         getProduct();
     }
@@ -45,19 +47,21 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     }
 
     public void getProduct() {
-        MyRetrofitSmartFind.getInstanceSmartFind().getAllProduct().enqueue(new Callback<Product>() {
+        ProductRequest request = new ProductRequest();
+        request.setId("5fb2073ff69b03b8f8875059");
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getAllProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
-                if (response.code() != 200) {
-                    Log.d("CheckResponse", "Check connect" + response.errorBody());
-                    return;
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.code() == 200) {
+                    mViewModel.onShow(response.body().getResponseBody().getProducts());
+                }else {
+                    Log.d("Hihi", response.code()+"");
                 }
-                Log.d("CheckResponse", new Gson().toJson(response.body()));
-                mViewModel.onShow(response.body().getResponse().getProducts());
             }
 
             @Override
-            public void onFailure(Call<Product> call, Throwable t) {
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
 
             }
         });

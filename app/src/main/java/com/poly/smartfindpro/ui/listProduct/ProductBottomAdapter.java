@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.listProduct;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.data.model.product.Product_;
+import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 
 import java.util.List;
 
 public class ProductBottomAdapter extends RecyclerView.Adapter<ProductBottomAdapter.ViewHolder> {
-    private List<Product_> mList;
+    private List<Products> mList;
     private Context mContext;
 
     public ProductBottomAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void setItemList(List<Product_> mList) {
+    public void setItemList(List<Products> mList) {
         this.mList = mList;
     }
 
@@ -38,15 +42,26 @@ public class ProductBottomAdapter extends RecyclerView.Adapter<ProductBottomAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product_ product = mList.get(position);
+        Products product = mList.get(position);
 
-        holder.tvType.setText(product.getCategory());
-        holder.tvGender.setText("Giới tính: " + product.getInformation().getGender());
+        holder.tvType.setText(product.getProduct().getCategory());
+        holder.tvGender.setText("Giới tính: " + product.getProduct().getInformation().getGender());
         holder.tvAddress.setText("Địa chỉ: " + product.getAddress().getDetailAddress() + ", " + product.getAddress().getCommuneWardTown()
                 + ", " + product.getAddress().getDistrictsTowns() + ", " + product.getAddress().getProvinceCity());
-        holder.tvPrice.setText("Giá tiền: " + product.getInformation().getPrice());
-        holder.tvAmount.setText("Số người: " + product.getInformation().getAmountPeople());
+        holder.tvPrice.setText("Giá tiền: " + product.getProduct().getInformation().getPrice());
+        holder.tvAmount.setText("Số người: " + product.getProduct().getInformation().getAmountPeople());
         holder.imgMarker.setImageResource(R.drawable.ic_marker);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailPostActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(product));
+                mContext.startActivity(intent);
+
+            }
+        });
 
     }
 
