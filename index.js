@@ -491,8 +491,16 @@ app.post('/user-product', async function (request, response) {
                 let userNo = await User.find({_id: id}).lean();
                 try {
                     let allProduct = await Product.find({
-                        deleteAt: '', user: id
-                    }).populate(['address', 'product', 'user']).lean();
+                        status: '1',
+                        deleteAt: ''
+                    }).populate(['address', 'product'])
+                        .populate({
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
+                        })
+                        .lean();
                     console.log(allProduct)
                     let res_body = {products: allProduct}
                     response.json(getResponse(name, 200, sttOK, res_body))
@@ -524,7 +532,14 @@ app.post('/list-product', async function (request, response) {
                     let allProduct = await Product.find({
                         status: '1',
                         deleteAt: ''
-                    }).populate(['address', 'product', 'user']).lean();
+                    }).populate(['address', 'product'])
+                        .populate({
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
+                        })
+                        .lean();
                     let res_body = {products: allProduct}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } catch (e) {
@@ -551,7 +566,7 @@ app.post('/find-user', async function (request, response) {
         let id = request.body.id;
         if (checkData(id)) {
             try {
-                let user = await User.find({_id: id}).lean();
+                let user = await User.find({_id: id}).populate(['address']).lean();
                 let res_body = {user: user[0]}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } catch (e) {
