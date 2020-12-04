@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-const inforProductSchema = new mongoose.Schema({
+const InforProductSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true
@@ -15,4 +15,4 @@ const inforProductSchema = new mongoose.Schema({
         required: true
     }
 });
-module.exports = inforProductSchema;
+module.exports = InforProductSchema;

@@ -37,16 +37,16 @@
                     <tbody>
                     <tr>
                         <th>Họ và tên</th>
-                        <td>{{userProduct.identityCard.name}}</td>
+                        <td>{{product.user.userName}}</td>
                     </tr>
                     <tr>
                         <th>Địa chỉ</th>
-                        <td>{{userProduct.address.detailAddress}}, {{userProduct.address.communeWardTown}}
-                            , {{userProduct.address.districtsTowns}}, {{userProduct.address.provinceCity}}</td>
+                        <td>{{product.user.address.detailAddress}}, {{product.user.address.communeWardTown}}
+                            , {{product.user.address.districtsTowns}}, {{product.user.address.provinceCity}}</td>
                     </tr>
                     <tr>
                         <th>Điện thoại</th>
-                        <td>{{userProduct.phoneNumber}}</td>
+                        <td>{{product.user.phoneNumber}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -132,7 +132,8 @@
                                     <th scope="col" style="width: 30%">Số người</th>
                                     <td scope="col">
                                         <input class="form-control" type="number"
-                                               value="{{product.information.amountPeople}}" id="ipAmountPeople" min="1"
+                                               value="{{product.product.information.amountPeople}}" id="ipAmountPeople"
+                                               min="1"
                                                max="100" disabled>
                                         <div class="d-flex flex-row-reverse">
                                             <div class="p-2">
@@ -195,10 +196,11 @@
                                     <td scope="col">First</td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" style="width: 30%">Giá phòng({{product.information.unit}})</th>
+                                    <th scope="col" style="width: 30%">Giá phòng({{product.product.information.unit}})
+                                    </th>
                                     <td scope="col">
                                         <input class="form-control"
-                                               value="{{product.information.price}}"
+                                               value="{{product.product.information.price}}"
                                                step="10000" type="number"
                                                id="ipPrice"
                                                placeholder="Nhập giá ..." disabled>
@@ -227,10 +229,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="col" style="width: 30%">Tiền cọc({{product.information.unit}})</th>
+                                    <th scope="col" style="width: 30%">Tiền cọc({{product.product.information.unit}})
+                                    </th>
                                     <td scope="col">
                                         <input class="form-control"
-                                               value="{{product.information.deposit}}"
+                                               value="{{product.product.information.deposit}}"
                                                step="10000" type="number"
                                                id="ipDeposit"
                                                placeholder="Nhập giá ..." disabled>
@@ -260,17 +263,17 @@
                                 </tr>
                                 <tr>
                                     <th scope="col" style="width: 30%">Tiền điện (Đơn
-                                        vị:1 {{product.information.electricUnit}})
+                                        vị:1 {{product.product.information.electricUnit}})
                                     </th>
                                     <td scope="col">
 
                                         <div class="row align-items-center">
                                             <input class="col-11 form-control"
-                                                   value="{{product.information.electricBill}}"
+                                                   value="{{product.product.information.electricBill}}"
                                                    step="10000" type="number"
                                                    id="ipWater"
                                                    placeholder="Nhập giá ..." disabled>
-                                            <b class="col-1">{{product.information.unit}}</b>
+                                            <b class="col-1">{{product.product.information.unit}}</b>
                                         </div>
                                         <div class="d-flex flex-row-reverse">
                                             <div class="p-2">
@@ -298,16 +301,16 @@
                                 </tr>
                                 <tr>
                                     <th scope="col" style="width: 30%">Tiền nước(Đơn
-                                        vị: {{product.information.waterUnit}})
+                                        vị: {{product.product.information.waterUnit}})
                                     </th>
                                     <td scope="col">
                                         <div class="row align-items-center">
                                             <input class="col-11 form-control"
-                                                   value="{{product.information.waterBill}}"
+                                                   value="{{product.product.information.waterBill}}"
                                                    step="10000" type="number"
                                                    id="ipWater"
                                                    placeholder="Nhập giá ..." disabled>
-                                            <b class="col-1">{{product.information.unit}}</b>
+                                            <b class="col-1">{{product.product.information.unit}}</b>
 
                                         </div>
                                         <div class="d-flex flex-row-reverse">
@@ -338,7 +341,7 @@
                                     <th scope="col" style="width: 30%">Nội dung</th>
                                     <td scope="col">
                                         <textarea class="form-control" id="txtDescribe" rows="5"
-                                                  disabled>{{product.information.describe}}</textarea>
+                                                  disabled>{{product.product.information.describe}}</textarea>
                                         <div class="d-flex flex-row-reverse">
                                             <div class="p-2">
                                                 <button type="button" class="btn btn-success"
@@ -372,10 +375,11 @@
                         <td>
                             <table class="table table-borderless">
                                 <tbody>
-                                {{#each product.information.image}}
+                                {{#each product.product.information.image}}
                                     <tr>
                                         <td style="width: 60%">
-                                            <img id="blah" src="http://128.199.165.184:9090/{{this}}" alt="{{this}}">
+                                            <img id="blah" width="250px" height="250px"
+                                                 src="http://128.199.165.184:9090/{{this}}" alt="{{this}}">
                                         </td>
                                         <td style="width: 40%">
                                             <div style="margin-bottom: 10px" class="custom-file">

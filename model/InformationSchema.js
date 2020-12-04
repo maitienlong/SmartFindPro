@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-const informationSchema = mongoose.Schema({
+const InformationSchema = mongoose.Schema({
     amountPeople: {type: Number},
     price: {type: Number},
     deposit: {type: Number},
@@ -14,4 +14,4 @@ const informationSchema = mongoose.Schema({
         type: [String]
     }
 });
-module.exports = informationSchema;
+module.exports = InformationSchema;

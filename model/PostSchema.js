@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
     product: {
         type: mongoose.Types.ObjectId,
         required: true,
@@ -35,4 +35,4 @@ const postSchema = new mongoose.Schema({
     },
     linkProduct: {type: String}
 });
-module.exports = postSchema;
+module.exports = PostSchema;

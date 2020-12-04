@@ -1,5 +1,6 @@
 class PostManage {
-    constructor(unapprovedPost, processingPost, successPost) {
+    constructor(allProduct, unapprovedPost, processingPost, successPost) {
+        this.allProduct = allProduct;
         this.unapprovedPost = unapprovedPost;
         this.processingPost = processingPost;
         this.successPost = successPost;
@@ -9,4 +10,5 @@ class PostManage {
         this.lengthOfAllPost = unapprovedPost.length + processingPost.length + successPost.length;
     }
 }
+
 module.exports = PostManage;

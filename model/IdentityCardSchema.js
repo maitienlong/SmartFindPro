@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-const identityCardSchema = mongoose.Schema({
+const IdentityCardSchema = mongoose.Schema({
     type: {type: String},
     code: {type: String},
     name: {type: String},
@@ -20,4 +20,4 @@ const identityCardSchema = mongoose.Schema({
         ref: 'Address',
     }
 });
-module.exports = identityCardSchema;
+module.exports = IdentityCardSchema;

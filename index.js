@@ -12,7 +12,7 @@ const Handlebars = require('handlebars');
 
 //anh xa model
 const postSchema = require('./model/PostSchema');
-const Product = db.model('Product', postSchema, 'postProduct');
+const Product = db.model('Product', postSchema, 'products');
 
 const userSchema = require('./model/UserSchema');
 const User = db.model('User', userSchema, 'users');
@@ -350,9 +350,6 @@ app.get('/updateAdAc', async function (request, response) {
 
 app.get('/postManage', async function (request, response) {
     const PostManage = require('./model/confirmPost/PostManage');
-    var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
-    var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
-    var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
     // try {
     //     if (request.query.idProduct != undefined) {
     //         let _id = request.query.idProduct
@@ -379,26 +376,28 @@ app.get('/postManage', async function (request, response) {
     //     console.log('[Delete] Error: ' + e)
     // }
     var allProduct = await Product.find({deleteAt: ''}).populate(['address', 'product', 'user']).lean();
-    console.log(allProduct)
+    var unapprovedPost = await Product.find({
+        status: '-1',
+        deleteAt: ''
+    }).populate(['address', 'product', 'user']).lean();
+    var processingPost = await Product.find({
+        status: '0',
+        deleteAt: ''
+    }).populate(['address', 'product', 'user']).lean();
+    var successPost = await Product.find({status: '1', deleteAt: ''}).populate(['address', 'product', 'user']).lean();
+    let data = new PostManage(allProduct, unapprovedPost, processingPost, successPost)
     response.render('postManage', {
-        data: allProduct,
-
+        data: data
     });
 });
 
 app.get('/confirmPost', async function (request, response) {
     let _id = request.query.idProduct;
     try {
-        let productFind = await Product.find({_id: _id}).lean();
-        let product = productFind[0]
-        let findUserProduct = await User.find({_id: product.userId}).lean();
-        let userProduct = findUserProduct[0]
-
-        console.log('[GET LIST FIND] Product\n' + JSON.stringify(product) + '\n User \n' + JSON.stringify(userProduct) + '\n AdminNow: ' + adminNow + '\n------------------->')
+        let product = await Product.find({_id: _id}).populate(['address', 'product', 'user']).lean();
+        console.log(product)
         response.render('confirmPost', {
-            product: product,
-            userProduct: userProduct,
-            nameDN: nameDN
+            product: product[0]
         });
     } catch (e) {
         console.log('Lỗi: ' + e)

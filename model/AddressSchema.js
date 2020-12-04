@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-const addressSchema = mongoose.Schema({
+const AddressSchema = mongoose.Schema({
     provinceCity: {
         type: String,
         required: true
@@ -25,4 +25,4 @@ const addressSchema = mongoose.Schema({
         }
     }
 });
-module.exports = addressSchema;
+module.exports = AddressSchema;
