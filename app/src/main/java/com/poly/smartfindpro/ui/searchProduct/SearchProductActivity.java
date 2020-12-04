@@ -1,10 +1,13 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -58,6 +61,61 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
             @Override
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                    @Override
+                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                        switch (newState) {
+                            case BottomSheetBehavior.STATE_DRAGGING:
+                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_DRAGGING");
+                                Toast.makeText(getBaseContext(), "STATE_DRAGGING", Toast.LENGTH_SHORT).show();
+                                break;
+                            case BottomSheetBehavior.STATE_SETTLING:
+                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_SETTLING");
+                                Toast.makeText(getBaseContext(), "STATE_SETTLING", Toast.LENGTH_SHORT).show();
+
+                                break;
+                            case BottomSheetBehavior.STATE_EXPANDED:
+                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_EXPANDED");
+                                Toast.makeText(getBaseContext(), "STATE_EXPANDED", Toast.LENGTH_SHORT).show();
+
+                                break;
+                            case BottomSheetBehavior.STATE_COLLAPSED:
+                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_COLLAPSED");
+                                Toast.makeText(getBaseContext(), "STATE_COLLAPSED", Toast.LENGTH_SHORT).show();
+
+                                break;
+                            case BottomSheetBehavior.STATE_HIDDEN:
+                                Log.d("BottomSheetCallback", "BottomSheetBehavior.STATE_HIDDEN");
+                                Toast.makeText(getBaseContext(), "STATE_HIDDEN", Toast.LENGTH_SHORT).show();
+
+                                break;
+
+                        }
+                    }
+
+                    @Override
+                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                        Log.d("BottomSheetCallback", "slideOffset: " + slideOffset);
+//                        boolean drawer = getSupportFragmentManager().getBackStackEntryCount() == 0;
+//                        ObjectAnimator.ofFloat(drawerArrow, "progress", drawer ? 0 : 1).start();
+                    }
+                });
+            }
+        });
+
+
+        bottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "ONCLickListner");
+
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    Log.d(TAG,"state expand");
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    Log.d(TAG,"state collapse");
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
             }
         });
 

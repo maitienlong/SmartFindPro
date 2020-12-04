@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConnect {
     private static ListServices listServices;
-    private static final String myAPI = "http://192.168.0.102:9090/";
+    private static final String myAPI = "http://102.168.180.117:9090/";
     public static final int CONNECT_TIMEOUT = 30 * 1000000;
 
 
