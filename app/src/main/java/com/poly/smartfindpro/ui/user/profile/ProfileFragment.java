@@ -44,7 +44,6 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onShow(List<Products> productList) {
-        Log.d("checkList", productList.size()+"");
         profileAdapter.setItemList(productList);
         BindingUtils.setAdapter(mBinding.rcProfile,profileAdapter,true);
     }

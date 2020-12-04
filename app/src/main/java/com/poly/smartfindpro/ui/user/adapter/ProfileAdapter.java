@@ -66,16 +66,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         List<String> image = new ArrayList<>();
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        try {
-            Date date = dateFormatter.parse(item.getCreateAt());
+            try {
+                Date date = dateFormatter.parse(item.getCreateAt());
 
-            holder.tv_time_post.setText(getTime(date));
+                holder.tv_time_post.setText(getTime(date));
 
-        } catch (Exception e) {
+            } catch (Exception e) {
 
-        }
+            }
 
         holder.tv_username_post.setText(item.getUser().getUserName());
         holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());

@@ -89,8 +89,9 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
                     mViewModel.onShow(response.body().getResponseBody().getProducts());
+
                 }else {
-                    Log.d("Hihi", response.code()+"");
+
                 }
             }
 
