@@ -14,6 +14,7 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
+import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
 
 
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
@@ -63,8 +64,8 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     }
 
 
-    private void setBottomNaviChange(int positon){
-        switch (positon){
+    private void setBottomNaviChange(int positon) {
+        switch (positon) {
             case 0:
                 mBinding.btnHome.setImageResource(R.drawable.ic__home_page_full);
                 mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
@@ -86,14 +87,14 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onSelectHome() {
-        Log.d("CheckBackStack", getSupportFragmentManager().getBackStackEntryCount()+"");
+        Log.d("CheckBackStack", getSupportFragmentManager().getBackStackEntryCount() + "");
         mBinding.vpNative.setCurrentItem(0);
         setBottomNaviChange(0);
     }
 
     @Override
     public void onSelecFind() {
-
+        openActivity(SearchProductActivity.class);
     }
 
     @Override

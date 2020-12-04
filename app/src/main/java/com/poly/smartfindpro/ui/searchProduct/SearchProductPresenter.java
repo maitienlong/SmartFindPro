@@ -7,7 +7,7 @@ import androidx.databinding.ObservableField;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.data.model.product.Product;
-import com.poly.smartfindpro.data.retrofit.RetrofitConnect;
+import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +45,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     }
 
     public void getProduct() {
-        RetrofitConnect.getInstanceSmartFind().getAllProduct().enqueue(new Callback<Product>() {
+        MyRetrofitSmartFind.getInstanceSmartFind().getAllProduct().enqueue(new Callback<Product>() {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
                 if (response.code() != 200) {
