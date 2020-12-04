@@ -1,254 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="confirm"
-            type="com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment" />
+            name="presenter"
+            type="com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostPresenter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="31dp">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidline_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4"/>
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:text="@string/tv_confirm"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="Xác nhận"
+            android:textColor="@color/black"
             android:textSize="@dimen/_20sdp"
-            android:textStyle="bold" />
+            android:textStyle="bold">
 
-        <TextView
-            android:id="@+id/tvCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="@string/tv_category"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirm" />
-
-        <TextView
-            android:id="@+id/str_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="22dp"
-            app:layout_constraintStart_toEndOf="@id/tvCategory"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirm" />
+        </TextView>
 
         <LinearLayout
-            android:id="@+id/gridlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-            app:layout_constraintTop_toBottomOf="@+id/tvCategory">
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Thể loại" />
 
-            <ImageView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:src="@mipmap/bg_barcode" />
-
-            <ImageView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:src="@mipmap/bg_barcode" />
-
-            <ImageView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:src="@mipmap/bg_barcode" />
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.theLoai}" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22sdp"
-            android:text="@string/tv_amount_room"
-            app:layout_constraintTop_toBottomOf="@+id/gridlayout" />
-
-        <TextView
-            android:id="@+id/str_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_22sdp"
-
-            app:layout_constraintStart_toEndOf="@+id/tvAmount"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@id/gridlayout" />
-
-        <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_price"
-            app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/str_price"
-            android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_photo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvPrice"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@+id/str_amount" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvDeposit"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Số lượng" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.soLuong}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_deposit"
-            app:layout_constraintTop_toBottomOf="@id/tvPrice" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/str_deposit"
-            android:layout_width="28dp"
-            android:layout_height="14dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@id/tvDeposit"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@id/str_price" />
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Giá" />
 
-        <TextView
-            android:id="@+id/tvGender"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.gia}" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_gender"
-            app:layout_constraintTop_toBottomOf="@id/tvDeposit" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/str_gender"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Đặt cọc" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.datCoc}" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvGender"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@+id/str_deposit" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Giới tính" />
 
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.gioiTinh}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_address"
-            app:layout_constraintTop_toBottomOf="@+id/tvGender" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/str_address"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Địa chỉ" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.diaChi}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvAddress"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@id/str_gender" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvElectricBill"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Tiền điện" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.tienDien}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_electricity_bill"
-            app:layout_constraintTop_toBottomOf="@id/tvAddress" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/str_electricbill"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Tiền nước" />
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.tienNuoc}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvElectricBill"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@+id/str_address" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Tiện ích" />
 
-        <TextView
-            android:id="@+id/tvWaterBill"
-            android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.tienIch}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_water_bill"
-            app:layout_constraintTop_toBottomOf="@+id/tvElectricBill" />
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/str_waterbill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvWaterBill"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@+id/str_electricbill" />
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Mô tả" />
 
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={presenter.moTa}" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvUtilities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_utilities"
-            app:layout_constraintTop_toBottomOf="@+id/tvWaterBill" />
-
-        <TextView
-            android:id="@+id/str_utilities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvUtilities"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@+id/str_waterbill"
-            android:maxEms="10"/>
-
-        <TextView
-            android:id="@+id/tvDescriptionDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/tv_detailed_description"
-            app:layout_constraintTop_toBottomOf="@+id/str_utilities" />
-
-        <TextView
-            android:id="@+id/str_descriptiondetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@+id/tvDescriptionDetail"
-            app:layout_constraintStart_toStartOf="@+id/guidline_confirm"
-            app:layout_constraintTop_toBottomOf="@+id/str_utilities" />
 
         <Button
-            android:id="@+id/btnPostToServer"
+            android:onClick="@{()-> presenter.requestUploadSurvey()}"
+            android:id="@+id/btnContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/bg_blue_round_15_selector"
-            android:text="@string/btn_post"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionDetail" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/custom_button_infor"
+            android:paddingHorizontal="@dimen/_30sdp"
+            android:text="@string/btn_continue"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 </layout>

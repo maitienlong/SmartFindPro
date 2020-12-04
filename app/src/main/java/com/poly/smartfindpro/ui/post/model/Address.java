@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Address {
-
     @SerializedName("provinceCity")
     @Expose
     private String provinceCity;
@@ -18,6 +17,9 @@ public class Address {
     @SerializedName("detailAddress")
     @Expose
     private String detailAddress;
+    @SerializedName("location")
+    @Expose
+    private Location location;
 
     public String getProvinceCity() {
         return provinceCity;
@@ -51,4 +53,11 @@ public class Address {
         this.detailAddress = detailAddress;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }

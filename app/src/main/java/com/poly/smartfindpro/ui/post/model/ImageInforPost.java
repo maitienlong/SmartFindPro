@@ -8,43 +8,41 @@ import android.provider.MediaStore;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class ImageInforPost {
-    public String mName;
-    public Uri uri;
+    private String nameFile;
+
+    private String realPath;
 
     private Bitmap bitmap;
-
-    public ImageInforPost(String mName, Uri uri, Bitmap bitmap) {
-        this.mName = mName;
-        this.uri = uri;
-        this.bitmap = bitmap;
-    }
-
-    public Uri getUri() {
-        return uri;
-    }
-
-    public void setUri(Uri uri) {
-        this.uri = uri;
-    }
-
-    public ImageInforPost(String mName) {
-        this.mName = mName;
-    }
 
     public ImageInforPost() {
     }
 
-    public String getmName() {
-        return mName;
+    public ImageInforPost(String nameFile, String realPath, Bitmap bitmap) {
+        this.realPath = realPath;;
+        this.nameFile = nameFile;
+        this.bitmap = bitmap;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
+    public String getNameFile() {
+        return nameFile;
+    }
+
+    public void setNameFile(String nameFile) {
+        this.nameFile = nameFile;
+    }
+
+    public String getRealPath() {
+        return realPath;
+    }
+
+    public void setRealPath(String realPath) {
+        this.realPath = realPath;
     }
 
     public Bitmap getBitmap() {
@@ -54,6 +52,4 @@ public class ImageInforPost {
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
-
-
 }
