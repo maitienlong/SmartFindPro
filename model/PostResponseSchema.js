@@ -4,32 +4,49 @@ const PostResponseSchema = new mongoose.Schema({
     category: {type: String},
     information: {
         type: Object,
-        ref: 'Information'
+        ref: 'Information',
+        required: true
     },
     address: {
         type: Object,
-        ref: 'Address'
+        ref: 'Address',
+        required: true
     },
-    utilities: {type: [String]},
-    content: {type: String},
+    utilities: {
+        type: [String],
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
     user: {
         type: Object,
         required: false,
         ref: 'User'
     },
-    status: {type: String},
+    status: {
+        type: String,
+        required: true
+    },
     deleteAt: {
         type: String,
-        default: Date
+        default: Date,
+        required: true
     },
     updateAt: {
         type: String,
-        default: Date
+        default: Date,
+        required: true
     },
     createAt: {
         type: String,
-        default: Date
+        default: Date,
+        required: true
     },
-    linkProduct: {type: String}
+    linkProduct: {
+        type: String,
+        required: true
+    }
 });
 module.exports = PostResponseSchema;

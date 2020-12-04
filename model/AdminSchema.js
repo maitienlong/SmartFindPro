@@ -1,9 +1,24 @@
 let mongoose = require('mongoose');
 const AdminSchema = mongoose.Schema({
-    username: {type: String},
-    password: {type: String},
-    name: {type: String},
-    phone: {type: String},
-    address: {type: String},
+    username: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
 });
 module.exports = AdminSchema;

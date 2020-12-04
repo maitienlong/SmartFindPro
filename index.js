@@ -78,6 +78,7 @@ function getResponse(name, resCode, resMess, res) {
 }
 
 function checkData(data) {
+    console.log(JSON.stringify(data))
     if (data == undefined) {
         return false
     }
@@ -138,14 +139,6 @@ async function getProducts(successPost) {
 const sttOK = 'Succsess'
 let nameDN = '', allAdmin = '';
 
-//lay danh sach dia chi
-request('https://lifecardtest.viviet.vn/lifecard-app/area/def', {json: true}, (err, res, body) => {
-    if (err) {
-        return console.log(err);
-    }
-    console.log(body.url);
-    console.log(body.explanation);
-});
 //new khoi tao noi luu tru
 storage = multer.diskStorage({
     destination: './public/uploads/',
@@ -491,167 +484,274 @@ app.get('/getAlluser', async function (request, response) {
 //trả ve danh sách bài đăng cua nguoi dung
 app.post('/user-product', async function (request, response) {
     let name = 'USER-PRODUCT'
-    let id = request.body.id;
-    if (checkData(id)) {
-        try {
-            let userNo = await User.find({_id: id}).lean();
+    try {
+        let id = request.body.id;
+        if (checkData(id)) {
             try {
-                let allProduct = await Product.find({
-                    deleteAt: '', user: id
-                }).populate(['address', 'product', 'user']).lean();
-                console.log(allProduct)
-                let res_body = {products: allProduct}
-                response.json(getResponse(name, 200, sttOK, res_body))
+                let userNo = await User.find({_id: id}).lean();
+                try {
+                    let allProduct = await Product.find({
+                        deleteAt: '', user: id
+                    }).populate(['address', 'product', 'user']).lean();
+                    console.log(allProduct)
+                    let res_body = {products: allProduct}
+                    response.json(getResponse(name, 200, sttOK, res_body))
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 200, 'Fail', null))
+                }
             } catch (e) {
                 console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'List user product not found', null))
+                response.json(getResponse(name, 404, 'User not found', null))
             }
-        } catch (e) {
-            console.log('loi ne: \n' + e)
-            response.json(getResponse(name, 404, 'User not found', null))
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
-    } else {
-        response.json(getResponse(name, 400, 'Bad request', null))
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
 //trả ve danh sách bài đăng
 app.post('/list-product', async function (request, response) {
     let name = 'LIST-PRODUCT'
-    let id = request.body.id;
-    if (checkData(id)) {
-        try {
-            let user = await User.find({_id: id}).lean();
+    try {
+        let id = request.body.id;
+        if (checkData(id)) {
             try {
-                let allProduct = await Product.find({
-                    status: '1',
-                    deleteAt: ''
-                }).populate(['address', 'product', 'user']).lean();
-                let res_body = {products: allProduct}
-                response.json(getResponse(name, 200, sttOK, res_body))
+                let user = await User.find({_id: id}).lean();
+                try {
+                    let allProduct = await Product.find({
+                        status: '1',
+                        deleteAt: ''
+                    }).populate(['address', 'product', 'user']).lean();
+                    let res_body = {products: allProduct}
+                    response.json(getResponse(name, 200, sttOK, res_body))
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 200, 'Fail', null))
+                }
             } catch (e) {
                 console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'List product not found', null))
+                response.json(getResponse(name, 404, 'User not found', null))
             }
-        } catch (e) {
-            console.log('loi ne: \n' + e)
-            response.json(getResponse(name, 404, 'User not found', null))
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
-    } else {
-        response.json(getResponse(name, 400, 'Bad request', null))
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
 
 //tim kiem nguoi dung
 app.post('/find-user', async function (request, response) {
     let name = 'FIND-USER'
-    let id = request.body.id;
-    if (checkData(id)) {
-        try {
-            let user = await User.find({_id: id}).lean();
-            response.json(getResponse(name, 200, sttOK, user[0]))
-        } catch (e) {
-            console.log('loi ne: \n' + e)
-            response.json(getResponse(name, 404, 'User not found', null))
+    try {
+        let id = request.body.id;
+        if (checkData(id)) {
+            try {
+                let user = await User.find({_id: id}).lean();
+                let res_body = {user: user[0]}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
-    } else {
-        response.json(getResponse(name, 400, 'Bad request', null))
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
 
 // them bai dang
 app.post('/init-product', async function (request, response) {
     let name = 'INIT-PRODUCT'
-    let id = request.body.id;
-    let utilities = request.body.utilities;
-    let category = request.body.category;
-    let information = request.body.information;
-    let mAddress = request.body.address;
-    let content = request.body.content;
-    let linkProduct = request.body.linkProduct;
     try {
-        let user = await User.find({_id: id}).lean();
-        try {
-            //luu data vao cac bang phu
-            let newInforProduct = new InforProduct({
-                category: category,
-                information: information,
-                utilities: utilities
-            });
-            let newProductAddress = new Address({
-                provinceCity: mAddress.provinceCity,
-                districtsTowns: mAddress.districtsTowns,
-                communeWardTown: mAddress.communeWardTown,
-                detailAddress: mAddress.detailAddress,
-                location: {
-                    latitude: "",
-                    longitude: ""
+        let id = request.body.id;
+        let utilities = request.body.utilities;
+        let category = request.body.category;
+        let information = request.body.information;
+        let mAddress = request.body.address;
+        let content = request.body.content;
+        let linkProduct = 'chua co link';
+        if (checkData(id) &&
+            checkData(utilities) &&
+            checkData(category) &&
+            checkData(information) &&
+            checkData(mAddress) &&
+            checkData(content) &&
+            checkData(linkProduct)) {
+            try {
+                let user = await User.find({_id: id}).lean();
+                try {
+                    //luu data vao cac bang phu
+                    let newInforProduct = new InforProduct({
+                        category: category,
+                        information: information,
+                        utilities: utilities
+                    });
+                    let newProductAddress = new Address({
+                        provinceCity: mAddress.provinceCity,
+                        districtsTowns: mAddress.districtsTowns,
+                        communeWardTown: mAddress.communeWardTown,
+                        detailAddress: mAddress.detailAddress,
+                        location: {
+                            latitude: mAddress.longitude,
+                            longitude: mAddress.latitude
+                        }
+                    });
+                    let product = await newInforProduct.save();
+                    let address = await newProductAddress.save();
+                    // luu data vao bang chinh
+                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let status = '-1'
+                    let newProduct = new Product({
+                        product: product._id,
+                        address: address._id,
+                        user: id,
+                        content: content,
+                        status: status,
+                        createAt: createAt,
+                        updateAt: "",
+                        deleteAt: "",
+                        linkProduct: ""
+                    });
+                    let initProduct = await newProduct.save();
+                    response.json(getResponse(name, 200, sttOK, null))
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 200, 'Fail', null))
                 }
-            });
-            let product = await newInforProduct.save();
-            let address = await newProductAddress.save();
-            // luu data vao bang chinh
-            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-            let status = '-1'
-            let newProduct = new Product({
-                product: product._id,
-                address: address._id,
-                user: id,
-                content: content,
-                status: status,
-                createAt: createAt,
-                updateAt: "",
-                deleteAt: "",
-                linkProduct: ""
-            });
-            if (!newProduct) {
-                response.json(getResponse(name, 200, 'Fail', null))
-            } else {
-                let product = await newProduct.save();
-                response.json(getResponse(name, 200, sttOK, null))
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
             }
-        } catch (e) {
-            console.log('loi ne: \n' + e)
+        } else {
             response.json(getResponse(name, 400, 'Bad request', null))
         }
     } catch (e) {
         console.log('loi ne: \n' + e)
-        response.json(getResponse(name, 404, 'User not found', null))
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-
 });
 // sua bai dang
 app.post('/update-product', async function (request, response) {
-    let _id = request.body._id;
-    let idUser = request.body.idUser;
-
-    let category = request.body.category;
-    let information = request.body.information;
-    let mAddress = request.body.address;
-    let utilities = request.body.utilities;
-    let content = request.body.content;
-    let linkProduct = request.body.linkProduct;
-    //validate các thứ
-    //kiểm tra trong danh sách các sản phẩm của thằng user này xem có bài đăng nào trùng không
-    //Nếu đúng thì cho phép xóa
-    //Nếu sai thì trả về là bạn đéo có tuổi để xóa sản phẩm này
-
-    let status = await Product.findByIdAndUpdate(request.query.nId, {
-        username: nUser,
-        password: nPass,
-        name: nName,
-        phone: nPhone,
-        address: nAddress,
-    });
+    let name = 'UPDATE-PRODUCT'
+    try {
+        let userId = request.body.userId;
+        let id = request.body.id;
+        let utilities = request.body.utilities;
+        let category = request.body.category;
+        let information = request.body.information;
+        let mAddress = request.body.address;
+        let content = request.body.content;
+        let linkProduct = 'chua co link';
+        if (checkData(userId) &&
+            checkData(id) &&
+            checkData(utilities) &&
+            checkData(category) &&
+            checkData(information) &&
+            checkData(mAddress) &&
+            checkData(content) &&
+            checkData(linkProduct)) {
+            try {
+                let user = await User.find({_id: userId}).lean();
+                try {
+                    let oldProduct = await Product.find({_id: id}).lean();
+                    oldProduct = oldProduct[0];
+                    try {
+                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                            category: category,
+                            information: information,
+                            utilities: utilities
+                        });
+                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
+                            provinceCity: mAddress.provinceCity,
+                            districtsTowns: mAddress.districtsTowns,
+                            communeWardTown: mAddress.communeWardTown,
+                            detailAddress: mAddress.detailAddress,
+                            location: {
+                                latitude: mAddress.longitude,
+                                longitude: mAddress.latitude
+                            }
+                        });
+                        // update data vao bang chinh
+                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                            product: product._id,
+                            address: address._id,
+                            user: oldProduct.user,
+                            content: content,
+                            status: oldProduct.status,
+                            createAt: oldProduct.createAt,
+                            updateAt: updateAt,
+                            deleteAt: oldProduct.deleteAt,
+                            linkProduct: oldProduct.linkProduct
+                        })
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } catch (e) {
+                        console.log('loi ne: \n' + e)
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
 });
 // xoa bai dang
 app.post('/delete-product', async function (request, response) {
-    let _id = request.body._id;
-    let idUser = request.body.idUser;
-    //kiểm tra trong danh sách các sản phẩm của thằng user này xem có bài đăng nào trùng không
-    //Nếu đúng thì cho phép xóa
-    //Nếu sai thì trả về là bạn đéo có tuổi để xóa sản phẩm này
-    let status = await Admin.findByIdAndDelete(_id);
+    let name = 'DELETE-PRODUCT'
+    try {
+        let id = request.body.id;
+        let userId = request.body.userId;
+        if (checkData(id) && checkData(userId)) {
+            try {
+                let user = await User.find({_id: userId}).lean();
+                try {
+                    let product = await Product.find({_id: id}).lean();
+                    product = product[0];
+                    try {
+                        let deleteProduct = await Product.findByIdAndDelete(product._id);
+                        let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
+                        let deleteAddress = await Address.findByIdAndDelete(product.address._id);
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } catch (e) {
+                        console.log('loi ne: \n' + e)
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
 });
+
+//import switch
 Handlebars.registerHelper('switch', function (value, options) {
     this.switch_value = value;
     return options.fn(this);

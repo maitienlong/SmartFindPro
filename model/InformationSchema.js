@@ -1,15 +1,45 @@
 let mongoose = require('mongoose');
 const InformationSchema = mongoose.Schema({
-    amountPeople: {type: Number},
-    price: {type: Number},
-    deposit: {type: Number},
-    gender: {type: String},
-    unit: {type: String},
-    electricBill: {type: Number},
-    electricUnit: {type: String},
-    waterBill: {type: Number},
-    waterUnit: {type: String},
-    describe: {type: String},
+    amountPeople: {
+        type: Number,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    deposit: {
+        type: Number,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    unit: {
+        type: String,
+        required: true
+    },
+    electricBill: {
+        type: Number,
+        required: true
+    },
+    electricUnit: {
+        type: String,
+        required: true
+    },
+    waterBill: {
+        type: Number,
+        required: true
+    },
+    waterUnit: {
+        type: String,
+        required: true
+    },
+    describe: {
+        type: String,
+        required: true
+    },
     image: {
         type: [String]
     }
