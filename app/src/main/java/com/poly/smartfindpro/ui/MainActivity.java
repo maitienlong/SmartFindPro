@@ -4,6 +4,7 @@ package com.poly.smartfindpro.ui;
 import android.content.res.ColorStateList;
 import android.graphics.ColorFilter;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -85,6 +86,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onSelectHome() {
+        Log.d("CheckBackStack", getSupportFragmentManager().getBackStackEntryCount()+"");
         mBinding.vpNative.setCurrentItem(0);
         setBottomNaviChange(0);
     }

@@ -12,6 +12,7 @@ import androidx.databinding.ObservableField;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.post.PostResponse;
 import com.poly.smartfindpro.data.model.post.res.ResImagePost;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
@@ -155,9 +156,9 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
 
 
     public void onSubmitToServer(List<String> photoList) {
-        mViewModel.showLoadingDialog();
         Information information = postRequest.getInformation();
         information.setImage(photoList);
+        postRequest.setIdUser(Config.TOKEN_USER);
         postRequest.setInformation(information);
 
         MyRetrofitSmartFind.getInstanceSmartFind().initPost(postRequest).enqueue(new Callback<PostResponse>() {
@@ -165,10 +166,10 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if (response.code() == 200) {
                     mViewModel.hideLoading();
-                    Log.d("PostUp", response.body().getMessage());
+                    mViewModel.showMessage("Bài viết đang được chờ duyệt");
                 } else {
                     mViewModel.hideLoading();
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail));
+                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng bài viết không thành công");
                     Log.d("PostUp", response.code() + " - " + response.message());
 
                 }
@@ -176,7 +177,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
 
             @Override
             public void onFailure(Call<PostResponse> call, Throwable t) {
-                Log.d("PostUp", t.toString());
+                mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng bài viết không thành công");
                 mViewModel.hideLoading();
             }
         });
@@ -184,6 +185,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
     }
 
     public void requestUploadSurvey() {
+        mViewModel.showLoadingDialog();
         MultipartBody.Part propertyImagePart;
 
         MultipartBody.Part[] surveyImagesParts;
@@ -202,14 +204,14 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                         onSubmitToServer(response.body().getAddressImage());
                     } else {
                         mViewModel.hideLoading();
-                        mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code());
+                        mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResImagePost> call, Throwable t) {
                     mViewModel.hideLoading();
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail));
+                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
                 }
             });
 
@@ -232,14 +234,14 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                         onSubmitToServer(response.body().getAddressImage());
                     } else {
                         mViewModel.hideLoading();
-                        mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code());
+                        mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResImagePost> call, Throwable t) {
                     mViewModel.hideLoading();
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail));
+                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
                 }
             });
         }
