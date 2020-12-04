@@ -76,4 +76,7 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:4.9.0"
 
+    //border image
+    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
 }

@@ -1,57 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.user.setting.SettingPresenter" />
+
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_20sdp"
+    <RelativeLayout
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvInfor"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:textSize="@dimen/_15sdp"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:textColor="@color/black"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_infor_user" />
+            android:layout_height="match_parent"
 
-        <View style="@style/ViewSettingLine"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvChangePass"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_change_pass" />
+            <com.poly.smartfindpro.widget.CommonToolbar
+                android:id="@+id/cmtb"
+                onBackClick="@{()->presenter.onBackClick()}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp" />
+
+            <TextView
+                android:id="@+id/tvInfor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:onClick="@{()->presenter.onClickInformation()}"
+                android:text="@string/setting_infor_user"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
+
+            <View style="@style/ViewSettingLine" />
+
+            <TextView
+                android:id="@+id/tvChangePass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:onClick="@{()->presenter.onClickChangePassword()}"
+                android:text="@string/setting_change_pass"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
 
 
-        <View style="@style/ViewSettingLine"/>
+            <View style="@style/ViewSettingLine" />
 
-        <TextView
-            android:id="@+id/tvPermission"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_permission" />
+            <TextView
+                android:id="@+id/tvPermission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:onClick="@{()->presenter.onClickPerMission()}"
+                android:text="@string/setting_permission"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
 
-        <View style="@style/ViewSettingLine"/>
-
-
-    </LinearLayout>
+            <View style="@style/ViewSettingLine" />
 
 
+        </LinearLayout>
+
+    </RelativeLayout>
 </layout>

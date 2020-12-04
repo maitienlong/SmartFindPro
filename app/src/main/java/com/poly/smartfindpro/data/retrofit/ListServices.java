@@ -5,11 +5,13 @@ import com.poly.smartfindpro.data.model.area.res.AreaResponse;
 import com.poly.smartfindpro.data.model.product.Product;
 import com.poly.smartfindpro.data.model.post.PostResponse;
 import com.poly.smartfindpro.data.model.post.res.ResImagePost;
+import com.poly.smartfindpro.data.model.product.req.ProductRequest;
+import com.poly.smartfindpro.data.model.product.res.ProductResponse;
+import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.ui.post.model.PostRequest;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Multipart;
@@ -30,6 +32,12 @@ public interface ListServices {
     @Multipart
     @POST("/upload-photo-array")
     Call<ResImagePost> postImageMulti(@Part MultipartBody.Part[] image);
+
+    @POST("/find-user")
+    Call<ProfileResponse> getProfile(@Body ProfileRequest request);
+
+    @POST("/user-product")
+    Call<ProductResponse> getProduct(@Body ProductRequest request);
 
     @POST("/list-product")
     Call<Product> getAllProduct();
