@@ -1,32 +1,39 @@
-let express = require('express');
-let hbs = require('express-handlebars');
-let db = require('mongoose');
-let multer = require('multer');
-let body = require('body-parser');
-let fs = require('fs');
-var moment = require('moment');
-var crypto = require('crypto');
-let request = require('request');
+//import thu vien
+const express = require('express');
+const hbs = require('express-handlebars');
+const db = require('mongoose');
+const multer = require('multer');
+const body = require('body-parser');
+const fs = require('fs');
+const moment = require('moment');
+const crypto = require('crypto');
+const request = require('request');
+const Handlebars = require('handlebars');
 
-let userSchema = require('./model/userSchema');
-let adminSchema = require('./model/adminSchema');
-let postSchema = require('./model/postSchema');
-let addressSchema = require('./model/addressSchema')
-let informationSchema = require('./model/informationSchema')
-let identityCardSchema = require('./model/identityCardSchema')
-let inforProductSchema = require('./model/inforProductSchema')
-let postResponseSchema = require('./model/PostResponseSchema')
+//anh xa model
+const postSchema = require('./model/PostSchema');
+const Product = db.model('Product', postSchema, 'postProduct');
 
-let PostResponseSchema = db.model('PostResponseSchema', postResponseSchema);
-let IdentityCard = db.model('IdentityCard', identityCardSchema);
-let Information = db.model('Information', informationSchema);
-let Address = db.model('Address', addressSchema, 'address');
-let InforProduct = db.model('InforProduct', inforProductSchema, 'product');
-let User = db.model('User', userSchema, 'users');
-let Admin = db.model('Admin', adminSchema, 'admins');
-let Product = db.model('Product', postSchema, 'postProduct');
+const userSchema = require('./model/UserSchema');
+const User = db.model('User', userSchema, 'users');
 
+const adminSchema = require('./model/AdminSchema');
+const Admin = db.model('Admin', adminSchema, 'admins');
 
+const addressSchema = require('./model/AddressSchema');
+const Address = db.model('Address', addressSchema, 'address');
+
+const inforProductSchema = require('./model/InforProductSchema');
+const InforProduct = db.model('InforProduct', inforProductSchema, 'product');
+
+const informationSchema = require('./model/InformationSchema');
+const Information = db.model('Information', informationSchema);
+const identityCardSchema = require('./model/IdentityCardSchema');
+const IdentityCard = db.model('IdentityCard', identityCardSchema);
+const postResponseSchema = require('./model/PostResponseSchema');
+const PostResponseSchema = db.model('PostResponseSchema', postResponseSchema);
+
+//conect mongodb
 db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.net/TimtroDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -35,33 +42,40 @@ db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.ne
     console.log('Mongoose is connected');
 });
 
-let app = express();
-
-let path = require('path');
+//khai bao can thiet
+const app = express();
+const path = require('path');
 const {json} = require('body-parser');
-app.use('/public', express.static(path.join(__dirname, 'public')))
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(body.json());
 app.use(body.urlencoded({extended: true}));
 app.engine('.hbs', hbs({
     extname: 'hbs',
     defaultLayout: '',
     layoutsDir: ''
-}))
-app.set('view engine', '.hbs')
+}));
+app.set('view engine', '.hbs');
 
-//chạy lên local host với port là 9090
-let localNumber = 9090
+//chạy lên local host với port là localNumber
+const localNumber = 9090;
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
-// phần sever
 
-// var log = console.log;
-// console.log = function () {
-//     log.apply(console, arguments);
-//     // Print the stack trace
-//     console.trace();
-// };
 
+//cac ham tro giup
+function getResponse(name, resCode, resMess, res) {
+    let resData = {
+        response_header: {
+            res_name: name,
+            res_code: resCode,
+            res_message: resMess
+        },
+        response_body: res
+    }
+    console.log('[' + name + '] \n' + 'res_code: ' + resCode + '\nres_mess: ' + resMess + '\n-------->')
+    return resData
+}
 
 function checkData(data) {
     if (data == undefined) {
@@ -79,9 +93,50 @@ function checkData(data) {
     return true
 }
 
-//tk Admin
-let adminNow = ''
-// đăng nhập
+async function getProducts(successPost) {
+    let products = [];
+
+    for (let i = 0; i < successPost.length; i++) {
+        let index = successPost[i]
+        let inforProduct = await InforProduct.find({_id: index.product}).lean();
+        let address = await Address.find({_id: index.address}).lean();
+        let user = await User.find({_id: index.userId}).lean();
+
+        if (checkData(inforProduct) && checkData(address) && checkData(user)) {
+            inforProduct = inforProduct[0]
+            address = address[0]
+            user = user[0]
+            let prd = new PostResponseSchema({
+                _id: index._id,
+                category: inforProduct.category,
+                information: inforProduct.information,
+                address: address,
+                utilities: inforProduct.utilities,
+                content: index.content,
+                user: user,
+                status: index.status,
+                createAt: index.createAt,
+                updateAt: index.updateAt,
+                deleteAt: index.deleteAt,
+                linkProduct: index.linkProduct
+            })
+            if (prd) {
+                console.log('id: ' + prd._id)
+                products.push(prd)
+            }
+        }
+    }
+    if (products.length <= 0) {
+        product = null
+    }
+    console.log(products.length)
+    return products
+}
+
+
+//Khai bao bien
+const sttOK = 'Succsess'
+let nameDN = '', allAdmin = '';
 
 //lay danh sach dia chi
 request('https://lifecardtest.viviet.vn/lifecard-app/area/def', {json: true}, (err, res, body) => {
@@ -108,7 +163,6 @@ app.get('/', function (request, response) {
     response.render('login', {status: 'none', user: '', pass: ''});
 });
 
-let nameDN = '', allAdmin = '';
 // kiểm tra đăng nhập nếu đúng hiện trang trủ index
 app.get('/index', async function (request, response) {
 
@@ -293,43 +347,42 @@ app.get('/updateAdAc', async function (request, response) {
     });
 
 });
+
 app.get('/postManage', async function (request, response) {
     const PostManage = require('./model/confirmPost/PostManage');
-    // let unapprovedPost = await Product.find({status: '-1'}).lean();
-    // let processingPost = await Product.find({status: '0'}).lean();
-    // let successPost = await Product.find({status: '1'}).lean();
-
     var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
     var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
     var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
-    try {
-        if (request.query.idProduct != undefined) {
-            let _id = request.query.idProduct
-            console.log('_id: ' + _id)
-            if (_id != undefined || _id != null || _id != '') {
-                let dateNow = Date.now()
-                let date = moment(dateNow).format('YYYY-MM-DD hh:mm:ss');
-                console.log(date)
-                let update = await Product.findByIdAndUpdate(_id, {
-                    deleteAt: date,
-                });
-                if (update) {
-                    console.log('[Delete] OK')
-                    var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
-                    var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
-                    var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
-                } else {
-                    console.log('[Delete] Fail')
-                }
-            }
-        }
-
-    } catch (e) {
-        console.log('[Delete] Error: ' + e)
-    }
-    let data = new PostManage(unapprovedPost, processingPost, successPost)
+    // try {
+    //     if (request.query.idProduct != undefined) {
+    //         let _id = request.query.idProduct
+    //         console.log('_id: ' + _id)
+    //         if (_id != undefined || _id != null || _id != '') {
+    //             let dateNow = Date.now()
+    //             let date = moment(dateNow).format('YYYY-MM-DD hh:mm:ss');
+    //             console.log(date)
+    //             let update = await Product.findByIdAndUpdate(_id, {
+    //                 deleteAt: date,
+    //             });
+    //             if (update) {
+    //                 console.log('[Delete] OK')
+    //                 var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
+    //                 var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
+    //                 var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
+    //             } else {
+    //                 console.log('[Delete] Fail')
+    //             }
+    //         }
+    //     }
+    //
+    // } catch (e) {
+    //     console.log('[Delete] Error: ' + e)
+    // }
+    var allProduct = await Product.find({deleteAt: ''}).populate(['address', 'product', 'user']).lean();
+    console.log(allProduct)
     response.render('postManage', {
-        data: data
+        data: allProduct,
+
     });
 });
 
@@ -438,219 +491,112 @@ app.get('/getAlluser', async function (request, response) {
 
 //trả ve danh sách bài đăng cua nguoi dung
 app.post('/user-product', async function (request, response) {
-    let userId = request.body.id;
-    try {
-        if (!checkData(userId)) {
-            let mess = 'PRODUCT NOT FOUND'
-            response.status(501).json({
-                message: mess.toUpperCase()
-            })
-        } else {
-            let successPost = await Product.find({userId: userId}).lean();
-            console.log(successPost);
-            if (!successPost) {
-                response.status(501).json({
-                    message: 'Fail'
-                })
-            } else {
-                let products = [];
-
-                for (let i = 0; i < successPost.length; i++) {
-                    let index = successPost[i]
-                    let inforProduct = await InforProduct.find({_id: index.product}).lean();
-                    let address = await Address.find({_id: index.address}).lean();
-                    let user = await User.find({_id: index.userId}).lean();
-
-                    if (checkData(inforProduct) && checkData(address) && checkData(user)) {
-                        inforProduct = inforProduct[0]
-                        address = address[0]
-                        user = user[0]
-                        let prd = new PostResponseSchema({
-                            _id: index._id,
-                            category: inforProduct.category,
-                            information: inforProduct.information,
-                            address: address,
-                            utilities: inforProduct.utilities,
-                            content: index.content,
-                            user: user,
-                            status: index.status,
-                            createAt: index.createAt,
-                            updateAt: index.updateAt,
-                            deleteAt: index.deleteAt,
-                            linkProduct: index.linkProduct
-                        })
-                        if (prd) {
-                            console.log('id: ' + prd._id)
-                            products.push(prd)
-                        }
-                    }
-                }
-                if (products.length <= 0) {
-                    product = null
-                }
-                response.status(200).json({
-                    message: 'OK',
-                    response: {
-                        count: successPost.length,
-                        products
-                    }
-                })
+    let name = 'USER-PRODUCT'
+    let id = request.body.id;
+    if (checkData(id)) {
+        try {
+            let user = await User.find({_id: id}).lean();
+            try {
+                let allProduct = await Product.find({
+                    user: user.id,
+                    deleteAt: ''
+                }).populate(['address', 'product', 'user']).lean();
+                let res_body = {products: allProduct}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'List user product not found', null))
             }
+        } catch (e) {
+            console.log('loi ne: \n' + e)
+            response.json(getResponse(name, 404, 'User not found', null))
         }
-    } catch (e) {
-        console.log("[Catch] " + e)
-        response.status(500).json({
-            message: 'Server error'
-        })
+    } else {
+        response.json(getResponse(name, 400, 'Bad request', null))
     }
-
 });
 //trả ve danh sách bài đăng
 app.post('/list-product', async function (request, response) {
-    try {
-        let successPost = await Product.find({status: '1'}).lean();
-        if (!successPost) {
-            console.log('successPost = Fail')
-            response.status(501).json({
-                message: 'Fail'
-            })
-        } else {
-            if (!checkData(successPost)) {
-                console.log('successPost === undefined || successPost === null || successPost.length <= 0');
-                response.status(501).json({
-                    message: 'Fail'
-                })
-            } else {
-                let products = [];
-                for (let i = 0; i < successPost.length; i++) {
-                    let index = successPost[i]
-                    let inforProduct = await InforProduct.find({_id: index.product}).lean();
-                    let address = await Address.find({_id: index.address}).lean();
-                    let user = await User.find({_id: index.userId}).lean();
-
-                    if (checkData(inforProduct) && checkData(address) && checkData(user)) {
-                        inforProduct = inforProduct[0]
-                        address = address[0]
-                        user = user[0]
-                        let prd = new PostResponseSchema({
-                            _id: index._id,
-                            category: inforProduct.category,
-                            information: inforProduct.information,
-                            address: address,
-                            utilities: inforProduct.utilities,
-                            content: index.content,
-                            user: user,
-                            status: index.status,
-                            createAt: index.createAt,
-                            updateAt: index.updateAt,
-                            deleteAt: index.deleteAt,
-                            linkProduct: index.linkProduct
-                        })
-                        if (prd) {
-                            console.log('id: ' + prd._id)
-                            products.push(prd)
-                        }
-                    }
-                }
-                if (products.length <= 0) {
-                    products = null
-                }
-                response.status(200).json({
-                    message: 'OK',
-                    response: {
-                        count: successPost.length,
-                        products
-                    }
-                })
+    let name = 'LIST-PRODUCT'
+    let id = request.body.id;
+    if (checkData(id)) {
+        try {
+            let user = await User.find({_id: id}).lean();
+            try {
+                let allProduct = await Product.find({
+                    status: '1',
+                    deleteAt: ''
+                }).populate(['address', 'product', 'user']).lean();
+                let res_body = {products: allProduct}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'List product not found', null))
             }
+        } catch (e) {
+            console.log('loi ne: \n' + e)
+            response.json(getResponse(name, 404, 'User not found', null))
         }
-    } catch
-        (e) {
-        console.log("[Catch] " + e)
-        response.status(500).json({
-            message: 'Server error'
-        })
+    } else {
+        response.json(getResponse(name, 400, 'Bad request', null))
     }
-
-})
-;
+});
 
 //tim kiem nguoi dung
 app.post('/find-user', async function (request, response) {
+    let name = 'FIND-USER'
     let id = request.body.id;
-    try {
-        if (!checkData(id)) {
-            response.status(501).json({
-                message: 'PRODUCT NOT FOUND'
-            })
-            return
+    if (checkData(id)) {
+        try {
+            let user = await User.find({_id: id}).lean();
+            response.json(getResponse(name, 200, sttOK, user[0]))
+        } catch (e) {
+            console.log('loi ne: \n' + e)
+            response.json(getResponse(name, 404, 'User not found', null))
         }
-        let user = await User.find({_id: id}).lean();
-        console.log(user);
-        if (!user) {
-            response.status(501).json({
-                message: 'Fail'
-            })
-        } else {
-            response.status(200).json({
-                message: 'OK',
-                response: {
-                    user: user[0]
-                }
-            })
-        }
-    } catch (e) {
-        response.status(500).json({
-            message: 'Server error'
-        })
+    } else {
+        response.json(getResponse(name, 400, 'Bad request', null))
     }
 });
 
 // them bai dang
 app.post('/init-product', async function (request, response) {
-    let idUser = request.body.idUser;
-
+    let name = 'INIT-PRODUCT'
+    let id = request.body.id;
     let utilities = request.body.utilities;
     let category = request.body.category;
     let information = request.body.information;
-
     let mAddress = request.body.address;
-
     let content = request.body.content;
     let linkProduct = request.body.linkProduct;
     try {
-        //lưu vào các bảng tương ứng
-        let newInforProduct = new InforProduct({
-            category: category,
-            information: information,
-            utilities: utilities
-        });
-        let newProductAddress = new Address({
-            provinceCity: mAddress.provinceCity,
-            districtsTowns: mAddress.districtsTowns,
-            communeWardTown: mAddress.communeWardTown,
-            detailAddress: mAddress.detailAddress,
-            location: {
-                latitude: "",
-                longitude: ""
-            }
-        });
-
-        if (checkData(idUser) && newInforProduct && newProductAddress) {
-            let user = await User.find({_id: idUser}).lean();
-            if (user.length <= 0) {
-                return
-            }
-            //luu data vao cac bang
+        let user = await User.find({_id: id}).lean();
+        try {
+            //luu data vao cac bang phu
+            let newInforProduct = new InforProduct({
+                category: category,
+                information: information,
+                utilities: utilities
+            });
+            let newProductAddress = new Address({
+                provinceCity: mAddress.provinceCity,
+                districtsTowns: mAddress.districtsTowns,
+                communeWardTown: mAddress.communeWardTown,
+                detailAddress: mAddress.detailAddress,
+                location: {
+                    latitude: "",
+                    longitude: ""
+                }
+            });
             let product = await newInforProduct.save();
             let address = await newProductAddress.save();
-
+            // luu data vao bang chinh
             let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
             let status = '-1'
             let newProduct = new Product({
                 product: product._id,
                 address: address._id,
-                userId: idUser,
+                user: id,
                 content: content,
                 status: status,
                 createAt: createAt,
@@ -659,28 +605,20 @@ app.post('/init-product', async function (request, response) {
                 linkProduct: ""
             });
             if (!newProduct) {
-                response.status(501).json({
-                    message: 'Fail'
-                })
+                response.json(getResponse(name, 200, 'Fail', null))
             } else {
                 let product = await newProduct.save();
-                console.log('[ADD-PRODUCT] _id: ' + product._id + ' --------->')
-                response.status(200).json({
-                    message: 'OK'
-                })
+                response.json(getResponse(name, 200, sttOK, null))
             }
-        } else {
-            let mess = 'insufficient data'
-            response.status(501).json({
-                message: mess.toUpperCase()
-            })
+        } catch (e) {
+            console.log('loi ne: \n' + e)
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
     } catch (e) {
-        console.log("[Init-product 500]" + e)
-        response.status(500).json({
-            message: 'Server error'
-        })
+        console.log('loi ne: \n' + e)
+        response.json(getResponse(name, 404, 'User not found', null))
     }
+
 });
 // sua bai dang
 app.post('/update-product', async function (request, response) {
@@ -714,4 +652,14 @@ app.post('/delete-product', async function (request, response) {
     //Nếu đúng thì cho phép xóa
     //Nếu sai thì trả về là bạn đéo có tuổi để xóa sản phẩm này
     let status = await Admin.findByIdAndDelete(_id);
+});
+Handlebars.registerHelper('switch', function (value, options) {
+    this.switch_value = value;
+    return options.fn(this);
+});
+
+Handlebars.registerHelper('case', function (value, options) {
+    if (value == this.switch_value) {
+        return options.fn(this);
+    }
 });

@@ -45,7 +45,6 @@
         </div>
     </nav>
 
-
     <div class="row">
         <div class="col-sm-2">
             <div class="list-group">
@@ -67,7 +66,65 @@
                 </a>
             </div>
         </div>
-        <div class="col-sm-10 bg-light" style="padding-right: 3%">
+        <div class="col-sm-10 bg-light" style="padding-right: 2%">
+            <div class=" search" style="padding-top: 3%">
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-control" id="year" name="year">
+                                    <option selected>Trạng thái</option>
+                                    <option>Chưa duyệt</option>
+                                    <option>Đang duyệt</option>
+                                    <option>Đã duyệt</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="month" name="month">
+                                    <option selected>Tháng</option>
+                                    <option>Tháng 1</option>
+                                    <option>Tháng 2</option>
+                                    <option>Tháng 3</option>
+                                    <option>Tháng 4</option>
+                                    <option>Tháng 5</option>
+                                    <option>Tháng 6</option>
+                                    <option>Tháng 7</option>
+                                    <option>Tháng 8</option>
+                                    <option>Tháng 9</option>
+                                    <option>Tháng 10</option>
+                                    <option>Tháng 11</option>
+                                    <option>Tháng 12</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="year" name="year">
+                                    <option selected>Năm</option>
+                                    <option>2020</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="type" name="type">
+                                    <option>Thể loại phòng</option>
+                                    <option>Trọ</option>
+                                    <option>Nguyên Căn</option>
+                                    <option>Chung cư</option>
+                                    <option>Ở ghép</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nam dep trai sieu cap vu tru"
+                                   aria-label="Nam dep trai sieu cap vu tru" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table style="margin-top: 10px" class="table table-bordered table-info">
                 <thead class="thead-dark ">
                 <tr>
@@ -88,158 +145,68 @@
                     <td>{{data.lengthOfAllPost }}</td>
                 </tr>
             </table>
-
-
-            <table class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th colspan="5">Danh sách số bài chưa duyệt</th>
-                </tr>
-                <tr>
-                    <th scope="col" style="width: 10%">Thời gian</th>
-                    <th scope="col" style="width: 80%">Thông tin bài đăng</th>
-                    <th scope="col" style="width: 10%">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each data.unapprovedPost}}
+            <div>
+                <table class="table">
+                    <thead class="thead-dark ">
                     <tr>
-                        <td>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
-                            <br>
-                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                        </td>
-                        <td>
-                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                            <br>
-                            <div><b>Loại bài đăng: </b> {{this.category}}</div>
-                            <br>
-                            <div><b>Nội dung: </b> {{this.content}}</div>
-                            <br>
-                            <div><b>Giá phòng: </b> {{this.information.price}} {{this.information.unit}}</div>
-                        </td>
-                        <td>
-
-                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                </div>
-                                <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
-
-                            </form>
-                            <form style="margin-bottom: 10px" action="" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                </div>
-                                <button type="submit" name="update" value="1" class="btn btn-warning">Xóa</button>
-
-                            </form>
-                        </td>
+                        <th colspan="3">Danh sách số bài đã duyệt</th>
                     </tr>
-                {{/each}}
-                </tbody>
-            </table>
-            <table class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th colspan="5">Danh sách số bài đã duyệt</th>
-                </tr>
-                <tr>
-                    <th scope="col">Thời gian</th>
-                    <th scope="col">Thông tin bài đăng</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each data.processingPost}}
                     <tr>
-                        <td>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
-                            <br>
-                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                        </td>
-                        <td>
-                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                            <br>
-                            <div><b>Loại bài đăng: </b> {{this.category}}</div>
-                            <br>
-                            <div><b>Nội dung: </b> {{this.content}}</div>
-                            <br>
-                            <div><b>Giá phòng: </b> {{this.information.price}} {{this.information.unit}}</div>
-                        </td>
-                        <td>
-
-                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                </div>
-                                <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
-
-                            </form>
-                            <form style="margin-bottom: 10px" action="" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                </div>
-                                <button type="submit" name="update" value="1" class="btn btn-warning">Xóa</button>
-
-                            </form>
-                        </td>
+                        <th scope="col">Thời gian</th>
+                        <th scope="col">Thông tin bài đăng</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
-                {{/each}}
-                </tbody>
-            </table>
-            <table class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th colspan="5">Danh sách số bài đã duyệt</th>
-                </tr>
-                <tr>
-                    <th scope="col">Thời gian</th>
-                    <th scope="col">Thông tin bài đăng</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each data.successPost}}
-                    <tr>
-                        <td>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
-                            <br>
-                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                        </td>
-                        <td>
-                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                            <br>
-                            <div><b>Loại bài đăng: </b> {{this.category}}</div>
-                            <br>
-                            <div><b>Nội dung: </b> {{this.content}}</div>
-                            <br>
-                            <div><b>Giá phòng: </b> {{this.information.price}} {{this.information.unit}}</div>
-                        </td>
-                        <td>
-
-                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
+                    </thead>
+                    <tbody>
+                    {{#each data}}
+                        <tr>
+                            <td>
+                                <div><b>Trạng thái:</b>
+                                    {{#switch this.status}}
+                                        {{#case '-1'}} Chưa duyệt {{/case}}
+                                        {{#case '0'}} Đang duyệt {{/case}}
+                                        {{#case '1'}} Đã duyệt {{/case}}
+                                    {{/switch}}</div>
+                                <br>
+                                <div><b>Đăng:</b> {{this.createAt}}</div>
+                                <br>
+                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                            </td>
+                            <td>
+                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
+                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                <br>
+                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                <br>
+                                <div><b>Nội dung: </b> {{this.content}}</div>
+                                <br>
+                                <div><b>Giá
+                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
                                 </div>
-                                <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
+                            </td>
+                            <td>
 
-                            </form>
-                            <form style="margin-bottom: 10px" action="" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                </div>
-                                <button type="submit" name="update" value="1" class="btn btn-warning">Xóa</button>
+                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                    <div class="form-group" style="display: none">
+                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
+                                    </div>
+                                    <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
 
-                            </form>
-                        </td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
+                                </form>
+                                <form style="margin-bottom: 10px" action="" method="get">
+                                    <div class="form-group" style="display: none">
+                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
+                                    </div>
+                                    <button type="submit" name="update" value="1" class="btn btn-warning">Xóa</button>
+
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </div>
