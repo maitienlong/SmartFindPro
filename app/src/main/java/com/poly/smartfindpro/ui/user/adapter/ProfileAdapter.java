@@ -22,9 +22,11 @@ import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +38,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     public ProfileAdapter(Context context) {
         this.context = context;
-        getTime();
     }
 
     public void setItemList(List<Product> productList) {
@@ -59,12 +60,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         List<String> image = new ArrayList<>();
 
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            Date date = dateFormatter.parse(item.getCreateAt());
+
+
+            holder.tv_time_post.setText(getTime(date));
+
+        } catch (Exception e) {
+
+        }
+
         holder.tv_username_post.setText(item.getUser().getUserName());
         holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
-        holder.tv_price_product.setText(item.getInformation().getPrice().toString());
+        holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getInformation().getPrice()));
         holder.tv_title_post.setText(item.getContent());
-        Log.d("ngay tao", item.getCreateAt());
-        holder.tv_time_post.setText(item.getCreateAt());
 
         if (item.getInformation().getImage().size() < 4) {
             for (int i = 0; i < item.getInformation().getImage().size(); i++) {
@@ -117,20 +128,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     .error(R.drawable.babyred)
                     .into(holder.img1);
         }
+        Glide.
+                with(context)
+                .load(MyRetrofitSmartFind.smartFind+item.getUser().getAvatar())
+                .placeholder(R.drawable.chucuongvlog)
+                .error(R.drawable.babyred)
+                .into(holder.img_avatar);
 
 
-        Log.d("HiHi", image.size() + "");
-
-        String strDate = item.getCreateAt();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = null;
-        try {
-            date = dateFormat.parse(strDate);
-            Log.d("converts", date.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(date);
         holder.btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,31 +167,34 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         return productList.size();
     }
 
-    private void getTime() {
-        DateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd hhmmss");
-        dateFormatter.setLenient(false);
-        Date today = new Date();
-        String s = dateFormatter.format(today);
-        Log.d("Timenow", s);
-        int year = today.getYear();
-        int month = today.getMonth();
-        int day = today.getDate();
-        int hour = today.getHours();
-        int minute = today.getMinutes();
-        int second = today.getSeconds();
+    private String getTime(Date datePost) {
+        String dateOK = "";
+        Date today = Calendar.getInstance().getTime();
+        if (!getTime("yyyy", today).equals(getTime("yyyy", datePost))) {
+           return String.valueOf(Integer.valueOf(getTime("yyyy", today)) - Integer.valueOf(getTime("yyyy", datePost))) + " năm";
+        } else if (!getTime("MM", today).equals(getTime("MM", datePost))) {
+            return String.valueOf(Integer.valueOf(getTime("MM", today)) - Integer.valueOf(getTime("MM", datePost))) + " tháng";
+        } else if (!getTime("dd", today).equals(getTime("dd", datePost))) {
+            return String.valueOf(Integer.valueOf(getTime("dd", today)) - Integer.valueOf(getTime("dd", datePost))) + " ngày";
+        } else if (!getTime("HH", today).equals(getTime("HH", datePost))) {
+            return String.valueOf(Integer.valueOf(getTime("HH", today)) - Integer.valueOf(getTime("HH", datePost))) +" giờ";
+        } else if (!getTime("mm", today).equals(getTime("mm", datePost))) {
+            return String.valueOf(Integer.valueOf(getTime("mm", today)) - Integer.valueOf(getTime("mm", datePost))) + " phút";
+        } else if (!getTime("ss", today).equals(getTime("ss", datePost))) {
+            return String.valueOf(Integer.valueOf(getTime("ss", today)) - Integer.valueOf(getTime("ss", datePost))) + " giây";
+        }
+        return dateOK;
+    }
 
-        Log.d("year", String.valueOf(year));
-        Log.d("year", String.valueOf(month));
-        Log.d("year", String.valueOf(day));
-        Log.d("year", String.valueOf(hour));
-        Log.d("year", String.valueOf(minute));
-        Log.d("year", String.valueOf(second));
+    private String getTime(String type, Date date) {
+        DateFormat dateFormat = new SimpleDateFormat(type);
+        return dateFormat.format(date);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Button btn_menu;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
-        private ImageView img1, img2, img3;
+        private ImageView img1, img2, img3, img_avatar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -199,6 +207,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             img1 = itemView.findViewById(R.id.img_product_post1);
             img2 = itemView.findViewById(R.id.img_product_post2);
             img3 = itemView.findViewById(R.id.img_product_post3);
+            img_avatar = itemView.findViewById(R.id.img_avatar);
         }
     }
 }

@@ -31,11 +31,9 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         mPresenter = new MainPresenter(this, this);
         mBinding.setPresenter(mPresenter);
 
-        oldColors = mBinding.btnHome.getColorFilter();
         ViewPagerPostAdapter viewPagerPostAdapter = new ViewPagerPostAdapter(getSupportFragmentManager(), this);
         mBinding.vpNative.setAdapter(viewPagerPostAdapter);
 
-        mBinding.vpNative.setCurrentItem(0);
         setBottomNaviChange(0);
 
         mBinding.vpNative.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
