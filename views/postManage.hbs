@@ -229,7 +229,8 @@
             data: JSON.stringify(data),
             success: function (data) {
                 $("#row-" + id).remove();
-                console.log('del ok: ' + data);
+                console.log('del ok: ' + JSON.stringify(data));
+
             }
         });
     }

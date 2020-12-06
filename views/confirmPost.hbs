@@ -378,58 +378,25 @@
                                 {{#each product.product.information.image}}
                                     <tr>
                                         <td style="width: 60%">
-                                            <img id="blah" width="250px" height="250px"
-                                                 src="http://128.199.165.184:9090/{{this}}" alt="{{this}}">
+                                            <img id=""{{this}}"" width="250px" height="250px"
+                                            src="http://128.199.165.184:9090/{{this}}" alt="{{this}}">
                                         </td>
                                         <td style="width: 40%">
-                                            <div style="margin-bottom: 10px" class="custom-file">
-                                                <input type="file" class="custom-file-input" id="ipChangeImage"
-                                                       onchange="readURL(this);" multiple>
-                                                <label id="ipChooseImage" class="custom-file-label" for="ipChangeImage"
-                                                       data-browse="Sửa ảnh">Chọn
-                                                    ảnh...</label>
-                                                <script>
-                                                    function getExtension(filename) {
-                                                        let parts = filename.split('.');
-                                                        return parts[parts.length - 1];
-                                                    }
-
-                                                    function isImage(filename) {
-                                                        let ext = getExtension(filename);
-                                                        switch (ext.toLowerCase()) {
-                                                            case 'jpg':
-                                                            case 'gif':
-                                                            case 'bmp':
-                                                            case 'png':
-                                                                //etc
-                                                                return true;
-                                                        }
-                                                        return false;
-                                                    }
-
-                                                    function readURL(input) {
-                                                        if (input.files && input.files[0]) {
-                                                            var reader = new FileReader();
-                                                            if (isImage(input.files[0].name)) {
-                                                                reader.onload = function (e) {
-                                                                    $('#blah')
-                                                                            .attr('src', e.target.result);
-                                                                    $("#ipChooseImage").text(input.files[0].name)
-                                                                };
-                                                                reader.readAsDataURL(input.files[0]);
-                                                            } else {
-                                                                alert('File không phải là ảnh!')
-                                                            }
-                                                        }
-                                                    }
-                                                </script>
-                                            </div>
-                                            <br>
-                                            <button type="button" class="btn btn-primary">Xóa ảnh</button>
-
+                                            <button type="button" onclick="deleteImage('{{this}}')"
+                                                    class="btn btn-primary">Xóa ảnh
+                                            </button>
                                         </td>
+
                                     </tr>
                                 {{/each}}
+
+                                <div style="margin-bottom: 10px" class="custom-file">
+                                    <input type="file" class="custom-file-input" id="ipChangeImage"
+                                           onchange="readURL(this);" multiple>
+                                    <label id="ipChooseImage" class="custom-file-label" for="ipChangeImage"
+                                           data-browse="Thêm ảnh">Chọn
+                                        ảnh...</label>
+                                </div>
                                 </tbody>
                             </table>
                         </td>
@@ -452,8 +419,9 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -461,5 +429,44 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script>
+    function deleteImage(id) {
+        console.log('id: ' + id)
+    }
+
+    function getExtension(filename) {
+        let parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        let ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            case 'gif':
+            case 'bmp':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            if (isImage(input.files[0].name)) {
+                reader.onload = function (e) {
+                    $('#blah')
+                            .attr('src', e.target.result);
+                    $("#ipChooseImage").text(input.files[0].name)
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                alert('File không phải là ảnh!')
+            }
+        }
+    }
+</script>
 </body>
 </html>
