@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -214,7 +215,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
 
         if (mFragStack != null)
             mFragStack.push(mBaseFragment);
-        trans.setCustomAnimations(R.anim.new_fade_in, R.anim.new_fade_out);
+
+       trans.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
         mFrgManager.executePendingTransactions();

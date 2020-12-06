@@ -25,6 +25,10 @@
         <item name="colorAccent">@color/background_login</item>
     </style>
 
+    <style name="CustomProgressIntro">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
     <style name="RoundMenuItem">
         <item name="android:background">?actionBarItemBackground</item>
     </style>

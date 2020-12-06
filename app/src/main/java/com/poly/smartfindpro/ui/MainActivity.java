@@ -87,6 +87,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     @Override
     public void onSelectHome() {
         Log.d("CheckBackStack", getSupportFragmentManager().getBackStackEntryCount()+"");
+        getSupportFragmentManager().popBackStack();
         mBinding.vpNative.setCurrentItem(0);
         setBottomNaviChange(0);
     }
