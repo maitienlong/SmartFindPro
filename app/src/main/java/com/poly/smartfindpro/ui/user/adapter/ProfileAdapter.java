@@ -96,48 +96,48 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             Glide.
                     with(context)
                     .load(image.get(0))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img1);
             Glide.
                     with(context)
                     .load(image.get(1))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img2);
             Glide.
                     with(context)
                     .load(image.get(2))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img3);
         } else if (image.size() == 2) {
             Glide.
                     with(context)
                     .load(image.get(0))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img1);
             Glide.
                     with(context)
                     .load(image.get(1))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img2);
 
         } else {
             Glide.
                     with(context)
                     .load(image.get(0))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img1);
         }
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
                 .into(holder.img_avatar);
 
 

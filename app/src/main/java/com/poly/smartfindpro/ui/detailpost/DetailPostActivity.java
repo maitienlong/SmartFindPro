@@ -45,7 +45,8 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     @Override
     protected void initData() {
-        adapter = new DetailImageAdapter(this, imageList);
+        adapter = new DetailImageAdapter(this);
+        adapter.setImage(mProduct.getProduct().getInformation().getImage());
         mBinding.rvListImage.setLayoutManager(new GridLayoutManager(getBaseContext(), 3));
         mBinding.rvListImage.setAdapter(adapter);
         mPresenter.setData(mProduct);

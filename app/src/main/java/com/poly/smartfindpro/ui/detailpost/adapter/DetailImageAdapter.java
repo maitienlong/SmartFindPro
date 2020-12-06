@@ -20,12 +20,11 @@ import java.util.List;
 
 public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Products> mListProduct;
-    List<String> image = new ArrayList<>();
 
-    public DetailImageAdapter(Context context, List<String> image) {
+    List<String> image;
+
+    public DetailImageAdapter(Context context) {
         this.context = context;
-        this.image = (List<String>) image;
     }
 
     public void setImage(List<String> image) {
@@ -42,20 +41,18 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Products item = mListProduct.get(position);
-        image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(position));
-        holder.imageView.setImageResource(R.mipmap.user);
+        String item = image.get(position);
         Glide.
                 with(context)
-                .load(image.get(position))
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .load(MyRetrofitSmartFind.smartFind + item)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
                 .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return image.size();
+        return 3;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
