@@ -12,6 +12,8 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
 import com.poly.smartfindpro.ui.detailpost.adapter.DetailImageAdapter;
+import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
+import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -37,7 +39,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
         getData();
 
-        mPresenter = new DetailPostPresenter(this, this,mBinding);
+        mPresenter = new DetailPostPresenter(this, this, mBinding);
         mBinding.setPresenter(mPresenter);
     }
 
@@ -48,6 +50,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         mBinding.rvListImage.setAdapter(adapter);
         mPresenter.setData(mProduct);
     }
+
     private String getTime(Date datePost) {
         String dateOK = "";
         Date today = Calendar.getInstance().getTime();
@@ -71,12 +74,18 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         DateFormat dateFormat = new SimpleDateFormat(type);
         return dateFormat.format(date);
     }
+
     private void getData() {
         Type type = new TypeToken<Products>() {
         }.getType();
         Intent intent = getIntent();
         mProduct = new Products();
-        mProduct = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES),type);
+        mProduct = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES), type);
 
+    }
+
+    @Override
+    public void onBackClick() {
+        finish();
     }
 }

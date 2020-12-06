@@ -17,7 +17,7 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     protected void initView() {
-        mPresenter = new UserPresenter(mActivity, this);
+        mPresenter = new UserPresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
     }
 

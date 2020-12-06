@@ -10,7 +10,6 @@ import com.poly.smartfindpro.ui.user.setting.SettingPresenter;
 public class InforFragment extends BaseDataBindFragment<FragmentInformationProfileBinding, InforPresenter> implements InforContact.ViewModel {
 
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_information_profile;
@@ -18,9 +17,9 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
 
     @Override
     protected void initView() {
-       mPresenter = new InforPresenter(mActivity,this);
-       mBinding.setPresenter(mPresenter);
-       mBinding.cmtb.setTitle("Thông tin cá nhân");
+        mPresenter = new InforPresenter(mActivity, this);
+        mBinding.setPresenter(mPresenter);
+        mBinding.cmtb.setTitle("Thông tin cá nhân");
 
     }
 

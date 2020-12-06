@@ -23,14 +23,14 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     protected void initView() {
-        mPresenter = new ProfilePresenter(mActivity, this);
+        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
     }
 
     @Override
     protected void initData() {
-        mPresenter = new ProfilePresenter(mActivity, this);
+        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         profileAdapter = new ProfileAdapter(mActivity, mActivity.getSupportFragmentManager());
 

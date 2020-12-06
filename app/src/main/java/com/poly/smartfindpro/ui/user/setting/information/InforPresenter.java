@@ -64,6 +64,7 @@ public class InforPresenter implements InforContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
+                    Log.d("TAG",response.body().getResponseBody().getUser().getUserName());
                     showData(mProfile);
 
                 } else {
@@ -79,9 +80,9 @@ public class InforPresenter implements InforContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUserName());
-   //     addressInfor.set(mProfile.getResponseBody().getAddress().getDetailAddress() + ", " + mProfile.getResponse().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponse().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponse().getUser().getAddress().getProvinceCity());
+        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+        addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
    //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
-        phone.set(mProfile.getResponseBody().getPhoneNumber());
+        phone.set(mProfile.getResponseBody().getUser().getPhoneNumber());
     }
 }

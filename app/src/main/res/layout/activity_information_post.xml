@@ -25,7 +25,7 @@
 
             <com.poly.smartfindpro.widget.CommonToolbar
                 android:id="@+id/cmtb"
-
+                android:onClick="@{()->presenter.onBackClick()}"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp" />
 

@@ -146,4 +146,8 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     }
 
 
+    @Override
+    public void onBackClick() {
+        mViewModel.onBackClick();
+    }
 }

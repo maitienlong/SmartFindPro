@@ -1,15 +1,17 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
+import com.bumptech.glide.Glide;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
+import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,13 +22,15 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private Context context;
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
+    private FragmentProfileBinding mBinding;
 
 
     public ObservableField<String> nameInfor;
 
-    public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel) {
+    public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel,FragmentProfileBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
+        this.mBinding = mBinding;
         initData();
     }
 
@@ -103,8 +107,14 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUserName());
-
+        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+        Glide.
+                with(context)
+                .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
+                .placeholder(R.drawable.chucuongvlog)
+                .error(R.drawable.babyred)
+                .into(mBinding.imgAvatarProfile);
     }
+
 
 }
