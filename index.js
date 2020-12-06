@@ -134,7 +134,6 @@ async function getProducts(successPost) {
     return products
 }
 
-
 //Khai bao bien
 const sttOK = 'Succsess'
 let nameDN = '', allAdmin = '';
@@ -368,16 +367,50 @@ app.get('/postManage', async function (request, response) {
     // } catch (e) {
     //     console.log('[Delete] Error: ' + e)
     // }
-    var allProduct = await Product.find({deleteAt: ''}).populate(['address', 'product', 'user']).lean();
+
+    var allProduct = await Product.find({
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
     var unapprovedPost = await Product.find({
         status: '-1',
         deleteAt: ''
-    }).populate(['address', 'product', 'user']).lean();
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
     var processingPost = await Product.find({
         status: '0',
         deleteAt: ''
-    }).populate(['address', 'product', 'user']).lean();
-    var successPost = await Product.find({status: '1', deleteAt: ''}).populate(['address', 'product', 'user']).lean();
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var successPost = await Product.find({
+        status: '1',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
     let data = new PostManage(allProduct, unapprovedPost, processingPost, successPost)
     response.render('postManage', {
         data: data
@@ -387,7 +420,14 @@ app.get('/postManage', async function (request, response) {
 app.get('/confirmPost', async function (request, response) {
     let _id = request.query.idProduct;
     try {
-        let product = await Product.find({_id: _id}).populate(['address', 'product', 'user']).lean();
+        let product = await Product.find({_id: _id}).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
         console.log(product)
         response.render('confirmPost', {
             product: product[0]

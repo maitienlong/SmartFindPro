@@ -159,7 +159,7 @@
                     </thead>
                     <tbody>
                     {{#each data.allProduct}}
-                        <tr>
+                        <tr id='row-{{this._id}}'>
                             <td>
                                 <div><b>Trạng thái:</b>
                                     {{#switch this.status}}
@@ -191,15 +191,11 @@
                                         <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
                                     </div>
                                     <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
-
                                 </form>
-                                <form style="margin-bottom: 10px" action="" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-warning">Xóa</button>
-
-                                </form>
+                                <button name="update" value="1" class="btn btn-warning"
+                                        onclick="deleteProuct('{{this._id}}', '{{this.user._id}}')">
+                                    Xóa
+                                </button>
                             </td>
                         </tr>
                     {{/each}}
@@ -210,9 +206,8 @@
         </div>
     </div>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -220,5 +215,24 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script>
+    function deleteProuct(id, userId) {
+        let data = {
+            id: id,
+            userId: userId
+        }
+        console.log(data)
+        $.ajax({
+            type: "POST",
+            url: "/delete-product",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data) {
+                $("#row-" + id).remove();
+                console.log('del ok: ' + data);
+            }
+        });
+    }
+</script>
 </body>
 </html>
