@@ -1,14 +1,12 @@
 package com.poly.smartfindpro.ui.user.setting.changepass;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
-import com.poly.smartfindpro.ui.user.setting.information.InforContact;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +51,6 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-                    Log.d("checkResponse", response.body().getMessage());
                     showData(mProfile);
 
                 } else {
@@ -68,7 +65,7 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
         });
     }
     private void showData(ProfileResponse mProfile) {
-        passInfor.set(mProfile.getResponse().getUser().getPassword());
+        passInfor.set(mProfile.getResponseBody().getUser().getPassword());
 
     }
 }

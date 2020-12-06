@@ -1,16 +1,17 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
-import com.google.gson.Gson;
+import com.bumptech.glide.Glide;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
+import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,13 +22,15 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private Context context;
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
+    private FragmentProfileBinding mBinding;
 
 
     public ObservableField<String> nameInfor;
 
-    public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel) {
+    public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel,FragmentProfileBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
+        this.mBinding = mBinding;
         initData();
     }
 
@@ -67,8 +70,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-                    Log.d("checkResponse", response.body().getMessage());
-
                     showData(mProfile);
 
                 } else {
@@ -90,12 +91,10 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                if(response.code() == 200){
-                    Log.d("CheckResponse", new Gson().toJson(response.body()));
-                    mViewModel.onShow(response.body().getResponse().getProducts());
+                if (response.code() == 200) {
+                    mViewModel.onShow(response.body().getResponseBody().getProducts());
 
                 }else {
-                    Log.d("CheckResponse", response.code()+"");
 
                 }
             }
@@ -108,8 +107,14 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponse().getUser().getUserName());
-
+        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+        Glide.
+                with(context)
+                .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
+                .placeholder(R.drawable.chucuongvlog)
+                .error(R.drawable.babyred)
+                .into(mBinding.imgAvatarProfile);
     }
+
 
 }

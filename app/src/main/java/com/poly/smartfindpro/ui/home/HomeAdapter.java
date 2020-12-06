@@ -43,7 +43,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_motel_room, null);
+        View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         inflate.setLayoutParams(lp);
         return new HomeAdapter.ViewHolder(inflate);
@@ -51,22 +51,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String item = mListItemTest.get(position);
-        // Anh
-//        Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Bitmap bitmap = LoadImage(item.getAvatar());
-//                holder.imgAvatar.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        holder.imgAvatar.setImageBitmap(bitmap);
-//                    }
-//                });
-//            }
-//        });
-//        thread.start();
-        holder.tvContent.setText(item);
+//        String item = mListItemTest.get(position);
+//        // Anh
+////        Thread thread = new Thread(new Runnable() {
+////            @Override
+////            public void run() {
+////                Bitmap bitmap = LoadImage(item.getAvatar());
+////                holder.imgAvatar.post(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        holder.imgAvatar.setImageBitmap(bitmap);
+////                    }
+////                });
+////            }
+////        });
+////        thread.start();
+//        holder.tvContent.setText(item);
     }
 
     @Override
@@ -75,37 +75,37 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgAvatar;
-        TextView tvAccountName;
-        TextView tvDate;
-        TextView tvContent;
-        TextView tvPrice;
-        TextView tvAddress;
-        TextView tvType;
-        ImageView imgSex;
-        TextView tvAmount;
-        ImageButton imgComment;
-        ImageButton imgShare;
-        RecyclerView rvListImage;
-        ImageView imgAddress;
-        ImageView imgPrice;
+//        ImageView imgAvatar;
+//        TextView tvAccountName;
+//        TextView tvDate;
+//        TextView tvContent;
+//        TextView tvPrice;
+//        TextView tvAddress;
+//        TextView tvType;
+//        ImageView imgSex;
+//        TextView tvAmount;
+//        ImageButton imgComment;
+//        ImageButton imgShare;
+//        RecyclerView rvListImage;
+//        ImageView imgAddress;
+//        ImageView imgPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgAvatar = (ImageView) itemView.findViewById(R.id.imgAvatar);
-            tvAccountName = (TextView) itemView.findViewById(R.id.tvAccountName);
-            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
-            tvContent = (TextView) itemView.findViewById(R.id.tvContent);
-            tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
-            tvAddress = (TextView) itemView.findViewById(R.id.tvAddress);
-            tvType = (TextView) itemView.findViewById(R.id.tvType);
-            imgSex = (ImageView) itemView.findViewById(R.id.imgSex);
-            tvAmount = (TextView) itemView.findViewById(R.id.tvAmount);
-            imgComment = (ImageButton) itemView.findViewById(R.id.imgComment);
-            imgShare = (ImageButton) itemView.findViewById(R.id.imgShare);
-            rvListImage = (RecyclerView) itemView.findViewById(R.id.rvListImage);
-            imgAddress = (ImageView) itemView.findViewById(R.id.imgAddress);
-            imgPrice = (ImageView) itemView.findViewById(R.id.imgPrice);
+//            imgAvatar = (ImageView) itemView.findViewById(R.id.imgAvatar);
+//            tvAccountName = (TextView) itemView.findViewById(R.id.tvAccountName);
+//            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
+//            tvContent = (TextView) itemView.findViewById(R.id.tvContent);
+//            tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
+//            tvAddress = (TextView) itemView.findViewById(R.id.tvAddress);
+//            tvType = (TextView) itemView.findViewById(R.id.tvType);
+//            imgSex = (ImageView) itemView.findViewById(R.id.imgSex);
+//            tvAmount = (TextView) itemView.findViewById(R.id.tvAmount);
+//            imgComment = (ImageButton) itemView.findViewById(R.id.imgComment);
+//            imgShare = (ImageButton) itemView.findViewById(R.id.imgShare);
+//            rvListImage = (RecyclerView) itemView.findViewById(R.id.rvListImage);
+//            imgAddress = (ImageView) itemView.findViewById(R.id.imgAddress);
+//            imgPrice = (ImageView) itemView.findViewById(R.id.imgPrice);
 
         }
     }

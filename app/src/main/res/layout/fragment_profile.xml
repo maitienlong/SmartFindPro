@@ -61,8 +61,8 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/imageView7"
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/img_avatar_profile"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
                         android:background="@drawable/border_image_avata"

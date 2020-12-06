@@ -8,7 +8,6 @@ import androidx.databinding.ObservableField;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
-import com.poly.smartfindpro.ui.user.setting.SettingContact;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,7 +64,7 @@ public class InforPresenter implements InforContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-                    Log.d("checkResponse", response.body().getMessage());
+                    Log.d("TAG",response.body().getResponseBody().getUser().getUserName());
                     showData(mProfile);
 
                 } else {
@@ -81,9 +80,9 @@ public class InforPresenter implements InforContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponse().getUser().getUserName());
-        addressInfor.set(mProfile.getResponse().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponse().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponse().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponse().getUser().getAddress().getProvinceCity());
-        idCard.set(mProfile.getResponse().getUser().getIdentityCard().getCode());
-        phone.set(mProfile.getResponse().getUser().getPhoneNumber());
+        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+        addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
+   //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
+        phone.set(mProfile.getResponseBody().getUser().getPhoneNumber());
     }
 }

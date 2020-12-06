@@ -1,8 +1,10 @@
 package com.poly.smartfindpro.ui.user.profile;
 
+import android.util.Log;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
-import com.poly.smartfindpro.data.model.product.res.Product;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 import com.poly.smartfindpro.ui.user.adapter.ProfileAdapter;
 import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
@@ -21,16 +23,16 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     protected void initView() {
-        mPresenter = new ProfilePresenter(mActivity, this);
+        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
     }
 
     @Override
     protected void initData() {
-        mPresenter = new ProfilePresenter(mActivity, this);
+        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
-        profileAdapter = new ProfileAdapter(mActivity);
+        profileAdapter = new ProfileAdapter(mActivity, mActivity.getSupportFragmentManager());
 
     }
 
@@ -41,7 +43,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     }
 
     @Override
-    public void onShow(List<Product> productList) {
+    public void onShow(List<Products> productList) {
         profileAdapter.setItemList(productList);
         BindingUtils.setAdapter(mBinding.rcProfile,profileAdapter,true);
     }

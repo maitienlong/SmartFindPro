@@ -22,9 +22,6 @@ public class User {
     @SerializedName("phoneNumber")
     @Expose
     private String phoneNumber;
-    @SerializedName("identityCard")
-    @Expose
-    private IdentityCard identityCard;
     @SerializedName("age")
     @Expose
     private String age;
@@ -79,14 +76,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public IdentityCard getIdentityCard() {
-        return identityCard;
-    }
-
-    public void setIdentityCard(IdentityCard identityCard) {
-        this.identityCard = identityCard;
     }
 
     public String getAge() {

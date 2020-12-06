@@ -1,6 +1,7 @@
 
 package com.poly.smartfindpro.data.model.profile.res;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,9 +22,21 @@ public class User {
     @SerializedName("phoneNumber")
     @Expose
     private String phoneNumber;
-    @SerializedName("identityCard")
+    @SerializedName("age")
     @Expose
-    private IdentityCard identityCard;
+    private String age;
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+    @SerializedName("coverImage")
+    @Expose
+    private String coverImage;
+    @SerializedName("gender")
+    @Expose
+    private String gender;
+    @SerializedName("share")
+    @Expose
+    private List<Share> share = null;
 
     public String getId() {
         return id;
@@ -65,12 +78,44 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public IdentityCard getIdentityCard() {
-        return identityCard;
+    public String getAge() {
+        return age;
     }
 
-    public void setIdentityCard(IdentityCard identityCard) {
-        this.identityCard = identityCard;
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public List<Share> getShare() {
+        return share;
+    }
+
+    public void setShare(List<Share> share) {
+        this.share = share;
     }
 
 }

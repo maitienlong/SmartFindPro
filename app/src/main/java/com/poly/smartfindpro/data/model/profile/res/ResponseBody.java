@@ -4,7 +4,7 @@ package com.poly.smartfindpro.data.model.profile.res;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
+public class ResponseBody {
 
     @SerializedName("user")
     @Expose
