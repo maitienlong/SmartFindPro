@@ -10,7 +10,7 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentListProductBinding;
-import com.poly.smartfindpro.ui.home.Product;
+
 
 import java.util.List;
 

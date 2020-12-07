@@ -18,6 +18,7 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
 import com.poly.smartfindpro.ui.home.HomeFragment;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
+import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
 import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
 
 
@@ -79,7 +80,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onSelecFind() {
-
+        openActivity(SearchProductActivity.class);
     }
 
     @Override
