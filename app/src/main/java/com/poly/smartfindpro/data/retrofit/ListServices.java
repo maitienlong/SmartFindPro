@@ -2,6 +2,9 @@ package com.poly.smartfindpro.data.retrofit;
 
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.home.req.HomeRequest;
+import com.poly.smartfindpro.data.model.home.res.HomeResponse;
+import com.poly.smartfindpro.data.model.post.PostResponse;
 import com.poly.smartfindpro.data.model.post.res.ResImagePost;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
@@ -37,4 +40,6 @@ public interface ListServices {
 
     @POST("/user-product")
     Call<ProductResponse> getProduct(@Body ProductRequest request);
+    @POST("/list-product")
+    Call<HomeResponse> getProduct(@Body HomeRequest request);
 }

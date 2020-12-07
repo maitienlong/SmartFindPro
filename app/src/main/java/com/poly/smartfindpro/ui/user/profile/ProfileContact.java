@@ -10,14 +10,24 @@ public interface ProfileContact {
 
     interface ViewModel extends BaseView {
         void onBackClick();
+
         void onShow(List<Products> productList);
 
         void onClickEditUser();
+
+        void onClickPending();
+
+        void onClickApproved();
     }
 
     interface Presenter extends BasePresenter {
         void onBackClick();
 
         void onClickEditUser();
+
+        void onClickPending();
+
+        void onClickApproved();
+
     }
 }

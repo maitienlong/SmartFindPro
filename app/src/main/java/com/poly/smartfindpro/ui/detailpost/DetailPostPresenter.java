@@ -94,8 +94,8 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + product.getUser().getAvatar())
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
                 .into(mBinding.imgAvatar);
 
         try {
@@ -149,5 +149,15 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     @Override
     public void onBackClick() {
         mViewModel.onBackClick();
+    }
+
+    @Override
+    public void onClickCall() {
+        mViewModel.onClickCall();
+    }
+
+    @Override
+    public void onClickInbox() {
+        mViewModel.onClickInbox();
     }
 }

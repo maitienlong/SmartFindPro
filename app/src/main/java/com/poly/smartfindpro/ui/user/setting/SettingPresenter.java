@@ -45,4 +45,9 @@ public class SettingPresenter implements SettingContact.Presenter {
     public void onClickPerMission() {
         mViewModel.onClickPerMission();
     }
+
+    @Override
+    public void onClickConfirmAccount() {
+        mViewModel.onClickConfirmAccount();
+    }
 }

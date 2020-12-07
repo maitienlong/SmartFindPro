@@ -65,7 +65,18 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15sdp" />
 
-
+                <TextView
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_20sdp"
+                    android:id="@+id/tvConfirmAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/border_item_post"
+                    android:onClick="@{()->presenter.onClickConfirmAccount()}"
+                    android:text="@string/setting_confirm_account"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
                 <TextView
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/_20sdp"

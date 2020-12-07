@@ -1,8 +1,12 @@
 package com.poly.smartfindpro.ui.detailpost;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,7 +31,6 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         implements DetailPostContact.ViewModel {
     private Products mProduct;
     private DetailImageAdapter adapter;
-    private List<String> imageList = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -45,35 +48,17 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     @Override
     protected void initData() {
-        adapter = new DetailImageAdapter(this, imageList);
-        mBinding.rvListImage.setLayoutManager(new GridLayoutManager(getBaseContext(), 3));
+        adapter = new DetailImageAdapter(this);
+        adapter.setImage(mProduct.getProduct().getInformation().getImage());
+        mBinding.rvListImage.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mBinding.rvListImage.setAdapter(adapter);
+        mBinding.rvListImage.setLayoutManager(layoutManager);
         mPresenter.setData(mProduct);
+
     }
 
-    private String getTime(Date datePost) {
-        String dateOK = "";
-        Date today = Calendar.getInstance().getTime();
-        if (!getTime("yyyy", today).equals(getTime("yyyy", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("yyyy", today)) - Integer.valueOf(getTime("yyyy", datePost))) + " năm";
-        } else if (!getTime("MM", today).equals(getTime("MM", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("MM", today)) - Integer.valueOf(getTime("MM", datePost))) + " tháng";
-        } else if (!getTime("dd", today).equals(getTime("dd", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("dd", today)) - Integer.valueOf(getTime("dd", datePost))) + " ngày";
-        } else if (!getTime("HH", today).equals(getTime("HH", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("HH", today)) - Integer.valueOf(getTime("HH", datePost))) + " giờ";
-        } else if (!getTime("mm", today).equals(getTime("mm", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("mm", today)) - Integer.valueOf(getTime("mm", datePost))) + " phút";
-        } else if (!getTime("ss", today).equals(getTime("ss", datePost))) {
-            return String.valueOf(Integer.valueOf(getTime("ss", today)) - Integer.valueOf(getTime("ss", datePost))) + " giây";
-        }
-        return dateOK;
-    }
-
-    private String getTime(String type, Date date) {
-        DateFormat dateFormat = new SimpleDateFormat(type);
-        return dateFormat.format(date);
-    }
 
     private void getData() {
         Type type = new TypeToken<Products>() {
@@ -87,5 +72,19 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     @Override
     public void onBackClick() {
         finish();
+    }
+
+    @Override
+    public void onClickCall() {
+        String PhoneNum = mBinding.tvPhoneNumber.getText().toString();
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:"+Uri.encode(PhoneNum.trim())));
+//        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(callIntent);
+    }
+
+    @Override
+    public void onClickInbox() {
+        Toast.makeText(this, "Chưa thực hiện được nhắn tin ", Toast.LENGTH_SHORT).show();
     }
 }

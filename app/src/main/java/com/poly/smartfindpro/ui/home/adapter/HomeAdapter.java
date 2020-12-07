@@ -1,7 +1,9 @@
-package com.poly.smartfindpro.ui.user.adapter;
+package com.poly.smartfindpro.ui.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,10 +23,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
+import com.poly.smartfindpro.ui.home.HomeContract;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -33,57 +38,54 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
-
-    private Context context;
-
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+    private Context mContext;
     private FragmentManager mFragmentManager;
+    private List<Product> productList;
+    HomeContract.ViewModel viewModel;
 
-    private List<Products> productList;
-
-
-    public ProfileAdapter(Context context, FragmentManager fragmentManager) {
-        this.context = context;
+    public HomeAdapter(Context mContext, FragmentManager fragmentManager) {
+        this.mContext = mContext;
         this.mFragmentManager = fragmentManager;
     }
 
-    public void setItemList(List<Products> productList) {
+    public void setListItem(List<Product> productList) {
         this.productList = productList;
+        notifyDataSetChanged();
     }
+
 
     @NonNull
     @Override
-    public ProfileAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_profile, null);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         inflate.setLayoutParams(lp);
-        return new ProfileAdapter.ViewHolder(inflate);
+        return new HomeAdapter.ViewHolder(inflate);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Products item = productList.get(position);
+        Product item = productList.get(position);
 
         List<String> image = new ArrayList<>();
 
-            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            try {
-                Date date = dateFormatter.parse(item.getCreateAt());
+        try {
+            Date date = dateFormatter.parse(item.getCreateAt());
 
-                holder.tv_time_post.setText(getTime(date));
+            holder.tv_time_post.setText(getTime(date));
 
-            } catch (Exception e) {
+        } catch (Exception e) {
 
-            }
+        }
 
         holder.tv_username_post.setText(item.getUser().getUserName());
         holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
         holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
         holder.tv_title_post.setText(item.getContent());
-
-
         if (item.getProduct().getInformation().getImage().size() < 4) {
             for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
                 image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
@@ -96,32 +98,32 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         if (image.size() == 3) {
             Glide.
-                    with(context)
+                    with(mContext)
                     .load(image.get(0))
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgerror)
                     .into(holder.img1);
             Glide.
-                    with(context)
+                    with(mContext)
                     .load(image.get(1))
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgerror)
                     .into(holder.img2);
             Glide.
-                    with(context)
+                    with(mContext)
                     .load(image.get(2))
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgerror)
                     .into(holder.img3);
         } else if (image.size() == 2) {
             Glide.
-                    with(context)
+                    with(mContext)
                     .load(image.get(0))
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgerror)
                     .into(holder.img1);
             Glide.
-                    with(context)
+                    with(mContext)
                     .load(image.get(1))
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgerror)
@@ -129,34 +131,32 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         } else {
             Glide.
-                    with(context)
+                    with(mContext)
                     .load(image.get(0))
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgerror)
                     .into(holder.img1);
         }
         Glide.
-                with(context)
+                with(mContext)
                 .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
                 .error(R.mipmap.imgerror)
                 .into(holder.img_avatar);
-
-
         holder.btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(context, holder.btn_menu);
+                PopupMenu popupMenu = new PopupMenu(mContext, holder.btn_menu);
                 popupMenu.inflate(R.menu.menu_item_profile);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.btn_delete_menu:
-                                Toast.makeText(context, "Xóa", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Xóa", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_edit_menu:
-                                Toast.makeText(context, "Sửa", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Sửa", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return false;
@@ -169,9 +169,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent intent = new Intent(context, DetailPostActivity.class);
-               intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(item));
-               context.startActivity(intent);
+                Intent intent = new Intent(mContext, DetailPostActivity.class);
+                intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(item));
+                mContext.startActivity(intent);
 
             }
         });
@@ -181,7 +181,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public int getItemCount() {
         return productList.size();
     }
-
     private String getTime(Date datePost) {
         String dateOK = "";
         Date today = Calendar.getInstance().getTime();
@@ -205,7 +204,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         DateFormat dateFormat = new SimpleDateFormat(type);
         return dateFormat.format(date);
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Button btn_menu;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
@@ -225,4 +223,20 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             img_avatar = itemView.findViewById(R.id.img_avatar);
         }
     }
+
+    private Bitmap LoadImage(String link) {
+
+        URL url;
+        Bitmap bitmap = null;
+        try {
+            url = new URL(link);
+            bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (IOException e) {
+            Log.e("LoadImage", e + "");
+        }
+
+        return bitmap;
+
+    }
 }
+

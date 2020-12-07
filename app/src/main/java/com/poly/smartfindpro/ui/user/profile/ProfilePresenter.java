@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
@@ -27,7 +28,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     public ObservableField<String> nameInfor;
 
-    public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel,FragmentProfileBinding mBinding) {
+    public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel, FragmentProfileBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
         this.mBinding = mBinding;
@@ -37,7 +38,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     private void initData() {
         nameInfor = new ObservableField<>();
-
         getInfor();
         getProduct();
     }
@@ -62,6 +62,16 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         mViewModel.onClickEditUser();
     }
 
+    @Override
+    public void onClickPending() {
+        mViewModel.onClickPending();
+    }
+
+    @Override
+    public void onClickApproved() {
+        mViewModel.onClickApproved();
+    }
+
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
         request.setId("5fb2073ff69b03b8f8875059");
@@ -70,6 +80,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
+
                     showData(mProfile);
 
                 } else {
@@ -94,7 +105,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                 if (response.code() == 200) {
                     mViewModel.onShow(response.body().getResponseBody().getProducts());
 
-                }else {
+                } else {
 
                 }
             }
@@ -108,12 +119,20 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     private void showData(ProfileResponse mProfile) {
         nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
                 .into(mBinding.imgAvatarProfile);
+        Glide.
+                with(context)
+                .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getCoverImage())
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
+                .into(mBinding.imgCoverImage);
+
     }
 
 

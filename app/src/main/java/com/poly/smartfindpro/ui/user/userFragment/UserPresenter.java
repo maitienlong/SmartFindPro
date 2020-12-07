@@ -98,8 +98,8 @@ public class UserPresenter implements UserContact.Presenter {
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.babyred)
                 .into(mBinding.imgAvatarUser);
     }
 }

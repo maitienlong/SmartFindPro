@@ -10,6 +10,7 @@ public interface SettingContact {
         void onClickInformation();
         void onClickChangePassword();
         void onClickPerMission();
+        void onClickConfirmAccount();
     }
 
     interface Presenter extends BasePresenter {
@@ -17,5 +18,6 @@ public interface SettingContact {
         void onClickInformation();
         void onClickChangePassword();
         void onClickPerMission();
+        void onClickConfirmAccount();
     }
 }

@@ -81,28 +81,28 @@
                 android:layout_height="@dimen/_100sdp">
 
                 <ImageView
-                    android:scaleType="centerInside"
+                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
                      />
 
                 <ImageView
-                    android:scaleType="centerInside"
+                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
                     />
 
                 <ImageView
-                    android:scaleType="centerInside"
+                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
                      />
@@ -147,20 +147,6 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/_10sdp">
 
-<!--                <Button-->
-
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/btn_category_pressed"-->
-<!--                    android:text="@string/cancel"-->
-<!--                    android:textColor="@color/white" />-->
-
-<!--                <Button-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="#1C58C9"-->
-<!--                    android:text="@string/edit"-->
-<!--                    android:textColor="@color/white" />-->
 <LinearLayout
     android:gravity="right|center"
     android:layout_width="match_parent"

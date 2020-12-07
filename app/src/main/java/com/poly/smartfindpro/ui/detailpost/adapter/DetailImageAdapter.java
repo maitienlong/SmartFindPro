@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +21,11 @@ import java.util.List;
 
 public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Products> mListProduct;
-    List<String> image = new ArrayList<>();
 
-    public DetailImageAdapter(Context context, List<String> image) {
+    List<String> image;
+
+    public DetailImageAdapter(Context context) {
         this.context = context;
-        this.image = (List<String>) image;
     }
 
     public void setImage(List<String> image) {
@@ -42,15 +42,19 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Products item = mListProduct.get(position);
-        image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(position));
-        holder.imageView.setImageResource(R.mipmap.user);
+        String item = image.get(position);
         Glide.
                 with(context)
-                .load(image.get(position))
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .load(MyRetrofitSmartFind.smartFind + item)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
                 .into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "phong to", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
