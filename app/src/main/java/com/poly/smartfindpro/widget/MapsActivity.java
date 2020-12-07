@@ -33,7 +33,7 @@ public class MapsActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void setUpClusterer() {
+    /*private void setUpClusterer() {
         // Vị trí map.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
 
@@ -47,9 +47,9 @@ public class MapsActivity extends AppCompatActivity {
         map.setOnMarkerClickListener(clusterManager);
         //Thêm các mục cụm (điểm đánh dấu) vào trình quản lý cụm
         addItems();
-    }
+    }*/
 
-    private void addItems() {
+    /*private void addItems() {
         // đưa 1 số tọa độ bắt đầu
         double lat = null;
         double lng = null;
@@ -62,7 +62,7 @@ public class MapsActivity extends AppCompatActivity {
             MyItem offsetItem = new MyItem(lat, lng, "Title " + i, "Snippet " + i);
             clusterManager.addItem(offsetItem);
         }
-    }
+    }*/
     //lấy tọa độ các điểm đã được chọn để
 
 
