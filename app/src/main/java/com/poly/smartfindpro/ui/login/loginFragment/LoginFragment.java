@@ -10,8 +10,7 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.MainActivity;
-import com.poly.smartfindpro.ui.post.PostActivity;
-import com.poly.smartfindpro.ui.user.UserActivity;
+
 
 
 public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, LoginFragmentPresenter> implements LoginFragmentContract.ViewModel {
