@@ -2,6 +2,8 @@ package com.poly.smartfindpro.ui.login.loginFragment;
 
 import android.content.Context;
 
+import com.poly.smartfindpro.data.Config;
+
 public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
     private Context mContex;
     private LoginFragmentContract.ViewModel mViewmodel;
@@ -23,8 +25,10 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
 
     }
 
-    public void sendRequestUser(){
+    public void sendRequestUser() {
         // ok
         mViewmodel.saveLogin(username, password, token);
+        String token = "5fb2073ff69b03b8f8875059";
+        Config.TOKEN_USER = token;
     }
 }

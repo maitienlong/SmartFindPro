@@ -1,20 +1,15 @@
 package com.poly.smartfindpro.ui.post;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
-import com.poly.smartfindpro.callback.OnFragmentCloseCallback;
 import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
@@ -22,8 +17,8 @@ import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.anim.ProgressBarAnimation;
 import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
 import java.lang.reflect.Type;
@@ -39,6 +34,8 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     private Type typeData;
 
     private Type typePhoto;
+
+    private int position = 0;
 
 
     @Override
@@ -90,21 +87,23 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
             case R.id.btn_infor:
                 goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
                 statusProress("1");
+                position = 1;
                 break;
 
             case R.id.btn_address:
                 goToFragmentCallBackData(R.id.fl_post, new AddressPostFragment(), bundle, this::onResult);
                 statusProress("2");
+                position = 2;
                 break;
 
             case R.id.btn_tool:
                 goToFragmentCallBackData(R.id.fl_post, new UtilitiesPostFragment(), bundle, this::onResult);
                 statusProress("3");
+                position = 3;
                 break;
 
             case R.id.btn_confirm:
-                goToFragmentCallBackData(R.id.fl_post, new ConfirmPostFragment(), bundle, this::onResult);
-                statusProress("4");
+
                 break;
         }
     }
@@ -153,7 +152,9 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 mBinding.imgTool.setImageResource(R.mipmap.btn_rdo_true);
                 mBinding.imgConfirm.setImageResource(R.mipmap.btn_rdo_true);
                 break;
-
+            case "5":
+                mBinding.linearLayout2.setVisibility(View.INVISIBLE);
+                break;
 
         }
 

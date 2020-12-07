@@ -1,5 +1,5 @@
 
-package com.poly.smartfindpro.ui.post.model;
+package com.poly.smartfindpro.data.model.post.req;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class PostRequest {
     @SerializedName("content")
     @Expose
     private String content;
-    @SerializedName("idUser")
+    @SerializedName("id")
     @Expose
-    private String idUser;
+    private String id;
 
     public String getCategory() {
         return category;
@@ -66,12 +66,12 @@ public class PostRequest {
         this.content = content;
     }
 
-    public String getIdUser() {
-        return idUser;
+    public String getId() {
+        return id;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

@@ -1,26 +1,19 @@
-package com.poly.smartfindpro.ui.post.adressPost;
+package com.poly.smartfindpro.ui.post.postsuccess;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.data.model.post.req.Address;
 
-public interface AddressPostContract {
+public interface SuccessPostContract {
     interface ViewModel extends BaseView {
-        void onShowProvince(ResultArea resultArea);
 
-        void onShowDistrict(ResultArea resultArea);
-
-        void onShowCommune(ResultArea resultArea);
-
-        void onSubmitData(Address address);
+        void onConfirm();
     }
 
     interface Presenter extends BasePresenter {
-
-        void getDataApiArea(int areaType, String jsonData);
+        void onConfirm();
 
         void onNext();
-
     }
 }

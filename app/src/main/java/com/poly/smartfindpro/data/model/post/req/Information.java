@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.post.model;
+package com.poly.smartfindpro.data.model.post.req;
 import android.graphics.Bitmap;
 import android.net.Uri;
 

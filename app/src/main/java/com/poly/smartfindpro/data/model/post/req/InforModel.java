@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.post.model;
+package com.poly.smartfindpro.data.model.post.req;
 
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 

@@ -1,10 +1,6 @@
 package com.poly.smartfindpro.ui.post.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 //import com.squareup.picasso.Picasso;

@@ -1,14 +1,9 @@
 package com.poly.smartfindpro.ui.post.inforPost;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 
-import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.ui.post.model.Information;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.Information;
 
 import java.io.File;
 
