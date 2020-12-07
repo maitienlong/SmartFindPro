@@ -16,6 +16,7 @@ import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
+import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
 
 public class ViewPagerPostAdapter extends FragmentPagerAdapter {
 
@@ -44,7 +45,7 @@ public class ViewPagerPostAdapter extends FragmentPagerAdapter {
                 fragment = new InforPostFragment();
                 break;
             case 2:
-                fragment = new InforPostFragment();
+                fragment = new UserFragment();
                 break;
             default:
                 fragment = new InforPostFragment();
