@@ -1,36 +1,23 @@
 package com.poly.smartfindpro.ui.post.utilitiesPost;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
 import com.poly.smartfindpro.databinding.FragmentUtilitiesPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.UtilitiesAdapter;
-import com.poly.smartfindpro.ui.post.adressPost.AddressPostContract;
-import com.poly.smartfindpro.ui.post.adressPost.AddressPostPresenter;
 import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;

@@ -12,7 +12,7 @@ import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
-import com.poly.smartfindpro.ui.post.model.Address;
+import com.poly.smartfindpro.data.model.post.req.Address;
 
 import java.lang.reflect.Type;
 

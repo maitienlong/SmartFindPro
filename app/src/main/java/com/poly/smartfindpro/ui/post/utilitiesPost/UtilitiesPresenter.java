@@ -4,8 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.ui.login.createPassword.CreatePasswordContract;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
 
 import java.util.ArrayList;
@@ -77,13 +76,18 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
 
     public void onSubmit() {
         utilitiesModelList = new ArrayList<>();
-        for (UtilitiesModel item : mListUpdate) {
-            if (item.isStatus()) {
-                utilitiesModelList.add(item.getTitle());
+        if(mListUpdate == null){
+           mViewModel.showMessage("");
+        }else {
+            for (UtilitiesModel item : mListUpdate) {
+                if (item.isStatus()) {
+                    utilitiesModelList.add(item.getTitle());
+                }
             }
-        }
-        postRequest.setUtilities(utilitiesModelList);
+            postRequest.setUtilities(utilitiesModelList);
 
-        mViewModel.onNext(new Gson().toJson(postRequest));
+            mViewModel.onNext(new Gson().toJson(postRequest));
+        }
+
     }
 }

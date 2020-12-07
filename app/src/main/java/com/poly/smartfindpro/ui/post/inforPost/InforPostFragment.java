@@ -15,10 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
@@ -26,12 +24,11 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
-import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
-import com.poly.smartfindpro.ui.post.model.Information;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.Information;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +37,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
         implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
+    private static final int IMAGE_PICK_CODE = 1000;
 
-    private static final int IMAGE_CODE = 1;
-
-    private static final int GALLERY_KITKAT_INTENT_CALLED = 100;
-
-    private static final int GALLERY_INTENT_CALLED = 101;
-
-    private static final int MY_PERMISSIONS_REQUEST = 102;
+    private static final int MY_PERMISSIONS_REQUEST = 1001;
     String category;
     String mAmountPeople = "";
     String mPrice = "";
@@ -102,7 +94,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_KITKAT_INTENT_CALLED || requestCode == GALLERY_INTENT_CALLED && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
             if (data.getClipData() != null) {
                 int totalItem = data.getClipData().getItemCount();
                 for (int i = 0; i < totalItem; i++) {
@@ -157,6 +149,8 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 onShowImage(imageListPath);
 
             }
+        } else {
+            showMessage("Bạn chưa chọn ảnh nào");
         }
 
     }
@@ -323,35 +317,19 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     }
 
     private void showImageGallery() {
-        if (Build.VERSION.SDK_INT < 19) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, GALLERY_INTENT_CALLED);
-        } else {
-            showKitKatGallery();
-        }
-    }
-
-    private void showKitKatGallery() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent, GALLERY_KITKAT_INTENT_CALLED);
+        startActivityForResult(intent, IMAGE_PICK_CODE);
     }
 
 
     public void onShowPhoto() {
-        if (ContextCompat.checkSelfPermission(mActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(mActivity, "Bạn cần phải cấp quền", Toast.LENGTH_SHORT).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+               mActivity.requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
             } else {
-
-                ActivityCompat.requestPermissions(mActivity,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST);
+                showImageGallery();
             }
         } else {
             showImageGallery();
@@ -359,4 +337,15 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     }
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showImageGallery();
+                } else {
+                    showMessage("Quyền truy cập đã được từ chối");
+                }
+        }
+    }
 }

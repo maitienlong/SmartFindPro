@@ -6,9 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
@@ -18,10 +15,9 @@ import com.poly.smartfindpro.data.model.area.req.BodyReq;
 import com.poly.smartfindpro.data.model.area.result.ListArea;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
-import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.SpinnerAreaAdapter;
-import com.poly.smartfindpro.ui.post.model.Address;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.Address;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
 import java.lang.reflect.Type;

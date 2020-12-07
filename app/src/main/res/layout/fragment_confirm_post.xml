@@ -9,14 +9,19 @@
             name="presenter"
             type="com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostPresenter" />
     </data>
-
-    <LinearLayout
-        android:paddingLeft="@dimen/_16sdp"
-        android:paddingRight="@dimen/_8sdp"
-        android:background="@color/white"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_8sdp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,6 +46,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:text="Tiêu đề" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:paddingRight="@dimen/_8sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:id="@+id/edtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_circle_editext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="Thể loại" />
 
             <TextView
@@ -52,9 +87,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rc_photo"
@@ -256,7 +291,6 @@
 
 
         <Button
-            android:onClick="@{()-> presenter.requestUploadSurvey()}"
             android:id="@+id/btnContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -264,9 +298,12 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/custom_button_infor"
+            android:onClick="@{()-> presenter.onRequestToServer()}"
             android:paddingHorizontal="@dimen/_30sdp"
             android:text="@string/btn_continue"
             android:textColor="@color/white" />
 
     </LinearLayout>
+
+    </ScrollView>
 </layout>
