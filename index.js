@@ -531,7 +531,6 @@ app.post('/user-product', async function (request, response) {
                 let userNo = await User.find({_id: id}).lean();
                 try {
                     let allProduct = await Product.find({
-                        status: '1',
                         deleteAt: ''
                     }).populate(['address', 'product'])
                         .populate({
