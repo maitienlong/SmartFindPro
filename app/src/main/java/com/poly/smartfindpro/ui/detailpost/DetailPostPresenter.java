@@ -150,4 +150,14 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     public void onBackClick() {
         mViewModel.onBackClick();
     }
+
+    @Override
+    public void onClickCall() {
+        mViewModel.onClickCall();
+    }
+
+    @Override
+    public void onClickInbox() {
+        mViewModel.onClickInbox();
+    }
 }

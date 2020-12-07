@@ -70,6 +70,7 @@
     <string name="user_permission_camera">Máy ảnh</string>
     <string name="user_permission_mic">Mic</string>
     <string name="user_permission_internet">Mạng cục bộ</string>
+    <string name="setting_confirm_account">Xác thực tài khoản</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -119,6 +120,12 @@
     <string name="btn_approved">Đã duyệt</string>
     <string name="btn_delete">Xóa</string>
     <string name="btn_edit">Sửa</string>
+    <string name="tv_type">Loại</string>
+    <string name="tv_date">Ngày sinh</string>
+    <string name="tv_home_town">Nguyên Quán</string>\
+    <string name="tv_address_now">Địa chỉ thường trú</string>
+    <string name="btn_confirm">Xác thực</string>
+
     <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
@@ -141,18 +148,10 @@
 
     <string name="error_edt_dont_match">Không khớp</string>
     <string name="add_images">Thêm ảnh</string>
-    <string-array name="province_array">
-        <item>Hà Nội</item>
-        <item>Hải Dương</item>
-        <item>Nghệ An</item>
-        <item>Ninh Bình</item>
-
-    </string-array>
-    <string-array name="district_array">
-        <item>Ba Đình</item>
-        <item>Bắc Từ Liêm</item>
-        <item>Cầu Giấy</item>
-        <item>Đống Đa</item>
+    <string-array name="type_id_card_array">
+        <item>Căn cước công dân</item>
+        <item>Chứng minh nhân dân 9 số</item>
+        <item>Chứng minh nhân dân 12 số</item>
 
     </string-array>
     <string name="title_activity_maps">Map</string>

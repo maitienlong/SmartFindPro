@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.home;
+package com.poly.smartfindpro.ui.home.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,14 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.ui.home.HomeContract;
+import com.poly.smartfindpro.ui.home.Product;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<Product> mListItem;
+    private ArrayList<Products> mListItem;
     private ArrayList<String> mListItemTest;
     HomeContract.ViewModel viewModel;
 
@@ -30,7 +30,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         this.mContext = mContext;
     }
 
-    public void setListItem(ArrayList<Product> listItem) {
+    public void setListItem(ArrayList<Products> listItem) {
         mListItem = listItem;
         notifyDataSetChanged();
     }

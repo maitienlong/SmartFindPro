@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,11 +49,17 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
                 .placeholder(R.mipmap.imgplaceholder)
                 .error(R.mipmap.imgerror)
                 .into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "phong to", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return image.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -3,10 +3,10 @@ package com.poly.smartfindpro.ui.home;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentHomeBinding;
+import com.poly.smartfindpro.ui.home.adapter.HomeAdapter;
 import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.MainSliderAdapter;
 import com.poly.smartfindpro.ui.post.adapter.PicassoImageLoadingService;
-import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.util.ArrayList;

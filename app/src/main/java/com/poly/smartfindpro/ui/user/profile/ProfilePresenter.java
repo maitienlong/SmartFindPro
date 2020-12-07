@@ -114,6 +114,13 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                 .placeholder(R.mipmap.imgplaceholder)
                 .error(R.mipmap.imgerror)
                 .into(mBinding.imgAvatarProfile);
+        Glide.
+                with(context)
+                .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getCoverImage())
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
+                .into(mBinding.imgCoverImage);
+
     }
 
 

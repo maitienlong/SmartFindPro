@@ -9,6 +9,7 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 import com.poly.smartfindpro.databinding.FragmentSettingUserBinding;
 import com.poly.smartfindpro.ui.user.setting.changepass.ChangePassFragment;
+import com.poly.smartfindpro.ui.user.setting.confirmAccount.ConfirmAccountFragment;
 import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
 import com.poly.smartfindpro.ui.user.setting.permission.PermissionFragment;
 
@@ -48,5 +49,10 @@ public class SettingFragment extends BaseDataBindFragment<FragmentSettingUserBin
     @Override
     public void onClickPerMission() {
         getBaseActivity().goToFragment(R.id.fl_native, new PermissionFragment(), null);
+    }
+
+    @Override
+    public void onClickConfirmAccount() {
+        getBaseActivity().goToFragment(R.id.fl_native, new ConfirmAccountFragment(), null);
     }
 }

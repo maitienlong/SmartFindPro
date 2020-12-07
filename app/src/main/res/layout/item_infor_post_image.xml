@@ -7,8 +7,9 @@
 
     <ImageView
         android:scaleType="centerCrop"
+        android:padding="@dimen/_5sdp"
         android:id="@+id/imageView"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
-        android:src="@mipmap/user" />
+        android:src="@mipmap/imgplaceholder" />
 </LinearLayout>
