@@ -125,6 +125,7 @@
 
 
                     <Button
+                        android:onClick="@{()->presenter.onClickPending()}"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
@@ -135,6 +136,7 @@
                     </Button>
 
                     <Button
+                        android:onClick="@{()->presenter.onClickApproved()}"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
