@@ -3,6 +3,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.listProduct.ListProductPresenter" />
+    </data>
 
     <LinearLayout
         android:id="@+id/bottomSheet"

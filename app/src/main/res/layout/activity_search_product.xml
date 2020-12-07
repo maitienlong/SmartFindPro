@@ -10,6 +10,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/listProductLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,8 +34,8 @@
 
                     <ImageView
                         android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
                         android:layout_marginStart="16dp"
                         android:src="@mipmap/marker"
                         app:layout_constraintBottom_toBottomOf="@+id/textView9"
@@ -52,37 +53,39 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName"
+                        android:id="@+id/edtSearch"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:ems="10"
                         android:hint="Nhập địa điểm tìm kiếm"
+                        app:addTextChangedListener="@{presenter.onListenerSearch()}"
                         android:inputType="textPersonName"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                        app:layout_constraintEnd_toStartOf="@+id/imgSearch"
                         app:layout_constraintStart_toStartOf="@+id/imageView8"
                         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                     <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/imgSearch"
+                        android:onClick="@{()-> presenter.onSearch()}"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
                         android:layout_marginEnd="16dp"
                         android:tintMode="@color/white"
-                        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+                        app:layout_constraintBottom_toBottomOf="@+id/edtSearch"
                         app:layout_constraintEnd_toStartOf="@+id/imageView10"
-                        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
-                        app:srcCompat="@drawable/ic_search_30" />
+                        app:layout_constraintTop_toTopOf="@+id/edtSearch"
+                        app:srcCompat="@drawable/ic_search_60_s" />
 
                     <ImageView
                         android:id="@+id/imageView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgSearch"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/imageView9" />
+                        app:layout_constraintTop_toTopOf="@+id/imgSearch" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 

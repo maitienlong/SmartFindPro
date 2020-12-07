@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.listProduct;
+package com.poly.smartfindpro.ui.searchProduct;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +34,7 @@ public class ProductBottomAdapter extends RecyclerView.Adapter<ProductBottomAdap
     @NonNull
     @Override
     public ProductBottomAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_product_bottom, parent, false);
+        View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_product_bottom, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         inflate.setLayoutParams(lp);
         return new ProductBottomAdapter.ViewHolder(inflate);

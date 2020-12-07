@@ -1,10 +1,13 @@
 
 package com.poly.smartfindpro.data.model.product.res;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Products {
+public class Products implements Parcelable {
 
     @SerializedName("_id")
     @Expose
@@ -128,4 +131,13 @@ public class Products {
         this.v = v;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
 }
