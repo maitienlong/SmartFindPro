@@ -12,6 +12,7 @@ import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 
 
+
 public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, LoginFragmentPresenter> implements LoginFragmentContract.ViewModel {
     @Override
     protected int getLayoutId() {

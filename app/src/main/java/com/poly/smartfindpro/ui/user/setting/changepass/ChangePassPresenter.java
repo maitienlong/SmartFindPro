@@ -1,7 +1,6 @@
 package com.poly.smartfindpro.ui.user.setting.changepass;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
@@ -66,7 +65,7 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
         });
     }
     private void showData(ProfileResponse mProfile) {
-        passInfor.set(mProfile.getResponseBody().getPassword());
+        passInfor.set(mProfile.getResponseBody().getUser().getPassword());
 
     }
 }

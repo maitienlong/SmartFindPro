@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
@@ -23,14 +24,14 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     protected void initView() {
-        mPresenter = new ProfilePresenter(mActivity, this);
+        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
     }
 
     @Override
     protected void initData() {
-        mPresenter = new ProfilePresenter(mActivity, this);
+        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         profileAdapter = new ProfileAdapter(mActivity, mActivity.getSupportFragmentManager());
 
@@ -44,7 +45,6 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onShow(List<Products> productList) {
-        Log.d("checkList", productList.size()+"");
         profileAdapter.setItemList(productList);
         BindingUtils.setAdapter(mBinding.rcProfile,profileAdapter,true);
     }
@@ -53,5 +53,16 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     @Override
     public void onClickEditUser() {
         getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
+    }
+
+    @Override
+    public void onClickPending() {
+        Toast.makeText(mActivity, "Pending", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onClickApproved() {
+        Toast.makeText(mActivity, "Approved", Toast.LENGTH_SHORT).show();
     }
 }

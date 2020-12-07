@@ -10,7 +10,8 @@ import java.util.List;
 public interface UtilitiesContract {
 
     interface ViewModel extends BaseView {
-      void onBackData(List<UtilitiesModel> arrayList);
+        void onBackData(List<UtilitiesModel> arrayList);
+
         void onNext(String jsonData);
     }
 

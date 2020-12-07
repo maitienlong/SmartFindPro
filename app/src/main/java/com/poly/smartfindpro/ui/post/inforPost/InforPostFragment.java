@@ -13,14 +13,10 @@ import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
@@ -28,12 +24,11 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
-import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
-import com.poly.smartfindpro.ui.post.model.Information;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.Information;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 
 import java.util.ArrayList;
 import java.util.List;

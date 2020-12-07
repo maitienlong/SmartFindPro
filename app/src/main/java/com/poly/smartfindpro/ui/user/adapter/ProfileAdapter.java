@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.user.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,21 +67,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         List<String> image = new ArrayList<>();
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        try {
-            Date date = dateFormatter.parse(item.getCreateAt());
+            try {
+                Date date = dateFormatter.parse(item.getCreateAt());
 
-            holder.tv_time_post.setText(getTime(date));
+                holder.tv_time_post.setText(getTime(date));
 
-        } catch (Exception e) {
+            } catch (Exception e) {
 
-        }
+            }
 
         holder.tv_username_post.setText(item.getUser().getUserName());
         holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
         holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
         holder.tv_title_post.setText(item.getContent());
+
 
         if (item.getProduct().getInformation().getImage().size() < 4) {
             for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
@@ -96,48 +98,48 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             Glide.
                     with(context)
                     .load(image.get(0))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img1);
             Glide.
                     with(context)
                     .load(image.get(1))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img2);
             Glide.
                     with(context)
                     .load(image.get(2))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img3);
         } else if (image.size() == 2) {
             Glide.
                     with(context)
                     .load(image.get(0))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img1);
             Glide.
                     with(context)
                     .load(image.get(1))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img2);
 
         } else {
             Glide.
                     with(context)
                     .load(image.get(0))
-                    .placeholder(R.drawable.chucuongvlog)
-                    .error(R.drawable.babyred)
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgerror)
                     .into(holder.img1);
         }
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
-                .placeholder(R.drawable.chucuongvlog)
-                .error(R.drawable.babyred)
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgerror)
                 .into(holder.img_avatar);
 
 

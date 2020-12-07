@@ -6,12 +6,30 @@
     <data>
 
         <variable
-            name="userActivity"
+            name="presenter"
             type="com.poly.smartfindpro.ui.user.help.HelpPresenter" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:id="@+id/cmtb"
+            onBackClick="@{()->presenter.onBackClick()}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

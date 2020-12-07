@@ -8,9 +8,12 @@
             name="presenter"
             type="com.poly.smartfindpro.ui.user.userFragment.UserPresenter" />
     </data>
+
     <ScrollView
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
@@ -31,7 +34,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:onClick="@{()->presenter.onClickProfile()}"
                 android:id="@+id/display_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,26 +42,28 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_blue_round_15_selector"
                 android:gravity="center"
+                android:onClick="@{()->presenter.onClickProfile()}"
                 android:orientation="vertical"
                 android:paddingBottom="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvUserTitle">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/img_avatar_user"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_marginTop="12dp"
-                    app:civ_border_width="2dp"
+                    android:src="@mipmap/imgplaceholder"
                     app:civ_border_color="#FF000000"
-                    android:src="@color/white"/>
+                    app:civ_border_width="2dp" />
 
                 <TextView
 
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/name_uesr"
+                    android:layout_marginTop="10dp"
+                    android:text="@={presenter.nameInfor}"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -80,8 +84,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="10dp"
-                android:onClick="@{()->presenter.onClickSetting()}"
                 android:background="@drawable/bg_blue_round_15_selector"
+                android:onClick="@{()->presenter.onClickSetting()}"
                 android:paddingBottom="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/display_user">
@@ -123,7 +127,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:onClick="@{()->presenter.onClickRules()}"
                 android:id="@+id/display_rules"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,6 +134,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_blue_round_15_selector"
+                android:onClick="@{()->presenter.onClickRules()}"
 
                 android:paddingBottom="18dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -148,10 +152,10 @@
 
                 <TextView
                     android:id="@+id/tvRules"
-                    android:layout_alignStart="@+id/imgRules"
-                    android:layout_marginStart="65dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imgRules"
+                    android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/rules"
                     android:textColor="@color/white"
@@ -159,11 +163,11 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/tvRules"
                     android:layout_alignStart="@+id/imgRules"
                     android:layout_marginStart="65dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/content_layout1"
                     android:textColor="@color/white"
@@ -171,7 +175,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:onClick="@{()->presenter.onClickHelp()}"
                 android:id="@+id/display_asistentAndFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,6 +182,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_blue_round_15_selector"
+                android:onClick="@{()->presenter.onClickHelp()}"
                 android:paddingBottom="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/display_rules">
@@ -195,10 +199,10 @@
 
                 <TextView
                     android:id="@+id/tvFeedback"
-                    android:layout_alignStart="@+id/imgFeedback"
-                    android:layout_marginStart="65dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imgFeedback"
+                    android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/asistent_and_feedback"
                     android:textColor="@color/white"
@@ -206,19 +210,18 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_alignStart="@+id/imgFeedback"
-                    android:layout_below="@+id/tvFeedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tvFeedback"
+                    android:layout_alignStart="@+id/imgFeedback"
                     android:layout_marginStart="65dp"
+                    android:layout_marginTop="5dp"
                     android:text="Hỗ trợ người dùng và đánh giá ứng dụng"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:onClick="@{()->presenter.onClickLogOut()}"
                 android:id="@+id/display_logOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -226,6 +229,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_blue_round_15_selected"
+                android:onClick="@{()->presenter.onClickLogOut()}"
 
                 android:paddingBottom="18dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -242,10 +246,10 @@
                     android:src="@drawable/ic_baseline_logout_24" />
 
                 <TextView
-                    android:layout_alignStart="@+id/imgLogout"
-                    android:layout_marginStart="65dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imgLogout"
+                    android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/log_out"
                     android:textColor="@color/white"

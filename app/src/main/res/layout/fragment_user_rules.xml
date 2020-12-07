@@ -15,12 +15,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
 
         <com.poly.smartfindpro.widget.CommonToolbar
-
+            android:onClick="@{()->presenter.onBackClick()}"
             android:id="@+id/cmtb"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />

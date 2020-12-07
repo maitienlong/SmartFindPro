@@ -1,5 +1,7 @@
 package com.poly.smartfindpro.ui.post.confirmPost;
 
+import android.content.Intent;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
@@ -9,12 +11,15 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentConfirmPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ShowImagePostAdapter;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
-//import com.poly.smartfindpro.ui.post.model.Address;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.ui.post.postsuccess.SuccessPostFragment;
+//import com.poly.smartfindpro.data.model.post.req.Address;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPostBinding, ConfirmPostPresenter> implements ConfirmPostContract.ViewModel {
     private PostRequest postRequest;
@@ -42,35 +47,37 @@ public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPos
 
     @Override
     protected void initData() {
-        mPresenter = new ConfirmPostPresenter(mActivity, this);
+        mPresenter = new ConfirmPostPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
-        showImagePostAdapter = new ShowImagePostAdapter(mActivity);
+        if (postRequest != null) {
 
-        onShowImage();
+            showImagePostAdapter = new ShowImagePostAdapter(mActivity);
 
-        mPresenter.setPostRequest(postRequest, imageList);
+            onShowImage();
 
-        mPresenter.setTheLoai(postRequest.getCategory());
+            mPresenter.setPostRequest(postRequest, imageList);
 
-        mPresenter.setSoLuong(postRequest.getInformation().getAmountPeople());
+            mPresenter.setTheLoai(postRequest.getCategory());
 
-        mPresenter.setGia(postRequest.getInformation().getPrice());
+            mPresenter.setSoLuong(postRequest.getInformation().getAmountPeople());
 
-        mPresenter.setDatCoc(postRequest.getInformation().getDeposit());
+            mPresenter.setGia(postRequest.getInformation().getPrice());
 
-        mPresenter.setGioiTinh(postRequest.getInformation().getGender());
+            mPresenter.setDatCoc(postRequest.getInformation().getDeposit());
 
-        mPresenter.setDiaChi(postRequest.getAddress().getDetailAddress() + ", " + postRequest.getAddress().getCommuneWardTown() + ", " + postRequest.getAddress().getDistrictsTowns() + ", " + postRequest.getAddress().getProvinceCity());
+            mPresenter.setGioiTinh(postRequest.getInformation().getGender());
 
-        mPresenter.setTienDien(postRequest.getInformation().getElectricBill());
+            mPresenter.setDiaChi(postRequest.getAddress().getDetailAddress() + ", " + postRequest.getAddress().getCommuneWardTown() + ", " + postRequest.getAddress().getDistrictsTowns() + ", " + postRequest.getAddress().getProvinceCity());
 
-        mPresenter.setTienNuoc(postRequest.getInformation().getElectricBill());
+            mPresenter.setTienDien(postRequest.getInformation().getElectricBill());
 
-        mPresenter.setTienIch(postRequest.getUtilities());
+            mPresenter.setTienNuoc(postRequest.getInformation().getElectricBill());
 
-        mPresenter.setMoTa(postRequest.getInformation().getDescribe());
+            mPresenter.setTienIch(postRequest.getUtilities());
 
+            mPresenter.setMoTa(postRequest.getInformation().getDescribe());
+        }
     }
 
     @Override
@@ -89,6 +96,19 @@ public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPos
     @Override
     public void showLoadingDialog() {
         super.showLoadingDialog();
+    }
+
+    @Override
+    public void onConfirm() {
+        Intent intent = new Intent();
+
+        intent.putExtra(Config.DATA_CALL_BACK, "5");
+
+        setResult(RESULT_OK, intent);
+
+        onBackData();
+
+        getBaseActivity().goToFragment(R.id.fl_post, new SuccessPostFragment(), null);
     }
 }
 

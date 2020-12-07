@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -214,7 +215,52 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
 
         if (mFragStack != null)
             mFragStack.push(mBaseFragment);
-        trans.setCustomAnimations(R.anim.new_fade_in, R.anim.new_fade_out);
+
+       trans.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
+        trans.commitAllowingStateLoss();
+        mFrgManager.executePendingTransactions();
+    }
+
+    public void goToFragmentReplaceLeft(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
+        if (mFragStack == null && mFrgManager == null) {
+            mFragStack = new ArrayDeque<>();
+            mFrgManager = getSupportFragmentManager();
+        }
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mBundle != null) {
+            mBaseFragment.setArguments(mBundle);
+        }
+        if (mFragStack != null && mFragStack.size() >= 1) {
+            trans.hide(mFragStack.getLast());
+        }
+
+        if (mFragStack != null)
+            mFragStack.push(mBaseFragment);
+
+        trans.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
+        trans.commitAllowingStateLoss();
+        mFrgManager.executePendingTransactions();
+    }
+
+    public void goToFragmentReplaceRight(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
+        if (mFragStack == null && mFrgManager == null) {
+            mFragStack = new ArrayDeque<>();
+            mFrgManager = getSupportFragmentManager();
+        }
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mBundle != null) {
+            mBaseFragment.setArguments(mBundle);
+        }
+        if (mFragStack != null && mFragStack.size() >= 1) {
+            trans.hide(mFragStack.getLast());
+        }
+
+        if (mFragStack != null)
+            mFragStack.push(mBaseFragment);
+
+        trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
         mFrgManager.executePendingTransactions();
