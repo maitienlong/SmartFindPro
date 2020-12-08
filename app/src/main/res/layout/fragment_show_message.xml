@@ -18,8 +18,9 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/TextViewStyle.Bold"
+            style="@style/textStyleBold"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="center"
@@ -39,7 +40,7 @@
 
         <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/tv_message"
-            style="@style/TextViewStyle"
+            style="@style/textStyleRegular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"

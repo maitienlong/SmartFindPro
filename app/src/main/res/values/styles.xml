@@ -50,29 +50,82 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="TextViewStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_vertical</item>
+    <style name="textStyleRegular">
+        <item name="android:fontFamily">@font/segoeuisl</item>
         <item name="android:textColorHint">@color/text_color_77</item>
         <item name="android:textColor">@color/text_color_42</item>
         <item name="android:textSize">@dimen/_12sdp</item>
     </style>
 
-    <style name="TextViewStyle.margin">
+    <style name="textStyleSemilight">
+        <item name="android:fontFamily">@font/segoeuil</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="textStyleSemiBold">
+        <item name="android:fontFamily">@font/seguisb</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+
+    <style name="textStyleBold">
+        <item name="android:fontFamily">@font/segoeuib</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+
+    // 10sdp
+    <style name="textStyleRegular_10dp">
+        <item name="android:fontFamily">@font/segoeuisl</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="textStyleSemilight_10dp">
+        <item name="android:fontFamily">@font/segoeuil</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="textStyleSemiBold_10dp">
+        <item name="android:fontFamily">@font/seguisb</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+
+    <style name="textStyleBold_10dp">
+        <item name="android:fontFamily">@font/segoeuib</item>
+        <item name="android:textColorHint">@color/text_color_77</item>
+        <item name="android:textColor">@color/text_color_42</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    //-------------------------------
+
+    <style name="textStyleRegular.margin">
         <item name="android:layout_marginLeft">@dimen/_10sdp</item>
         <item name="android:layout_marginRight">@dimen/_10sdp</item>
     </style>
 
-    <style name="TextViewStyle.Big">
+    <style name="textStyleRegular.Big">
         <item name="android:textSize">@dimen/_14sdp</item>
     </style>
 
-    <style name="TextViewStyle.gray">
+    <style name="textStyleRegular.gray">
         <item name="android:textColor">@color/grey_three</item>
     </style>
 
-    <style name="TextViewStyle.Bold">
+    <style name="textStyleRegular.Bold">
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
@@ -80,21 +133,21 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="TextViewStyle.Title">
+    <style name="textStyleRegular.Title">
         <item name="android:textSize">@dimen/_10sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="TextViewStyle.Title2">
+    <style name="textStyleRegular.Title2">
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="TextViewStyle.Bold.End">
+    <style name="textStyleRegular.Bold.End">
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
@@ -102,7 +155,7 @@
         <item name="android:gravity">end</item>
     </style>
 
-    <style name="TextViewStyle.Bold.Right">
+    <style name="textStyleRegular.Bold.Right">
         <item name="android:textSize">@dimen/_9sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
@@ -110,13 +163,13 @@
         <item name="android:gravity">right</item>
     </style>
 
-    <style name="TextViewStyle.Size">
+    <style name="textStyleRegular.Size">
         <item name="android:textSize">@dimen/_8sdp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="TextViewStyle.Vnd">
+    <style name="textStyleRegular.Vnd">
         <item name="android:textSize">@dimen/_8sdp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -124,7 +177,7 @@
     </style>
 
 
-    <style name="TextViewStyle.Bold.margin">
+    <style name="textStyleRegular.Bold.margin">
         <item name="android:layout_marginLeft">@dimen/_10sdp</item>
         <item name="android:layout_marginRight">@dimen/_10sdp</item>
         <item name="android:textSize">@dimen/_14sdp</item>
