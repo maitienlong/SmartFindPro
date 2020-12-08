@@ -12,102 +12,109 @@
         <import type="android.view.View" />
     </data>
 
-    <LinearLayout
-        android:layout_margin="@dimen/_8sdp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_address"
-            style="@style/textStyleBoldBlack_20dp">
-
-        </TextView>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            style="@style/textStyleNormal_15dp"
-            android:text="@string/tv_province">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spnProvince"
+        <LinearLayout
+            android:layout_margin="@dimen/_8sdp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:prompt="@string/app_name" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_address"
+                style="@style/textStyleBoldBlack_20dp">
+
+            </TextView>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/textStyleNormal_15dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_district">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/textStyleNormal_15dp"
+                android:text="@string/tv_province">
 
-        </TextView>
+            </TextView>
 
-        <Spinner
-            android:id="@+id/spnDistrict"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:prompt="@string/app_name" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            style="@style/textStyleNormal_15dp"
-            android:text="@string/tv_commune">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spnComune"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:prompt="@string/app_name" />
-
-        <TextView
-            style="@style/textStyleNormal_15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/tv_detail_address">
-
-        </TextView>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:padding="@dimen/_8sdp"
-                android:id="@+id/edtDetialAdress"
+            <Spinner
+                android:id="@+id/spnProvince"
                 android:layout_width="match_parent"
-                android:gravity="start"
-                android:layout_height="match_parent"
-
-                android:background="@drawable/bg_circle_editext" />
+                android:layout_height="@dimen/_50sdp"
+                android:prompt="@string/app_name" />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textStyleNormal_15dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/tv_district">
 
-        <Button
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:onClick="@{()->presenter.onNext()}"
-            android:id="@+id/btnContinue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@drawable/custom_button_infor"
-            android:text="@string/btn_continue"
-            android:textColor="@color/white" />
-    </LinearLayout>
+            </TextView>
+
+            <Spinner
+                android:id="@+id/spnDistrict"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:prompt="@string/app_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/textStyleNormal_15dp"
+                android:text="@string/tv_commune">
+
+            </TextView>
+
+            <Spinner
+                android:id="@+id/spnComune"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:prompt="@string/app_name" />
+
+            <TextView
+                style="@style/textStyleNormal_15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/tv_detail_address">
+
+            </TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:padding="@dimen/_8sdp"
+                    android:id="@+id/edtDetialAdress"
+                    android:layout_width="match_parent"
+                    android:gravity="start"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/bg_circle_editext" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:onClick="@{()->presenter.onNext()}"
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/custom_button_infor"
+                android:text="@string/btn_continue"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </ScrollView>
+
 </layout>
