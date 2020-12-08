@@ -1,9 +1,6 @@
 package com.poly.smartfindpro.ui.searchProduct.model;
 
 public class ItemMarker {
-
-
-    class ItemMarker {
         Double lat;
         Double log;
         String name;
