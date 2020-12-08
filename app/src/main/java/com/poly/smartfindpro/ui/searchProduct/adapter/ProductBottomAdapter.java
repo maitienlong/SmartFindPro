@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.searchProduct;
+package com.poly.smartfindpro.ui.searchProduct.adapter;
 
 import android.content.Context;
 import android.content.Intent;
