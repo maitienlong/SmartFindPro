@@ -10,11 +10,11 @@ const UserSchema = mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
+        required: false
     },
     address: {
         type: Object,
-        required: true,
+        required: false,
         ref: 'Address',
     }
 });
