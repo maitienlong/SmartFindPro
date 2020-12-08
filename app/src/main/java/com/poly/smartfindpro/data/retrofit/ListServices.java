@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.data.retrofit;
 
+import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
@@ -15,9 +16,11 @@ import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ListServices {
     @POST("/lifecard-app/area/req")
@@ -45,4 +48,10 @@ public interface ListServices {
 
     @POST("/list-product")
     Call<HomeResponse> getProduct(@Body HomeRequest request);
+
+    @GET("/maps/api/place/findplacefromtext/json")
+    Call<AddressGoogleResponse> getFindLocation(@Query("input") String input,
+                                                @Query("inputtype") String inputtype,
+                                                @Query("fields") String fields,
+                                                @Query("key") String key);
 }

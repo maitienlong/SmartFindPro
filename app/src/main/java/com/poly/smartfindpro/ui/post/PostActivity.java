@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
@@ -163,7 +164,18 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     @Override
     public void onBackClick() {
-        finish();
+        showAlertDialog("Thông báo", "Bạn muốn hủy bài đăng", "Đồng ý", "Hủy", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 
 

@@ -76,8 +76,8 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
 
     public void onSubmit() {
         utilitiesModelList = new ArrayList<>();
-        if(mListUpdate == null){
-           mViewModel.showMessage("");
+        if(mListUpdate == null || mListUpdate.size() == 0){
+           mViewModel.showMessage("Phải có ít nhất 1 tiện ích");
         }else {
             for (UtilitiesModel item : mListUpdate) {
                 if (item.isStatus()) {

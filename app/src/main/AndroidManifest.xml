@@ -33,6 +33,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/logo_app"
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 

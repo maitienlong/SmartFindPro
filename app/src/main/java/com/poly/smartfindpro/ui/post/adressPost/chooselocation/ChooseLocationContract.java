@@ -1,12 +1,12 @@
-package com.poly.smartfindpro.ui.map;
+package com.poly.smartfindpro.ui.post.adressPost.chooselocation;
 
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 
-public interface MapContract {
+public interface ChooseLocationContract {
     interface ViewModel extends BaseView {
-        void openFragment();
+
     }
 
     interface Presenter extends BasePresenter {

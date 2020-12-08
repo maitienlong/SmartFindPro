@@ -92,34 +92,16 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
         });
     }
 
-    public TextWatcher onListenerSearch() {
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-//                onSearchProduct(editable.toString());
-//                key.set(editable.toString());
-            }
-        };
-    }
-
     private void onSearchProduct(String key) {
         List<Products> mListAddress = new ArrayList<>();
+
         for (Products item : mListProduct) {
             if (item.getAddress().getDetailAddress().toLowerCase().contains(key) || item.getAddress().getCommuneWardTown().toLowerCase().contains(key)) {
                 mListAddress.add(item);
             }
         }
-        Log.d("getLow", new Gson().toJson(mListProduct));
+        Log.d("getLow", new Gson().toJson(mListAddress));
+
         mViewModel.onShow(mListAddress);
     }
 

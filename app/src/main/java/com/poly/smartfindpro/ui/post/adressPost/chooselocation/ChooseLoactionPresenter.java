@@ -1,18 +1,18 @@
-package com.poly.smartfindpro.ui.searchProduct.map;
+package com.poly.smartfindpro.ui.post.adressPost.chooselocation;
 
 import android.content.Context;
 
 import com.poly.smartfindpro.databinding.FragmentMapsSearchBinding;
 
 
-public class MapsPresenter implements MapsContract.Presenter {
+public class ChooseLoactionPresenter implements ChooseLocationContract.Presenter {
 
     private Context mContext;
-    private MapsContract.ViewModel mViewModel;
+    private ChooseLocationContract.ViewModel mViewModel;
 
     private FragmentMapsSearchBinding mBinding;
 
-    public MapsPresenter(Context context, MapsContract.ViewModel viewModel, FragmentMapsSearchBinding binding) {
+    public ChooseLoactionPresenter(Context context, ChooseLocationContract.ViewModel viewModel, FragmentMapsSearchBinding binding) {
         mContext = context;
         mViewModel = viewModel;
         this.mBinding = binding;
