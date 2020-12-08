@@ -10,6 +10,7 @@
     </data>
 
     <LinearLayout
+        android:background="@color/white"
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,8 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Tìm kiếm gần đây"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp" />
+                    style="@style/textStyleBlackEffec_15dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProduct"

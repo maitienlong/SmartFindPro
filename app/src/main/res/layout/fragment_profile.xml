@@ -94,8 +94,7 @@
                             android:layout_gravity="center"
 
                             android:text="@{presenter.nameInfor}"
-                            android:textColor="@color/blue"
-                            android:textSize="@dimen/_15sdp"
+                            style="@style/textStyleBlue_15dp"
                             app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
                         <Button
@@ -124,8 +123,23 @@
                     android:padding="@dimen/_10sdp">
 
 
+
+                    <Button
+                        android:onClick="@{()->presenter.onClickApproved()}"
+                        android:id="@+id/btn_approved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/btn_category_pressed"
+                        android:text="@string/btn_approved"
+                        android:textColor="@color/white">
+
+
+                    </Button>
+
                     <Button
                         android:onClick="@{()->presenter.onClickPending()}"
+                        android:id="@+id/btn_pending"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
@@ -135,16 +149,6 @@
 
                     </Button>
 
-                    <Button
-                        android:onClick="@{()->presenter.onClickApproved()}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_25sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:background="@drawable/btn_category"
-                        android:text="@string/btn_approved"
-                        android:textColor="@color/blue">
-
-                    </Button>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

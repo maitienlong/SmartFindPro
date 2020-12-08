@@ -13,6 +13,7 @@
     </data>
 
     <ScrollView
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,8 +47,7 @@
                     <com.github.siyamed.shapeimageview.CircularImageView
                         android:id="@+id/img_avatar"
                         android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-
+                        android:layout_height="match_parent"
                         android:src="@mipmap/user" />
 
 
@@ -60,20 +60,17 @@
 
                         <TextView
                             android:id="@+id/tvName"
+                            style="@style/textStyleBlackEffec_15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={presenter.userNameDetail}"
-                            android:textColor="@color/black_effective"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
+                            android:text="@={presenter.userNameDetail}" />
 
                         <TextView
                             android:id="@+id/tvTime"
+                            style="@style/textStyleBlackEffect_12dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={presenter.timePostDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_13sdp" />
+                            android:text="@={presenter.timePostDetail}" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -91,16 +88,16 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/textStyleRegular_10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={presenter.categoryDetail}"
-                        android:textSize="@dimen/_10sdp" />
+                        android:text="@={presenter.categoryDetail}" />
 
                     <TextView
+                        style="@style/textStyleRegular_10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={presenter.amountDetail}"
-                        android:textSize="@dimen/_10sdp" />
+                        android:text="@={presenter.amountDetail}" />
 
                 </LinearLayout>
 
@@ -132,12 +129,10 @@
                         android:text="@string/text_infor_price" />
 
                     <TextView
+                        style="@style/textStyleBoldRed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:text="@={presenter.priceDetail}"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/_14sdp" />
+                        android:text="@={presenter.priceDetail}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,13 +169,12 @@
                             android:text="@string/text_infor_price_electric" />
 
                         <TextView
+                            style="@style/textStyleRegular_10dp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-
-                            android:text="@={presenter.priceElectricDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_10sdp" />
+                            android:text="@={presenter.priceElectricDetail}" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -203,13 +197,12 @@
                             android:text="@string/text_infor_price_water" />
 
                         <TextView
+                            style="@style/textStyleRegular_10dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
 
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="@={presenter.priceWaterDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_10sdp" />
+                            android:text="@={presenter.priceWaterDetail}" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -232,13 +225,12 @@
                             android:textColor="@color/black" />
 
                         <TextView
+                            style="@style/textStyleRegular_10dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
 
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="@={presenter.priceDepositDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_10sdp" />
+                            android:text="@={presenter.priceDepositDetail}" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -255,9 +247,7 @@
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_address"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold" />
+                        style="@style/textStyleBoldBlack_14dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -275,8 +265,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="@={presenter.addressDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
+                            style="@style/textStyleBlack_14dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -296,8 +285,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="@={presenter.phoneNumberDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
+                            style="@style/textStyleBlack_14dp"/>
                     </LinearLayout>
 
                     <TextView
@@ -305,9 +293,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:text="@string/text_infor_gender"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold" />
+                        style="@style/textStyleBoldBlack_14dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -325,8 +311,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="@={presenter.genderDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
+                            style="@style/textStyleBlack_14dp"/>
                     </LinearLayout>
 
 
@@ -335,9 +320,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:text="@string/text_infor_utilities"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold" />
+                        style="@style/textStyleBoldBlack_14dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -355,8 +338,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:text="@={presenter.utilitiesDetail}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_14sdp" />
+                            style="@style/textStyleBlack_14dp"/>
                     </LinearLayout>
                 </LinearLayout>
 
