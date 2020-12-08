@@ -48,7 +48,7 @@
                     android:id="@+id/img_avatar"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-
+                    android:onClick="@{()->presenter.onClickProfile()}"
                     android:src="@mipmap/user" />
 
 
@@ -60,6 +60,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:onClick="@{()->presenter.onClickProfile()}"
                         android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

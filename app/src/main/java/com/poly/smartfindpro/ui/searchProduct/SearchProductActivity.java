@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,9 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
+import com.poly.smartfindpro.ui.searchProduct.adapter.ProductBottomAdapter;
+import com.poly.smartfindpro.ui.searchProduct.filterProduct.FilterProductActivity;
+import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.util.List;
@@ -45,12 +49,13 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
         rvProduct = findViewById(R.id.rvProduct);
 
         bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
-//        mBinding.imgSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//            }
-//        });
+        mBinding.imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent = new Intent(SearchProductActivity.this, FilterProductActivity.class);
+               startActivity(intent);
+            }
+        });
 
         bottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +87,14 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
         adapter.setItemList(products);
         BindingUtils.setAdapter(rvProduct, adapter, true);
     }
+
+    @Override
+    public void onSearch() {
+        Intent intent = new Intent(this,FilterProductActivity.class);
+        startActivity(intent);
+    }
+
+
 
 
 }

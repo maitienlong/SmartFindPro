@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
@@ -31,6 +32,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         implements DetailPostContact.ViewModel {
     private Products mProduct;
     private DetailImageAdapter adapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -87,4 +89,10 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     public void onClickInbox() {
         Toast.makeText(this, "Chưa thực hiện được nhắn tin ", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onClickProfile() {
+        getSupportFragmentManager().beginTransaction()
+                .add(android.R.id.content, new ProfileFragment ()).commit();}
+    
 }

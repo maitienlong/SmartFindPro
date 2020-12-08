@@ -160,4 +160,9 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     public void onClickInbox() {
         mViewModel.onClickInbox();
     }
+
+    @Override
+    public void onClickProfile() {
+        mViewModel.onClickProfile();
+    }
 }

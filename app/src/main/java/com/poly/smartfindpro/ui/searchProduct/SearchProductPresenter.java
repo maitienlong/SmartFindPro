@@ -25,6 +25,7 @@ import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
 import com.poly.smartfindpro.ui.listProduct.ListProductFragment;
+import com.poly.smartfindpro.ui.searchProduct.filterProduct.FilterProductActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +126,10 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     @Override
     public void onSearch() {
-        onSearchProduct(mBinding.edtSearch.getText().toString());
-        Log.d("getLow", mBinding.edtSearch.getText().toString());
+//        onSearchProduct(mBinding.edtSearch.getText().toString());
+//        Log.d("getLow", mBinding.edtSearch.getText().toString());
+//        Intent intent =new Intent( mContext, FilterProductActivity.class);
+//        mContext.startActivity(intent);
+        mViewModel.onSearch();
     }
 }

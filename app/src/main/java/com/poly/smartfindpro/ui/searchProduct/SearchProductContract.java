@@ -12,7 +12,7 @@ import java.util.List;
 public interface SearchProductContract {
     interface ViewModel extends BaseView {
         void onShow(List<Products> products);
-
+        void onSearch();
     }
 
     interface Presenter extends BasePresenter {
