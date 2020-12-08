@@ -1,6 +1,5 @@
 package com.poly.smartfindpro.ui.login.registerFragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
@@ -8,10 +7,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.FirebaseException;
-//import com.google.firebase.auth.PhoneAuthCredential;
-//import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
@@ -22,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBinding, RegisterPresenter> implements RegisterContract.ViewModel {
 
+
+    FirebaseAuth mAuth;
     private static String code = "";
 
     @Override
@@ -40,6 +40,7 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
         });
 
     }
+
 
     @Override
     protected void initData() {
@@ -60,9 +61,9 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
                             }
 
                             @Override
-                            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                super.onCodeSent(s, forceResendingToken);
-                                code = s;
+                            public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+//                                mVerificationId = verificationId;
+//                                mResendToken = token;
                             }
                         }
                 );
