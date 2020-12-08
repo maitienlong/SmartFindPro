@@ -61,6 +61,7 @@ app.set('view engine', '.hbs');
 const localNumber = 9090;
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
+
 //cac ham tro giup
 function getResponse(name, resCode, resMess, res) {
     let resData = {
@@ -522,19 +523,30 @@ app.post('/login', async function (request, response) {
     let name = 'LOGIN'
     try {
         let id = request.body.id;
-        let userName = request.body.userName;
+        let account = request.body.account;
         let password = request.body.password;
-        if (checkData(userName) &&
+        if (checkData(account) &&
             checkData(password)) {
             try {
-                let user = await User.find({userName: userName,password: password}).populate(['address']).lean();
-                console.log(user.length);
-                if (user.length <= 0){
-                    response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
-                }else {
-                    let res_body = {user : user[0]}
+                let userByPhone = await User.find({
+                    phoneNumber: account,
+                    password: password
+                }).populate(['address']).lean();
+                let userByUserName = await User.find({
+                    userName: account,
+                    password: password
+                }).populate(['address']).lean();
+
+                if (userByUserName.length > 0) {
+                    let res_body = {type: 'USER_NAME', user: userByUserName[0]}
                     response.json(getResponse(name, 200, sttOK, res_body))
+                } else if (userByPhone.length > 0) {
+                    let res_body = {type: 'PHONE_NUMBER', user: userByPhone[0]}
+                    response.json(getResponse(name, 200, sttOK, res_body))
+                } else {
+                    response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
                 }
+
             } catch (e) {
                 console.log('loi ne: \n' + e)
                 response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
@@ -557,9 +569,9 @@ app.post('/find-user', async function (request, response) {
             try {
                 let user = await User.find({_id: id}).populate(['address']).lean();
 
-                if (user.length <= 0){
+                if (user.length <= 0) {
                     response.json(getResponse(name, 404, 'User not found', null))
-                }else {
+                } else {
                     let res_body = {user: user[0]}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 }
@@ -586,29 +598,29 @@ app.post('/init-user', async function (request, response) {
         let address = request.body.address;
         if (checkData(userName) &&
             checkData(password)) {
-                try {
-                    //luu data vao cac bang phu
-                    let newUser = new User({
-                        userName: userName,
-                        password: password,
-                        phoneNumber: '',
-                        address: {
-                            provinceCity: '',
-                            districtsTowns: '',
-                            communeWardTown: '',
-                            detailAddress: '',
-                            location: {
-                                latitude: '',
-                                longitude: ''
-                            }
+            try {
+                //luu data vao cac bang phu
+                let newUser = new User({
+                    userName: userName,
+                    password: password,
+                    phoneNumber: '',
+                    address: {
+                        provinceCity: '',
+                        districtsTowns: '',
+                        communeWardTown: '',
+                        detailAddress: '',
+                        location: {
+                            latitude: '',
+                            longitude: ''
                         }
-                    });
-                    let user = await newUser.save();
-                    response.json(getResponse(name, 200, sttOK, null))
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
-                    response.json(getResponse(name, 200, 'Fail', null))
-                }
+                    }
+                });
+                let user = await newUser.save();
+                response.json(getResponse(name, 200, sttOK, null))
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 200, 'Fail', null))
+            }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
         }
@@ -636,9 +648,9 @@ app.post('/find-product', async function (request, response) {
                         }
                     })
                     .lean();
-                if (prd.length <= 0){
+                if (prd.length <= 0) {
                     response.json(getResponse(name, 404, 'Product not found', null))
-                }else {
+                } else {
                     let res_body = {user: prd[0]}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 }
@@ -687,11 +699,13 @@ app.post('/init-product', async function (request, response) {
                         communeWardTown: mAddress.communeWardTown,
                         detailAddress: mAddress.detailAddress,
                         location: {
-                            latitude: mAddress.longitude,
-                            longitude: mAddress.latitude
+                            latitude: mAddress.location.latitude,
+                            longitude: mAddress.location.longitude
                         }
                     });
+
                     let product = await newInforProduct.save();
+                    console.log('product: ', product._id)
                     let address = await newProductAddress.save();
                     // luu data vao bang chinh
                     let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
@@ -762,8 +776,8 @@ app.post('/update-product', async function (request, response) {
                             communeWardTown: mAddress.communeWardTown,
                             detailAddress: mAddress.detailAddress,
                             location: {
-                                latitude: mAddress.longitude,
-                                longitude: mAddress.latitude
+                                latitude: mAddress.location.latitude,
+                                longitude: mAddress.location.longitude
                             }
                         });
                         // update data vao bang chinh
