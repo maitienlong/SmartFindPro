@@ -1,7 +1,7 @@
 package com.poly.smartfindpro.ui.searchProduct.model;
 
 public class ItemMarker {
-    package com.poly.smartfindpro.ui.searchProduct.model;
+
 
     class ItemMarker {
         Double lat;
