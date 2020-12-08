@@ -4,6 +4,8 @@ import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
+import com.poly.smartfindpro.data.model.login.req.LoginRequest;
+import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.post.res.ResImagePost;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
@@ -45,4 +47,7 @@ public interface ListServices {
 
     @POST("/list-product")
     Call<HomeResponse> getProduct(@Body HomeRequest request);
+
+    @POST("/login")
+    Call<LoginResponse> getLogin(@Body LoginRequest request);
 }
