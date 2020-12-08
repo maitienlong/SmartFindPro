@@ -3,9 +3,6 @@ package com.poly.smartfindpro.ui.post.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 //import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
@@ -26,9 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAdapter.ViewHolder> {
@@ -50,12 +42,8 @@ public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        holder.tvTitle.setText(mList.get(position).getmName());
-
-        holder.img_infor_post.setImageBitmap(mList.get(position).getBitmap());
-
-
+        ImageInforPost  item = mList.get(position);
+        holder.img_infor_post.setImageBitmap(item.getBitmap());
     }
 
     @Override
@@ -77,43 +65,30 @@ public class ImageInforPostAdapter extends RecyclerView.Adapter<ImageInforPostAd
     }
 
 
-    public Bitmap loadBitmap(String url)
-    {
+    public Bitmap loadBitmap(String url) {
         Bitmap bm = null;
         InputStream is = null;
         BufferedInputStream bis = null;
-        try
-        {
+        try {
             URLConnection conn = new URL(url).openConnection();
             conn.connect();
             is = conn.getInputStream();
             bis = new BufferedInputStream(is, 1080);
             bm = BitmapFactory.decodeStream(bis);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if (bis != null)
-            {
-                try
-                {
+        } finally {
+            if (bis != null) {
+                try {
                     bis.close();
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (is != null)
-            {
-                try
-                {
+            if (is != null) {
+                try {
                     is.close();
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

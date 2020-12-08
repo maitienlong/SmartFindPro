@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.callback.OnFragmentCloseCallback;
+import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.constants.Constants;
 import com.poly.smartfindpro.dialog.AlertFragment;
 import com.poly.smartfindpro.dialog.LoadingDialog;
@@ -191,9 +193,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
 
         if (mFragStack != null)
             mFragStack.push(mBaseFragment);
-
+        trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         trans.add(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
+
         mFrgManager.executePendingTransactions();
     }
 
@@ -213,6 +216,51 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
         if (mFragStack != null)
             mFragStack.push(mBaseFragment);
 
+       trans.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
+        trans.commitAllowingStateLoss();
+        mFrgManager.executePendingTransactions();
+    }
+
+    public void goToFragmentReplaceLeft(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
+        if (mFragStack == null && mFrgManager == null) {
+            mFragStack = new ArrayDeque<>();
+            mFrgManager = getSupportFragmentManager();
+        }
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mBundle != null) {
+            mBaseFragment.setArguments(mBundle);
+        }
+        if (mFragStack != null && mFragStack.size() >= 1) {
+            trans.hide(mFragStack.getLast());
+        }
+
+        if (mFragStack != null)
+            mFragStack.push(mBaseFragment);
+
+        trans.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
+        trans.commitAllowingStateLoss();
+        mFrgManager.executePendingTransactions();
+    }
+
+    public void goToFragmentReplaceRight(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
+        if (mFragStack == null && mFrgManager == null) {
+            mFragStack = new ArrayDeque<>();
+            mFrgManager = getSupportFragmentManager();
+        }
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mBundle != null) {
+            mBaseFragment.setArguments(mBundle);
+        }
+        if (mFragStack != null && mFragStack.size() >= 1) {
+            trans.hide(mFragStack.getLast());
+        }
+
+        if (mFragStack != null)
+            mFragStack.push(mBaseFragment);
+
+        trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
         mFrgManager.executePendingTransactions();
@@ -221,6 +269,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
     public void goToFragment(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle,
                              OnFragmentCloseCallback callback) {
         mBaseFragment.setOnFragmentCloseCallback(callback);
+        goToFragment(fragmentContainerId, mBaseFragment, mBundle);
+    }
+
+    public void goToFragmentCallBackData(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle,
+                                         OnFragmentDataCallBack callback) {
+        mBaseFragment.setOnFragmentDataCallback(callback);
         goToFragment(fragmentContainerId, mBaseFragment, mBundle);
     }
 

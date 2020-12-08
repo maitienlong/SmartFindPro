@@ -5,10 +5,90 @@
 
     <data>
 
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.MainPresenter" />
+
+        <import type="android.view.View" />
     </data>
 
-    <FrameLayout
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:id="@+id/fl_native"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_40sdp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctr_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_65sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/ln_bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/background"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_post"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/btn_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()-> presenter.onSelectHome()}"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_outline_home" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/btn_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()-> presenter.onSelectMessager()}"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_outline_message"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/btn_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()-> presenter.onSelectUser()}"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_person_outline"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+            <ImageView
+                android:onClick="@{()-> presenter.onSelecFind()}"
+                android:id="@+id/btn_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.35"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:maxImageSize="@dimen/_40sdp"
+                app:srcCompat="@mipmap/search_real" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+
 </layout>

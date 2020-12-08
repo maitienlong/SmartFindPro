@@ -4,13 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.user.setting.permission.PermissionPresenter" />
 
     </data>
+    <RelativeLayout
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-
+        <com.poly.smartfindpro.widget.CommonToolbar
+            onBackClick="@{()->presenter.onBackClick()}"
+            android:id="@+id/cmtb"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
         <RelativeLayout
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/_20sdp"
@@ -106,5 +122,5 @@
 
 
     </LinearLayout>
-
+    </RelativeLayout>
 </layout>

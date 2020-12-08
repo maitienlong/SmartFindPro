@@ -1,12 +1,13 @@
 package com.poly.smartfindpro.ui.post.inforPost;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.ui.post.model.Information;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
+import com.poly.smartfindpro.data.model.post.req.Information;
 
-public class InforPostPresenter {
+import java.io.File;
+
+public class InforPostPresenter implements InforPostContract.Presenter {
 
     private Context context;
 
@@ -29,10 +30,37 @@ public class InforPostPresenter {
                 mWaterBill.isEmpty()) {
             mViewModel.onErrorInfor();
         } else {
-         Information information = new Information();
+            Information information = new Information();
             mViewModel.onNextFragment();
         }
     }
 
 
+    @Override
+    public void onDemoUri(String uri) {
+
+        File file = new File(uri);
+        String fileThat = file.getAbsolutePath();
+        if (fileThat != null) {
+            Log.d("DuMaNoa", fileThat);
+        } else {
+            Log.d("DuMaNob", "NONO");
+        }
+
+    }
+
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unSubscribe() {
+
+    }
+
+
+    public void openChoosePhoto(){
+        mViewModel.onShowPhoto();
+    }
 }

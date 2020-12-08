@@ -45,6 +45,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.2'
+    implementation 'com.google.android.material:material:1.3.0-alpha01'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:4.4.1'
@@ -69,5 +72,13 @@ dependencies {
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    //slider
+    compile 'com.ss.bannerslider:bannerslider:2.0.0'
+
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+
+    //border image
+    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
 }

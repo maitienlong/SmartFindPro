@@ -1,9 +1,6 @@
 package com.poly.smartfindpro.ui.post.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.ui.post.model.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 //import com.squareup.picasso.Picasso;
@@ -28,14 +20,14 @@ import java.util.List;
 public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdapter.ViewHolder> {
 
     private Context context;
-    private List<Bitmap> mList;
+    private List<ImageInforPost> mList;
 
     public ShowImagePostAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setItemView(List<Bitmap> mList) {
+    public void setItemView(List<ImageInforPost> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
@@ -50,9 +42,9 @@ public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Bitmap item = mList.get(position);
+        ImageInforPost item = mList.get(position);
 
-        holder.img_infor_post.setImageBitmap(item);
+        holder.img_infor_post.setImageBitmap(item.getBitmap());
 
 
     }

@@ -1,12 +1,6 @@
 package com.poly.smartfindpro.ui.post.confirmPost;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
+import android.content.Intent;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -16,21 +10,23 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentConfirmPostBinding;
-import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.ShowImagePostAdapter;
-import com.poly.smartfindpro.ui.post.model.InforModel;
-import com.poly.smartfindpro.ui.post.model.PostRequest;
-import com.poly.smartfindpro.ui.post.utilitiesPost.model.UtilitiesModel;
-//import com.poly.smartfindpro.ui.post.model.Address;
+import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.ui.post.postsuccess.SuccessPostFragment;
+//import com.poly.smartfindpro.data.model.post.req.Address;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPostBinding, ConfirmPostPresenter> implements ConfirmPostContract.ViewModel {
     private PostRequest postRequest;
 
     private ShowImagePostAdapter showImagePostAdapter;
+
+    private List<ImageInforPost> imageList;
 
     @Override
     protected int getLayoutId() {
@@ -41,38 +37,47 @@ public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPos
         Type type = new TypeToken<PostRequest>() {
         }.getType();
 
+        Type typeImage = new TypeToken<List<ImageInforPost>>() {
+        }.getType();
+
         postRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
 
+        imageList = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES_PHOTO), typeImage);
     }
 
     @Override
     protected void initData() {
-        mPresenter = new ConfirmPostPresenter(mActivity, this);
+        mPresenter = new ConfirmPostPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
-        showImagePostAdapter = new ShowImagePostAdapter(mActivity);
+        if (postRequest != null) {
 
-        onShowImage();
+            showImagePostAdapter = new ShowImagePostAdapter(mActivity);
 
-        mPresenter.setTheLoai(postRequest.getCategory());
+            onShowImage();
 
-        mPresenter.setSoLuong(postRequest.getInformation().getAmountPeople());
+            mPresenter.setPostRequest(postRequest, imageList);
 
-        mPresenter.setGia(postRequest.getInformation().getPrice());
+            mPresenter.setTheLoai(postRequest.getCategory());
 
-        mPresenter.setDatCoc(postRequest.getInformation().getDeposit());
+            mPresenter.setSoLuong(postRequest.getInformation().getAmountPeople());
 
-        mPresenter.setGioiTinh(postRequest.getInformation().getGender());
+            mPresenter.setGia(postRequest.getInformation().getPrice());
 
-        mPresenter.setDiaChi(postRequest.getAddress().getDetailAddress() + ", " + postRequest.getAddress().getCommuneWardTown() + ", " + postRequest.getAddress().getDistrictsTowns() + ", " + postRequest.getAddress().getProvinceCity());
+            mPresenter.setDatCoc(postRequest.getInformation().getDeposit());
 
-        mPresenter.setTienDien(postRequest.getInformation().getElectricBill());
+            mPresenter.setGioiTinh(postRequest.getInformation().getGender());
 
-        mPresenter.setTienNuoc(postRequest.getInformation().getWaterBill());
+            mPresenter.setDiaChi(postRequest.getAddress().getDetailAddress() + ", " + postRequest.getAddress().getCommuneWardTown() + ", " + postRequest.getAddress().getDistrictsTowns() + ", " + postRequest.getAddress().getProvinceCity());
 
-        mPresenter.setTienIch(postRequest.getUtilities());
+            mPresenter.setTienDien(postRequest.getInformation().getElectricBill());
 
-        mPresenter.setMoTa(postRequest.getInformation().getDescribe());
+            mPresenter.setTienNuoc(postRequest.getInformation().getElectricBill());
+
+            mPresenter.setTienIch(postRequest.getUtilities());
+
+            mPresenter.setMoTa(postRequest.getInformation().getDescribe());
+        }
     }
 
     @Override
@@ -81,13 +86,29 @@ public class ConfirmPostFragment extends BaseDataBindFragment<FragmentConfirmPos
     }
 
     public void onShowImage() {
-        showImagePostAdapter.setItemView(postRequest.getInformation().getImageShow());
+        showImagePostAdapter.setItemView(imageList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false);
         mBinding.rcPhoto.setLayoutManager(linearLayoutManager);
         mBinding.rcPhoto.setAdapter(showImagePostAdapter);
 
     }
 
+    @Override
+    public void showLoadingDialog() {
+        super.showLoadingDialog();
+    }
 
+    @Override
+    public void onConfirm() {
+        Intent intent = new Intent();
+
+        intent.putExtra(Config.DATA_CALL_BACK, "5");
+
+        setResult(RESULT_OK, intent);
+
+        onBackData();
+
+        getBaseActivity().goToFragment(R.id.fl_post, new SuccessPostFragment(), null);
+    }
 }
 

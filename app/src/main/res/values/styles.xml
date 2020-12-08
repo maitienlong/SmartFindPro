@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -22,7 +22,11 @@
     </style>
 
     <style name="CustomProgress">
-        <item name="colorAccent">@color/orange_three</item>
+        <item name="colorAccent">@color/background_login</item>
+    </style>
+
+    <style name="CustomProgressIntro">
+        <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="RoundMenuItem">

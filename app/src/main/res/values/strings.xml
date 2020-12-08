@@ -51,7 +51,7 @@
     <string name="text_infor_name">Nguyễn Văn Quân</string>
     <string name="text_infor_time">1 Giờ</string>
     <string name="text_infor_title">Nhà trọ mới xây ngày hôm qua đây các bạn ạ. Ai thuê thì alo cho Mình nha.</string>
-    <string name="text_infor_price">Mức giá:</string>
+    <string name="text_infor_price">GIÁ PHÒNG:</string>
     <string name="text_infor_location">Vị trí:</string>
     <string name="text_infor_gender">Giới tính:</string>
     <string name="text_infor_quantity">Số lượng:</string>
@@ -70,6 +70,7 @@
     <string name="user_permission_camera">Máy ảnh</string>
     <string name="user_permission_mic">Mic</string>
     <string name="user_permission_internet">Mạng cục bộ</string>
+    <string name="setting_confirm_account">Xác thực tài khoản</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -86,7 +87,7 @@
     <string name="email">Thư điện thử</string>
     <string name="avatar">Ảnh đại diện</string>
     <string name="change_">Thay đổi</string>
-    <string name="name_uesr">Phạm Hồng Thái</string>
+    <string name="name_uesr">Nguyễn Minh Hiếu</string>
     <string name="title_layout">Trang cá nhân</string>
     <string name="user_image">User image</string>
     <string name="content_layout">Quản lí hồ sơ cá nhân, bảo mật</string>
@@ -109,7 +110,23 @@
     <string name="str_price_to_rent">50.000.000</string>
     <string name="cancel2">Hủy</string>
     <string name="edit2">Sửa</string>
+<!--User-->
+    <string name="tv_username">Họ và tên</string>
+    <string name="tv_telephone_number">Số điện thoại</string>
+    <string name="tv_id_card">Số CMND</string>
+    <string name="btn_change">Thay đổi</string>
+    <string name="btn_not_hire">Chưa thuê</string>
+    <string name="btn_pending">Chờ duyệt</string>
+    <string name="btn_approved">Đã duyệt</string>
+    <string name="btn_delete">Xóa</string>
+    <string name="btn_edit">Sửa</string>
+    <string name="tv_type">Loại</string>
+    <string name="tv_date">Ngày sinh</string>
+    <string name="tv_home_town">Nguyên Quán</string>\
+    <string name="tv_address_now">Địa chỉ thường trú</string>
+    <string name="btn_confirm">Xác thực</string>
 
+    <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
     <string name="home_highlightTv">Nổi bật</string>
@@ -127,20 +144,14 @@
     <string name="text_gender_empty">Bạn phải chọn giới tính</string>
     <string name="text_infor_error_empty">Bạn hãy điền đầy đủ thông tin số người, giá tiền, tiền cọc, tiền điện, tiền nước</string>
 
+    <string name="services_not_avail">Dịch vụ không sẵn sàng, vui lòng thử lại sau</string>
+
     <string name="error_edt_dont_match">Không khớp</string>
     <string name="add_images">Thêm ảnh</string>
-    <string-array name="province_array">
-        <item>Hà Nội</item>
-        <item>Hải Dương</item>
-        <item>Nghệ An</item>
-        <item>Ninh Bình</item>
-
-    </string-array>
-    <string-array name="district_array">
-        <item>Ba Đình</item>
-        <item>Bắc Từ Liêm</item>
-        <item>Cầu Giấy</item>
-        <item>Đống Đa</item>
+    <string-array name="type_id_card_array">
+        <item>Căn cước công dân</item>
+        <item>Chứng minh nhân dân 9 số</item>
+        <item>Chứng minh nhân dân 12 số</item>
 
     </string-array>
     <string name="title_activity_maps">Map</string>

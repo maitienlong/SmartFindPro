@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.user.help.HelpPresenter" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:id="@+id/cmtb"
+            onBackClick="@{()->presenter.onBackClick()}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
