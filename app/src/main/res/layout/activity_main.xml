@@ -76,6 +76,7 @@
             </LinearLayout>
 
             <ImageView
+                android:onClick="@{()-> presenter.onSelecFind()}"
                 android:id="@+id/btn_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

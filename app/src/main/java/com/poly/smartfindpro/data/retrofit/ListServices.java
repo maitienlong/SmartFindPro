@@ -39,6 +39,10 @@ public interface ListServices {
 
     @POST("/user-product")
     Call<ProductResponse> getProduct(@Body ProductRequest request);
+
+    @POST("/list-product")
+    Call<ProductResponse> getAllProduct(@Body ProductRequest request);
+
     @POST("/list-product")
     Call<HomeResponse> getProduct(@Body HomeRequest request);
 }

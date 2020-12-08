@@ -20,7 +20,7 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     }
 
     private void initData() {
-      //  title = new ObservableField<>(mContext.getString(R.string.home_title_sell));
+        //  title = new ObservableField<>(mContext.getString(R.string.home_title_sell));
         mViewModel.openFragment();
     }
 
@@ -33,4 +33,10 @@ public class ListProductPresenter implements ListProductContract.Presenter {
     public void unSubscribe() {
 
     }
+
+
+//
+//    private void showData(Product mProduct){
+//
+//    }
 }
