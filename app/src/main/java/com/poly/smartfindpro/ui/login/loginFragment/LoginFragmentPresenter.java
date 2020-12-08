@@ -36,9 +36,10 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
 
     public void sendRequestUser() {
         // ok
-//        mViewmodel.saveLogin(username, password, token);
-//        String token = "5fb2073ff69b03b8f8875059";
-//        Config.TOKEN_USER = token;
+
+        String token = "5fb2073ff69b03b8f8875059";
+        Config.TOKEN_USER = token;
+        mViewmodel.saveLogin(username, password, token);
     }
     private void getLogin() {
         LoginRequest request = new LoginRequest();

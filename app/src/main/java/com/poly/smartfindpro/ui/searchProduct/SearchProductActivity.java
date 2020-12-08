@@ -1,23 +1,31 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
 import com.poly.smartfindpro.ui.searchProduct.map.MapsFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
+import com.poly.smartfindpro.ui.searchProduct.adapter.ProductBottomAdapter;
 
 import java.util.List;
 
 public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchProductBinding,
-        SearchProductPresenter> implements SearchProductContract.ViewModel {
+        SearchProductPresenter> implements SearchProductContract.ViewModel, OnFragmentDataCallBack {
 
     private static final String TAG = "MyTag";
 
@@ -43,7 +51,7 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
         bottomSheet = findViewById(R.id.bottomSheet);
         rvProduct = findViewById(R.id.rvProduct);
 
-        goToFragment(R.id.fl_search, new MapsFragment(), null);
+        goToFragmentMapsCallBackData(R.id.fl_search, new MapsFragment(), null, this::onResult);
 
         // bottom sheet
         bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
@@ -74,11 +82,32 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     @Override
     public void onShow(List<Products> products) {
-        Log.d("checkList", products.size() + "");
+
+        // send to map activity
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString(Config.POST_BUNDEL_RES, new Gson().toJson(products));
+
+        goToFragmentMapsCallBackData(R.id.fl_search, new MapsFragment(), bundle, this::onResult);
+
+        // show bottom sheet
         adapter.setItemList(products);
+
         BindingUtils.setAdapter(rvProduct, adapter, true);
     }
 
+    @Override
+    public void onSearch() {
+
+    }
 
 
+    @Override
+    public void onResult(int resultCode, Intent intent) {
+        Log.d("CheckCallback", resultCode+"");
+        if(resultCode == Activity.RESULT_OK && intent.hasExtra("data")){
+
+        }
+    }
 }

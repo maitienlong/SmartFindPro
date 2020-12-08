@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
@@ -71,24 +72,28 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     }
 
     public void getProduct() {
+        mViewModel.showLoading();
+
         ProductRequest request = new ProductRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getAllProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
+                    mViewModel.hideLoading();
                     mViewModel.onShow(response.body().getResponseBody().getProducts());
                     mListProduct = new ArrayList<>();
                     mListProduct.addAll(response.body().getResponseBody().getProducts());
                 } else {
-                    Log.d("Hihi", response.code() + "");
+                    mViewModel.hideLoading();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-
+                mViewModel.hideLoading();
             }
         });
     }
@@ -101,17 +106,15 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
                 mListAddress.add(item);
             }
         }
-        Log.d("getLow", new Gson().toJson(mListAddress));
 
-        mViewModel.onShow(mListAddress);
+        if (mListProduct != null && !mListProduct.isEmpty()) {
+            mViewModel.onShow(mListAddress);
+        }
+
     }
 
     @Override
     public void onSearch() {
-//        onSearchProduct(mBinding.edtSearch.getText().toString());
-//        Log.d("getLow", mBinding.edtSearch.getText().toString());
-//        Intent intent =new Intent( mContext, FilterProductActivity.class);
-//        mContext.startActivity(intent);
-        mViewModel.onSearch();
+        onSearchProduct(mBinding.edtSearch.getText().toString());
     }
 }
