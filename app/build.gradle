@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -80,5 +81,8 @@ dependencies {
 
     //border image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-bom:26.1.1'
 
 }

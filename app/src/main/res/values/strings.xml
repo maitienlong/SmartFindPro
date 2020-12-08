@@ -110,7 +110,7 @@
     <string name="str_price_to_rent">50.000.000</string>
     <string name="cancel2">Hủy</string>
     <string name="edit2">Sửa</string>
-<!--User-->
+    <!--User-->
     <string name="tv_username">Họ và tên</string>
     <string name="tv_telephone_number">Số điện thoại</string>
     <string name="tv_id_card">Số CMND</string>
@@ -155,4 +155,5 @@
 
     </string-array>
     <string name="title_activity_maps">Map</string>
+    <string name="send_verify_token">Xác nhận mã OTP</string>
 </resources>
