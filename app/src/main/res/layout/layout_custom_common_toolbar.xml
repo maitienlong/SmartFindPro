@@ -9,7 +9,6 @@
     android:paddingBottom="@dimen/_5sdp">
 
     <FrameLayout
-
         android:id="@+id/fl_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -22,8 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_address"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="bold">
+            style="@style/textStyleBoldBlack_20dp">
 
         </TextView>
 
@@ -32,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            style="@style/textStyleNormal_15dp"
             android:text="@string/tv_province">
 
         </TextView>
@@ -46,6 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/textStyleNormal_15dp"
             android:layout_marginTop="20dp"
             android:text="@string/tv_district">
 
@@ -61,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            style="@style/textStyleNormal_15dp"
             android:text="@string/tv_commune">
 
         </TextView>
@@ -72,6 +74,7 @@
             android:prompt="@string/app_name" />
 
         <TextView
+            style="@style/textStyleNormal_15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -95,6 +98,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:layout_marginVertical="@dimen/_10sdp"
             android:onClick="@{()->presenter.onNext()}"
             android:id="@+id/btnContinue"
             android:layout_width="wrap_content"

@@ -28,6 +28,7 @@
 
                 <TextView
                     android:id="@+id/tvHighlight"
+                    style="@style/textStyleHomePost_12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -82,6 +83,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
+                            style="@style/textStyleHomePost_11dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_40sdp"
                             android:text="@string/home_postBtn" />
@@ -99,12 +101,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvHighlight">
 
                     <TextView
+                        android:id="@+id/tv_rentalRoom"
+                        android:onClick="@{()->presenter.onClickRentalRoom()}"
+                        style="@style/textStyleWhite_10dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_2sdp"
                         android:gravity="center"
-                        android:text="@string/home_rentalRoomBtn"
-                        android:textColor="@color/white" />
+                        android:text="@string/home_rentalRoomBtn" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -120,12 +124,14 @@
                     app:layout_constraintTop_toTopOf="@+id/btnRentalRoom">
 
                     <TextView
+                        android:id="@+id/tv_shareRoom"
+                        android:onClick="@{()->presenter.onClickShareRoom()}"
+                        style="@style/textStyleBlue_10dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_2sdp"
                         android:gravity="center"
-                        android:text="@string/home_shareRoomBtn"
-                        android:textColor="@color/blue" />
+                        android:text="@string/home_shareRoomBtn" />
 
                 </androidx.cardview.widget.CardView>
 

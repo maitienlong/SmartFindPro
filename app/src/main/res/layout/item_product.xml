@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -22,13 +23,13 @@
 
             <TextView
                 android:id="@+id/textView2"
+                style="@style/textStyleWhite_11dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Thuê phòng"
-                android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/textView7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Giá: 1 500 000"
-                android:textColor="@color/white"
+                style="@style/textStyleWhite_11dp"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -51,19 +52,19 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Địa điểm: Số 22, ngõ 210, đội cấn, ba đình, hà nội"
-                android:textColor="@color/white"
+                style="@style/textStyleWhite_11dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView3"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <TextView
                 android:id="@+id/textView7"
+                style="@style/textStyleWhite_11dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Số lượng: 01"
-                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintEnd_toStartOf="@+id/textView8"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -71,12 +72,12 @@
 
             <TextView
                 android:id="@+id/textView8"
+                style="@style/textStyleWhite_11dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="Giới tính: tất cả"
-                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView7"

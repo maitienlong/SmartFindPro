@@ -29,14 +29,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/textStyleBoldBlack_20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="@string/tv_category"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_20sdp"
-                    android:textStyle="bold">
+                    android:text="@string/tv_category">
 
                 </TextView>
 
@@ -101,12 +99,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/textStyleBlackEffec_15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/_10sdp"
-                    android:text="@string/tv_infor"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp">
+                    android:text="@string/tv_infor">
 
                 </TextView>
 
@@ -122,6 +119,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/textStyleAlert_12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -132,12 +130,12 @@
                             android:layout_height="wrap_content">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:text="1"
                                 android:id="@+id/edt_amount_person"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/custom_edt_change_pass"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="1" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -151,6 +149,8 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/textStyleAlert_12dp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -164,11 +164,11 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_price"
-                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/custom_edt_change_pass"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="1" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -187,6 +187,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/textStyleAlert_12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -200,11 +201,11 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_deposit"
-                                android:text="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/custom_edt_change_pass"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="1" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -218,6 +219,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/textStyleAlert_12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -271,6 +273,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/textStyleAlert_12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -293,9 +296,9 @@
                                     android:id="@+id/edt_electricity_bill"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="1"
                                     android:background="@drawable/custom_edt_change_pass"
-                                    android:inputType="number" />
+                                    android:inputType="number"
+                                    android:text="1" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <TextView
@@ -321,6 +324,7 @@
                         android:weightSum="5">
 
                         <TextView
+                            style="@style/textStyleAlert_12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -342,8 +346,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/custom_edt_change_pass"
-                                    android:text="1"
-                                    android:inputType="number" />
+                                    android:inputType="number"
+                                    android:text="1" />
 
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -374,6 +378,7 @@
                 </LinearLayout>
 
                 <TextView
+                    style="@style/textStyleAlert_12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_images" />

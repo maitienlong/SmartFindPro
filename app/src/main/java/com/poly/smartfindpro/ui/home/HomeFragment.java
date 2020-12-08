@@ -1,8 +1,11 @@
 package com.poly.smartfindpro.ui.home;
 
+import android.annotation.SuppressLint;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.model.home.res.Product;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentHomeBinding;
 import com.poly.smartfindpro.ui.home.adapter.HomeAdapter;
 import com.poly.smartfindpro.ui.post.PostActivity;
@@ -17,7 +20,7 @@ import ss.com.bannerslider.Slider;
 
 public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, HomePresenter> implements HomeContract.ViewModel {
     private HomeAdapter homeAdapter;
-    private ArrayList<Product> product = new ArrayList<>();
+//    private ArrayList<Product> product = new ArrayList<>();
 
     private List<String> mListImage;
 
@@ -56,14 +59,32 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
 
     }
 
+    @Override
     public void onShow(List<Product> productList) {
         homeAdapter.setListItem(productList);
         BindingUtils.setAdapter(mBinding.rvList, homeAdapter, true);
     }
 
+
     @Override
     public void openPost() {
         getBaseActivity().openActivity(PostActivity.class);
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void onClickRentalRoom() {
+//        mBinding.btnRentalRoom.setBackgroundColor(R.color.blue);
+//        mBinding.btnRentalRoom.setCardBackgroundColor(R.color.blue);
+//        mBinding.btnRentalRoom.setRadius(R.color.blue);
+////        mBinding.tvRentalRoom.
+//        mBinding.btnShareRoom.setBackgroundColor(R.color.white);
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void onClickShareRoom() {
+//
     }
 
 }

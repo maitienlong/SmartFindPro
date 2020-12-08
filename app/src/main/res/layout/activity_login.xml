@@ -82,23 +82,21 @@
 
                         <TextView
                             android:id="@+id/btn_Change_Login"
+                            style="@style/textStyleSemiBold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/tv_login"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
+                            android:text="@string/tv_login"/>
 
                         <TextView
                             android:id="@+id/btn_Change_Resign"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            style="@style/textStyleSemiBold"
                             android:gravity="center"
-                            android:text="@string/tv_registrer"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
+                            android:text="@string/tv_registrer"/>
 
                     </LinearLayout>
 
@@ -135,11 +133,11 @@
         <TextView
             android:id="@+id/btn_forgot_password"
             android:layout_marginTop="@dimen/_16sdp"
+            style="@style/textStyleForgotPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Quên mật khẩu ?"
-            android:textColor="@color/background_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
