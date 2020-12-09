@@ -1,12 +1,12 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
@@ -83,7 +83,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
@@ -167,7 +167,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     private void getProduct() {
         ProductRequest request = new ProductRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
@@ -188,19 +188,19 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+        nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
 
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgAvatarProfile);
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getCoverImage())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgCoverImage);
 
     }

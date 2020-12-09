@@ -6,9 +6,14 @@ import com.poly.smartfindpro.basedatabind.BaseView;
 public interface CreatePasswordContract {
     interface ViewModel extends BaseView {
         void OnBackClick();
+
+//        void onClickRegister();
+
     }
 
     interface Presenter extends BasePresenter {
-
+        void onClickRegister();
     }
+
+
 }

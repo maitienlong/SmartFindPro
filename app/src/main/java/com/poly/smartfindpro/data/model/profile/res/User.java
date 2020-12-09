@@ -1,7 +1,6 @@
 
 package com.poly.smartfindpro.data.model.profile.res;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,21 +9,12 @@ public class User {
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("userName")
-    @Expose
-    private String userName;
     @SerializedName("password")
     @Expose
     private String password;
     @SerializedName("address")
     @Expose
     private Address address;
-    @SerializedName("phoneNumber")
-    @Expose
-    private String phoneNumber;
-    @SerializedName("age")
-    @Expose
-    private String age;
     @SerializedName("avatar")
     @Expose
     private String avatar;
@@ -34,9 +24,24 @@ public class User {
     @SerializedName("gender")
     @Expose
     private String gender;
-    @SerializedName("share")
+    @SerializedName("birth")
     @Expose
-    private List<Share> share = null;
+    private String birth;
+    @SerializedName("full_name")
+    @Expose
+    private String fullName;
+    @SerializedName("phone_number")
+    @Expose
+    private String phoneNumber;
+    @SerializedName("createAt")
+    @Expose
+    private String createAt;
+    @SerializedName("updateAt")
+    @Expose
+    private String updateAt;
+    @SerializedName("deleteAt")
+    @Expose
+    private String deleteAt;
 
     public String getId() {
         return id;
@@ -44,14 +49,6 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
@@ -68,22 +65,6 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
     }
 
     public String getAvatar() {
@@ -110,12 +91,52 @@ public class User {
         this.gender = gender;
     }
 
-    public List<Share> getShare() {
-        return share;
+    public String getBirth() {
+        return birth;
     }
 
-    public void setShare(List<Share> share) {
-        this.share = share;
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public String getDeleteAt() {
+        return deleteAt;
+    }
+
+    public void setDeleteAt(String deleteAt) {
+        this.deleteAt = deleteAt;
     }
 
 }

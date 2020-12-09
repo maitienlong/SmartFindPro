@@ -5,10 +5,10 @@ import com.poly.smartfindpro.basedatabind.BaseView;
 
 public interface ConfirmOTPContract {
     interface ViewModel extends BaseView {
-
+        void onClickConfirm();
     }
 
     interface Presenter extends BasePresenter {
-
+        void onClickConfirm();
     }
 }

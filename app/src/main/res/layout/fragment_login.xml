@@ -31,8 +31,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_Account_Number"
                 style="@style/EditText"
-                android:gravity="center"
-                android:inputType="number" />
+                android:gravity="center" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
