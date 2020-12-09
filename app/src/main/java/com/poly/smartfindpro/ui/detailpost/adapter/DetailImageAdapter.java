@@ -47,7 +47,7 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + item)
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

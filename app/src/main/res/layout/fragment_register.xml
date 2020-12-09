@@ -32,7 +32,7 @@
                 app:counterMaxLength="10">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_Account_Number"
+                    android:id="@+id/edt_Account_Number_Register"
                     style="@style/EditText"
                     android:gravity="center"
                     android:inputType="number" />
@@ -42,6 +42,7 @@
         <Button
             android:id="@+id/btn_Action"
             android:layout_width="match_parent"
+            android:onClick="@{()->presenter.onClickRegister()}"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@color/background_login"

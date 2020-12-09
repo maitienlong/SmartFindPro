@@ -11,8 +11,12 @@ import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
-import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
+import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
+import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
+import com.poly.smartfindpro.data.model.register.res.CheckPhoneNumberResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -49,5 +53,11 @@ public interface ListServices {
     Call<HomeResponse> getProduct(@Body HomeRequest request);
 
     @POST("/login")
-    Call<LoginResponse> getLogin(@Body LoginRequest request);
+    Call<LoginResponse> getLogin(@Body LoginRequest request );
+
+    @POST("/check-phone-Number")
+    Call<CheckPhoneNumberResponse> getCheckNum(@Body CheckPhoneNumberRequest request );
+
+    @POST("/init-user")
+    Call<RegisterResponse> getRegister(@Body RegisterRequest request );
 }

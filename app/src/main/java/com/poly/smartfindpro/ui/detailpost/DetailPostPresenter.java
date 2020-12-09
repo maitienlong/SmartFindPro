@@ -95,7 +95,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + product.getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgAvatar);
 
         try {

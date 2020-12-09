@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.databinding.ObservableField;
 
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
@@ -45,7 +46,7 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
 
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {

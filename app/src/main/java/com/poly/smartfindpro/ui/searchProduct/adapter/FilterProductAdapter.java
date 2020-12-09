@@ -99,32 +99,32 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
                     with(mContext)
                     .load(image.get(0))
                     .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
+                    .error(R.mipmap.imgplaceholder)
                     .into(holder.img1);
             Glide.
                     with(mContext)
                     .load(image.get(1))
                     .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
+                    .error(R.mipmap.imgplaceholder)
                     .into(holder.img2);
             Glide.
                     with(mContext)
                     .load(image.get(2))
                     .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
+                    .error(R.mipmap.imgplaceholder)
                     .into(holder.img3);
         } else if (image.size() == 2) {
             Glide.
                     with(mContext)
                     .load(image.get(0))
                     .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
+                    .error(R.mipmap.imgplaceholder)
                     .into(holder.img1);
             Glide.
                     with(mContext)
                     .load(image.get(1))
                     .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
+                    .error(R.mipmap.imgplaceholder)
                     .into(holder.img2);
 
         } else {
@@ -132,14 +132,14 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
                     with(mContext)
                     .load(image.get(0))
                     .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
+                    .error(R.mipmap.imgplaceholder)
                     .into(holder.img1);
         }
         Glide.
                 with(mContext)
                 .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(holder.img_avatar);
         holder.btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
