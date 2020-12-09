@@ -179,7 +179,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.setData(category, soLuong, mPrice, mPriceElect, mPriceWatter, mGender);
+                showMessage("Phần mềm đang phát triển");
             }
         });
     }
