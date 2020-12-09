@@ -598,9 +598,9 @@ app.post('/check-phone-number', async function (request, response) {
                     let user = await User.find({phone_number: phoneNumber}).lean();
                     console.log(user)
                     if (user.length > 0) {
-                        response.json(getResponse(name, 200, sttOK, null))
-                    } else {
                         response.json(getResponse(name, 200, 'Fail', null))
+                    } else {
+                        response.json(getResponse(name, 200, sttOK, null))
                     }
                 } catch (e) {
                     console.log('loi ne: \n' + e)
