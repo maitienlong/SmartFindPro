@@ -10,7 +10,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/black_effective</item>
+        <item name="colorControlNormal">@color/white</item>
 
     </style>
 

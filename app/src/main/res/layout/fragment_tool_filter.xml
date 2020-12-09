@@ -91,13 +91,14 @@
                                     android:gravity="center">
 
                                     <Button
+
                                         android:id="@+id/btn_nha_tro"
                                         android:layout_width="@dimen/_100sdp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginRight="20dp"
                                         android:background="@drawable/btn_category_selector"
                                         android:text="@string/btn_rental_hous"
-                                        android:textColor="@drawable/btn_category_textcolor_selector">
+                                        android:textColor="@color/white">
 
                                     </Button>
 
@@ -153,73 +154,61 @@
 
                                 </TextView>
 
+
+                                <LinearLayout
+                                    android:layout_marginLeft="@dimen/_8sdp"
+                                    android:layout_marginRight="@dimen/_8sdp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textStyleAlert_12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:text="@string/tv_amount_person"/>
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/edt_amount_person"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/custom_edt_change_pass"
+                                            android:inputType="number"
+                                            android:text="1" />
+
+
+                                    </com.google.android.material.textfield.TextInputLayout>
+                                </LinearLayout>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:weightSum="4">
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:orientation="vertical">
 
-                                    <LinearLayout
-                                        android:layout_width="0dp"
+                                    <TextView
+                                        style="@style/textStyleAlert_12dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1.5"
-                                        android:orientation="vertical">
+                                        android:layout_marginTop="20dp"
+                                        android:text="Giá">
 
-                                        <TextView
-                                            style="@style/textStyleAlert_12dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="20dp"
-                                            android:text="@string/tv_amount_person"></TextView>
+                                    </TextView>
 
-                                        <com.google.android.material.textfield.TextInputLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
-
-                                            <com.google.android.material.textfield.TextInputEditText
-                                                android:id="@+id/edt_amount_person"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@drawable/custom_edt_change_pass"
-                                                android:inputType="number"
-                                                android:text="1" />
+                                   <SeekBar
+                                       android:layout_marginTop="@dimen/_8sdp"
+                                       android:id="@+id/snb_price"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="@dimen/_20sdp"/>
 
 
-                                        </com.google.android.material.textfield.TextInputLayout>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/_10sdp"
-                                        android:layout_weight="2.5"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            style="@style/textStyleAlert_12dp"
-
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="20dp"
-                                            android:text="Giá">
-
-                                        </TextView>
-
-                                        <com.google.android.material.textfield.TextInputLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
-
-                                            <com.google.android.material.textfield.TextInputEditText
-                                                android:id="@+id/edt_price"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@drawable/custom_edt_change_pass"
-                                                android:inputType="number"
-                                                android:text="1" />
-
-
-                                        </com.google.android.material.textfield.TextInputLayout>
-                                    </LinearLayout>
                                 </LinearLayout>
+
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -392,50 +381,6 @@
                         </LinearLayout>
 
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/_8sdp"
-                            android:background="@color/white"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/textStyleBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/tv_address">
-
-                            </TextView>
-
-                            <TextView
-                                style="@style/textStyleRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="@string/tv_detail_address">
-
-                            </TextView>
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_60sdp">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/edtDetialAdress"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/bg_circle_editext"
-                                    android:gravity="start"
-
-                                    android:padding="@dimen/_8sdp" />
-
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-
-                        </LinearLayout>
-
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rc_utilities"
                             android:layout_width="match_parent"
@@ -443,15 +388,16 @@
                             android:layout_margin="@dimen/_8sdp" />
 
                         <Button
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:layout_marginRight="@dimen/_8sdp"
-                            android:layout_marginLeft="@dimen/_8sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
+                            android:id="@+id/btn_filter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
 
                             android:background="@drawable/custom_button_infor"
-                            android:text="@string/btn_continue"
+                            android:text="Tìm kiếm"
                             android:textColor="@color/white">
 
                         </Button>
