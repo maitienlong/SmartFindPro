@@ -9,7 +9,6 @@ const moment = require('moment');
 const crypto = require('crypto');
 const request = require('request');
 const Handlebars = require('handlebars');
-const validatePhoneNumber = require('validate-phone-number-node-js');
 
 //anh xa model
 const postSchema = require('./model/PostSchema');
