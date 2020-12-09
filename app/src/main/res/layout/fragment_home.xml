@@ -125,12 +125,12 @@
 
                     <TextView
                         android:id="@+id/tv_shareRoom"
-                        android:onClick="@{()->presenter.onClickShareRoom()}"
                         style="@style/textStyleBlue_10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_2sdp"
                         android:gravity="center"
+                        android:onClick="@{()->presenter.onClickShareRoom()}"
                         android:text="@string/home_shareRoomBtn" />
 
                 </androidx.cardview.widget.CardView>

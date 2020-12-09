@@ -4,16 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="presenter"
             type="com.poly.smartfindpro.ui.listProduct.ListProductPresenter" />
     </data>
 
     <LinearLayout
-        android:background="@color/white"
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         app:behavior_hideable="true"
         app:behavior_peekHeight="@dimen/_60sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -43,18 +44,27 @@
                     app:layout_constraintVertical_bias="0.021" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/tv_title_bts"
+                    style="@style/textStyleBlackEffec_15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Tìm kiếm gần đây"
-                    style="@style/textStyleBlackEffec_15dp"/>
+                    android:layout_marginTop="8dp"
+                    android:text="Tìm kiếm gần đây" />
+
+                <TextView
+                    android:id="@+id/btn_fiter_nang_cao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Tìm kiếm nâng cao"
+                    android:textColor="@color/background" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp" />
+                    android:layout_marginTop="@dimen/_16sdp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

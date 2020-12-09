@@ -1,4 +1,4 @@
-package com.poly.smartfindpro.ui.searchProduct;
+package com.poly.smartfindpro.ui.searchProduct.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,19 +16,25 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
+import com.poly.smartfindpro.ui.searchProduct.SearchProductContract;
 
 import java.util.List;
 
 public class ProductBottomAdapter extends RecyclerView.Adapter<ProductBottomAdapter.ViewHolder> {
     private List<Products> mList;
+
     private Context mContext;
 
-    public ProductBottomAdapter(Context mContext) {
+    private SearchProductContract.ViewModel mViewModel;
+
+    public ProductBottomAdapter(Context mContext, SearchProductContract.ViewModel mViewModel) {
         this.mContext = mContext;
+        this.mViewModel = mViewModel;
     }
 
     public void setItemList(List<Products> mList) {
         this.mList = mList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -55,11 +61,11 @@ public class ProductBottomAdapter extends RecyclerView.Adapter<ProductBottomAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailPostActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(product));
-                mContext.startActivity(intent);
-
+//                Intent intent = new Intent(mContext, DetailPostActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(product));
+//                mContext.startActivity(intent);
+                mViewModel.onResultAdapter(product.getId());
             }
         });
 
