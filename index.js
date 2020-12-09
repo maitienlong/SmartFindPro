@@ -1042,6 +1042,44 @@ app.post('/list-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
+
+// Xóa ảnh của bài đăng
+app.post('/delete-image-product', async function (request, response) {
+    let name = 'DELETE-PRODUCT'
+    try {
+        let id = request.body.id;
+        let userId = request.body.userId;
+        if (checkData(id) && checkData(userId)) {
+            try {
+                let user = await User.find({_id: userId}).lean();
+                try {
+                    let product = await Product.find({_id: id}).lean();
+                    product = product[0];
+                    try {
+                        let deleteProduct = await Product.findByIdAndDelete(product._id);
+                        let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
+                        let deleteAddress = await Address.findByIdAndDelete(product.address._id);
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } catch (e) {
+                        console.log('loi ne: \n' + e)
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
 //import switch
 Handlebars.registerHelper('switch', function (value, options) {
     this.switch_value = value;
