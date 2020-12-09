@@ -19,11 +19,19 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentConfirmOtpBinding;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.login.createPassword.CreatePasswordFragment;
+import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
 
 import java.util.concurrent.TimeUnit;
 
 public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpBinding, ConfirmOTPPresenter> implements ConfirmOTPContract.ViewModel {
 
+    String verifyCode;
+    String phoneNumber;
+
+    public ConfirmOTPFragment(String verifyCode, String phoneNumber) {
+        this.verifyCode = verifyCode;
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -33,7 +41,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
     @Override
     protected void initView() {
 
-        mBinding.btnAction.setOnClickListener(new View.OnClickListener() {
+        mBinding.btnAction2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getBaseActivity().goToFragmentReplace(R.id.fl_Login, new CreatePasswordFragment(), null);
@@ -45,7 +53,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
 
     @Override
     protected void initData() {
-        mBinding.edtOtp.addTextChangedListener(new TextWatcher() {
+        mBinding.btnAction2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

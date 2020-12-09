@@ -34,7 +34,7 @@
 
 
         <Button
-            android:id="@+id/btn_Action"
+            android:id="@+id/btn_Action2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"

@@ -23,10 +23,11 @@ import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;
+import com.poly.smartfindpro.ui.login.otp.ConfirmOTPFragment;
 import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
 
 
-public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.ViewModel {
+public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, LoginPresenter> implements LoginContract.ViewModel, RegisterFragment.OnReceivedOTP {
 
     private boolean isLogin = true;
 
@@ -35,6 +36,7 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
     public ObservableField<Integer> currentHeight;
 
     public ObservableField<Integer> newHeight;
+    private RegisterFragment registerFragment = new RegisterFragment();
 
     @Override
     protected int getLayoutId() {
@@ -94,7 +96,10 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-            fragmentTransaction.replace(R.id.fl_Login, new RegisterFragment()).commit();
+//            fragmentTransaction.replace(R.id.fl_Login, new RegisterFragment()).commit();
+            fragmentTransaction.replace(R.id.fl_Login, registerFragment).commit();
+            registerFragment.setOnReceivedOTP(this);
+
 
             mBinding.btnChangeResign.setTextColor(getResources().getColor(R.color.background_login));
             mBinding.btnChangeLogin.setTextColor(getResources().getColor(R.color.black));
@@ -130,4 +135,13 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
     }
 
 
+    @Override
+    public void onReceivedOTP(String phoneNumber, String verificationId) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+//            fragmentTransaction.replace(R.id.fl_Login, new RegisterFragment()).commit();
+        fragmentTransaction.replace(R.id.fl_Login, new ConfirmOTPFragment(phoneNumber,verificationId)).commit();
+
+    }
 }
