@@ -1,16 +1,13 @@
 let mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
-    userName: {
-        type: String,
-        required: false
-    },
     password: {
         type: String,
         required: true
     },
-    phoneNumber: {
-        type: String,
-        required: true
+    address: {
+        type: mongoose.Types.ObjectId,
+        required: false,
+        ref: 'Address'
     },
     avatar: {
         type: String,
@@ -24,10 +21,32 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    address: {
-        type: Object,
-        required: false,
-        ref: 'Address',
+    birth: {
+        type: String,
+        required: false
+    },
+    full_name: {
+        type: String,
+        required: true
+    },
+    phone_number: {
+        type: String,
+        required: true
+    },
+    deleteAt: {
+        type: String,
+        default: Date,
+        required: false
+    },
+    updateAt: {
+        type: String,
+        default: Date,
+        required: false
+    },
+    createAt: {
+        type: String,
+        default: Date,
+        required: false
     }
 });
 module.exports = UserSchema;
