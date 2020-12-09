@@ -9,6 +9,7 @@ const moment = require('moment');
 const crypto = require('crypto');
 const request = require('request');
 const Handlebars = require('handlebars');
+const validatePhoneNumber = require('validate-phone-number-node-js');
 
 //anh xa model
 const postSchema = require('./model/PostSchema');
@@ -74,6 +75,16 @@ function getResponse(name, resCode, resMess, res) {
     }
     console.log('[' + name + '] \n' + 'res_code: ' + resCode + '\nres_mess: ' + resMess + '\n-------->')
     return resData
+}
+
+function phonenumber(inputtxt) {
+    var phoneno = /^\d{10}$/;
+    if (inputtxt.value.match(phoneno)) {
+        return true;
+    } else {
+        alert("message");
+        return false;
+    }
 }
 
 function checkData(data) {
@@ -529,24 +540,15 @@ app.post('/login', async function (request, response) {
             checkData(password)) {
             try {
                 let userByPhone = await User.find({
-                    phoneNumber: account,
+                    phone_number: account,
                     password: password
                 }).populate(['address']).lean();
-                let userByUserName = await User.find({
-                    userName: account,
-                    password: password
-                }).populate(['address']).lean();
-
-                if (userByUserName.length > 0) {
-                    let res_body = {type: 'USER_NAME', user: userByUserName[0]}
-                    response.json(getResponse(name, 200, sttOK, res_body))
-                } else if (userByPhone.length > 0) {
+                if (userByPhone.length > 0) {
                     let res_body = {type: 'PHONE_NUMBER', user: userByPhone[0]}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
                     response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
                 }
-
             } catch (e) {
                 console.log('loi ne: \n' + e)
                 response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
@@ -588,32 +590,69 @@ app.post('/find-user', async function (request, response) {
     }
 });
 // them bai nguoi dung
+app.post('/check-phone-number', async function (request, response) {
+    let name = 'CHECK-PHONE-NUMBER'
+    try {
+        let phoneNumber = request.body.phoneNumber;
+        if (checkData(phoneNumber)) {
+            if (phonenumber(phoneNumber) == true) {
+                try {
+                    let user = await User.find({phone_number: phoneNumber}).lean();
+                    if (user.length > 0) {
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    } else {
+                        response.json(getResponse(name, 200, sttOK, null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 200, 'Fail', null))
+                }
+            } else {
+                response.json(getResponse(name, 200, 'Fail', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// them bai nguoi dung
 app.post('/init-user', async function (request, response) {
     let name = 'INIT-USER'
     try {
-        let id = request.body.id;
-        let userName = request.body.userName;
+        let fullName = request.body.fullName;
         let password = request.body.password;
         let phoneNumber = request.body.phoneNumber;
-        let address = request.body.address;
-        if (checkData(userName) &&
-            checkData(password)) {
+        if (checkData(fullName) &&
+            checkData(password) &&
+            checkData(phoneNumber)) {
             try {
+                let newProductAddress = new Address({
+                    provinceCity: '',
+                    districtsTowns: '',
+                    communeWardTown: '',
+                    detailAddress: '',
+                    location: {
+                        latitude: '',
+                        longitude: ''
+                    }
+                });
+                let address = await newProductAddress.save();
                 //luu data vao cac bang phu
                 let newUser = new User({
-                    userName: userName,
                     password: password,
-                    phoneNumber: '',
-                    address: {
-                        provinceCity: '',
-                        districtsTowns: '',
-                        communeWardTown: '',
-                        detailAddress: '',
-                        location: {
-                            latitude: '',
-                            longitude: ''
-                        }
-                    }
+                    address: address._id,
+                    avatar: '',
+                    coverImage: '',
+                    gender: '',
+                    birth: '',
+                    full_name: fullName,
+                    phone_number: phoneNumber,
+                    deleteAt: '',
+                    updateAt: '',
+                    createAt: ''
                 });
                 let user = await newUser.save();
                 response.json(getResponse(name, 200, sttOK, null))
