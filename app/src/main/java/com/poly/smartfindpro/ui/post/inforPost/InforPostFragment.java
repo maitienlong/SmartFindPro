@@ -199,10 +199,10 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
         postRequest.setCategory(category);
         postRequest.setInformation(information);
-       if(imageListPath != null || imageListPath.size() != 0){
+       if(imageListPath != null && imageListPath.size() > 0){
            onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath));
        }else {
-           showMessage("Phải có ít nhất 1 ảnh");
+           showMessage("Bạn phải có ít nhất 1 ảnh");
        }
 
 

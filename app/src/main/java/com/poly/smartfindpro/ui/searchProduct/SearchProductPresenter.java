@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
+import com.poly.smartfindpro.data.model.product.res.Location;
 import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
@@ -102,13 +103,16 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
         List<Products> mListAddress = new ArrayList<>();
 
         for (Products item : mListProduct) {
-            if (item.getAddress().getDetailAddress().toLowerCase().contains(key) || item.getAddress().getCommuneWardTown().toLowerCase().contains(key)) {
+            String address = item.getAddress().getDetailAddress() +", "+ item.getAddress().getCommuneWardTown() + ", "+ item.getAddress().getDistrictsTowns() +", "+ item.getAddress().getProvinceCity();
+            if (address.toLowerCase().contains(key)) {
                 mListAddress.add(item);
             }
         }
 
-        if (mListProduct != null && !mListProduct.isEmpty()) {
+        if(!mListAddress.isEmpty()){
             mViewModel.onShow(mListAddress);
+        }else {
+            mViewModel.showMessage("Không có kết quả nào !");
         }
 
     }
@@ -116,5 +120,29 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     @Override
     public void onSearch() {
         onSearchProduct(mBinding.edtSearch.getText().toString());
+    }
+
+    @Override
+    public void onDataCallBackMap(String tag) {
+        Log.d("ChecMap", "OK");
+        List<Products> mListChoose = new ArrayList<>();
+        for (Products products : mListProduct) {
+            if (products.getId().equals(tag)) {
+                mListChoose.add(products);
+            }
+        }
+        mViewModel.onShowResult(mListChoose, 0);
+    }
+
+    @Override
+    public void onResultAdapter(String tag) {
+        List<Products> mListChoose = new ArrayList<>();
+        for (Products products : mListProduct) {
+            if (products.getId().equals(tag)) {
+                mListChoose.add(products);
+            }
+        }
+
+        mViewModel.onShowResult(mListChoose, 1);
     }
 }

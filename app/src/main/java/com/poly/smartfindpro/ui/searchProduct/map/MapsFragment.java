@@ -69,7 +69,6 @@ public class MapsFragment extends BaseDataBindFragment<FragmentMapsSearchBinding
             Type type = new TypeToken<List<Products>>() {
             }.getType();
             mListProduct = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-            Log.d("CheckMap", new Gson().toJson(mListProduct));
         }
 
     }
@@ -105,6 +104,7 @@ public class MapsFragment extends BaseDataBindFragment<FragmentMapsSearchBinding
                 if (mListProduct.get(i).getAddress().getLocation() != null) {
                     LatLng sydney = new LatLng(Double.valueOf(mListProduct.get(i).getAddress().getLocation().getLatitude()), Double.valueOf(mListProduct.get(i).getAddress().getLocation().getLongitude()));
                     Marker marker = gMap.addMarker(new MarkerOptions().position(sydney));
+                    marker.setTag(mListProduct.get(i).getId());
                     mListMarker.add(marker);
                 }
             }
@@ -125,23 +125,21 @@ public class MapsFragment extends BaseDataBindFragment<FragmentMapsSearchBinding
             gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    Location location = new Location();
-                    location.setLatitude(String.valueOf(marker.getPosition().latitude));
-                    location.setLongitude(String.valueOf(marker.getPosition().longitude));
-                    onCallBackData(location);
+                    onCallBackData(marker.getTag().toString());
                     return false;
                 }
             });
+
 
         } else {
 
         }
     }
 
-    private void onCallBackData(Location location) {
+    private void onCallBackData(String tag) {
         Intent intent = new Intent();
 
-        intent.putExtra("data", new Gson().toJson(location));
+        intent.putExtra("data", tag);
 
         setResult(RESULT_OK, intent);
 

@@ -27,11 +27,6 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected int getLayoutId() {
         return R.layout.activity_filter_product;
     }
@@ -50,7 +45,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
     @Override
     public void onShow(List<Product> products) {
         adapter.setListItem(products);
-        BindingUtils.setAdapter(mBinding.rvListProduct, adapter, true);
+        BindingUtils.setAdapter(mBinding.rvResult, adapter, true);
     }
 
     @Override

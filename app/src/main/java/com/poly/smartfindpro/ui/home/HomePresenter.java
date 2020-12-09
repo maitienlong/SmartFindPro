@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.home.res.Product;
@@ -32,6 +33,7 @@ public class HomePresenter implements HomeContract.Presenter {
         this.mBinding = mBinding;
         initData();
     }
+
     private void initData() {
 
 //        getProduct();
@@ -65,7 +67,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     }
 
-    private void getProductRental(){
+    private void getProductRental() {
         HomeRequest request = new HomeRequest();
         request.setId("5fb2073ff69b03b8f8875059");
 
@@ -74,29 +76,34 @@ public class HomePresenter implements HomeContract.Presenter {
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
                     productsList = new ArrayList<>();
-                    for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
+                    for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
                         if (response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Nhà trọ")
                                 || response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Chung cư")
-                                || response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Nguyên căn")){
+                                || response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Nguyên căn")) {
                             productsList.add(response.body().getResponseBody().getProducts().get(i));
                         }
                     }
-                    Log.d("list111", "onResponse: " + productsList.size());
-                    mViewmodel.onShow(productsList);
+
+                    if(productsList.size() > 0){
+                        mViewmodel.onShow(productsList);
+                    }else {
+                        mViewmodel.showMessage("Không có bài viết nào trên bản tin");
+                    }
+
 
                 } else {
-
+                    mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));
                 }
             }
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
-
+                mViewmodel.showMessage(mContext.getString(R.string.services_not_avail) + t.toString());
             }
         });
     }
 
-    private void getProductShare(){
+    private void getProductShare() {
         HomeRequest request = new HomeRequest();
         request.setId("5fb2073ff69b03b8f8875059");
 
@@ -105,8 +112,8 @@ public class HomePresenter implements HomeContract.Presenter {
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
                     productsList = new ArrayList<>();
-                    for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
-                        if (response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Ở ghép")){
+                    for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
+                        if (response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Ở ghép")) {
                             productsList.add(response.body().getResponseBody().getProducts().get(i));
                         }
                     }

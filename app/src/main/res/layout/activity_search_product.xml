@@ -68,12 +68,15 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
+                        app:endIconMode="clear_text"
                         android:layout_weight="1">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edtSearch"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:singleLine="true"
+
                             android:background="@drawable/bg_circle_editext_while"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_8sdp"
