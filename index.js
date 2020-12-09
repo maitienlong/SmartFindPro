@@ -78,10 +78,9 @@ function getResponse(name, resCode, resMess, res) {
 
 function phonenumber(inputtxt) {
     var phoneno = /^\d{10}$/;
-    if (inputtxt.value.match(phoneno)) {
+    if (inputtxt.match(phoneno)) {
         return true;
     } else {
-        alert("message");
         return false;
     }
 }
@@ -588,7 +587,7 @@ app.post('/find-user', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-// them bai nguoi dung
+// kiem tra so dien thoai
 app.post('/check-phone-number', async function (request, response) {
     let name = 'CHECK-PHONE-NUMBER'
     try {
@@ -597,17 +596,18 @@ app.post('/check-phone-number', async function (request, response) {
             if (phonenumber(phoneNumber) == true) {
                 try {
                     let user = await User.find({phone_number: phoneNumber}).lean();
+                    console.log(user)
                     if (user.length > 0) {
-                        response.json(getResponse(name, 200, 'Fail', null))
-                    } else {
                         response.json(getResponse(name, 200, sttOK, null))
+                    } else {
+                        response.json(getResponse(name, 200, 'Fail', null))
                     }
                 } catch (e) {
                     console.log('loi ne: \n' + e)
                     response.json(getResponse(name, 200, 'Fail', null))
                 }
             } else {
-                response.json(getResponse(name, 200, 'Fail', null))
+                response.json(getResponse(name, 200, 'Not a phone number', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -629,13 +629,13 @@ app.post('/init-user', async function (request, response) {
             checkData(phoneNumber)) {
             try {
                 let newProductAddress = new Address({
-                    provinceCity: '',
-                    districtsTowns: '',
-                    communeWardTown: '',
-                    detailAddress: '',
+                    provinceCity: "Hà Nội",
+                    districtsTowns: "Ba Đình",
+                    communeWardTown: "Điện Bàn",
+                    detailAddress: "2 Hùng Vương",
                     location: {
-                        latitude: '',
-                        longitude: ''
+                        latitude: "21.0228161",
+                        longitude: "105.8019438"
                     }
                 });
                 let address = await newProductAddress.save();
@@ -658,6 +658,81 @@ app.post('/init-user', async function (request, response) {
             } catch (e) {
                 console.log('loi ne: \n' + e)
                 response.json(getResponse(name, 200, 'Fail', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// cap nhat nguoi dung
+app.post('/update-user', async function (request, response) {
+    let name = 'UPDATE-USER'
+    try {
+        let userId = request.body.userId;
+        let id = request.body.id;
+        let utilities = request.body.utilities;
+        let category = request.body.category;
+        let information = request.body.information;
+        let mAddress = request.body.address;
+        let content = request.body.content;
+        let linkProduct = 'chua co link';
+        if (checkData(userId) &&
+            checkData(id) &&
+            checkData(utilities) &&
+            checkData(category) &&
+            checkData(information) &&
+            checkData(mAddress) &&
+            checkData(content) &&
+            checkData(linkProduct)) {
+            try {
+                let user = await User.find({_id: userId}).lean();
+                try {
+                    let oldProduct = await Product.find({_id: id}).lean();
+                    oldProduct = oldProduct[0];
+                    try {
+                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                            category: category,
+                            information: information,
+                            utilities: utilities
+                        });
+                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
+                            provinceCity: mAddress.provinceCity,
+                            districtsTowns: mAddress.districtsTowns,
+                            communeWardTown: mAddress.communeWardTown,
+                            detailAddress: mAddress.detailAddress,
+                            location: {
+                                latitude: mAddress.location.latitude,
+                                longitude: mAddress.location.longitude
+                            }
+                        });
+                        // update data vao bang chinh
+                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                            product: product._id,
+                            address: address._id,
+                            user: oldProduct.user,
+                            content: content,
+                            status: oldProduct.status,
+                            createAt: oldProduct.createAt,
+                            updateAt: updateAt,
+                            deleteAt: oldProduct.deleteAt,
+                            linkProduct: oldProduct.linkProduct
+                        })
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } catch (e) {
+                        console.log('loi ne: \n' + e)
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
