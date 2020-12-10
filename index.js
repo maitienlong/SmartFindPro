@@ -62,6 +62,17 @@ const localNumber = 9090;
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
 
+//import switch
+Handlebars.registerHelper('switch', function (value, options) {
+    this.switch_value = value;
+    return options.fn(this);
+});
+Handlebars.registerHelper('case', function (value, options) {
+    if (value == this.switch_value) {
+        return options.fn(this);
+    }
+});
+
 //cac ham tro giup
 function getResponse(name, resCode, resMess, res) {
     let resData = {
@@ -348,32 +359,6 @@ app.get('/updateAdAc', async function (request, response) {
 
 app.get('/postManage', async function (request, response) {
     const PostManage = require('./model/confirmPost/PostManage');
-    // try {
-    //     if (request.query.idProduct != undefined) {
-    //         let _id = request.query.idProduct
-    //         console.log('_id: ' + _id)
-    //         if (_id != undefined || _id != null || _id != '') {
-    //             let dateNow = Date.now()
-    //             let date = moment(dateNow).format('YYYY-MM-DD hh:mm:ss');
-    //             console.log(date)
-    //             let update = await Product.findByIdAndUpdate(_id, {
-    //                 deleteAt: date,
-    //             });
-    //             if (update) {
-    //                 console.log('[Delete] OK')
-    //                 var unapprovedPost = await Product.find({deleteAt: '', status: '-1'}).lean();
-    //                 var processingPost = await Product.find({deleteAt: '', status: '0'}).lean();
-    //                 var successPost = await Product.find({deleteAt: '', status: '1'}).lean();
-    //             } else {
-    //                 console.log('[Delete] Fail')
-    //             }
-    //         }
-    //     }
-    //
-    // } catch (e) {
-    //     console.log('[Delete] Error: ' + e)
-    // }
-
     var allProduct = await Product.find({
         deleteAt: ''
     }).populate(['address', 'product'])
@@ -417,7 +402,8 @@ app.get('/postManage', async function (request, response) {
             }
         })
         .lean();
-    let data = new PostManage(allProduct, unapprovedPost, processingPost, successPost)
+    let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+
     response.render('postManage', {
         data: data
     });
@@ -434,7 +420,6 @@ app.get('/confirmPost', async function (request, response) {
                 }
             })
             .lean();
-        console.log(product)
         //them cho moi image 1 truong id
         let listImages = product[0].product.information.image;
         let countListImages = listImages.length;
@@ -455,9 +440,28 @@ app.get('/confirmPost', async function (request, response) {
                 utilities: listUtilities[i]
             })
         }
+        let dataUtilities = [];
+        let countUtilities = 6
+        let utilities = ['Wifi', 'An ninh', 'Giờ giấc', 'Nhà ăn', 'Nhà vệ sinh', 'Phòng riêng', 'Giường', 'Để xe', 'Thú cưng', 'Trẻ em']
+        for (let i = 0; i < countUtilities; i++) {
+            dataUtilities.push({
+                id: i,
+                utilities: utilities[i]
+            })
+        }
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        let info = {
+            admin: nameDN,
+            date: today
+        }
         response.render('confirmPost', {
+            info: info,
             product: product[0],
-            utilities: listObjectUtilities,
+            utilities: dataUtilities,
             images: listObjectImages
         });
     } catch (e) {
@@ -662,6 +666,7 @@ app.post('/init-user', async function (request, response) {
                 });
                 let address = await newProductAddress.save();
                 //luu data vao cac bang phu
+                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
                 let newUser = new User({
                     password: password,
                     address: address._id,
@@ -673,7 +678,7 @@ app.post('/init-user', async function (request, response) {
                     phone_number: phoneNumber,
                     deleteAt: '',
                     updateAt: '',
-                    createAt: ''
+                    createAt: createAt
                 });
                 let user = await newUser.save();
                 response.json(getResponse(name, 200, sttOK, null))
@@ -1102,14 +1107,122 @@ app.post('/delete-image-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-//import switch
-Handlebars.registerHelper('switch', function (value, options) {
-    this.switch_value = value;
-    return options.fn(this);
-});
 
-Handlebars.registerHelper('case', function (value, options) {
-    if (value == this.switch_value) {
-        return options.fn(this);
+// duyet bai dang
+app.post('/confirm-product', async function (request, response) {
+    let name = 'CONFIRM-PRODUCT'
+    try {
+        let userId = request.body.userId;
+        let id = request.body.id;
+        let utilities = request.body.utilities;
+        let category = request.body.category;
+        let information = request.body.information;
+        let mAddress = request.body.address;
+        let content = request.body.content;
+        let linkProduct = 'chua co link';
+        if (checkData(userId) &&
+            checkData(id) &&
+            checkData(utilities) &&
+            checkData(category) &&
+            checkData(information) &&
+            checkData(mAddress) &&
+            checkData(content) &&
+            checkData(linkProduct)) {
+            try {
+                let user = await User.find({_id: userId}).lean();
+                try {
+                    let oldProduct = await Product.find({_id: id}).lean();
+                    oldProduct = oldProduct[0];
+                    try {
+                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                            category: category,
+                            information: information,
+                            utilities: utilities
+                        });
+                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
+                            provinceCity: mAddress.provinceCity,
+                            districtsTowns: mAddress.districtsTowns,
+                            communeWardTown: mAddress.communeWardTown,
+                            detailAddress: mAddress.detailAddress,
+                            location: {
+                                latitude: mAddress.location.latitude,
+                                longitude: mAddress.location.longitude
+                            }
+                        });
+                        // update data vao bang chinh
+                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                            product: product._id,
+                            address: address._id,
+                            user: oldProduct.user,
+                            content: content,
+                            status: oldProduct.status,
+                            createAt: oldProduct.createAt,
+                            updateAt: updateAt,
+                            deleteAt: oldProduct.deleteAt,
+                            linkProduct: oldProduct.linkProduct
+                        })
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } catch (e) {
+                        console.log('loi ne: \n' + e)
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// huy duyet bai dang
+app.post('/cancel-product', async function (request, response) {
+    let name = 'CANCEL-PRODUCT'
+    try {
+        let userId = request.body.userId;
+        let id = request.body.id;
+        let status = request.body.status;
+        if (checkData(userId) &&
+            checkData(id) &&
+            checkData(status)) {
+            try {
+                let user = await User.find({_id: userId}).lean();
+                try {
+                    let oldProduct = await Product.find({_id: id}).lean();
+                    oldProduct = oldProduct[0];
+                    try {
+                        // update data vao bang chinh
+                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                            status: status,
+                            updateAt: updateAt
+                        })
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } catch (e) {
+                        console.log('loi ne: \n' + e)
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } catch (e) {
+                    console.log('loi ne: \n' + e)
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } catch (e) {
+                console.log('loi ne: \n' + e)
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
