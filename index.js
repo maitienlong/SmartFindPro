@@ -435,8 +435,30 @@ app.get('/confirmPost', async function (request, response) {
             })
             .lean();
         console.log(product)
+        //them cho moi image 1 truong id
+        let listImages = product[0].product.information.image;
+        let countListImages = listImages.length;
+        let listObjectImages = [];
+        for (let i = 0; i < countListImages; i++) {
+            listObjectImages.push({
+                id: i,
+                path: listImages[i]
+            })
+        }
+        //them cho moi tienich 1 truong id
+        let listUtilities = product[0].product.utilities;
+        let countListUtilities = listUtilities.length;
+        let listObjectUtilities = [];
+        for (let i = 0; i < countListUtilities; i++) {
+            listObjectUtilities.push({
+                id: i,
+                utilities: listUtilities[i]
+            })
+        }
         response.render('confirmPost', {
-            product: product[0]
+            product: product[0],
+            utilities: listObjectUtilities,
+            images: listObjectImages
         });
     } catch (e) {
         console.log('Lỗi: ' + e)

@@ -154,7 +154,34 @@
                                 </tr>
                                 <tr>
                                     <th scope="col" style="width: 30%">Tiện ích</th>
-                                    <td scope="col">First</td>
+                                    <td scope="col">
+                                        <div id="idDivUtilities">
+                                            {{#each utilities}}
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                       id="cb-{{this.id}}" checked>
+                                                <label class="form-check-label" for="cb-{{this.id}}">
+                                                    {{this.utilities}}
+                                                </label>
+                                                <br>
+                                            {{/each}}
+                                        </div>
+                                        <div>
+                                            <input class="form-control" type="text" id="idUtilities"
+                                                   placeholder="Nhập vào đây ..." disabled>
+                                            <div class="d-flex flex-row-reverse">
+                                                <div class="p-2">
+                                                    <button type="button" class="btn btn-success"
+                                                            id="updateUtilities">Thêm mới
+                                                    </button>
+                                                </div>
+                                                <div class="p-2">
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="cancelUtilities">Hủy
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="col" style="width: 30%">Giá phòng({{product.product.information.unit}})
@@ -284,29 +311,35 @@
                     <tr>
                         <th scope="row">Ảnh phòng</th>
                         <td>
-                            <table class="table table-borderless">
+                            <table id="table-images" class="table table-borderless">
                                 <tbody>
-                                {{#each product.product.information.image}}
-                                    <tr id='image-{{this}}'>
+                                {{#each images}}
+                                    <tr id='tr-{{this.id}}'>
                                         <td style="width: 80%">
-                                            <img id=""{{this}}" width="250px" height="250px"
-                                            src="http://128.199.99.9:9090/{{this}}" alt="{{this}}">
+                                            <img id="image-{{this.id}}" width="250px" height="250px"
+                                                 src="http://128.199.99.9:9090/{{this.path}}" alt="{{this.path}}">
                                         </td>
-                                        <td style="width: 40%">
-                                            <button type="button" onclick="deleteImage('{{this}}')"
+                                        <td style="width: 20%">
+                                            <button type="button" onclick="deleteImage('tr-{{this.id}}')"
                                                     class="btn btn-primary">Xóa ảnh
                                             </button>
                                         </td>
-
                                     </tr>
                                 {{/each}}
                                 <div>
-                                    <form action="http://128.199.99.9:9090/upload-photo-array" method="post"
-                                          enctype="multipart/form-data">
-                                        <input onchange="readURL(this);" type="file" name="photo" id="ipChangeImage"
-                                               multiple="multiple">
-                                        <input type="submit" value="Thêm ảnh" class="btn btn-primary">
-                                    </form>
+                                    <!--                                    <form action="http://128.199.99.9:9090/upload-photo-array" method="post"-->
+                                    <!--                                          enctype="multipart/form-data">-->
+                                    <!--                                        <input onchange="readURL(this);" type="file" name="photo" id="ipChangeImage"-->
+                                    <!--                                               multiple="multiple">-->
+                                    <!--                                        <input type="submit" value="Thêm ảnh" class="btn btn-primary">-->
+                                    <!--                                    </form>-->
+                                    <div style="margin-bottom: 10px" class="custom-file">
+                                        <input type="file" class="custom-file-input" id="ipChangeImage"
+                                               onchange="readURL(this);" multiple>
+                                        <label id="ipChooseImage" class="custom-file-label" for="ipChangeImage"
+                                               data-browse="Thêm ảnh">Chọn
+                                            ảnh...</label>
+                                    </div>
                                 </div>
                                 </tbody>
                             </table>
@@ -341,8 +374,75 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script>
+    //function
+
+    function initImages(idTable, id, path, name) {
+        console.log('idTable: ' + idTable)
+        console.log('id: ' + id)
+        console.log('path: ' + path)
+
+        $("#" + idTable).find('tbody')
+                .append($('<tr>')
+                        .attr('id', id)
+                        .append($('<td>')
+                                        .attr('style', 'width: 80%')
+                                        .append($('<img>')
+                                                .attr('src', path)
+                                                .attr('width', '250px')
+                                                .attr('height', '250px')
+                                                .attr('id', 'image-' + path)
+                                                .attr('alt', name)
+                                        ),
+                                $('<td>')
+                                        .attr('style', 'width: 20%')
+                                        .append($('<button>')
+                                                .attr('type', 'button')
+                                                .attr('class', 'btn btn-primary')
+                                                .text('Xóa ảnh')
+                                                .on('click', function () {
+                                                    deleteImage(id)
+                                                })
+                                        )
+                        )
+                );
+    }
+
+    function getExtension(filename) {
+        let parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        let ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            case 'gif':
+            case 'bmp':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            if (isImage(input.files[0].name)) {
+                reader.onload = function (e) {
+                    var rowCount = $('#table-images tr').length;
+                    initImages('table-images', 'tr-' + rowCount, e.target.result, input.files[0].name)
+
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                alert('File không phải là ảnh!')
+            }
+        }
+    }
+
     function deleteImage(id) {
-        console.log(id)
+        console.log('del: ' + id)
         $("#" + id).remove();
     }
 
@@ -371,7 +471,7 @@
         $("#idAddress").removeAttr('disabled');
     });
     $("#cancelUpdateAddress").click(function () {
-
+        $("#idAddress").val(address);
         $("#idAddress").attr({
             'disabled': 'disabled'
         });
@@ -406,6 +506,35 @@
         $("#slGender").val(gender.toUpperCase());
 
         $("#slGender").attr({
+            'disabled': 'disabled'
+        });
+    });
+    //update utilities
+    $('#updateUtilities').click(function () {
+        $("#idUtilities").removeAttr('disabled');
+        var isDisabled = $('#idUtilities').prop('disabled');
+        if (isDisabled == false) {
+            let count = $('#idDivUtilities input').length
+            let text = $('#idUtilities').val();
+            $("#idDivUtilities")
+                    .append($('<input>')
+                                    .attr('id', "cb-" + count)
+                                    .attr('class', 'form-check-input')
+                                    .attr('type', 'checkbox')
+                                    .attr('checked', 'checked'),
+                            $('<label>')
+                                    .attr('class', 'form-check-label')
+                                    .attr('for', "cb-" + count)
+                                    .text(text),
+                            $('<br>')
+                    );
+        } else {
+
+        }
+
+    });
+    $("#cancelUtilities").click(function () {
+        $("#idUtilities").attr({
             'disabled': 'disabled'
         });
     });
@@ -460,39 +589,6 @@
         });
     });
 
-    function getExtension(filename) {
-        let parts = filename.split('.');
-        return parts[parts.length - 1];
-    }
-
-    function isImage(filename) {
-        let ext = getExtension(filename);
-        switch (ext.toLowerCase()) {
-            case 'jpg':
-            case 'gif':
-            case 'bmp':
-            case 'png':
-                //etc
-                return true;
-        }
-        return false;
-    }
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            if (isImage(input.files[0].name)) {
-                reader.onload = function (e) {
-                    $('#blah')
-                            .attr('src', e.target.result);
-                    $("#ipChooseImage").text(input.files[0].name)
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                alert('File không phải là ảnh!')
-            }
-        }
-    }
 </script>
 </body>
 </html>
