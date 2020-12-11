@@ -28,6 +28,8 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
 
     private List<Products> mListProduct;
 
+    private List<Products> mListResult;
+
     public FilterProductPresenter(Context mContext, FilterProductContact.ViewModel mViewModel, ActivityFilterProductBinding mBinding) {
         this.mContext = mContext;
         this.mViewModel = mViewModel;
@@ -37,6 +39,7 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
 
     private void initData() {
         mListProduct = new ArrayList<>();
+        mListResult = new ArrayList<>();
     }
 
     public void setProducts(List<Products> products) {
@@ -49,22 +52,136 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
     }
 
     @Override
-    public void setData(String theLoai, int soLuong, int giaTien, int tienDien, int tienNuoc, String gioiTinh) {
+    public void setData(String valueFilter, int intTieuChi) {
         List<Products> mListChoose = new ArrayList<>();
-        for (Products item : mListProduct) {
-            if (item.getProduct().getCategory().toLowerCase().contains(theLoai)) {
-                if (item.getProduct().getInformation().getPrice() > 1000000 && item.getProduct().getInformation().getPrice() < giaTien) {
-                    if (item.getProduct().getInformation().getGender().equals(gioiTinh)) {
-                        mListChoose.add(item);
-                    }
+        if (mListResult.size() > 0) {
+            for (Products item : mListResult) {
+                switch (intTieuChi) {
+                    case 0:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getCategory().equals(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+
+                        break;
+                    case 1:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getAmountPeople() == Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getPrice() > 1000000 && item.getProduct().getInformation().getPrice() < Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else if (valueFilter.equals("Tất cả")) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getGender().equals(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getElectricBill() == Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 6:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getWaterBill() == Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                }
+            }
+        } else {
+            for (Products item : mListProduct) {
+                switch (intTieuChi) {
+                    case 0:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getCategory().equals(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+
+                        break;
+                    case 1:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getAmountPeople() == Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getPrice() > 1000000 && item.getProduct().getInformation().getPrice() < Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else if (valueFilter.equals("Tất cả")) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getGender().equals(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getElectricBill() == Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
+                    case 6:
+                        if (valueFilter.isEmpty()) {
+                            mListChoose.add(item);
+                        } else {
+                            if (item.getProduct().getInformation().getWaterBill() == Integer.valueOf(valueFilter)) {
+                                mListChoose.add(item);
+                            }
+                        }
+                        break;
                 }
             }
         }
-        if (mListChoose.size() > 0) {
-            mViewModel.onShow(mListChoose);
-        }else {
-            mViewModel.onShowMsg("Không tìm kiếm thấy kết quả nào");
-        }
+        mListResult.clear();
+        mListResult.addAll(mListChoose);
+        mViewModel.onShow(mListResult);
 
     }
 }

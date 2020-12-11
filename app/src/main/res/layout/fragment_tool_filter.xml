@@ -87,56 +87,20 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_8sdp"
+                                    android:layout_marginRight="@dimen/_8sdp"
                                     android:layout_marginBottom="20dp"
                                     android:gravity="center">
 
-                                    <Button
-
-                                        android:id="@+id/btn_nha_tro"
-                                        android:layout_width="@dimen/_100sdp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginRight="20dp"
+                                    <Spinner
+                                        android:id="@+id/spnTheLoai"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_35sdp"
                                         android:background="@drawable/btn_category_selector"
-                                        android:text="@string/btn_rental_hous"
-                                        android:textColor="@color/white">
-
-                                    </Button>
-
-                                    <Button
-                                        android:id="@+id/btn_chung_cu"
-                                        android:layout_width="@dimen/_100sdp"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/btn_category_selector"
-                                        android:text="@string/btn_apartment"
-                                        android:textColor="@drawable/btn_category_textcolor_selector"></Button>
+                                        android:prompt="@string/app_name" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center">
 
-                                    <Button
-                                        android:id="@+id/btn_nguyen_can"
-                                        android:layout_width="@dimen/_100sdp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginRight="20dp"
-                                        android:background="@drawable/btn_category_selector"
-                                        android:text="@string/btn_whole_house"
-                                        android:textColor="@drawable/btn_category_textcolor_selector">
-
-                                    </Button>
-
-                                    <Button
-                                        android:id="@+id/btn_o_ghep"
-                                        android:layout_width="@dimen/_100sdp"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/btn_category_selector"
-                                        android:text="@string/btn_pairing"
-                                        android:textColor="@drawable/btn_category_textcolor_selector">
-
-                                    </Button>
-                                </LinearLayout>
                             </LinearLayout>
 
                             <LinearLayout
@@ -156,10 +120,10 @@
 
 
                                 <LinearLayout
-                                    android:layout_marginLeft="@dimen/_8sdp"
-                                    android:layout_marginRight="@dimen/_8sdp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_8sdp"
+                                    android:layout_marginRight="@dimen/_8sdp"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -167,7 +131,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="20dp"
-                                        android:text="@string/tv_amount_person"/>
+                                        android:text="@string/tv_amount_person" />
 
                                     <com.google.android.material.textfield.TextInputLayout
                                         android:layout_width="match_parent"
@@ -175,8 +139,8 @@
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/edt_amount_person"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="@dimen/_150sdp"
+                                            android:layout_height="@dimen/_35sdp"
                                             android:background="@drawable/custom_edt_change_pass"
                                             android:inputType="number"
                                             android:text="1" />
@@ -196,15 +160,38 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="20dp"
-                                        android:text="Giá">
+                                        android:text="Giá" />
 
-                                    </TextView>
+                                    <SeekBar
+                                        android:id="@+id/snb_price"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_marginTop="@dimen/_8sdp" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+                                        <TextView
+                                            style="@style/textStyleAlert_12dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:text="Giá từ:  " />
+                                        <TextView
+                                            style="@style/textStyleAlert_12dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:text="1.000.000  - " />
+                                        <TextView
+                                            android:id="@+id/tv_maxTien"
+                                            style="@style/textStyleAlert_12dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:text="0" />
+                                    </LinearLayout>
 
-                                   <SeekBar
-                                       android:layout_marginTop="@dimen/_8sdp"
-                                       android:id="@+id/snb_price"
-                                       android:layout_width="match_parent"
-                                       android:layout_height="@dimen/_20sdp"/>
 
 
                                 </LinearLayout>
@@ -212,8 +199,7 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:weightSum="2.5">
+                                    android:layout_height="wrap_content">
 
                                     <LinearLayout
                                         android:layout_width="0dp"
@@ -242,6 +228,7 @@
                                                 android:id="@+id/rbMale"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginRight="@dimen/_16sdp"
                                                 android:text="@string/tv_male">
 
                                             </RadioButton>
@@ -250,6 +237,7 @@
                                                 android:id="@+id/rbFemale"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginRight="@dimen/_16sdp"
                                                 android:text="@string/tv_female">
 
                                             </RadioButton>
@@ -258,6 +246,7 @@
                                                 android:id="@+id/rbAll"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
+                                                android:layout_marginRight="@dimen/_16sdp"
                                                 android:text="@string/tv_all">
 
                                             </RadioButton>

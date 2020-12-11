@@ -1,17 +1,23 @@
 package com.poly.smartfindpro.ui.searchProduct.filterProduct;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
-import android.view.MotionEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,16 +25,10 @@ import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivityFilterProductBinding;
-import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
-import com.poly.smartfindpro.ui.home.adapter.HomeAdapter;
-import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
-import com.poly.smartfindpro.ui.searchProduct.SearchProductContract;
-import com.poly.smartfindpro.ui.searchProduct.SearchProductPresenter;
 import com.poly.smartfindpro.ui.searchProduct.adapter.FilterProductAdapter;
-import com.poly.smartfindpro.ui.searchProduct.adapter.ProductBottomAdapter;
+import com.poly.smartfindpro.ui.searchProduct.adapter.SpinnerCatalory;
 import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.lang.reflect.Type;
@@ -39,15 +39,17 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         FilterProductPresenter> implements FilterProductContact.ViewModel {
     FilterProductAdapter adapter;
 
-    private List<Products>  products;
+    private List<Products> mListProduct;
 
-    private Button btnNhaTro, btnChungCu, btnNguyenCan, btnOGhep, btn_filter;
+    private Button btn_filter;
 
     private EditText edt_amount_person, edt_electricity_bill, edt_water_bill;
 
     private SeekBar snb_price;
 
     private RadioButton btnNam, btnNu, btnTatCa;
+
+    private TextView tv_maxTien;
 
     private String category = "";
 
@@ -61,7 +63,10 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
     private int soLuong = 1;
 
+    private Spinner spnTheLoai;
+
     private RecyclerView rc_utilities;
+
 
     @Override
     protected int getLayoutId() {
@@ -71,17 +76,17 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
     private void getData() {
         Type type = new TypeToken<List<Products>>() {
         }.getType();
-        products = new ArrayList<>();
-        products = new Gson().fromJson(getIntent().getStringExtra(Config.POST_BUNDEL_RES), type);
+        if (getIntent() != null) {
+            mListProduct = new ArrayList<>();
+            mListProduct = new Gson().fromJson(getIntent().getStringExtra(Config.POST_BUNDEL_RES), type);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void initView() {
-        btnNhaTro = findViewById(R.id.btn_nha_tro);
-        btnChungCu = findViewById(R.id.btn_chung_cu);
-        btnNguyenCan = findViewById(R.id.btn_nguyen_can);
-        btnOGhep = findViewById(R.id.btn_o_ghep);
+        getData();
         edt_amount_person = findViewById(R.id.edt_amount_person);
         snb_price = findViewById(R.id.snb_price);
         btnTatCa = findViewById(R.id.rbAll);
@@ -91,73 +96,122 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         edt_electricity_bill = findViewById(R.id.edt_electricity_bill);
         edt_water_bill = findViewById(R.id.edt_water_bill);
         rc_utilities = findViewById(R.id.rc_utilities);
-
+        spnTheLoai = findViewById(R.id.spnTheLoai);
+        tv_maxTien = findViewById(R.id.tv_maxTien);
         mPresenter = new FilterProductPresenter(this, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
-        btnNhaTro.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
+        List<String> listCatalory = new ArrayList<>();
+        listCatalory.add("");
+        listCatalory.add("Nhà trọ");
+        listCatalory.add("Nguyên căn");
+        listCatalory.add("Chung cư");
+        listCatalory.add("Ở ghép");
+
+        SpinnerCatalory spinnerCatalory = new SpinnerCatalory(this, listCatalory);
+        spnTheLoai.setAdapter(spinnerCatalory);
+
+        snb_price.setMin(0);
+        snb_price.setMax(100);
+
+        // the loai
+        spnTheLoai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                btnNhaTro.setBackgroundTintList(getColorStateList(R.color.background));
-                btnChungCu.setPressed(false);
-                btnNguyenCan.setPressed(false);
-                btnOGhep.setPressed(false);
-                category = btnNhaTro.getText().toString();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = (String) parent.getItemAtPosition(position);
+                if (!item.equals("")) {
+                    mPresenter.setData(item, 0);
+                } else {
+                    Toast.makeText(FilterProductActivity.this, "Bạn không chọn thể loại", Toast.LENGTH_SHORT).show();
+                    mPresenter.setData(item, 0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
-        btnChungCu.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                btnNhaTro.setPressed(false);
-                btnChungCu.setBackgroundTintList(getColorStateList(R.color.background));
-                btnNguyenCan.setPressed(false);
-                btnOGhep.setPressed(false);
-                category = btnChungCu.getText().toString();
-            }
-        });
-
-        btnNguyenCan.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                btnNhaTro.setPressed(false);
-                btnChungCu.setPressed(false);
-                btnNguyenCan.setBackgroundTintList(getColorStateList(R.color.background));
-                btnOGhep.setPressed(false);
-                category = btnNguyenCan.getText().toString();
-            }
-        });
-
-        btnOGhep.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                btnNhaTro.setPressed(false);
-                btnChungCu.setPressed(false);
-                btnNguyenCan.setPressed(false);
-                btnOGhep.setBackgroundTintList(getColorStateList(R.color.background));
-                category = btnOGhep.getText().toString();
-            }
-        });
-
+        // gioi tinh
         if (btnNam.isChecked()) {
-            mGender = btnNam.getText().toString();
+            mPresenter.setData(btnTatCa.getText().toString(), 5);
         } else if (btnNu.isChecked()) {
-            mGender = btnNu.getText().toString();
+            mPresenter.setData(btnTatCa.getText().toString(), 5);
         } else if (btnTatCa.isChecked()) {
-            mGender = btnTatCa.getText().toString();
+            mPresenter.setData(btnTatCa.getText().toString(), 5);
         }
 
-        snb_price.setMin(1000000);
-        snb_price.setMax(100000000);
+        // gia tien dien
+        edt_electricity_bill.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        mPriceElect = Integer.valueOf(edt_electricity_bill.getText().toString());
-        mPriceWatter = Integer.valueOf(edt_water_bill.getText().toString());
+            }
 
-        soLuong = Integer.valueOf(edt_amount_person.getText().toString());
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s != null){
+                    mPresenter.setData(s.toString(), 5);
+                }else {
+                    mPresenter.setData("", 5);
+                }
+
+            }
+        });
+
+        // gia tien nuoc
+        edt_water_bill.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s != null){
+                    mPresenter.setData(s.toString(), 6);
+                }else {
+                    mPresenter.setData("", 6);
+                }
+
+            }
+        });
+
+        // so luong nguoi
+        edt_amount_person.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s != null){
+                    mPresenter.setData(s.toString(), 1);
+                }else {
+                    mPresenter.setData("", 1);
+                }
+
+            }
+        });
+
+        // gia tien
         snb_price.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -171,15 +225,27 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mPrice = seekBar.getProgress();
-                Toast.makeText(FilterProductActivity.this, mPrice + "", Toast.LENGTH_SHORT).show();
+                tv_maxTien.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_maxTien.setText(seekBar.getProgress()*500000+"");
+                    }
+                });
+                if(seekBar.getProgress() > 0){
+                    mPresenter.setData(String.valueOf(seekBar.getProgress()*500000), 3);
+                }else {
+                    mPresenter.setData("", 3);
+                }
+
+
+
             }
         });
 
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMessage("Phần mềm đang phát triển");
+
             }
         });
     }
@@ -187,7 +253,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
     @Override
     protected void initData() {
         adapter = new FilterProductAdapter(getBaseContext());
-        mPresenter.setProducts(products);
+        mPresenter.setProducts(mListProduct);
     }
 
     @Override

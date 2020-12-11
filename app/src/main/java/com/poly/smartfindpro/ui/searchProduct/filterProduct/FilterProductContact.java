@@ -17,6 +17,6 @@ public interface FilterProductContact {
     public interface Presenter {
         void onClickFilter();
 
-        void setData(String theLoai, int soLuong, int giaTien, int tienDien, int tienNuoc, String gioiTinh);
+        void setData(String tieChiLoc, int tieuChiLoc);
     }
 }

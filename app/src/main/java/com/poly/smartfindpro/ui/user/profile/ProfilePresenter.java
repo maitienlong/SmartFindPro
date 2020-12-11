@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
