@@ -1003,7 +1003,7 @@ app.post('/user-product', async function (request, response) {
                 let userNo = await User.find({_id: id}).lean();
                 try {
                     let allProduct = await Product.find({
-                        deleteAt: ''
+                        deleteAt: '', user: id
                     }).populate(['address', 'product'])
                         .populate({
                             path: 'user',
@@ -1226,3 +1226,59 @@ app.post('/cancel-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
+// lay danh sach area
+app.post('/area', async function (request, response) {
+    let name = 'AREA'
+    try {
+        let body = request.body.dataBody;
+        if (checkData(body)) {
+            let requestArea = {
+                restHeader: {
+                    channelCode: "VIVIET_APP",
+                    clientAddress: "127.0.0.1",
+                    clientRequestId: "1234567",
+                    clientSessionId: "",
+                    deviceId: "abc-123-def-456",
+                    exchangeIV: "",
+                    systemCode: "VIVIET",
+                    language: "vi",
+                    location: {
+                        latitude: "0",
+                        longitude: "0"
+                    },
+                    platform: "android",
+                    platformVersion: "",
+                    sdkId: "123",
+                    secretKey: "",
+                    signature: ""
+                },
+                body: body
+            }
+            let TOKEN_TEST_CARGO = "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.GsHvc-8OefGRoN5FZPgHTz9P29NyWTb44s_LzdGRQo7ow3FNIIk9Vv8NFYxDSHeOevknSG891jKa83vMeNOA1p2rgAlVpwlY3VzsWld9QVnu3timrhicmynney9RjDEHSreeBLK919Ei9J0OUwyS-TMuCaDSlPqTKWnQPepRiAJv5eoVBQ2aR72ffAQFWyHQQ01Jq8JsfbHbePt7fSNMByz44SfhsVuKAgf9UZKmcPWIovsUWsygKhJ5XBJQeVfibGXDXNVSl7JV6ews0oNyMHq85PlFuTHUUsgBZRNyslrMKxQHs2bR8VPmDmSIfndWcAGcYeQL44J-wymN_5z1ZA.RfVbT4K2jbbeU3j8.Hc38QUh-1gT-te5cMcfJiTI9PBmLuN8NQKs0P6lf8X2rHtTUpPjx7t3Th1WCENlW7LGLgiRgoAr-KtkEgNFh-ZCv0weDTKrhvER0WGnaORxFjo_M2QVOMmKstTNaTzJTCqA7AsVGZ0s5_L-jFQ-ZPPTZAiVQWKzaMHxCDox2QrhGc_FCiSoGrPA0h2cSLCASmBPClk3og8Kaom0BVB0y1IFDZs96WfzQRLlBDQshqt8jZxLIQQTJ7XAs0ZjCfN11FZCAbAFWg7VZ2fexdaLve-2N21UL_QO6x3TZ70MCHAt6z2illMlHD1mkN9d-yyLuWIX6ZQ1ZGNxsHe3XIbiBdtwjisdIxHPUHtQcSHjLsO6bIazor5E-nfssRcKS5YLEF_UUbzTuI5UaDYaYOEl3RAsJTzdACIR59MENjrjC52VGIgwYLVGKeUOs05oej2B7q2yo7KYKKz5orTSeE0MxOU-zbkBtV0plrgUWEFFt8ud5KYXbAorh9R9beZmgoLF7TfCyvEn-r65CrV7rrto0MHovS4Qc8y7r9KAuNMOcoJxXAjmC_59Qsis6yTrfGRjzGhu7zHHvk4d5BtQrqY_qquju42F7rlE2YLgViykn2WFj41QWRvTP_gOpBqLAkgTnm6a6liwjlUn89CoEywJcECZOZPPoi9ZF_c1r721rz75Mqy63j-aIjGkPa5bGeWY_g4exPLJisjG2txQFF9737IWelJLosxnCAXi6vkpqb1jhqsC_DXHAaWrPJas7w4hWNXCfacdJVtJbUysJcH8JehrJzXDgzv5f5fo4iUo3qBSLOiFt1PAw5ztrWzunGL07d4KxhH4pcrPrlVnPqCw9rZCycmrkZn_nWm3BcahC07uMhg_AwbJJYZ_rFoM.psevOPdyiO-S_dNsct81Lw";
+            call(TOKEN_TEST_CARGO);
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+function call(token) {
+    request({
+        method: "POST",
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token
+        },
+        url: "https://lifecardtest.viviet.vn/lifecard-app/area/req",
+        body: requestArea
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log('RESPONSE AREA:\n' + JSON.stringify(data)); // Print the google web page.
+        } else {
+            console.log('thua')
+        }
+    });
+}

@@ -612,7 +612,7 @@
         });
     });
     $("#btn-confirm").click(function () {
-        alert('SUCCESS');
+        getArea('Nam', 'Nguyen');
     });
     $("#btn-cancel").click(function () {
         console.log('btn-cancel')
@@ -658,6 +658,7 @@
             }
         });
     }
+
     function updateProduct(id, userId, stt) {
         let data = {
             id: id,
@@ -674,6 +675,23 @@
                 alert('cancel ok: ' + JSON.stringify(data));
             }
         });
+    }
+
+    function getArea(areaType, parentCode) {
+        let dataBody = "{areaType: " + areaType + ", parentCode:" + parentCode + " }";
+        let dataBodyBase64 = {dataBody: btoa(dataBody)};
+        console.log(dataBodyBase64);
+        $.ajax({
+            type: "POST",
+            url: "/area",
+            contentType: "application/json",
+            data: JSON.stringify(dataBodyBase64),
+            success: function (dataBodyBase64) {
+                console.log(dataBodyBase64)
+            }
+        });
+
+
     }
 </script>
 </body>
