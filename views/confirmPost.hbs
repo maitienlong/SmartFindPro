@@ -612,7 +612,7 @@
         });
     });
     $("#btn-confirm").click(function () {
-        getArea('Nam', 'Nguyen');
+        getArea("P", "");
     });
     $("#btn-cancel").click(function () {
         console.log('btn-cancel')
@@ -678,16 +678,21 @@
     }
 
     function getArea(areaType, parentCode) {
-        let dataBody = "{areaType: " + areaType + ", parentCode:" + parentCode + " }";
-        let dataBodyBase64 = {dataBody: btoa(dataBody)};
+        let dataBody = {areaType: areaType, parentCode: parentCode};
+        let dataBodyBase64 = {dataBody: btoa(JSON.stringify(dataBody))};
         console.log(dataBodyBase64);
         $.ajax({
             type: "POST",
             url: "/area",
             contentType: "application/json",
             data: JSON.stringify(dataBodyBase64),
-            success: function (dataBodyBase64) {
-                console.log(dataBodyBase64)
+            success: function (res) {
+                if (!res) {
+                    alert('KHÔNG THỂ TẢI DỮ LIỆU CÁC ĐỊA CHỈ!');
+                } else {
+                    console.log('res.body: ' + res.body);
+                    let body = atob(res.body);
+                }
             }
         });
 
