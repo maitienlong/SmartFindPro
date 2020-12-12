@@ -360,8 +360,8 @@ app.get('/updateAdAc', async function (request, response) {
 
 app.get('/postManage', async function (request, response) {
     const PostManage = require('./model/confirmPost/PostManage');
-    let obj = await getArea('P', '');
-    console.log('object: ' + obj);
+    //  let obj = await getArea('P', '');
+    //console.log('object: ' + obj);
     var allProduct = await Product.find({
         deleteAt: ''
     }).populate(['address', 'product'])
@@ -406,7 +406,6 @@ app.get('/postManage', async function (request, response) {
         })
         .lean();
     let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-
     response.render('postManage', {
         data: data
     });
@@ -461,6 +460,7 @@ app.get('/confirmPost', async function (request, response) {
             admin: nameDN,
             date: today
         }
+        console.log(JSON.stringify(product[0].address));
         response.render('confirmPost', {
             info: info,
             product: product[0],
@@ -527,26 +527,34 @@ app.post('/postUpdateUserPass', async function (request, response) {
 
 //post anh
 app.post("/upload-photo", multer({storage: storage}).single('photo'), function (req, res) {
-
-    var jsonResult = [];
-    jsonResult.push(req.file.path)
-
-    return res.status(200).json({
-        addressImage: jsonResult
-    })
+    let name = 'UPLOAD-PHOTO';
+    try {
+        var jsonResult = [];
+        jsonResult.push(req.file.path)
+        console.log(jsonResult)
+        return res.status(200).json({
+            addressImage: jsonResult
+        })
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
 });
 
 app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), function (req, res) {
-
-    var jsonResult = [];
-
-    for (var i in req.files) {
-        jsonResult.push(req.files[i].path)
+    let name = 'UPLOAD-PHOTO-ARRAY';
+    try {
+        var jsonResult = [];
+        console.log(req.files)
+        for (var i in req.files) {
+            jsonResult.push(req.files[i].path)
+        }
+        let res_body = {addressImage: jsonResult}
+        return res.status(200).json(getResponse(name, 200, sttOK, res_body))
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-
-    return res.status(200).json({
-        addressImage: jsonResult
-    })
 });
 
 // trả về dữ liệu trong database
@@ -1120,17 +1128,11 @@ app.post('/confirm-product', async function (request, response) {
         let utilities = request.body.utilities;
         let category = request.body.category;
         let information = request.body.information;
-        let mAddress = request.body.address;
-        let content = request.body.content;
-        let linkProduct = 'chua co link';
         if (checkData(userId) &&
             checkData(id) &&
             checkData(utilities) &&
             checkData(category) &&
-            checkData(information) &&
-            checkData(mAddress) &&
-            checkData(content) &&
-            checkData(linkProduct)) {
+            checkData(information)) {
             try {
                 let user = await User.find({_id: userId}).lean();
                 try {
@@ -1142,28 +1144,11 @@ app.post('/confirm-product', async function (request, response) {
                             information: information,
                             utilities: utilities
                         });
-                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
-                            provinceCity: mAddress.provinceCity,
-                            districtsTowns: mAddress.districtsTowns,
-                            communeWardTown: mAddress.communeWardTown,
-                            detailAddress: mAddress.detailAddress,
-                            location: {
-                                latitude: mAddress.location.latitude,
-                                longitude: mAddress.location.longitude
-                            }
-                        });
                         // update data vao bang chinh
                         let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
                         let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                            product: product._id,
-                            address: address._id,
-                            user: oldProduct.user,
-                            content: content,
-                            status: oldProduct.status,
-                            createAt: oldProduct.createAt,
-                            updateAt: updateAt,
-                            deleteAt: oldProduct.deleteAt,
-                            linkProduct: oldProduct.linkProduct
+                            status: '1',
+                            updateAt: updateAt
                         })
                         response.json(getResponse(name, 200, sttOK, null))
                     } catch (e) {
@@ -1320,7 +1305,7 @@ async function getArea(areaType, parentCode) {
             },
             url: "https://lifecardtest.viviet.vn/lifecard-app/area/req",
             body: requestArea
-        }, function (error, res, body) {
+        }, await function (error, res, body) {
             if (!error && res.statusCode == 200) {
                 let bodyJSON = JSON.parse(buffer.from(JSON.stringify(body.body), 'base64').toString('utf8'));
                 listArea = bodyJSON.listArea;

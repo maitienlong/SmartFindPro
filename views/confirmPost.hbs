@@ -69,18 +69,17 @@
                         <td>
                             <input class="form-control"
                                    value="{{product.address.detailAddress}}, {{product.address.communeWardTown}}, {{product.address.districtsTowns}}, {{product.address.provinceCity}}"
-                                   type="text" id="idAddress"
-                                   placeholder="Nhập địa chỉ ..." disabled>
-                            <div class="d-flex flex-row-reverse">
-                                <div class="p-2">
-                                    <button id="updateAddress" type="button" class="btn btn-success">Sửa
-                                    </button>
-                                </div>
-                                <div class="p-2">
-                                    <button id="cancelUpdateAddress" type="button" class="btn btn-primary">Hủy
-                                    </button>
-                                </div>
-                            </div>
+                                   type="text" id="idAddress" placeholder="Nhập địa chỉ ..." disabled>
+                            <!--                            <div class="d-flex flex-row-reverse">-->
+                            <!--                                <div class="p-2">-->
+                            <!--                                    <button id="updateAddress" type="button" class="btn btn-success">Sửa-->
+                            <!--                                    </button>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="p-2">-->
+                            <!--                                    <button id="cancelUpdateAddress" type="button" class="btn btn-primary">Hủy-->
+                            <!--                                    </button>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </td>
                     </tr>
                     <tr>
@@ -91,7 +90,7 @@
                                 <tr>
                                     <th scope="col" style="width: 30%">Loại</th>
                                     <td scope="col">
-                                        <select id="slType" class="form-control" disabled>
+                                        <select name="type" id="slType" class="form-control" disabled>
                                             <option value="Ở GHÉP">Ở ghép</option>
                                             <option value="CHUNG CƯ">Chung cư</option>
                                             <option value="NGUYÊN CĂN">Nguyên căn</option>
@@ -115,7 +114,8 @@
                                     <th scope="col" style="width: 30%">Số người</th>
                                     <td scope="col">
                                         <input class="form-control" type="number"
-                                               value="{{product.product.information.amountPeople}}" id="idAmountPeople"
+                                               value="{{product.product.information.amountPeople}}"
+                                               id="idAmountPeople"
                                                min="1"
                                                max="100" disabled>
                                         <div class="d-flex flex-row-reverse">
@@ -135,7 +135,7 @@
                                 <tr>
                                     <th scope="col" style="width: 30%">Giới tính</th>
                                     <td scope="col">
-                                        <select id="slGender" class="form-control" disabled>
+                                        <select name="gender" id="slGender" class="form-control" disabled>
                                             <option value="NAM">Nam</option>
                                             <option value="NỮ">Nữ</option>
                                             <option value="TẤT CẢ">Tất cả</option>
@@ -159,8 +159,9 @@
                                     <td scope="col">
                                         <div id="idDivUtilities">
                                             {{#each utilities}}
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="cb-{{this.id}}" checked>
+                                                <input name="utilities" class="form-check-input" type="checkbox"
+                                                       value="{{this.utilities}}"
+                                                       id="cb-{{this.id}}">
                                                 <label class="form-check-label" for="cb-{{this.id}}">
                                                     {{this.utilities}}
                                                 </label>
@@ -318,7 +319,10 @@
                                 {{#each images}}
                                     <tr id='tr-{{this.id}}'>
                                         <td style="width: 80%">
-                                            <img id="image-{{this.id}}" width="250px" height="250px"
+                                            <img name="image-product"
+                                                 id="image-{{this.id}}"
+                                                 width="250px"
+                                                 height="250px"
                                                  src="http://128.199.99.9:9090/{{this.path}}" alt="{{this.path}}">
                                         </td>
                                         <td style="width: 20%">
@@ -328,14 +332,7 @@
                                         </td>
                                     </tr>
                                 {{/each}}
-                                <div>
-                                    <!--                                    <form action="http://128.199.99.9:9090/upload-photo-array" method="post"-->
-                                    <!--                                          enctype="multipart/form-data">-->
-                                    <!--                                        <input onchange="readURL(this);" type="file" name="photo" id="ipChangeImage"-->
-                                    <!--                                               multiple="multiple">-->
-                                    <!--                                        <input type="submit" value="Thêm ảnh" class="btn btn-primary">-->
-                                    <!--                                    </form>-->
-
+                                <div style="display: none">
                                     <div style="margin-bottom: 10px" class="custom-file">
 
                                         <input type="file" class="custom-file-input" id="ipChangeImage"
@@ -357,7 +354,8 @@
             <div class='row justify-content-center'>
                 <div class="row mx-lg-n5">
                     <div class=" py-3 px-lg-5  bg-light">
-                        <button id="btn-confirm" type="button" class="btn btn-success">Xác nhận duyệt</button>
+                        <button id="btn-confirm" type="button" class="btn btn-success">Xác nhận duyệt
+                        </button>
                     </div>
                     <div class=" py-3 px-lg-5  bg-light">
                         <button id="btn-cancel" type="button" class="btn btn-danger">Từ chối duyệt</button>
@@ -365,7 +363,30 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+             aria-labelledby="titleDialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="titleDialog">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="contentDialog" class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelDialog" type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                        </button>
+                        <button id="successDialog" type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -378,7 +399,31 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script>
+    let titleStt = 'Thông báo';
+    let content = '';
+    let titleOK = '';
+    let titleCancel = '';
     $(document).ready(function () {
+        try {
+            let user = '{{product.user._id}}';
+            console.log('userId: ' + user)
+            if (user._id === '') {
+                content = 'Không thể thao tác với bài đăng này. Tài khoản đăng bài đã bị xóa!';
+                titleOK = 'Trở lại';
+                showDialog(titleStt, content, titleOK);
+                $('#successDialog').click(function () {
+                    location.href = 'index';
+                });
+            }
+        } catch (e) {
+            content = 'Không thể thao tác với bài đăng này. Tài khoản đăng bài đã bị xóa!';
+            titleOK = 'Trở lại';
+            showDialog(titleStt, content, titleOK);
+            $('#successDialog').click(function () {
+                location.href = 'index';
+            });
+        }
+
         let status = "{{product.status}}";
         console.log('status: ' + status);
         let date = "{{info.date}}";
@@ -388,81 +433,28 @@
             $('button').css("display", "none");
             $('input[type=checkbox]').attr('disabled', 'true');
         }
+        try {
+            let utilitiesArray = [];
+            let utilities = '{{product.product.utilities}}';
+            let trainindIdArray = utilities.split(',');
+            $.each(trainindIdArray, function (index, value) {
+                utilitiesArray.push({id: index, utilities: value})
+            });
+            $('input[type=checkbox]').each(function () {
+                for (let i = 0; i < utilitiesArray.length; i++) {
+                    let thisVal = this.value.toUpperCase().trim();
+                    let indexVal = utilitiesArray[i].utilities.toUpperCase().trim();
+                    if (indexVal === thisVal) {
+                        this.checked = true;
+                    }
+                }
+            });
+        } catch (e) {
+            console.log('ERROR: load Utilities')
+        }
     });
-
-    //function
-    function initImages(idTable, id, path, name) {
-        console.log('idTable: ' + idTable)
-        console.log('id: ' + id)
-        console.log('path: ' + path)
-
-        $("#" + idTable).find('tbody')
-                .append($('<tr>')
-                        .attr('id', id)
-                        .append($('<td>')
-                                        .attr('style', 'width: 80%')
-                                        .append($('<img>')
-                                                .attr('src', path)
-                                                .attr('width', '250px')
-                                                .attr('height', '250px')
-                                                .attr('id', 'image-' + path)
-                                                .attr('alt', name)
-                                        ),
-                                $('<td>')
-                                        .attr('style', 'width: 20%')
-                                        .append($('<button>')
-                                                .attr('type', 'button')
-                                                .attr('class', 'btn btn-primary')
-                                                .text('Xóa ảnh')
-                                                .on('click', function () {
-                                                    deleteImage(id)
-                                                })
-                                        )
-                        )
-                );
-    }
-
-    function getExtension(filename) {
-        let parts = filename.split('.');
-        return parts[parts.length - 1];
-    }
-
-    function isImage(filename) {
-        let ext = getExtension(filename);
-        switch (ext.toLowerCase()) {
-            case 'jpg':
-            case 'gif':
-            case 'bmp':
-            case 'png':
-                //etc
-                return true;
-        }
-        return false;
-    }
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            if (isImage(input.files[0].name)) {
-                reader.onload = function (e) {
-                    var rowCount = $('#table-images tr').length;
-                    initImages('table-images', 'tr-' + rowCount, e.target.result, input.files[0].name)
-
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                alert('File không phải là ảnh!')
-            }
-        }
-    }
-
-    function deleteImage(id) {
-        console.log('del: ' + id)
-        $("#" + id).remove();
-    }
-
     //set data
-    let address = "{{product.user.address.detailAddress}}, " + "{{product.user.address.communeWardTown}}, " + "{{product.user.address.districtsTowns}}, " + "{{product.user.address.provinceCity}}";
+    let address = "{{product.address.detailAddress}}, " + "{{product.address.communeWardTown}}, " + "{{product.product.districtsTowns}}, " + "{{product.address.provinceCity}}";
     $("#idAddress").val(address);
     let category = "{{product.product.category}}"
     $("#slType").val(category.toUpperCase());
@@ -546,6 +538,11 @@
                                         .text(text),
                                 $('<br>')
                         );
+
+            $("#idUtilities").attr('disabled', 'true')
+                    .css("display", "none")
+                    .val("");
+            $("#cancelUtilities").css("display", "none");
         } else {
             $("#idUtilities").css("display", "block");
             $("#cancelUtilities").css("display", "block");
@@ -611,8 +608,40 @@
             'disabled': 'disabled'
         });
     });
+    //confirm product
     $("#btn-confirm").click(function () {
-        getArea("P", "");
+        let dataUpdate = getDataUpdate();
+        $.ajax({
+            type: "POST",
+            url: "/confirm-product",
+            contentType: "application/json",
+            data: JSON.stringify(dataUpdate),
+            success: function (res) {
+                if (!res) {
+                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
+                    titleOK = 'Trở lại';
+                    $('#successDialog').click(function () {
+                        location.href = 'index';
+                    });
+                } else {
+                    let resCode = res.response_header.res_code;
+                    if (resCode == 200) {
+                        content = 'Duyệt dữ liệụ thành công!';
+                        titleOK = 'Trở lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'postManage';
+                        });
+                    } else {
+                        content = 'Duyệt dữ liệu thất bại. Vui lòng thử lại sau!';
+                        titleOK = 'Thử lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'postManage';
+                        });
+                    }
+                }
+                showDialog(titleStt, content, titleOK);
+            }
+        });
     });
     $("#btn-cancel").click(function () {
         console.log('btn-cancel')
@@ -623,6 +652,78 @@
             deleteProduct('{{product._id}}', '5fb2073ff69b03b8f8875059');
         }
     });
+
+
+    //function
+    function initImages(idTable, id, path, input) {
+        let name = input.files[0].name;
+        $("#" + idTable).find('tbody')
+                .append($('<tr>')
+                        .attr('id', id)
+                        .append($('<td>')
+                                        .attr('style', 'width: 80%')
+                                        .append($('<img>')
+                                                .attr('src', path)
+                                                .attr('width', '250px')
+                                                .attr('height', '250px')
+                                                .attr('id', 'image-' + path)
+                                                .attr('alt', name)
+                                                .attr('name', 'image-product')
+                                        ),
+                                $('<td>')
+                                        .attr('style', 'width: 20%')
+                                        .append($('<button>')
+                                                .attr('type', 'button')
+                                                .attr('class', 'btn btn-primary')
+                                                .text('Xóa ảnh')
+                                                .on('click', function () {
+                                                    deleteImage(id);
+                                                })
+                                        )
+                        )
+                );
+    }
+
+    function getExtension(filename) {
+        let parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
+
+    function isImage(filename) {
+        let ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+            case 'gif':
+            case 'bmp':
+            case 'png':
+                //etc
+                return true;
+        }
+        return false;
+    }
+
+    function readURL(input) {
+        if (input.files) {
+            let len = input.files.length;
+            for (let i = 0; i < len; i++) {
+                let reader = new FileReader();
+                if (isImage(input.files[i].name)) {
+                    reader.onload = function (e) {
+                        var rowCount = $('#table-images tr').length;
+                        initImages('table-images', 'tr-' + rowCount, e.target.result, input)
+                    };
+                    reader.readAsDataURL(input.files[i]);
+                } else {
+                    alert('File không phải là ảnh!')
+                }
+            }
+        }
+    }
+
+    function deleteImage(id) {
+        console.log('del: ' + id);
+        $("#" + id).remove();
+    }
 
     function deleteProduct(id, userId) {
         let data = {
@@ -647,14 +748,36 @@
             userId: userId,
             status: stt
         }
-        console.log(data)
+        console.log(data);
         $.ajax({
             type: "POST",
             url: "/cancel-product",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function (data) {
-                alert('cancel ok: ' + JSON.stringify(data));
+            success: function (res) {
+                if (!res) {
+                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
+                    titleOK = 'Trở lại';
+                    $('#successDialog').click(function () {
+                        location.href = 'index';
+                    });
+                } else {
+                    let resCode = res.response_header.res_code;
+                    if (resCode == 200) {
+                        content = 'Duyệt dữ liệụ thành công!';
+                        titleOK = 'Trở lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'postManage';
+                        });
+                    } else {
+                        content = 'Duyệt dữ liệu thất bại. Vui lòng thử lại sau!';
+                        titleOK = 'Thử lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'index';
+                        });
+                    }
+                }
+                showDialog(titleStt, content, titleOK);
             }
         });
     }
@@ -695,8 +818,94 @@
                 }
             }
         });
+    }
 
+    function getDataUpdate() {
+        //lay thong tin duyet
+        let idAdmin = 1;
+        let timeConfirm = $('#date-success').val();
+        //lay thong tin nguoi dang bai
+        let userId = '{{product.user._id}}';
 
+        //dia chi
+        let address = $('#idAddress').val();
+        //loai
+        let type = $('select[name=type] option').filter(':selected').val();
+        //songuoi
+        let amountPeople = $('#idAmountPeople').val();
+        //gioitinh
+        let gender = $('select[name=gender] option').filter(':selected').val();
+        //tienich
+        let utilities = [];
+        $('input[name=utilities]:checked').each(function () {
+            utilities.push(this.value);
+        });
+        //giaphong
+        let price = $('#idPrice').val();
+        //tien coc
+        let deposit = $('#idDeposit').val();
+        //tien dien
+        let electricPrice = $('#idElectric').val();
+        //tien nuoc
+        let waterPrice = $('#idWater').val();
+        //noi dung
+        let describe = $('#txtDescribe').val();
+        //anh
+        let image = [];
+        $('img[name=image-product]').each(function () {
+            let src = this.src;
+            if (src.match("http://128.199.99.9:9090/")) {
+                src = src.split("http://128.199.99.9:9090/");
+            } else {
+                console.log('update later!')
+                // try {
+                //     $.ajax({
+                //         type: "POST",
+                //         url: "/upload-photo-array",
+                //         contentType: "application/json",
+                //         data: "fd",
+                //         contentType: false,
+                //         processData: false,
+                //         success: function (res) {
+                //             if (!res) {
+                //                 console.log('upload image fail')
+                //             } else {
+                //                 console.log('upload image success \n' + JSON.stringify(res));
+                //             }
+                //         }
+                //     });
+                // } catch (e) {
+                //     console.log('loine: ' + e)
+                // }
+            }
+            image.push(src[1]);
+        });
+        let information = {
+            amountPeople: amountPeople,
+            deposit: deposit,
+            describe: describe,
+            electricBill: electricPrice,
+            gender: gender,
+            price: price,
+            waterBill: waterPrice,
+            image: image
+        }
+        let dataUpdate = {
+            id: '{{product._id}}',
+            userId: userId,
+            utilities: utilities,
+            category: type,
+            information: information
+        }
+        return dataUpdate
+    }
+
+    function showDialog(title, content, titleOK) {
+        $('#dialog').modal('show');
+        $('#titleDialog').text(title);
+        $('#contentDialog').text(content);
+        $('#cancelDialog').css("display", "none");
+        $('#successDialog').text(titleOK);
     }
 </script>
 </body>
