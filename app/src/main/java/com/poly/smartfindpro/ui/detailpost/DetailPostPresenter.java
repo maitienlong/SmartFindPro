@@ -117,7 +117,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         }
         utilitiesDetail.set(tIch);
         contentDetail.set(product.getContent());
-        userNameDetail.set(product.getUser().getUserName());
+        userNameDetail.set(product.getUser().getPhoneNumber());
 
     }
 

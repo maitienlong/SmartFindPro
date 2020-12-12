@@ -80,7 +80,7 @@ public class InforPresenter implements InforContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
+        nameInfor.set(mProfile.getResponseBody().getUser().getPhoneNumber());
         addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
    //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
         phone.set(mProfile.getResponseBody().getUser().getPhoneNumber());
