@@ -12,11 +12,15 @@ public interface FilterProductContact {
         void onClickFilter();
 
         void onShowMsg(String msg);
+
+        void onBackClick();
     }
 
     public interface Presenter {
         void onClickFilter();
 
         void setData(String tieChiLoc, int tieuChiLoc);
+
+        void onBackClick();
     }
 }

@@ -29,6 +29,21 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp">
 
+            <ProgressBar
+
+                android:id="@+id/pb_tientrinh"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_30sdp"
+                android:paddingRight="@dimen/_30sdp"
+                android:progressTint="@color/color_progress_loading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+                app:layout_constraintVertical_bias="0.23000002" />
+
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
@@ -139,20 +154,7 @@
 
             </LinearLayout>
 
-            <ProgressBar
 
-                android:id="@+id/pb_tientrinh"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp"
-                android:paddingLeft="@dimen/_30sdp"
-                android:paddingRight="@dimen/_30sdp"
-                android:progressTint="@color/color_progress_loading"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout2"
-                app:layout_constraintVertical_bias="0.23000002" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

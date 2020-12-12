@@ -6,7 +6,7 @@
     <string name="common_cancel">Hủy</string>
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
-    <string name="tv_category">Thể loại:</string>
+    <string name="tv_category">Thể loại</string>
     <string name="btn_pairing">Ở ghép</string>
     <string name="btn_rental_hous">Nhà trọ</string>
     <string name="btn_apartment">Chung cư</string>
@@ -22,12 +22,12 @@
     <string name="tv_electricity_bill">Tiền điện / Tháng:</string>
     <string name="tv_water_bill">Tiền nước / Tháng:</string>
     <string name="btn_continue">Tiếp tục</string>
-    <string name="tv_address">Địa chỉ:</string>
+    <string name="tv_address">Địa chỉ</string>
     <string name="tv_province">Tỉnh/Thành phố </string>
     <string name="tv_district">Huyện/Thị xã </string>
     <string name="tv_commune">Xã/Phường/Thị trấn </string>
     <string name="tv_detail_address">Địa chỉ chi tiết </string>
-    <string name="tv_utilities">Tiện ích:</string>
+    <string name="tv_utilities">Tiện ích</string>
     <string name="tv_wc">Vệ sinh</string>
     <string name="tv_bathroom">Nhà tắm</string>
     <string name="tv_parking">Chỗ để xe </string>

@@ -14,9 +14,9 @@
 
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
@@ -25,6 +25,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/LayoutEditText"
             android:hint="Nhập số điện thoại"
+            android:textColorHint="#000"
             app:counterEnabled="true"
             app:counterMaxLength="10">
 
@@ -37,6 +38,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/LayoutEditText"
             android:hint="Nhập mật khẩu"
+            android:textColorHint="#000"
             app:counterEnabled="true"
             app:counterMaxLength="10">
 
@@ -49,12 +51,12 @@
 
 
         <Button
-            android:onClick="@{()->presenter.sendRequestUser()}"
             android:id="@+id/btn_Action"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@color/background_login"
+            android:onClick="@{()->presenter.sendRequestUser()}"
             android:text="@string/tv_dang_nhap"
             android:textColor="#fff" />
 

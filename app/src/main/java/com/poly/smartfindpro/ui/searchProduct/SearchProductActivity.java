@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -144,6 +147,38 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
     @Override
     public void onResultAdapter(String tag) {
         mPresenter.onResultAdapter(tag);
+    }
+
+    @Override
+    public void onSelectTypeFilter() {
+        PopupMenu popupMenu = new PopupMenu(this, mBinding.typeFilter);
+        popupMenu.inflate(R.menu.menu_choose_type_menu);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.btn_filter_address:
+                        mPresenter.filterAddress();
+                        break;
+                    case R.id.btn_filter_price:
+                        mPresenter.filterPrice();
+                        break;
+                    case R.id.btn_filter_advanced:
+                        mPresenter.filterAdvance();
+                        break;
+                }
+                return false;
+            }
+
+        });
+        popupMenu.show();
+    }
+
+    @Override
+    public void filterAdvance(String jsonData) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.POST_BUNDEL_RES, jsonData);
+        openActivity(FilterProductActivity.class, bundle);
     }
 
     @Override

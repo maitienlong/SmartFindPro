@@ -105,7 +105,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     private void getProductApproved(){
         ProductRequest request = new ProductRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
@@ -135,7 +135,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void getProductPending(){ProductRequest request = new ProductRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override

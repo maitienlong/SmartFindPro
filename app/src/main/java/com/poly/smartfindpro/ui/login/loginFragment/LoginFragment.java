@@ -9,12 +9,13 @@ import android.widget.Toast;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.callback.AlertDialogListener;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 
 
-
 public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, LoginFragmentPresenter> implements LoginFragmentContract.ViewModel {
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_login;
@@ -22,13 +23,17 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     @Override
     protected void initView() {
-
-        mPresenter = new LoginFragmentPresenter(mActivity, this,mBinding);
+        getData();
+        mPresenter = new LoginFragmentPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
-
 
     }
 
+    private void getData() {
+        if(getArguments() != null){
+            mBinding.edtAccountNumber.setText(getArguments().getString(Config.POST_BUNDEL_RES));
+        }
+    }
 
     @Override
     protected void initData() {
@@ -38,28 +43,28 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
     @Override
     public void saveLogin(String username, String password, String token) {
 
-            getBaseActivity().showAlertDialog("Thông báo", "Bạn muốn ghi nhớ đăng nhập", "Có", "Không", true, new AlertDialogListener() {
-                @Override
-                public void onAccept() {
-                    showLoadingDialog();
-                    if (onSaveLogin(username, password, token)) {
-                        Intent intent = new Intent(mActivity, MainActivity.class);
-                        startActivity(intent);
-                        mActivity.finish();
-                    }else {
-                        showMessage("Lưu đăng nhập không thành công !");
-                    }
-
-                }
-
-                @Override
-                public void onCancel() {
-                    showLoadingDialog();
+        getBaseActivity().showAlertDialog("Thông báo", "Bạn muốn ghi nhớ đăng nhập", "Có", "Không", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                showLoadingDialog();
+                if (onSaveLogin(username, password, token)) {
                     Intent intent = new Intent(mActivity, MainActivity.class);
                     startActivity(intent);
                     mActivity.finish();
+                } else {
+                    showMessage("Lưu đăng nhập không thành công !");
                 }
-            });
+
+            }
+
+            @Override
+            public void onCancel() {
+                showLoadingDialog();
+                Intent intent = new Intent(mActivity, MainActivity.class);
+                startActivity(intent);
+                mActivity.finish();
+            }
+        });
 //        }
 
     }
@@ -81,10 +86,10 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     @Override
     public void onClickLogin() {
-        if (mBinding.edtAccountNumber.getText().toString()== ""||mBinding.edtPassword.getText().toString()==""){
+        if (mBinding.edtAccountNumber.getText().toString() == "" || mBinding.edtPassword.getText().toString() == "") {
             showMessage("vui long");
             Toast.makeText(mActivity, "vui long", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
         }
     }

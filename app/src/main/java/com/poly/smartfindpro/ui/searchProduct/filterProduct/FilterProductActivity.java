@@ -272,5 +272,10 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         showMessage(msg);
     }
 
+    @Override
+    public void onBackClick() {
+        finish();
+    }
+
 
 }

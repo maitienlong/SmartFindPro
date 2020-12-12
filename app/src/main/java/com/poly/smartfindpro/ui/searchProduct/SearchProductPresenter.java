@@ -7,8 +7,11 @@ import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
@@ -40,15 +43,20 @@ import retrofit2.Response;
 public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     private Context mContext;
+
     private SearchProductContract.ViewModel mViewModel;
 
     public ObservableField<String> title;
+
+    public ObservableField<String> hint;
 
     public ObservableField<String> key;
 
     private List<Products> mListProduct;
 
     private ActivitySearchProductBinding mBinding;
+
+    private int type = 1;
 
     public SearchProductPresenter(Context context, SearchProductContract.ViewModel viewModel, ActivitySearchProductBinding binding) {
         mContext = context;
@@ -59,6 +67,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     private void initData() {
         key = new ObservableField<>();
+        hint = new ObservableField<>();
         getProduct();
     }
 
@@ -99,27 +108,49 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
         });
     }
 
-    private void onSearchProduct(String key) {
-        List<Products> mListAddress = new ArrayList<>();
+    private void onSearchProduct(int type, String key) {
+        if (type == 1) {
+            List<Products> mListAddress = new ArrayList<>();
 
-        for (Products item : mListProduct) {
-            String address = item.getAddress().getDetailAddress() +", "+ item.getAddress().getCommuneWardTown() + ", "+ item.getAddress().getDistrictsTowns() +", "+ item.getAddress().getProvinceCity();
-            if (address.toLowerCase().contains(key)) {
-                mListAddress.add(item);
+            for (Products item : mListProduct) {
+                String address = item.getAddress().getDetailAddress() + ", " + item.getAddress().getCommuneWardTown() + ", " + item.getAddress().getDistrictsTowns() + ", " + item.getAddress().getProvinceCity();
+                if (address.toLowerCase().contains(key)) {
+                    mListAddress.add(item);
+                }
+            }
+
+            if (!mListAddress.isEmpty()) {
+                mViewModel.onShow(mListAddress);
+            } else {
+                mViewModel.showMessage("Không có kết quả nào !");
+            }
+        } else if (type == 2) {
+            List<Products> mListAddress = new ArrayList<>();
+
+            for (Products item : mListProduct) {
+                if (item.getProduct().getInformation().getPrice() < Integer.valueOf(key)) {
+                    mListAddress.add(item);
+                }
+            }
+
+            if (!mListAddress.isEmpty()) {
+                mViewModel.onShow(mListAddress);
+            } else {
+                mViewModel.showMessage("Không có kết quả nào !");
             }
         }
 
-        if(!mListAddress.isEmpty()){
-            mViewModel.onShow(mListAddress);
-        }else {
-            mViewModel.showMessage("Không có kết quả nào !");
-        }
 
     }
 
     @Override
     public void onSearch() {
-        onSearchProduct(mBinding.edtSearch.getText().toString());
+
+        if(mBinding.edtSearch.getText().toString().isEmpty()){
+            getProduct();
+        }else {
+            onSearchProduct(type, mBinding.edtSearch.getText().toString());
+        }
     }
 
     @Override
@@ -144,5 +175,26 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
         }
 
         mViewModel.onShowResult(mListChoose, 1);
+    }
+
+    public void onSelectTypeFilter() {
+        mViewModel.onSelectTypeFilter();
+    }
+
+    @Override
+    public void filterAddress() {
+        type = 1;
+        hint.set("Nhập địa chỉ tìm kiếm");
+    }
+
+    @Override
+    public void filterPrice() {
+        type = 2;
+        hint.set("Nhập số tiền lớn nhất");
+    }
+
+    @Override
+    public void filterAdvance() {
+        mViewModel.filterAdvance(new Gson().toJson(mListProduct));
     }
 }

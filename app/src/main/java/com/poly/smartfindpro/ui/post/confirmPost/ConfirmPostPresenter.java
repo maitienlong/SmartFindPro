@@ -173,7 +173,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 } else {
                     mViewModel.hideLoading();
 
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng bài viết không thành công");
+                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) +" - Code: " +response.code()+" - msg: Đăng bài viết không thành công");
 
                     Log.d("postProduct", response.code() + " - " + response.message());
 
@@ -183,6 +183,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
             @Override
             public void onFailure(Call<PostResponse> call, Throwable t) {
                 mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng bài viết không thành công");
+                Log.d("CheckUpLoadImage", t.toString());
                 mViewModel.hideLoading();
             }
         });
@@ -216,6 +217,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 @Override
                 public void onFailure(Call<ResImagePost> call, Throwable t) {
                     mViewModel.hideLoading();
+                    Log.d("CheckUpLoadImage", t.toString());
                     mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
                 }
             });
@@ -246,6 +248,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 @Override
                 public void onFailure(Call<ResImagePost> call, Throwable t) {
                     mViewModel.hideLoading();
+                    Log.d("CheckUpLoadImage", t.toString());
                     mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
                 }
             });

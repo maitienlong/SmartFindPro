@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
@@ -54,14 +55,11 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
 
     @Override
     public void onClickRegister() {
-        if (mBinding.edtPassword.getText().toString().equals("") && mBinding.edtConfirmPassword.getText().toString().equals("") && mBinding.edtUserName.getText().toString().equals("")) {
+        if (mBinding.edtPassword.getText().toString().equals("") && mBinding.edtConfirmPassword.getText().toString().equals("")) {
             mViewModel.showMessage("Vui lòng nhập đủ thông tin");
 
         } else {
             getRegister();
-            mViewModel.showMessage("đăng ký thành công! Vui lòng đăng nhập để tiếp tục");
-
-
         }
 
     }
@@ -69,9 +67,7 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
     private void getRegister() {
         mViewModel.showLoading();
         registerRequest.setPassword(mBinding.edtPassword.getText().toString());
-
-
-        registerRequest.setFullName(mBinding.edtUserName.getText().toString());
+        registerRequest.setFullName(registerRequest.getPhoneNumber());
 
         MyRetrofitSmartFind.getInstanceSmartFind().getRegister(registerRequest).enqueue(new Callback<RegisterResponse>() {
             @Override
@@ -79,11 +75,10 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
 
                 if (response.code() == 200 && response.body().getResponseHeader().getResMessage().equals("Succsess")) {
                     mViewModel.hideLoading();
-                    Log.d("checkRegister", String.valueOf(response.body().getResponseHeader().getResMessage()));
-
+                    mViewModel.onGoToLogin(registerRequest.getPhoneNumber());
                 } else {
                     mViewModel.hideLoading();
-
+                    mViewModel.showMessage("Tài khoản đã được đăng ký trước đó");
                 }
 
             }
@@ -92,6 +87,7 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
                 mViewModel.hideLoading();
+                mViewModel.showMessage(context.getString(R.string.services_not_avail));
             }
         });
     }

@@ -142,8 +142,7 @@
                                             android:layout_width="@dimen/_150sdp"
                                             android:layout_height="@dimen/_35sdp"
                                             android:background="@drawable/custom_edt_change_pass"
-                                            android:inputType="number"
-                                            android:text="1" />
+                                            android:inputType="number" />
 
 
                                     </com.google.android.material.textfield.TextInputLayout>
@@ -167,22 +166,26 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="@dimen/_20sdp"
                                         android:layout_marginTop="@dimen/_8sdp" />
+
                                     <LinearLayout
-                                        android:orientation="horizontal"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
                                         <TextView
                                             style="@style/textStyleAlert_12dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="20dp"
                                             android:text="Giá từ:  " />
+
                                         <TextView
                                             style="@style/textStyleAlert_12dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="20dp"
                                             android:text="1.000.000  - " />
+
                                         <TextView
                                             android:id="@+id/tv_maxTien"
                                             style="@style/textStyleAlert_12dp"
@@ -191,7 +194,6 @@
                                             android:layout_marginTop="20dp"
                                             android:text="0" />
                                     </LinearLayout>
-
 
 
                                 </LinearLayout>
@@ -290,8 +292,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:background="@drawable/custom_edt_change_pass"
-                                                    android:inputType="number"
-                                                    android:text="1" />
+                                                    android:inputType="number" />
                                             </com.google.android.material.textfield.TextInputLayout>
 
                                             <TextView
@@ -339,8 +340,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:background="@drawable/custom_edt_change_pass"
-                                                    android:inputType="number"
-                                                    android:text="1" />
+                                                    android:inputType="number" />
 
 
                                             </com.google.android.material.textfield.TextInputLayout>

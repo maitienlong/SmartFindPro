@@ -30,6 +30,8 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
 
     private List<Products> mListResult;
 
+    public ObservableField<String> title;
+
     public FilterProductPresenter(Context mContext, FilterProductContact.ViewModel mViewModel, ActivityFilterProductBinding mBinding) {
         this.mContext = mContext;
         this.mViewModel = mViewModel;
@@ -40,6 +42,7 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
     private void initData() {
         mListProduct = new ArrayList<>();
         mListResult = new ArrayList<>();
+        title = new ObservableField<>("Tìm kiếm nâng cao");
     }
 
     public void setProducts(List<Products> products) {
@@ -183,5 +186,10 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
         mListResult.addAll(mListChoose);
         mViewModel.onShow(mListResult);
 
+    }
+
+    @Override
+    public void onBackClick() {
+        mViewModel.onBackClick();
     }
 }

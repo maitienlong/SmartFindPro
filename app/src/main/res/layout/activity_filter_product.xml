@@ -23,6 +23,8 @@
         android:orientation="vertical">
 
         <com.poly.smartfindpro.widget.CommonToolbar
+            title="@{presenter.title}"
+            onBackClick="@{()-> presenter.onBackClick()}"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
 

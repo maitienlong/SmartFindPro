@@ -19,6 +19,10 @@ public interface SearchProductContract {
         void onShowResult(List<Products> productsList, int code);
 
         void onResultAdapter(String tag);
+
+        void onSelectTypeFilter();
+
+        void filterAdvance(String jsonData);
     }
 
     interface Presenter extends BasePresenter {
@@ -28,5 +32,13 @@ public interface SearchProductContract {
         void onDataCallBackMap(String tag);
 
         void onResultAdapter(String tag);
+
+        void onSelectTypeFilter();
+
+        void filterAddress();
+
+        void filterPrice();
+
+        void filterAdvance();
     }
 }

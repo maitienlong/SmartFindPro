@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
@@ -199,11 +200,11 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
         postRequest.setCategory(category);
         postRequest.setInformation(information);
-       if(imageListPath != null && imageListPath.size() > 0){
-           onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath));
-       }else {
-           showMessage("Bạn phải có ít nhất 1 ảnh");
-       }
+        if (imageListPath != null && imageListPath.size() > 0) {
+            onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath));
+        } else {
+            showMessage("Bạn phải có ít nhất 1 ảnh");
+        }
 
 
     }
@@ -296,7 +297,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
     public void onNext(String jsonData, String jsonPhoto) {
         Log.d("CheckLog", jsonData);
-        Log.d("CheckLog", jsonPhoto);
+        Log.d("CheckLogPhoto", jsonPhoto);
 
         Bundle bundle = new Bundle();
 
@@ -329,9 +330,9 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
     public void onShowPhoto() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-               mActivity.requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
+                ActivityCompat.requestPermissions(mActivity, permissions, MY_PERMISSIONS_REQUEST);
             } else {
                 showImageGallery();
             }
