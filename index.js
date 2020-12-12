@@ -12,6 +12,10 @@ const Handlebars = require('handlebars');
 const buffer = require('buffer').Buffer;
 
 //anh xa model
+
+const confirmPostSchema = require('./model/ConfirmPostSchema');
+const ConfirmPost = db.model('ConfirmPost', confirmPostSchema, 'confirmPost');
+
 const postSchema = require('./model/PostSchema');
 const Product = db.model('Product', postSchema, 'products');
 
@@ -19,7 +23,7 @@ const userSchema = require('./model/UserSchema');
 const User = db.model('User', userSchema, 'users');
 
 const adminSchema = require('./model/AdminSchema');
-const Admin = db.model('Admin', adminSchema, 'admins');
+const Admin = db.model('Admin', adminSchema, 'admin');
 
 const addressSchema = require('./model/AddressSchema');
 const Address = db.model('Address', addressSchema, 'address');
@@ -192,7 +196,7 @@ app.get('/index', async function (request, response) {
     }
 
     let admins = await Admin.find({username: user, password: pass}).lean();   //dk
-
+    console.log(admins);
     if (admins.length <= 0 && sm == 1) {
         response.render('login', {
             status: 'block',
@@ -573,19 +577,30 @@ app.post('/login', async function (request, response) {
         let password = request.body.password;
         if (checkData(account) &&
             checkData(password)) {
-            try {
-                let userByPhone = await User.find({
-                    phone_number: account,
-                    password: password
-                }).populate(['address']).lean();
-                if (userByPhone.length > 0) {
-                    let res_body = {type: 'PHONE_NUMBER', user: userByPhone[0]}
+            let userByPhone = await User.find({
+                phone_number: account,
+                password: password
+            }).populate(['address']).lean();
+
+            if (userByPhone.length > 0) {
+                userByPhone = userByPhone[0];
+                if (userByPhone) {
+                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let confirm = await ConfirmPost({
+                        product: id,
+                        admin: null,
+                        user: userByPhone,
+                        status: 'LOGIN',
+                        createAt: createAt
+                    });
+                    let confirPrd = await confirm.save();
+
+                    let res_body = {type: 'PHONE_NUMBER', user: userByPhone}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
-                    response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
+                    response.json(getResponse(name, 200, 'Fail', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            } else {
                 response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
             }
         } else {
@@ -597,24 +612,21 @@ app.post('/login', async function (request, response) {
     }
 });
 
-//tim kiem nguoi dung
-app.post('/find-user', async function (request, response) {
-    let name = 'FIND-USER'
+// kiem tra so dien thoai
+app.post('/check-phone-number', async function (request, response) {
+    let name = 'CHECK-PHONE-NUMBER'
     try {
-        let id = request.body.id;
-        if (checkData(id)) {
-            try {
-                let user = await User.find({_id: id}).populate(['address']).lean();
-
-                if (user.length <= 0) {
-                    response.json(getResponse(name, 404, 'User not found', null))
+        let phoneNumber = request.body.phoneNumber;
+        if (checkData(phoneNumber)) {
+            if (phonenumber(phoneNumber) == true) {
+                let user = await User.find({phone_number: phoneNumber}).lean();
+                if (user.length > 0) {
+                    response.json(getResponse(name, 200, 'Fail', null))
                 } else {
-                    let res_body = {user: user[0]}
-                    response.json(getResponse(name, 200, sttOK, res_body))
+                    response.json(getResponse(name, 200, sttOK, null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'User not found', null))
+            } else {
+                response.json(getResponse(name, 200, 'Not a phone number', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -624,27 +636,23 @@ app.post('/find-user', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-// kiem tra so dien thoai
-app.post('/check-phone-number', async function (request, response) {
-    let name = 'CHECK-PHONE-NUMBER'
+//tim kiem nguoi dung
+app.post('/find-user', async function (request, response) {
+    let name = 'FIND-USER'
     try {
-        let phoneNumber = request.body.phoneNumber;
-        if (checkData(phoneNumber)) {
-            if (phonenumber(phoneNumber) == true) {
-                try {
-                    let user = await User.find({phone_number: phoneNumber}).lean();
-                    console.log(user)
-                    if (user.length > 0) {
-                        response.json(getResponse(name, 200, 'Fail', null))
-                    } else {
-                        response.json(getResponse(name, 200, sttOK, null))
-                    }
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
+        let id = request.body.id;
+        if (checkData(id)) {
+            let user = await User.find({_id: id}).populate(['address']).lean();
+            if (user.length > 0) {
+                user = user[0];
+                if (user) {
+                    let res_body = {user: user}
+                    response.json(getResponse(name, 200, sttOK, res_body))
+                } else {
                     response.json(getResponse(name, 200, 'Fail', null))
                 }
             } else {
-                response.json(getResponse(name, 200, 'Not a phone number', null))
+                response.json(getResponse(name, 404, 'User not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -664,37 +672,36 @@ app.post('/init-user', async function (request, response) {
         if (checkData(fullName) &&
             checkData(password) &&
             checkData(phoneNumber)) {
-            try {
-                let newProductAddress = new Address({
-                    provinceCity: "Hà Nội",
-                    districtsTowns: "Ba Đình",
-                    communeWardTown: "Điện Bàn",
-                    detailAddress: "2 Hùng Vương",
-                    location: {
-                        latitude: "21.0228161",
-                        longitude: "105.8019438"
-                    }
-                });
-                let address = await newProductAddress.save();
-                //luu data vao cac bang phu
-                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                let newUser = new User({
-                    password: password,
-                    address: address._id,
-                    avatar: '',
-                    coverImage: '',
-                    gender: '',
-                    birth: '',
-                    full_name: fullName,
-                    phone_number: phoneNumber,
-                    deleteAt: '',
-                    updateAt: '',
-                    createAt: createAt
-                });
-                let user = await newUser.save();
+            let newProductAddress = new Address({
+                provinceCity: "Hà Nội",
+                districtsTowns: "Ba Đình",
+                communeWardTown: "Điện Bàn",
+                detailAddress: "2 Hùng Vương",
+                location: {
+                    latitude: "21.0228161",
+                    longitude: "105.8019438"
+                }
+            });
+            let address = await newProductAddress.save();
+            //luu data vao cac bang phu
+            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+            let newUser = new User({
+                password: password,
+                address: address._id,
+                avatar: '',
+                coverImage: '',
+                gender: '',
+                birth: '',
+                full_name: fullName,
+                phone_number: phoneNumber,
+                deleteAt: '',
+                updateAt: '',
+                createAt: createAt
+            });
+            let user = await newUser.save();
+            if (address && user) {
                 response.json(getResponse(name, 200, sttOK, null))
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            } else {
                 response.json(getResponse(name, 200, 'Fail', null))
             }
         } else {
@@ -710,104 +717,104 @@ app.post('/update-user', async function (request, response) {
     let name = 'UPDATE-USER'
     try {
         let userId = request.body.userId;
-        let id = request.body.id;
-        let utilities = request.body.utilities;
-        let category = request.body.category;
-        let information = request.body.information;
-        let mAddress = request.body.address;
-        let content = request.body.content;
-        let linkProduct = 'chua co link';
-        if (checkData(userId) &&
-            checkData(id) &&
-            checkData(utilities) &&
-            checkData(category) &&
-            checkData(information) &&
-            checkData(mAddress) &&
-            checkData(content) &&
-            checkData(linkProduct)) {
-            try {
-                let user = await User.find({_id: userId}).lean();
-                try {
-                    let oldProduct = await Product.find({_id: id}).lean();
-                    oldProduct = oldProduct[0];
-                    try {
-                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
-                            category: category,
-                            information: information,
-                            utilities: utilities
-                        });
-                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
-                            provinceCity: mAddress.provinceCity,
-                            districtsTowns: mAddress.districtsTowns,
-                            communeWardTown: mAddress.communeWardTown,
-                            detailAddress: mAddress.detailAddress,
-                            location: {
-                                latitude: mAddress.location.latitude,
-                                longitude: mAddress.location.longitude
-                            }
-                        });
-                        // update data vao bang chinh
-                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                            product: product._id,
-                            address: address._id,
-                            user: oldProduct.user,
-                            content: content,
-                            status: oldProduct.status,
-                            createAt: oldProduct.createAt,
-                            updateAt: updateAt,
-                            deleteAt: oldProduct.deleteAt,
-                            linkProduct: oldProduct.linkProduct
-                        })
-                        response.json(getResponse(name, 200, sttOK, null))
-                    } catch (e) {
-                        console.log('loi ne: \n' + e)
-                        response.json(getResponse(name, 200, 'Fail', null))
+        let password = request.body.password;
+        let address = request.body.address;
+        let avatar = request.body.avatar;
+        let converImage = request.body.coverImage;
+        let gender = request.body.gender;
+        let birth = request.body.birth;
+        let fullName = request.body.full_name;
+        let phoneNumber = request.body.phone_number;
+        if (checkData(userId)) {
+            let user = await User.find({_id: userId}).lean();
+            if (user.length > 0) {
+                user = user[0];
+                let address = await Address.findByIdAndUpdate(user.address._id, {
+                    provinceCity: mAddress.provinceCity,
+                    districtsTowns: mAddress.districtsTowns,
+                    communeWardTown: mAddress.communeWardTown,
+                    detailAddress: mAddress.detailAddress,
+                    location: {
+                        latitude: mAddress.location.latitude,
+                        longitude: mAddress.location.longitude
                     }
-                } catch (e) {
+                });
+                // update data vao bang chinh
+                let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let updateUser = await Product.findByIdAndUpdate(userId, {
+                    password: checkData(password) ? password : user.password,
+                    address: checkData(address) ? address : user.address,
+                    avatar: checkData(avatar) ? avatar : user.avatar,
+                    coverImage: checkData(coverImage) ? coverImage : user.coverImage,
+                    gender: checkData(gender) ? gender : user.gender,
+                    birth: checkData(birth) ? birth : user.birth,
+                    full_name: checkData(fullName) ? fullName : user.full_name,
+                    phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
+                    deleteAt: user.deleteAt,
+                    updateAt: updateAt,
+                    createAt: createAt
+                })
+                if (address && updateUser) {
+                    let confirm = await ConfirmPost({
+                        product: null,
+                        admin: null,
+                        user: userId,
+                        status: 'UPDATE_USER',
+                        createAt: updateAt
+                    });
+                    console.log(JSON.stringify(confirm));
+                    let confirPrd = await confirm.save();
+                    response.json(getResponse(name, 200, sttOK, null))
+                } else {
                     console.log('loi ne: \n' + e)
-                    response.json(getResponse(name, 404, 'Product not found', null))
+                    response.json(getResponse(name, 200, 'Fail', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
         }
-    } catch (e) {
+    } catch
+        (e) {
         console.log('loi ne: \n' + e)
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-});
+})
+;
 
 //tim kiem bai dang
 app.post('/find-product', async function (request, response) {
-    let name = 'FIND-USER'
+    let name = 'FIND-PRODUCT'
     try {
         let id = request.body.id;
         if (checkData(id)) {
-            try {
-                let prd = await Product.find({
-                    status: '1',
-                    deleteAt: ''
-                }).populate(['address', 'product'])
-                    .populate({
-                        path: 'user',
-                        populate: {
-                            path: 'address'
-                        }
-                    })
-                    .lean();
-                if (prd.length <= 0) {
-                    response.json(getResponse(name, 404, 'Product not found', null))
-                } else {
-                    let res_body = {user: prd[0]}
-                    response.json(getResponse(name, 200, sttOK, res_body))
-                }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            let prd = await Product.find({
+                deleteAt: ''
+            }).populate(['address', 'product'])
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                })
+                .lean();
+            if (prd.length <= 0) {
                 response.json(getResponse(name, 404, 'Product not found', null))
+            } else {
+                let product = prd[0];
+                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let confirm = await ConfirmPost({
+                    product: id,
+                    admin: null,
+                    user: product.user._id,
+                    status: 'FIND_PRODUCT',
+                    createAt: createAt
+                });
+                console.log(JSON.stringify(confirm));
+                let confirPrd = await confirm.save();
+                let res_body = {products: product}
+                response.json(getResponse(name, 200, sttOK, res_body))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -835,51 +842,58 @@ app.post('/init-product', async function (request, response) {
             checkData(mAddress) &&
             checkData(content) &&
             checkData(linkProduct)) {
-            try {
-                let user = await User.find({_id: id}).lean();
-                try {
-                    //luu data vao cac bang phu
-                    let newInforProduct = new InforProduct({
-                        category: category,
-                        information: information,
-                        utilities: utilities
-                    });
-                    let newProductAddress = new Address({
-                        provinceCity: mAddress.provinceCity,
-                        districtsTowns: mAddress.districtsTowns,
-                        communeWardTown: mAddress.communeWardTown,
-                        detailAddress: mAddress.detailAddress,
-                        location: {
-                            latitude: mAddress.location.latitude,
-                            longitude: mAddress.location.longitude
-                        }
-                    });
+            let user = await User.find({_id: id}).lean();
+            if (user.length > 0) {
+                //luu data vao cac bang phu
+                let newInforProduct = new InforProduct({
+                    category: category,
+                    information: information,
+                    utilities: utilities
+                });
+                let newProductAddress = new Address({
+                    provinceCity: mAddress.provinceCity,
+                    districtsTowns: mAddress.districtsTowns,
+                    communeWardTown: mAddress.communeWardTown,
+                    detailAddress: mAddress.detailAddress,
+                    location: {
+                        latitude: mAddress.location.latitude,
+                        longitude: mAddress.location.longitude
+                    }
+                });
 
-                    let product = await newInforProduct.save();
-                    console.log('product: ', product._id)
-                    let address = await newProductAddress.save();
-                    // luu data vao bang chinh
-                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                    let status = '-1'
-                    let newProduct = new Product({
-                        product: product._id,
-                        address: address._id,
+                let product = await newInforProduct.save();
+                console.log('product: ', product._id)
+                let address = await newProductAddress.save();
+                // luu data vao bang chinh
+                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let status = '-1'
+                let newProduct = new Product({
+                    product: product._id,
+                    address: address._id,
+                    user: id,
+                    content: content,
+                    status: status,
+                    createAt: createAt,
+                    updateAt: "",
+                    deleteAt: "",
+                    linkProduct: ""
+                });
+                let initProduct = await newProduct.save();
+                if (product && address && initProduct) {
+                    let confirm = await ConfirmPost({
+                        product: initProduct._id,
+                        admin: null,
                         user: id,
-                        content: content,
-                        status: status,
-                        createAt: createAt,
-                        updateAt: "",
-                        deleteAt: "",
-                        linkProduct: ""
+                        status: 'INIT_PRODUCT',
+                        createAt: createAt
                     });
-                    let initProduct = await newProduct.save();
+                    console.log(JSON.stringify(confirm));
+                    let confirPrd = await confirm.save();
                     response.json(getResponse(name, 200, sttOK, null))
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
+                } else {
                     response.json(getResponse(name, 200, 'Fail', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
         } else {
@@ -910,52 +924,58 @@ app.post('/update-product', async function (request, response) {
             checkData(mAddress) &&
             checkData(content) &&
             checkData(linkProduct)) {
-            try {
-                let user = await User.find({_id: userId}).lean();
-                try {
-                    let oldProduct = await Product.find({_id: id}).lean();
-                    oldProduct = oldProduct[0];
-                    try {
-                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
-                            category: category,
-                            information: information,
-                            utilities: utilities
+            let oldProduct = await Product.find({_id: id}).lean();
+            if (oldProduct.length > 0) {
+                oldProduct = oldProduct[0];
+                if (oldProduct.user._id == userId) {
+                    let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                        category: category,
+                        information: information,
+                        utilities: utilities
+                    });
+                    let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
+                        provinceCity: mAddress.provinceCity,
+                        districtsTowns: mAddress.districtsTowns,
+                        communeWardTown: mAddress.communeWardTown,
+                        detailAddress: mAddress.detailAddress,
+                        location: {
+                            latitude: mAddress.location.latitude,
+                            longitude: mAddress.location.longitude
+                        }
+                    });
+                    // update data vao bang chinh
+                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                        product: product._id,
+                        address: address._id,
+                        user: oldProduct.user,
+                        content: content,
+                        status: oldProduct.status,
+                        createAt: oldProduct.createAt,
+                        updateAt: updateAt,
+                        deleteAt: oldProduct.deleteAt,
+                        linkProduct: oldProduct.linkProduct
+                    })
+                    if (updateProduct && product && address) {
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: null,
+                            user: userId,
+                            status: 'UPDATE_PRODUCT',
+                            createAt: updateAt
                         });
-                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
-                            provinceCity: mAddress.provinceCity,
-                            districtsTowns: mAddress.districtsTowns,
-                            communeWardTown: mAddress.communeWardTown,
-                            detailAddress: mAddress.detailAddress,
-                            location: {
-                                latitude: mAddress.location.latitude,
-                                longitude: mAddress.location.longitude
-                            }
-                        });
-                        // update data vao bang chinh
-                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                            product: product._id,
-                            address: address._id,
-                            user: oldProduct.user,
-                            content: content,
-                            status: oldProduct.status,
-                            createAt: oldProduct.createAt,
-                            updateAt: updateAt,
-                            deleteAt: oldProduct.deleteAt,
-                            linkProduct: oldProduct.linkProduct
-                        })
+                        console.log(JSON.stringify(confirm));
+                        let confirPrd = await confirm.save();
+
                         response.json(getResponse(name, 200, sttOK, null))
-                    } catch (e) {
-                        console.log('loi ne: \n' + e)
+                    } else {
                         response.json(getResponse(name, 200, 'Fail', null))
                     }
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
-                    response.json(getResponse(name, 404, 'Product not found', null))
+                } else {
+                    response.json(getResponse(name, 404, 'User not found', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'User not found', null))
+            } else {
+                response.json(getResponse(name, 404, 'Product not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -971,28 +991,61 @@ app.post('/delete-product', async function (request, response) {
     try {
         let id = request.body.id;
         let userId = request.body.userId;
-        if (checkData(id) && checkData(userId)) {
-            try {
-                let user = await User.find({_id: userId}).lean();
-                try {
-                    let product = await Product.find({_id: id}).lean();
-                    product = product[0];
-                    try {
+        let adminId = request.body.adminId;
+        if (checkData(id)) {
+            let product = await Product.find({_id: id}).lean();
+            if (product.length > 0) {
+                product = product[0];
+                if (checkData(userId)) {
+                    if (product.user._id == userId) {
+                        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
                         let deleteProduct = await Product.findByIdAndDelete(product._id);
                         let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
                         let deleteAddress = await Address.findByIdAndDelete(product.address._id);
+
+                        if (deleteProduct && deleteInforProduct && deleteAddress) {
+                            response.json(getResponse(name, 200, sttOK, null))
+                            let confirm = await ConfirmPost({
+                                product: id,
+                                admin: null,
+                                user: userId,
+                                status: 'DELETE_PRODUCT',
+                                createAt: createAt
+                            });
+                            console.log(JSON.stringify(confirm));
+                            let confirPrd = await confirm.save();
+                        } else {
+                            response.json(getResponse(name, 200, 'Fail', null))
+                        }
+                    } else {
+                        response.json(getResponse(name, 404, 'Product not found', null))
+                    }
+                } else if (checkData(adminId)) {
+                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let deleteProduct = await Product.findByIdAndDelete(product._id);
+                    let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
+                    let deleteAddress = await Address.findByIdAndDelete(product.address._id);
+                    if (deleteProduct && deleteInforProduct && deleteAddress) {
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: adminId,
+                            user: null,
+                            status: 'DELETE_PRODUCT',
+                            createAt: createAt
+                        });
+                        console.log(JSON.stringify(confirm));
+                        let confirPrd = await confirm.save();
                         response.json(getResponse(name, 200, sttOK, null))
-                    } catch (e) {
-                        console.log('loi ne: \n' + e)
+                    } else {
                         response.json(getResponse(name, 200, 'Fail', null))
                     }
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
-                    response.json(getResponse(name, 404, 'Product not found', null))
+                } else {
+                    response.json(getResponse(name, 400, 'Bad request', null))
+                    return
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'User not found', null))
+
+            } else {
+                response.json(getResponse(name, 404, 'Product not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -1003,35 +1056,31 @@ app.post('/delete-product', async function (request, response) {
     }
 });
 
-
 //trả ve danh sách bài đăng cua nguoi dung
 app.post('/user-product', async function (request, response) {
     let name = 'USER-PRODUCT'
     try {
         let id = request.body.id;
         if (checkData(id)) {
-            try {
-                let userNo = await User.find({_id: id}).lean();
-                try {
-                    let allProduct = await Product.find({
-                        deleteAt: '', user: id
-                    }).populate(['address', 'product'])
-                        .populate({
-                            path: 'user',
-                            populate: {
-                                path: 'address'
-                            }
-                        })
-                        .lean();
-                    console.log(allProduct)
+            let userNo = await User.find({_id: id}).lean();
+            if (userNo.length > 0) {
+                let allProduct = await Product.find({
+                    deleteAt: '', user: id
+                }).populate(['address', 'product'])
+                    .populate({
+                        path: 'user',
+                        populate: {
+                            path: 'address'
+                        }
+                    })
+                    .lean();
+                if (allProduct.length > 0) {
                     let res_body = {products: allProduct}
                     response.json(getResponse(name, 200, sttOK, res_body))
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
+                } else {
                     response.json(getResponse(name, 200, 'Fail', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
         } else {
@@ -1048,28 +1097,26 @@ app.post('/list-product', async function (request, response) {
     try {
         let id = request.body.id;
         if (checkData(id)) {
-            try {
-                let user = await User.find({_id: id}).lean();
-                try {
-                    let allProduct = await Product.find({
-                        status: '1',
-                        deleteAt: ''
-                    }).populate(['address', 'product'])
-                        .populate({
-                            path: 'user',
-                            populate: {
-                                path: 'address'
-                            }
-                        })
-                        .lean();
+            let user = await User.find({_id: id}).lean();
+            if (user.length > 0) {
+                let allProduct = await Product.find({
+                    status: '1',
+                    deleteAt: ''
+                }).populate(['address', 'product'])
+                    .populate({
+                        path: 'user',
+                        populate: {
+                            path: 'address'
+                        }
+                    })
+                    .lean();
+                if (allProduct.length > 0) {
                     let res_body = {products: allProduct}
                     response.json(getResponse(name, 200, sttOK, res_body))
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
+                } else {
                     response.json(getResponse(name, 200, 'Fail', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
+            } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
         } else {
@@ -1081,87 +1128,55 @@ app.post('/list-product', async function (request, response) {
     }
 });
 
-// Xóa ảnh của bài đăng
-app.post('/delete-image-product', async function (request, response) {
-    let name = 'DELETE-PRODUCT'
-    try {
-        let id = request.body.id;
-        let userId = request.body.userId;
-        if (checkData(id) && checkData(userId)) {
-            try {
-                let user = await User.find({_id: userId}).lean();
-                try {
-                    let product = await Product.find({_id: id}).lean();
-                    product = product[0];
-                    try {
-                        let deleteProduct = await Product.findByIdAndDelete(product._id);
-                        let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
-                        let deleteAddress = await Address.findByIdAndDelete(product.address._id);
-                        response.json(getResponse(name, 200, sttOK, null))
-                    } catch (e) {
-                        console.log('loi ne: \n' + e)
-                        response.json(getResponse(name, 200, 'Fail', null))
-                    }
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
-                    response.json(getResponse(name, 404, 'Product not found', null))
-                }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'User not found', null))
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
 
 // duyet bai dang
 app.post('/confirm-product', async function (request, response) {
     let name = 'CONFIRM-PRODUCT'
     try {
-        let userId = request.body.userId;
+        let adminId = request.body.adminId;
         let id = request.body.id;
         let utilities = request.body.utilities;
         let category = request.body.category;
         let information = request.body.information;
-        if (checkData(userId) &&
+        if (checkData(adminId) &&
             checkData(id) &&
             checkData(utilities) &&
             checkData(category) &&
             checkData(information)) {
-            try {
-                let user = await User.find({_id: userId}).lean();
-                try {
-                    let oldProduct = await Product.find({_id: id}).lean();
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let oldProduct = await Product.find({_id: id}).lean();
+                if (oldProduct.length > 0) {
                     oldProduct = oldProduct[0];
-                    try {
-                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
-                            category: category,
-                            information: information,
-                            utilities: utilities
-                        });
-                        // update data vao bang chinh
-                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                            status: '1',
-                            updateAt: updateAt
+                    let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                        category: category,
+                        information: information,
+                        utilities: utilities
+                    });
+                    // update data vao bang chinh
+                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                        status: '1',
+                        updateAt: updateAt
+                    });
+                    if (updateProduct && product) {
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: adminId,
+                            user: null,
+                            status: 'CONFIRM',
+                            createAt: updateAt
                         })
+                        let confirPrd = await confirm.save();
                         response.json(getResponse(name, 200, sttOK, null))
-                    } catch (e) {
-                        console.log('loi ne: \n' + e)
+                    } else {
                         response.json(getResponse(name, 200, 'Fail', null))
                     }
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
+                } else {
                     response.json(getResponse(name, 404, 'Product not found', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'User not found', null))
+            } else {
+                response.json(getResponse(name, 404, 'Admin not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -1175,36 +1190,89 @@ app.post('/confirm-product', async function (request, response) {
 app.post('/cancel-product', async function (request, response) {
     let name = 'CANCEL-PRODUCT'
     try {
-        let userId = request.body.userId;
+        let adminId = request.body.adminId;
         let id = request.body.id;
         let status = request.body.status;
-        if (checkData(userId) &&
+        if (checkData(adminId) &&
             checkData(id) &&
             checkData(status)) {
-            try {
-                let user = await User.find({_id: userId}).lean();
-                try {
-                    let oldProduct = await Product.find({_id: id}).lean();
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let oldProduct = await Product.find({_id: id}).lean();
+                if (oldProduct.length > 0) {
                     oldProduct = oldProduct[0];
-                    try {
-                        // update data vao bang chinh
-                        let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                            status: status,
-                            updateAt: updateAt
+                    // update data vao bang chinh
+                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                        status: status,
+                        updateAt: updateAt
+                    })
+                    if (updateProduct) {
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: adminId,
+                            user: null,
+                            status: 'CANCEL',
+                            createAt: updateAt
                         })
+                        let confirPrd = await confirm.save();
                         response.json(getResponse(name, 200, sttOK, null))
-                    } catch (e) {
-                        console.log('loi ne: \n' + e)
+                    } else {
                         response.json(getResponse(name, 200, 'Fail', null))
+
                     }
-                } catch (e) {
-                    console.log('loi ne: \n' + e)
+                } else {
                     response.json(getResponse(name, 404, 'Product not found', null))
                 }
-            } catch (e) {
-                console.log('loi ne: \n' + e)
-                response.json(getResponse(name, 404, 'User not found', null))
+            } else {
+                response.json(getResponse(name, 404, 'Admin not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+
+//chua sd
+// Xóa ảnh của bài đăng
+app.post('/delete-image-product', async function (request, response) {
+    let name = 'DELETE-IMAGE-PRODUCT'
+    try {
+        let id = request.body.id;
+        let adminId = request.body.adminId;
+        if (checkData(id) && checkData(adminId)) {
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let product = await Product.find({_id: id}).lean();
+                if (product.length > 0) {
+                    product = product[0];
+                    let deleteProduct = await Product.findByIdAndDelete(product._id);
+                    let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
+                    let deleteAddress = await Address.findByIdAndDelete(product.address._id);
+                    if (deleteProduct && deleteInforProduct && deleteAddress) {
+                        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: adminId,
+                            user: null,
+                            status: 'DELETE_IMAGE_PRODUCT',
+                            createAt: createAt
+                        });
+                        console.log(JSON.stringify(confirm));
+                        let confirPrd = await confirm.save();
+                        response.json(getResponse(name, 200, sttOK, null))
+                    } else {
+                        response.json(getResponse(name, 200, 'Fail', null))
+                    }
+                } else {
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'Admin not found', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))

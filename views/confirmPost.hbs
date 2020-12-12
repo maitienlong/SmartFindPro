@@ -742,10 +742,11 @@
         });
     }
 
-    function cancelProduct(id, userId, stt) {
+    function cancelProduct(id, adminId, stt) {
+        adminId = '5fd4d983c89b6cc9ccfc86f2';
         let data = {
             id: id,
-            userId: userId,
+            adminId: adminId,
             status: stt
         }
         console.log(data);
@@ -782,24 +783,6 @@
         });
     }
 
-    function updateProduct(id, userId, stt) {
-        let data = {
-            id: id,
-            userId: userId,
-            status: stt
-        }
-        console.log(data)
-        $.ajax({
-            type: "POST",
-            url: "/cancel-product",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data) {
-                alert('cancel ok: ' + JSON.stringify(data));
-            }
-        });
-    }
-
     function getArea(areaType, parentCode) {
         let dataBody = {areaType: areaType, parentCode: parentCode};
         let dataBodyBase64 = {dataBody: btoa(JSON.stringify(dataBody))};
@@ -822,11 +805,10 @@
 
     function getDataUpdate() {
         //lay thong tin duyet
-        let idAdmin = 1;
+        let adminId = '5fd4d983c89b6cc9ccfc86f2';
         let timeConfirm = $('#date-success').val();
         //lay thong tin nguoi dang bai
         let userId = '{{product.user._id}}';
-
         //dia chi
         let address = $('#idAddress').val();
         //loai
@@ -892,7 +874,7 @@
         }
         let dataUpdate = {
             id: '{{product._id}}',
-            userId: userId,
+            adminId: adminId,
             utilities: utilities,
             category: type,
             information: information

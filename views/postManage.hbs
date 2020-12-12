@@ -187,7 +187,7 @@
                                     <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
                                 </form>
                                 <button name="update" value="1" class="btn btn-warning"
-                                        onclick="deleteProduct('{{this._id}}', '{{this.user._id}}')">
+                                        onclick="deleteProduct('{{this._id}}')">
                                     Xóa
                                 </button>
                             </td>
@@ -244,7 +244,7 @@
                                     </button>
                                 </form>
                                 <button name="update" value="1" class="btn btn-warning"
-                                        onclick="deleteProduct('{{this._id}}', '{{this.user._id}}')">
+                                        onclick="deleteProduct('{{this._id}}')">
                                     Xóa
                                 </button>
                             </td>
@@ -301,7 +301,7 @@
                                     </button>
                                 </form>
                                 <button name="update" value="1" class="btn btn-warning"
-                                        onclick="deleteProduct('{{this._id}}', '{{this.user._id}}')">
+                                        onclick="deleteProduct('{{this._id}}')">
                                     Xóa
                                 </button>
                             </td>
@@ -311,6 +311,29 @@
                 </table>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         aria-labelledby="titleDialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleDialog">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="contentDialog" class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelDialog" type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
+                    <button id="successDialog" type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -324,10 +347,16 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script>
-    function deleteProduct(id, userId) {
+    let titleStt = 'Thông báo';
+    let content = '';
+    let titleOK = '';
+    let titleCancel = '';
+
+    function deleteProduct(id) {
+        let adminId = '5fd4d983c89b6cc9ccfc86f2';
         let data = {
             id: id,
-            userId: userId
+            adminId: adminId
         }
         console.log(data)
         $.ajax({
@@ -335,12 +364,41 @@
             url: "/delete-product",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function (data) {
-                $("#row-" + id).remove();
-                console.log('del ok: ' + JSON.stringify(data));
-
+            success: function (res) {
+                if (!res) {
+                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
+                    titleOK = 'Trở lại';
+                    $('#successDialog').click(function () {
+                        location.href = 'index';
+                    });
+                } else {
+                    let resCode = res.response_header.res_code;
+                    if (resCode == 200) {
+                        $("#row-" + id).remove();
+                        content = 'Xóa bài đăng thành công!';
+                        titleOK = 'Trở lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'postManage';
+                        });
+                    } else {
+                        content = 'Xóa bài đăng thất bại. Vui lòng thử lại sau!';
+                        titleOK = 'Thử lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'index';
+                        });
+                    }
+                }
+                showDialog(titleStt, content, titleOK);
             }
         });
+    }
+
+    function showDialog(title, content, titleOK) {
+        $('#dialog').modal('show');
+        $('#titleDialog').text(title);
+        $('#contentDialog').text(content);
+        $('#cancelDialog').css("display", "none");
+        $('#successDialog').text(titleOK);
     }
 </script>
 </body>
