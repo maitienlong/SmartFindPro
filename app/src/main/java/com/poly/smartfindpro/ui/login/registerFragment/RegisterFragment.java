@@ -72,8 +72,16 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
                                 bundle.putString(Config.POST_BUNDEL_SDT, phone);
                                 getBaseActivity().goToFragmentReplace(R.id.fl_Login, new ConfirmOTPFragment(), bundle);
                             }
+
+                            @Override
+                            public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
+                                super.onCodeAutoRetrievalTimeOut(s);
+                                hideLoading();
+                                showMessage("Hệ thống OTP đang mất kết nối - Lỗi: " +s);
+                            }
                         })
                         .build();
+
         PhoneAuthProvider.verifyPhoneNumber(phoneAuthOptions);
 
 

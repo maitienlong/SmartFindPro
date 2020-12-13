@@ -10,7 +10,7 @@ public class User {
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("userName")
+    @SerializedName("full_name")
     @Expose
     private String userName;
     @SerializedName("password")
@@ -19,7 +19,7 @@ public class User {
     @SerializedName("address")
     @Expose
     private Object address;
-    @SerializedName("phoneNumber")
+    @SerializedName("phone_number")
     @Expose
     private String phoneNumber;
     @SerializedName("age")
