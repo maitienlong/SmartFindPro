@@ -231,7 +231,7 @@ app.post('/login', async function (request, response) {
                         createAt: createAt
                     });
                     let confirPrd = await confirm.save();
-                    res_body = {type: 'PHONE_NUMBER', user: null}
+                    res_body = {type: 'PHONE_NUMBER', user: userByPhone}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
                     response.json(getResponse(name, 200, 'Fail', res_body))
