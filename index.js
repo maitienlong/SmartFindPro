@@ -1143,7 +1143,125 @@ app.get('/confirmPost', async function (request, response) {
 });
 
 //quản lý người dùng
+app.get('/userManage', async function (request, response) {
+    //  let obj = await getArea('P', '');
+    //console.log('object: ' + obj);
+    var allProduct = await Product.find({
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var unapprovedPost = await Product.find({
+        status: '-1',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var processingPost = await Product.find({
+        status: '0',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var successPost = await Product.find({
+        status: '1',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+    response.render('userManage', {
+        data: data
+    });
+});
+//duyệt bài viết
+app.get('/confirmUser', async function (request, response) {
+    let _id = request.query.idProduct;
+    try {
+        let product = await Product.find({_id: _id}).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        //them cho moi image 1 truong id
+        let listImages = product[0].product.information.image;
+        let countListImages = listImages.length;
+        let listObjectImages = [];
+        for (let i = 0; i < countListImages; i++) {
+            listObjectImages.push({
+                id: i,
+                path: listImages[i]
+            })
+        }
+        //them cho moi tienich 1 truong id
+        let listUtilities = product[0].product.utilities;
+        let countListUtilities = listUtilities.length;
+        let listObjectUtilities = [];
+        for (let i = 0; i < countListUtilities; i++) {
+            listObjectUtilities.push({
+                id: i,
+                utilities: listUtilities[i]
+            })
+        }
+        let dataUtilities = [];
+        let countUtilities = 6
+        let utilities = ['Wifi', 'An ninh', 'Giờ giấc', 'Nhà ăn', 'Nhà vệ sinh', 'Phòng riêng', 'Giường', 'Để xe', 'Thú cưng', 'Trẻ em']
+        for (let i = 0; i < countUtilities; i++) {
+            dataUtilities.push({
+                id: i,
+                utilities: utilities[i]
+            })
+        }
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
 
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        let info = {
+            admin: nameDN,
+            date: today
+        }
+        console.log(JSON.stringify(product[0].address));
+        response.render('confirmUser', {
+            info: info,
+            product: product[0],
+            utilities: dataUtilities,
+            images: listObjectImages
+        });
+    } catch (e) {
+        console.log('Lỗi: ' + e)
+        response.render('login', {status: 'none', user: '', pass: ''});
+    }
+
+});
+
+//lịch sử
+app.get('/history', function (req, res) {
+    res.render('history', {});
+});
 //API-WEB
 // duyet bai dang
 app.post('/confirm-product', async function (request, response) {
