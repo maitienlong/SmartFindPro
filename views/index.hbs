@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <ul class="  navbar-nav fmy-2 my-lg-0  mr-auto">
-                <li class="nav-item">
+                <li style="display: none" class="nav-item">
                     <a class="nav-link" href="/createAdAc">Quản lý nhân viên</a>
                 </li>
             </ul>
@@ -56,14 +56,14 @@
                 <a href="/postManage" class="list-group-item list-group-item-action">
                     Quản lý bài đăng
                 </a>
-                <a href="/confirmPost" class="list-group-item list-group-item-action">
-                    confirmPost
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    Quản lý dịch vụ chuyển đồ
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
+                <a href="/userManage" class="list-group-item list-group-item-action">
                     Quản lý người dùng
+                </a>
+                <a href="/createAdAc" class="list-group-item list-group-item-action">
+                    Quản lý nhân viên
+                </a>
+                <a href="/history" class="list-group-item list-group-item-action">
+                    Lịch sử
                 </a>
             </div>
         </div>
@@ -73,56 +73,56 @@
                 <div>Chúc bạn ngày mới tốt lành</div>
                 <hr>
             </div>
+
+            <table style="margin-top: 10px" class="table table-bordered table-info">
+                <thead class="thead-dark ">
+                <tr>
+                    <th colspan="5">Thống kê bài đăng</th>
+                </tr>
+                <tr>
+                    <th scope="col">Số bài chưa duyệt</th>
+                    <th scope="col">Số bài đang duyệt</th>
+                    <th scope="col">Số bài đã duyệt</th>
+                    <th scope="col">Tổng số</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{dataProduct.lengthOfUnapprovedPost}}</td>
+                    <td>{{dataProduct.lengthOfProcessingPost}}</td>
+                    <td>{{dataProduct.lengthOfSuccessPost}}</td>
+                    <td>{{dataProduct.lengthOfAllPost }}</td>
+                </tr>
+            </table>
             <table class="table table-bordered table-info">
                 <thead class="thead-dark ">
                 <tr>
-                    <th scope="col">Thống kê số bài đăng</th>
-                    <th scope="col">Số bài cho thuê trọ</th>
-                    <th scope="col">Số bài tìm ở ghép</th>
-                    <th scope="col">Số bài dịch vụ vận chuyển</th>
+                    <th scope="col">Thống kê người dùng</th>
+                    <th scope="col">Số người chưa xác thực tài khoản</th>
+                    <th scope="col">Số người đã xác thực tài khoản</th>
                     <th scope="col">Tổng số</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <th scope="row">Số lượng</th>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td>{{dataUser}}</td>
+                    <td>{{dataUser}}</td>
+                    <td>{{dataUser}}</td>
                 </tr>
             </table>
 
-
             <table class="table table-bordered table-info">
                 <thead class="thead-dark ">
                 <tr>
-                    <th scope="col">Thống kê số người dùng</th>
-                    <th scope="col">Số người đã đăng bài</th>
-                    <th scope="col">Số người chưa đăng bài</th>
+                    <th scope="col">Thống kê số tài khoản quản lý</th>
                     <th scope="col">Tổng số</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <th scope="row">Số lượng</th>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-            </table>
-
-            <table class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th scope="col">Thống kê số lượng nhân viên</th>
-                    <th scope="col">Tổng số</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">Số lượng</th>
-                    <td>0</td>
+                    <td>{{dataAdmin}}</td>
                 </tr>
             </table>
         </div>

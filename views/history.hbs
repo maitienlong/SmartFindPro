@@ -118,6 +118,26 @@
                     </div>
                 </div>
             </div>
+            <table style="margin-top: 10px" class="table table-bordered table-info">
+                <thead class="thead-dark ">
+                <tr>
+                    <th colspan="5">Thống kê số bài đăng</th>
+                </tr>
+                <tr>
+                    <th scope="col">Số bài chưa duyệt</th>
+                    <th scope="col">Số bài đang duyệt</th>
+                    <th scope="col">Số bài đã duyệt</th>
+                    <th scope="col">Tổng số</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{data.lengthOfUnapprovedPost}}</td>
+                    <td>{{data.lengthOfProcessingPost}}</td>
+                    <td>{{data.lengthOfSuccessPost}}</td>
+                    <td>{{data.lengthOfAllPost }}</td>
+                </tr>
+            </table>
             <div>
                 <table class="table">
                     <thead class="thead-dark ">
@@ -163,9 +183,9 @@
                                     <div class="form-group" style="display: none">
                                         <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
                                     </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-success">Duyệt</button>
+                                    <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
                                 </form>
-                                <button name="update" value="1" class="btn btn-danger"
+                                <button name="update" value="1" class="btn btn-warning"
                                         onclick="deleteProduct('{{this._id}}')">
                                     Xóa
                                 </button>
@@ -178,7 +198,7 @@
                 <table class="table">
                     <thead class="thead-dark ">
                     <tr>
-                        <th colspan="3">Danh sách số bài đã từ chối duyệt</th>
+                        <th colspan="3">Danh sách số bài đang duyệt</th>
                     </tr>
                     <tr>
                         <th scope="col">Thời gian</th>
@@ -219,10 +239,10 @@
                                     <div class="form-group" style="display: none">
                                         <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
                                     </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-success">Duyệt lại
+                                    <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt tiếp
                                     </button>
                                 </form>
-                                <button name="update" value="1" class="btn btn-danger"
+                                <button name="update" value="1" class="btn btn-warning"
                                         onclick="deleteProduct('{{this._id}}')">
                                     Xóa
                                 </button>
@@ -279,7 +299,7 @@
                                     <button type="submit" name="update" value="1" class="btn btn-warning">Xem chi tiết
                                     </button>
                                 </form>
-                                <button name="update" value="1" class="btn btn-danger"
+                                <button name="update" value="1" class="btn btn-warning"
                                         onclick="deleteProduct('{{this._id}}')">
                                     Xóa
                                 </button>

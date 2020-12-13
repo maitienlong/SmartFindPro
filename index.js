@@ -13,6 +13,7 @@ const buffer = require('buffer').Buffer;
 
 //anh xa model
 
+const PostManage = require('./model/confirmPost/PostManage');
 const confirmPostSchema = require('./model/ConfirmPostSchema');
 const ConfirmPost = db.model('ConfirmPost', confirmPostSchema, 'confirmPost');
 
@@ -205,10 +206,61 @@ app.get('/index', async function (request, response) {
             pass: ''
         });
     } else {
+        var allProduct = await Product.find({
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var unapprovedPost = await Product.find({
+            status: '-1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var processingPost = await Product.find({
+            status: '0',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var successPost = await Product.find({
+            status: '1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+        let dataUser = await User.find({}).populate(['address']).lean();
+        let dataAdmin = await Admin.find({}).lean();
+        dataUser = dataUser.length;
+        dataAdmin = dataAdmin.length;
         response.render('index', {
             status: 'none',
             user: nameDN,
             pass: pass,
+            dataProduct: dataProduct,
+            dataUser: dataUser,
+            dataAdmin: dataAdmin
         });
     }
 });
@@ -363,7 +415,6 @@ app.get('/updateAdAc', async function (request, response) {
 });
 
 app.get('/postManage', async function (request, response) {
-    const PostManage = require('./model/confirmPost/PostManage');
     //  let obj = await getArea('P', '');
     //console.log('object: ' + obj);
     var allProduct = await Product.find({
