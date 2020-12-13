@@ -1,11 +1,16 @@
 package com.poly.smartfindpro.ui.home;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentHomeBinding;
 import com.poly.smartfindpro.ui.home.adapter.HomeAdapter;
 import com.poly.smartfindpro.ui.post.PostActivity;
@@ -36,9 +41,9 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
         mPresenter = new HomePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         mListImage = new ArrayList<>();
-        mListImage.add("https://puta.edu.vn/wp-content/uploads/2020/01/Free-Vector-Hoa-Mai-Hoa-%C4%90%C3%A0o-ng%C3%A0y-t%E1%BA%BFt-th%C3%AAm-r%E1%BB%B1c-r%E1%BB%A1-9.png");
-        mListImage.add("https://tronghoa.vn/wp-content/uploads/2018/10/Hoa-dao.jpg");
-        mListImage.add("https://images.kienthuc.net.vn/zoom/800/Uploaded/ngoclinh/2015_12_17/NewFolder1/vnpa4vtxv_-_copy_CYMU.jpg");
+        mListImage.add(MyRetrofitSmartFind.smartFind+"public/uploads/59df69e4e8bddc38a5af5f7337a481db.png");
+        mListImage.add(MyRetrofitSmartFind.smartFind+"public/uploads/0cfdaa31a2c408d038b2cea7c8ca86a6.png");
+        mListImage.add(MyRetrofitSmartFind.smartFind+"public/uploads/3242b6ad6e1e4966c9db0158161b2429.png");
 
         PicassoImageLoadingService picassoImageLoadingService = new PicassoImageLoadingService(mActivity);
         Slider.init(picassoImageLoadingService);
@@ -59,6 +64,23 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onCheckStatus(int status){
+        if(status == 1){
+            mBinding.btnShareRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.white));
+            mBinding.tvShareRoom.setTextColor(mActivity.getColorStateList(R.color.background));
+
+            mBinding.btnRentalRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.background));
+            mBinding.tvRentalRoom.setTextColor(mActivity.getColorStateList(R.color.white));
+        }else if(status == 2){
+            mBinding.btnRentalRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.white));
+            mBinding.tvRentalRoom.setTextColor(mActivity.getColorStateList(R.color.background));
+
+            mBinding.btnShareRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.background));
+            mBinding.tvShareRoom.setTextColor(mActivity.getColorStateList(R.color.white));
+        }
+    }
+
     @Override
     public void onShow(List<Product> productList) {
         homeAdapter.setListItem(productList);
@@ -71,20 +93,6 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
         getBaseActivity().openActivity(PostActivity.class);
     }
 
-    @SuppressLint("ResourceAsColor")
-    @Override
-    public void onClickRentalRoom() {
-//        mBinding.btnRentalRoom.setBackgroundColor(R.color.blue);
-//        mBinding.btnRentalRoom.setCardBackgroundColor(R.color.blue);
-//        mBinding.btnRentalRoom.setRadius(R.color.blue);
-////        mBinding.tvRentalRoom.
-//        mBinding.btnShareRoom.setBackgroundColor(R.color.white);
-    }
 
-    @SuppressLint("ResourceAsColor")
-    @Override
-    public void onClickShareRoom() {
-//
-    }
 
 }

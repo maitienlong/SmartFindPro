@@ -68,7 +68,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     mViewmodel.hideLoading();
                     Log.d("checkNum", String.valueOf(response.body().getResponseHeader().getResMessage()));
                     registerRequest.setPhoneNumber(mBinding.edtAccountNumberRegister.getText().toString());
-                    mViewmodel.checkNumber(new Gson().toJson(registerRequest));
+                    mViewmodel.checkNumber(new Gson().toJson(registerRequest), mBinding.edtAccountNumberRegister.getText().toString());
                 }else if(response.code() == 200 && response.body().getResponseHeader().getResMessage().equals("Fail")){
                     mViewmodel.hideLoading();
                     mViewmodel.showMessage("Số điện thoại đã được đăng ký");

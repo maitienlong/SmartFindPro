@@ -68,119 +68,123 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Product item = productList.get(position);
+        if (item != null && item.getUser() != null) {
 
-        List<String> image = new ArrayList<>();
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            List<String> image = new ArrayList<>();
 
-        try {
-            Date date = dateFormatter.parse(item.getCreateAt());
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            holder.tv_time_post.setText(getTime(date));
+            try {
+                Date date = dateFormatter.parse(item.getCreateAt());
 
-        } catch (Exception e) {
+                holder.tv_time_post.setText(getTime(date));
 
-        }
+            } catch (Exception e) {
 
-        holder.tv_username_post.setText(item.getUser().getUserName());
-        holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
-        holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
-        holder.tv_title_post.setText(item.getContent());
-        if (item.getProduct().getInformation().getImage().size() < 4) {
-            for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
             }
-        } else {
-            for (int i = 0; i < 3; i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+
+            holder.tv_username_post.setText(item.getUser().getUserName());
+            holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
+            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
+            holder.tv_title_post.setText(item.getContent());
+            if (item.getProduct().getInformation().getImage().size() < 4) {
+                for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
+                    image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+                }
+            } else {
+                for (int i = 0; i < 3; i++) {
+                    image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+                }
             }
-        }
 
-        if (image.size() == 3) {
-            Glide.
-                    with(mContext)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img1);
-            Glide.
-                    with(mContext)
-                    .load(image.get(1))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img2);
-            Glide.
-                    with(mContext)
-                    .load(image.get(2))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img3);
-        } else if (image.size() == 2) {
-            Glide.
-                    with(mContext)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img1);
-            Glide.
-                    with(mContext)
-                    .load(image.get(1))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img2);
+            if (image.size() == 3) {
+                Glide.
+                        with(mContext)
+                        .load(image.get(0))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img1);
+                Glide.
+                        with(mContext)
+                        .load(image.get(1))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img2);
+                Glide.
+                        with(mContext)
+                        .load(image.get(2))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img3);
+            } else if (image.size() == 2) {
+                Glide.
+                        with(mContext)
+                        .load(image.get(0))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img1);
+                Glide.
+                        with(mContext)
+                        .load(image.get(1))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img2);
 
-        } else {
+            } else {
+                Glide.
+                        with(mContext)
+                        .load(image.get(0))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img1);
+            }
             Glide.
                     with(mContext)
-                    .load(image.get(0))
+                    .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgplaceholder)
-                    .into(holder.img1);
-        }
-        Glide.
-                with(mContext)
-                .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
-                .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgplaceholder)
-                .into(holder.img_avatar);
-        holder.btn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(mContext, holder.btn_menu);
-                popupMenu.inflate(R.menu.menu_item_profile);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.btn_delete_menu:
-                                Toast.makeText(mContext, "Xóa", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_edit_menu:
-                                Toast.makeText(mContext, "Sửa", Toast.LENGTH_SHORT).show();
-                                break;
+                    .into(holder.img_avatar);
+            holder.btn_menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(mContext, holder.btn_menu);
+                    popupMenu.inflate(R.menu.menu_item_profile);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.btn_delete_menu:
+                                    Toast.makeText(mContext, "Xóa", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_edit_menu:
+                                    Toast.makeText(mContext, "Sửa", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
 
-                });
-                popupMenu.show();
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailPostActivity.class);
-                intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(item));
-                mContext.startActivity(intent);
+                    });
+                    popupMenu.show();
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, DetailPostActivity.class);
+                    intent.putExtra(Config.POST_BUNDEL_RES, new Gson().toJson(item));
+                    mContext.startActivity(intent);
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
+
     private String getTime(Date datePost) {
         String dateOK = "";
         Date today = Calendar.getInstance().getTime();
@@ -204,6 +208,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         DateFormat dateFormat = new SimpleDateFormat(type);
         return dateFormat.format(date);
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private Button btn_menu;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;

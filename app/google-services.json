@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "378152820463",
+    "project_id": "smartfindprodev",
+    "storage_bucket": "smartfindprodev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378152820463:android:1a8dbf4aaa36a23626851a",
+        "android_client_info": {
+          "package_name": "com.poly.smartfindpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378152820463-r1ipr73tedl85l0msk1euerbclt34hjs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.poly.smartfindpro",
+            "certificate_hash": "1abdc3183062ecf4574d709ec6447b6252a1b2c8"
+          }
+        },
+        {
+          "client_id": "378152820463-i8ils32f98esb7otiqmhhtjuq9atk03m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeIkXDp27chyaM1qmWP_sShRRrgOWt-9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378152820463-i8ils32f98esb7otiqmhhtjuq9atk03m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

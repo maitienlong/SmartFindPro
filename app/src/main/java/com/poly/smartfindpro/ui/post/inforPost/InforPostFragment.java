@@ -330,9 +330,9 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
     public void onShowPhoto() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                ActivityCompat.requestPermissions(mActivity, permissions, MY_PERMISSIONS_REQUEST);
+                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
             } else {
                 showImageGallery();
             }

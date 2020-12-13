@@ -18,6 +18,7 @@ import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.res.CheckPhoneNumberResponse;
+import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -37,11 +38,11 @@ public interface ListServices {
 
     @Multipart
     @POST("/upload-photo")
-    Call<ResImagePost> postImage(@Part MultipartBody.Part image);
+    Call<ResponsePostPhoto> postImage(@Part MultipartBody.Part image);
 
     @Multipart
     @POST("/upload-photo-array")
-    Call<ResImagePost> postImageMulti(@Part MultipartBody.Part[] image);
+    Call<ResponsePostPhoto> postImageMulti(@Part MultipartBody.Part[] image);
 
     @POST("/find-user")
     Call<ProfileResponse> getProfile(@Body ProfileRequest request);

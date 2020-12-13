@@ -12,8 +12,7 @@ public interface HomeContract {
         void onBackClick();
         void onShow(List<Product> productList);
         void openPost();
-        void onClickRentalRoom();
-        void onClickShareRoom();
+        void onCheckStatus(int status);
     }
 
     interface Presenter extends BasePresenter {

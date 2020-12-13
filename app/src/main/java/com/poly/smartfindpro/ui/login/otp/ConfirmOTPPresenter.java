@@ -9,12 +9,12 @@ import com.poly.smartfindpro.ui.login.registerFragment.RegisterContract;
 public class ConfirmOTPPresenter implements ConfirmOTPContract.Presenter {
     private Context mContex;
     private ConfirmOTPContract.ViewModel mViewmodel;
-      private FragmentConfirmOtpBinding mBinding;
+    private FragmentConfirmOtpBinding mBinding;
 
-    public ConfirmOTPPresenter(Context mContex, ConfirmOTPContract.ViewModel mViewmodel,FragmentConfirmOtpBinding mBinding) {
+    public ConfirmOTPPresenter(Context mContex, ConfirmOTPContract.ViewModel mViewmodel, FragmentConfirmOtpBinding mBinding) {
         this.mContex = mContex;
         this.mViewmodel = mViewmodel;
-        this.mBinding =mBinding;
+        this.mBinding = mBinding;
     }
 
     @Override
@@ -29,6 +29,12 @@ public class ConfirmOTPPresenter implements ConfirmOTPContract.Presenter {
 
     @Override
     public void onClickConfirm() {
-mViewmodel.onClickConfirm();
+        mViewmodel.onClickConfirm();
     }
+
+    @Override
+    public void onResendOTP() {
+        mViewmodel.onResendOTP();
+    }
+
 }

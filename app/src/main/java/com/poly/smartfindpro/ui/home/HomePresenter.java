@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.home.res.Product;
@@ -47,13 +48,13 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void onClickRentalRoom() {
-        mViewmodel.onClickRentalRoom();
+        mViewmodel.onCheckStatus(1);
         getProductRental();
     }
 
     @Override
     public void onClickShareRoom() {
-        mViewmodel.onClickShareRoom();
+        mViewmodel.onCheckStatus(2);
         getProductShare();
     }
 
@@ -69,26 +70,22 @@ public class HomePresenter implements HomeContract.Presenter {
 
     private void getProductRental() {
         HomeRequest request = new HomeRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
                     productsList = new ArrayList<>();
-                    for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
-                        if (response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Nhà trọ")
-                                || response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Chung cư")
-                                || response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Nguyên căn")) {
-                            productsList.add(response.body().getResponseBody().getProducts().get(i));
+
+                    for (Product item : response.body().getResponseBody().getProducts()) {
+                        if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
+                            productsList.add(item);
                         }
                     }
 
-                    if(productsList.size() > 0){
-                        mViewmodel.onShow(productsList);
-                    }else {
-                        mViewmodel.showMessage("Không có bài viết nào trên bản tin");
-                    }
+
+                    mViewmodel.onShow(productsList);
 
 
                 } else {
@@ -104,56 +101,40 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     private void getProductShare() {
+        mViewmodel.showLoading();
         HomeRequest request = new HomeRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
+                    mViewmodel.hideLoading();
+
                     productsList = new ArrayList<>();
-                    for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
-                        if (response.body().getResponseBody().getProducts().get(i).getProduct().getCategory().equals("Ở ghép")) {
-                            productsList.add(response.body().getResponseBody().getProducts().get(i));
+
+                    for (Product item : response.body().getResponseBody().getProducts()) {
+                        if (item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
+                            productsList.add(item);
                         }
                     }
-                    Log.d("list111", "onResponse: " + productsList.size());
+
                     mViewmodel.onShow(productsList);
 
-                } else {
 
+                } else {
+                    mViewmodel.hideLoading();
+
+                    mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));
                 }
             }
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
-
+                mViewmodel.hideLoading();
+                mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));
             }
         });
     }
 
-
-//    private void getProduct() {
-//        ProductRequest request = new ProductRequest();
-//        request.setId("5fb2073ff69b03b8f8875059");
-//
-//        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
-//            @Override
-//            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-//                if (response.code() == 200) {
-////                    if (response.body().getResponseBody().getProducts())
-//                    mViewmodel.onShow(response.body().getResponseBody().getProducts());
-//
-//
-//                } else {
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ProductResponse> call, Throwable t) {
-//
-//            }
-//        });
-//    }
 }

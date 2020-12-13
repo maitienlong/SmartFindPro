@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.searchProduct.filterProduct;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,12 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
@@ -67,6 +70,10 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
     private RecyclerView rc_utilities;
 
+    private BottomSheetBehavior bottomSheetBehavior;
+
+    private LinearLayout bottomSheet;
+
 
     @Override
     protected int getLayoutId() {
@@ -99,6 +106,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         spnTheLoai = findViewById(R.id.spnTheLoai);
         tv_maxTien = findViewById(R.id.tv_maxTien);
         mPresenter = new FilterProductPresenter(this, this, mBinding);
+        bottomSheet = findViewById(R.id.bottomSheetFilter);
         mBinding.setPresenter(mPresenter);
 
         List<String> listCatalory = new ArrayList<>();
@@ -113,6 +121,15 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
         snb_price.setMin(0);
         snb_price.setMax(100);
+
+        bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
+
+        mBinding.btnFilterOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
 
         // the loai
         spnTheLoai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

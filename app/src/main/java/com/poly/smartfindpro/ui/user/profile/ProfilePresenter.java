@@ -111,15 +111,12 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
-//                    if (response.body().getResponseBody().getProducts())
-//                    mViewModel.onShow(response.body().getResponseBody().getProducts());
                     productsList = new ArrayList<>();
                     for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
                         if (response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")){
                             productsList.add(response.body().getResponseBody().getProducts().get(i));
                         }
                     }
-                    Log.d("list111", "onResponse: " + productsList.size());
                     mViewModel.onShow(productsList);
 
                 } else {

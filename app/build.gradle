@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -79,4 +80,12 @@ dependencies {
     //border image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:26.1.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'androidx.browser:browser:1.2.0'
+
+    // dynamicLink
+    implementation 'com.google.firebase:firebase-dynamic-links'
 }
