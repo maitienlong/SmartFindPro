@@ -79,6 +79,19 @@ Handlebars.registerHelper('case', function (value, options) {
     }
 });
 
+//new khoi tao noi luu tru
+storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: function (req, file, cb) {
+        return crypto.pseudoRandomBytes(16, function (err, raw) {
+            if (err) {
+                return cb(err);
+            }
+            return cb(null, "" + (raw.toString('hex')) + (path.extname(file.originalname)));
+        });
+    }
+});
+
 //cac ham tro giup
 function getResponse(name, resCode, resMess, res) {
     let resData = {
@@ -159,427 +172,7 @@ async function getProducts(successPost) {
     return products
 }
 
-//Khai bao bien
-const sttOK = 'Succsess'
-let nameDN = '', allAdmin = '';
-
-//new khoi tao noi luu tru
-storage = multer.diskStorage({
-    destination: './public/uploads/',
-    filename: function (req, file, cb) {
-        return crypto.pseudoRandomBytes(16, function (err, raw) {
-            if (err) {
-                return cb(err);
-            }
-            return cb(null, "" + (raw.toString('hex')) + (path.extname(file.originalname)));
-        });
-    }
-});
-
-app.get('/', function (request, response) {
-    response.render('login', {status: 'none', user: '', pass: ''});
-});
-
-// kiểm tra đăng nhập nếu đúng hiện trang trủ index
-app.get('/index', async function (request, response) {
-
-    let listAdmin = await Admin.find({}).lean();   //dk
-
-    allAdmin = listAdmin.length;
-
-    let user = request.query.user;
-    let pass = request.query.pass;
-    let sm = request.query.sm;
-
-    if (sm == 1) {
-        nameDN = user;
-        console.log(user + " " + sm);
-    }
-
-    let admins = await Admin.find({username: user, password: pass}).lean();   //dk
-    console.log(admins);
-    if (admins.length <= 0 && sm == 1) {
-        response.render('login', {
-            status: 'block',
-            data: 'Không thể đăng nhập, kiểm tra lại tài khoản và mật khẩu của bạn.',
-            user: '',
-            pass: ''
-        });
-    } else {
-        var allProduct = await Product.find({
-            deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
-        var unapprovedPost = await Product.find({
-            status: '-1',
-            deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
-        var processingPost = await Product.find({
-            status: '0',
-            deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
-        var successPost = await Product.find({
-            status: '1',
-            deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
-        let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-        let dataUser = await User.find({}).populate(['address']).lean();
-        let dataAdmin = await Admin.find({}).lean();
-        dataUser = dataUser.length;
-        dataAdmin = dataAdmin.length;
-        response.render('index', {
-            status: 'none',
-            user: nameDN,
-            pass: pass,
-            dataProduct: dataProduct,
-            dataUser: dataUser,
-            dataAdmin: dataAdmin
-        });
-    }
-});
-// thêm sửa xóa tài khoản admin
-app.get('/createAdAc', async function (request, response) {
-    let a = await Admin.find({}).lean();   //dk
-    let search = request.query.search;
-    let nameSP = request.query.nameSP;
-    if (search == 1 && nameSP) {
-        let seachAdmin = await Admin.find({username: nameSP}).lean();
-        response.render('createAdAc', {
-            status: 'none',
-            data: seachAdmin,
-        });
-    } else {
-        let sm = request.query.sm;
-        let del = request.query.del;
-        let edit = request.query.ud;
-        if (sm == 1) {
-            let nUser = request.query.nUser;
-            let nPass = request.query.nPass;
-            let nName = request.query.nName;
-            let nPhone = request.query.nPhone;
-            let nAddress = request.query.nAddress;
-
-            let findAdmin = await Admin.find({username: nUser}).lean();   //dk
-
-            if (findAdmin.length <= 0) {
-                let newAdmin = new Admin({
-                    username: nUser,
-                    password: nPass,
-                    name: nName,
-                    phone: nPhone,
-                    address: nAddress,
-                });
-                let status = await newAdmin.save();
-                let admins = await Admin.find({}).lean();   //dk
-
-                if (status) {
-                    response.render('createAdAc', {
-                        status: 'block',
-                        textAlert: 'Tạo tài khoản thành công.',
-                        data: admins,
-                    });
-                } else {
-                    response.render('createAdAc', {
-                        status: 'block',
-                        textAlert: 'Tạo tài khoản thất bại.',
-                        data: admins,
-                    });
-                }
-            } else {
-                response.render('createAdAc', {
-                    status: 'block',
-                    textAlert: 'Tài khoản đã tồn tại.Mời tạo tài khoản khác !',
-                    data: a,
-                });
-            }
-            //xóa nhân viên
-        } else if (del == 1) {
-            console.log('del ad ' + request.query.idAD);
-            let status = await Admin.findByIdAndDelete(request.query.idAD);
-            let admins = await Admin.find({}).lean();   //dk
-            if (status) {
-                response.render('createAdAc', {
-                    status: 'block',
-                    textAlert: 'Xóa tài khoản thành công.',
-                    data: admins,
-                });
-            } else {
-                response.render('createAdAc', {
-                    status: 'block',
-                    textAlert: 'Xóa tài khoản thất bại.',
-                    data: admins,
-                });
-            }
-        } else if (edit == 1) {
-            let nUser = request.query.nUser;
-            let nPass = request.query.nPass;
-            let nName = request.query.nName;
-            let nPhone = request.query.nPhone;
-            let nAddress = request.query.nAddress;
-
-            console.log('edit ad ' + request.query.nId);
-
-            let admins = await Admin.find({username: nUser, password: nPass}).lean();   //dk
-
-            if (admins.length >= 0) {
-                // console.log(nId + "edit ad");
-                let status = await Admin.findByIdAndUpdate(request.query.nId, {
-                    username: nUser,
-                    password: nPass,
-                    name: nName,
-                    phone: nPhone,
-                    address: nAddress,
-                });
-                let nAdmins = await Admin.find({}).lean();
-                if (status) {
-                    response.render('createAdAc', {
-                        status: 'block',
-                        textAlert: 'Cập nhật tài khoản thành công.',
-                        data: nAdmins,
-                    });
-                } else {
-                    response.render('createAdAc', {
-                        status: 'block',
-                        textAlert: 'Cập nhật tài khoản thất bại.',
-                        data: nAdmins,
-                    });
-                }
-            } else {
-                let nAdmins = await Admin.find({}).lean();
-                response.render('createAdAc', {
-                    status: 'block',
-                    textAlert: 'Cập nhật tài khoản thất bại. Tài khoản đã tồn tại.',
-                    data: nAdmins,
-                });
-            }
-
-        } else {
-            del = 0;
-            edit = 0;
-            response.render('createAdAc', {
-                status: 'none',
-                data: a,
-            });
-        }
-    }
-});
-// form update admin
-app.get('/updateAdAc', async function (request, response) {
-    let userAD = request.query.userAD;
-    let passAD = request.query.passAD;
-    let idAD = request.query.idAD;
-    let nName = request.query.nameAD;
-    let nPhone = request.query.phoneAD;
-    let nAddress = request.query.addressAD;
-    // let admins = await Admin.find({username: userAD, password: passAD}).lean();   //dk
-    response.render('updateAdAc', {
-        status: 'none',
-        user: userAD,
-        pass: passAD,
-        id: idAD,
-        // name:admins.name,
-        // phone:admins.phone,
-        // address:admins.address,
-        name: nName,
-        phone: nPhone,
-        address: nAddress,
-    });
-
-});
-
-app.get('/postManage', async function (request, response) {
-    //  let obj = await getArea('P', '');
-    //console.log('object: ' + obj);
-    var allProduct = await Product.find({
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var unapprovedPost = await Product.find({
-        status: '-1',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var processingPost = await Product.find({
-        status: '0',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var successPost = await Product.find({
-        status: '1',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-    response.render('postManage', {
-        data: data
-    });
-});
-
-app.get('/confirmPost', async function (request, response) {
-    let _id = request.query.idProduct;
-    try {
-        let product = await Product.find({_id: _id}).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
-        //them cho moi image 1 truong id
-        let listImages = product[0].product.information.image;
-        let countListImages = listImages.length;
-        let listObjectImages = [];
-        for (let i = 0; i < countListImages; i++) {
-            listObjectImages.push({
-                id: i,
-                path: listImages[i]
-            })
-        }
-        //them cho moi tienich 1 truong id
-        let listUtilities = product[0].product.utilities;
-        let countListUtilities = listUtilities.length;
-        let listObjectUtilities = [];
-        for (let i = 0; i < countListUtilities; i++) {
-            listObjectUtilities.push({
-                id: i,
-                utilities: listUtilities[i]
-            })
-        }
-        let dataUtilities = [];
-        let countUtilities = 6
-        let utilities = ['Wifi', 'An ninh', 'Giờ giấc', 'Nhà ăn', 'Nhà vệ sinh', 'Phòng riêng', 'Giường', 'Để xe', 'Thú cưng', 'Trẻ em']
-        for (let i = 0; i < countUtilities; i++) {
-            dataUtilities.push({
-                id: i,
-                utilities: utilities[i]
-            })
-        }
-        var now = new Date();
-        var day = ("0" + now.getDate()).slice(-2);
-        var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
-        var today = now.getFullYear() + "-" + (month) + "-" + (day);
-        let info = {
-            admin: nameDN,
-            date: today
-        }
-        console.log(JSON.stringify(product[0].address));
-        response.render('confirmPost', {
-            info: info,
-            product: product[0],
-            utilities: dataUtilities,
-            images: listObjectImages
-        });
-    } catch (e) {
-        console.log('Lỗi: ' + e)
-        response.render('login', {status: 'none', user: '', pass: ''});
-    }
-
-});
-
-// phần kết nối sever với app
-app.get('/getDL', async function (request, response) {
-    response.render('getDL');
-});
-
-// nhận thông tin khách hàng để tạo tài khoản
-app.post('/postUser', async function (request, response) {
-    let nPhone = request.body.phone;
-    let nFullName = request.body.fullname;
-    let nPassword = request.body.password;
-    let nPassword2 = request.body.password2;
-
-
-    let newUser = new User({
-        phone: nPhone,
-        fullName: nFullName,
-        password: nPassword,
-        password2: nPassword2
-    });
-    let status = await newUser.save();
-    if (status) {
-        response.send(newUser)
-    } else {
-        response.send('Them thất bại.')
-    }
-
-
-});
-// nhận thông tin giỏ hàng để thêm vào database
-app.post('/postUpdateUserPass', async function (request, response) {
-
-    let nPhone = request.body.nPhone;
-    let nPassword = request.body.nPassword;
-
-    let searchUser = await User.find({phone: nPhone}).lean();
-
-    let update = await User.findByIdAndUpdate(searchUser[0]._id, {
-        password: nPassword,
-    });
-
-
-    let nUser = await User.find({}).lean();
-    if (update) {
-        response.send(nUser)
-    } else {
-        response.send('Update thất bại.' + nPhone + ' , ' + searchUser.fullName + ' , ' + nPassword + ' , ' + searchUser.password2)
-    }
-
-});
-
-
+//API
 //post anh
 app.post("/upload-photo", multer({storage: storage}).single('photo'), function (req, res) {
     let name = 'UPLOAD-PHOTO';
@@ -595,7 +188,6 @@ app.post("/upload-photo", multer({storage: storage}).single('photo'), function (
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), function (req, res) {
     let name = 'UPLOAD-PHOTO-ARRAY';
     try {
@@ -611,14 +203,7 @@ app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), fu
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
-// trả về dữ liệu trong database
-app.get('/getAlluser', async function (request, response) {
-    let users = await User.find({});
-    response.send(users);
-});
-
-
+// App
 //login
 app.post('/login', async function (request, response) {
     let name = 'LOGIN'
@@ -662,7 +247,6 @@ app.post('/login', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 // kiem tra so dien thoai
 app.post('/check-phone-number', async function (request, response) {
     let name = 'CHECK-PHONE-NUMBER'
@@ -735,8 +319,10 @@ app.post('/init-user', async function (request, response) {
             });
             let address = await newProductAddress.save();
             //luu data vao cac bang phu
+            let level = 0;
             let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
             let newUser = new User({
+                level: level,
                 password: password,
                 address: address._id,
                 avatar: '',
@@ -831,8 +417,7 @@ app.post('/update-user', async function (request, response) {
         console.log('loi ne: \n' + e)
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-})
-;
+});
 
 //tim kiem bai dang
 app.post('/find-product', async function (request, response) {
@@ -1125,12 +710,8 @@ app.post('/user-product', async function (request, response) {
                         }
                     })
                     .lean();
-                if (allProduct.length > 0) {
-                    let res_body = {products: allProduct}
-                    response.json(getResponse(name, 200, sttOK, res_body))
-                } else {
-                    response.json(getResponse(name, 200, 'Fail', null))
-                }
+                let res_body = {products: allProduct}
+                response.json(getResponse(name, 200, sttOK, res_body))
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
@@ -1161,12 +742,8 @@ app.post('/list-product', async function (request, response) {
                         }
                     })
                     .lean();
-                if (allProduct.length > 0) {
-                    let res_body = {products: allProduct}
-                    response.json(getResponse(name, 200, sttOK, res_body))
-                } else {
-                    response.json(getResponse(name, 200, 'Fail', null))
-                }
+                let res_body = {products: allProduct}
+                response.json(getResponse(name, 200, sttOK, res_body))
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
@@ -1179,7 +756,368 @@ app.post('/list-product', async function (request, response) {
     }
 });
 
+//Web
+//Khai bao bien web
+const sttOK = 'Succsess'
+let nameDN = '', allAdmin = '';
+//start
+app.get('/', function (request, response) {
+    response.render('login', {status: 'none', user: '', pass: ''});
+});
+// kiểm tra đăng nhập nếu đúng hiện trang trủ index
+app.get('/index', async function (request, response) {
 
+    let listAdmin = await Admin.find({}).lean();   //dk
+
+    allAdmin = listAdmin.length;
+
+    let user = request.query.user;
+    let pass = request.query.pass;
+    let sm = request.query.sm;
+
+    if (sm == 1) {
+        nameDN = user;
+        console.log(user + " " + sm);
+    }
+
+    let admins = await Admin.find({username: user, password: pass}).lean();   //dk
+    console.log(admins);
+    if (admins.length <= 0 && sm == 1) {
+        response.render('login', {
+            status: 'block',
+            data: 'Không thể đăng nhập, kiểm tra lại tài khoản và mật khẩu của bạn.',
+            user: '',
+            pass: ''
+        });
+    } else {
+        var allProduct = await Product.find({
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var unapprovedPost = await Product.find({
+            status: '-1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var processingPost = await Product.find({
+            status: '0',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var successPost = await Product.find({
+            status: '1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+        let dataUser = await User.find({}).populate(['address']).lean();
+        let dataAdmin = await Admin.find({}).lean();
+        dataUser = dataUser.length;
+        dataAdmin = dataAdmin.length;
+        response.render('index', {
+            status: 'none',
+            user: nameDN,
+            pass: pass,
+            dataProduct: dataProduct,
+            dataUser: dataUser,
+            dataAdmin: dataAdmin
+        });
+    }
+});
+
+// quản lý admin, tạo admin
+app.get('/createAdAc', async function (request, response) {
+    let a = await Admin.find({}).lean();   //dk
+    let search = request.query.search;
+    let nameSP = request.query.nameSP;
+    if (search == 1 && nameSP) {
+        let seachAdmin = await Admin.find({username: nameSP}).lean();
+        response.render('createAdAc', {
+            status: 'none',
+            data: seachAdmin,
+        });
+    } else {
+        let sm = request.query.sm;
+        let del = request.query.del;
+        let edit = request.query.ud;
+        if (sm == 1) {
+            let nUser = request.query.nUser;
+            let nPass = request.query.nPass;
+            let nName = request.query.nName;
+            let nPhone = request.query.nPhone;
+            let nAddress = request.query.nAddress;
+
+            let findAdmin = await Admin.find({username: nUser}).lean();   //dk
+
+            if (findAdmin.length <= 0) {
+                let newAdmin = new Admin({
+                    username: nUser,
+                    password: nPass,
+                    name: nName,
+                    phone: nPhone,
+                    address: nAddress,
+                });
+                let status = await newAdmin.save();
+                let admins = await Admin.find({}).lean();   //dk
+
+                if (status) {
+                    response.render('createAdAc', {
+                        status: 'block',
+                        textAlert: 'Tạo tài khoản thành công.',
+                        data: admins,
+                    });
+                } else {
+                    response.render('createAdAc', {
+                        status: 'block',
+                        textAlert: 'Tạo tài khoản thất bại.',
+                        data: admins,
+                    });
+                }
+            } else {
+                response.render('createAdAc', {
+                    status: 'block',
+                    textAlert: 'Tài khoản đã tồn tại.Mời tạo tài khoản khác !',
+                    data: a,
+                });
+            }
+            //xóa nhân viên
+        } else if (del == 1) {
+            console.log('del ad ' + request.query.idAD);
+            let status = await Admin.findByIdAndDelete(request.query.idAD);
+            let admins = await Admin.find({}).lean();   //dk
+            if (status) {
+                response.render('createAdAc', {
+                    status: 'block',
+                    textAlert: 'Xóa tài khoản thành công.',
+                    data: admins,
+                });
+            } else {
+                response.render('createAdAc', {
+                    status: 'block',
+                    textAlert: 'Xóa tài khoản thất bại.',
+                    data: admins,
+                });
+            }
+        } else if (edit == 1) {
+            let nUser = request.query.nUser;
+            let nPass = request.query.nPass;
+            let nName = request.query.nName;
+            let nPhone = request.query.nPhone;
+            let nAddress = request.query.nAddress;
+
+            console.log('edit ad ' + request.query.nId);
+
+            let admins = await Admin.find({username: nUser, password: nPass}).lean();   //dk
+
+            if (admins.length >= 0) {
+                // console.log(nId + "edit ad");
+                let status = await Admin.findByIdAndUpdate(request.query.nId, {
+                    username: nUser,
+                    password: nPass,
+                    name: nName,
+                    phone: nPhone,
+                    address: nAddress,
+                });
+                let nAdmins = await Admin.find({}).lean();
+                if (status) {
+                    response.render('createAdAc', {
+                        status: 'block',
+                        textAlert: 'Cập nhật tài khoản thành công.',
+                        data: nAdmins,
+                    });
+                } else {
+                    response.render('createAdAc', {
+                        status: 'block',
+                        textAlert: 'Cập nhật tài khoản thất bại.',
+                        data: nAdmins,
+                    });
+                }
+            } else {
+                let nAdmins = await Admin.find({}).lean();
+                response.render('createAdAc', {
+                    status: 'block',
+                    textAlert: 'Cập nhật tài khoản thất bại. Tài khoản đã tồn tại.',
+                    data: nAdmins,
+                });
+            }
+
+        } else {
+            del = 0;
+            edit = 0;
+            response.render('createAdAc', {
+                status: 'none',
+                data: a,
+            });
+        }
+    }
+});
+// cập nhật admin
+app.get('/updateAdAc', async function (request, response) {
+    let userAD = request.query.userAD;
+    let passAD = request.query.passAD;
+    let idAD = request.query.idAD;
+    let nName = request.query.nameAD;
+    let nPhone = request.query.phoneAD;
+    let nAddress = request.query.addressAD;
+    // let admins = await Admin.find({username: userAD, password: passAD}).lean();   //dk
+    response.render('updateAdAc', {
+        status: 'none',
+        user: userAD,
+        pass: passAD,
+        id: idAD,
+        // name:admins.name,
+        // phone:admins.phone,
+        // address:admins.address,
+        name: nName,
+        phone: nPhone,
+        address: nAddress,
+    });
+
+});
+
+// quản lý bài viết
+app.get('/postManage', async function (request, response) {
+    //  let obj = await getArea('P', '');
+    //console.log('object: ' + obj);
+    var allProduct = await Product.find({
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var unapprovedPost = await Product.find({
+        status: '-1',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var processingPost = await Product.find({
+        status: '0',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    var successPost = await Product.find({
+        status: '1',
+        deleteAt: ''
+    }).populate(['address', 'product'])
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+    response.render('postManage', {
+        data: data
+    });
+});
+//duyệt bài viết
+app.get('/confirmPost', async function (request, response) {
+    let _id = request.query.idProduct;
+    try {
+        let product = await Product.find({_id: _id}).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        //them cho moi image 1 truong id
+        let listImages = product[0].product.information.image;
+        let countListImages = listImages.length;
+        let listObjectImages = [];
+        for (let i = 0; i < countListImages; i++) {
+            listObjectImages.push({
+                id: i,
+                path: listImages[i]
+            })
+        }
+        //them cho moi tienich 1 truong id
+        let listUtilities = product[0].product.utilities;
+        let countListUtilities = listUtilities.length;
+        let listObjectUtilities = [];
+        for (let i = 0; i < countListUtilities; i++) {
+            listObjectUtilities.push({
+                id: i,
+                utilities: listUtilities[i]
+            })
+        }
+        let dataUtilities = [];
+        let countUtilities = 6
+        let utilities = ['Wifi', 'An ninh', 'Giờ giấc', 'Nhà ăn', 'Nhà vệ sinh', 'Phòng riêng', 'Giường', 'Để xe', 'Thú cưng', 'Trẻ em']
+        for (let i = 0; i < countUtilities; i++) {
+            dataUtilities.push({
+                id: i,
+                utilities: utilities[i]
+            })
+        }
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        let info = {
+            admin: nameDN,
+            date: today
+        }
+        console.log(JSON.stringify(product[0].address));
+        response.render('confirmPost', {
+            info: info,
+            product: product[0],
+            utilities: dataUtilities,
+            images: listObjectImages
+        });
+    } catch (e) {
+        console.log('Lỗi: ' + e)
+        response.render('login', {status: 'none', user: '', pass: ''});
+    }
+
+});
+
+//quản lý người dùng
+
+//API-WEB
 // duyet bai dang
 app.post('/confirm-product', async function (request, response) {
     let name = 'CONFIRM-PRODUCT'
@@ -1286,157 +1224,3 @@ app.post('/cancel-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
-
-//chua sd
-// Xóa ảnh của bài đăng
-app.post('/delete-image-product', async function (request, response) {
-    let name = 'DELETE-IMAGE-PRODUCT'
-    try {
-        let id = request.body.id;
-        let adminId = request.body.adminId;
-        if (checkData(id) && checkData(adminId)) {
-            let admin = await Admin.find({_id: adminId}).lean();
-            if (admin.length > 0) {
-                let product = await Product.find({_id: id}).lean();
-                if (product.length > 0) {
-                    product = product[0];
-                    let deleteProduct = await Product.findByIdAndDelete(product._id);
-                    let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
-                    let deleteAddress = await Address.findByIdAndDelete(product.address._id);
-                    if (deleteProduct && deleteInforProduct && deleteAddress) {
-                        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                        let confirm = await ConfirmPost({
-                            product: id,
-                            admin: adminId,
-                            user: null,
-                            status: 'DELETE_IMAGE_PRODUCT',
-                            createAt: createAt
-                        });
-                        console.log(JSON.stringify(confirm));
-                        let confirPrd = await confirm.save();
-                        response.json(getResponse(name, 200, sttOK, null))
-                    } else {
-                        response.json(getResponse(name, 200, 'Fail', null))
-                    }
-                } else {
-                    response.json(getResponse(name, 404, 'Product not found', null))
-                }
-            } else {
-                response.json(getResponse(name, 404, 'Admin not found', null))
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
-// lay danh sach area
-app.post('/area', async function (req, response) {
-    let name = 'AREA'
-    try {
-        let body = req.body.dataBody;
-        if (checkData(body)) {
-            let requestArea = {
-                restHeader: {
-                    channelCode: "VIVIET_APP",
-                    clientAddress: "127.0.0.1",
-                    clientRequestId: "1234567",
-                    clientSessionId: "",
-                    deviceId: "abc-123-def-456",
-                    exchangeIV: "",
-                    systemCode: "VIVIET",
-                    language: "vi",
-                    location: {
-                        latitude: "0",
-                        longitude: "0"
-                    },
-                    platform: "android",
-                    platformVersion: "",
-                    sdkId: "123",
-                    secretKey: "",
-                    signature: ""
-                },
-                body: body
-            }
-            let TOKEN_TEST_CARGO = "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.GsHvc-8OefGRoN5FZPgHTz9P29NyWTb44s_LzdGRQo7ow3FNIIk9Vv8NFYxDSHeOevknSG891jKa83vMeNOA1p2rgAlVpwlY3VzsWld9QVnu3timrhicmynney9RjDEHSreeBLK919Ei9J0OUwyS-TMuCaDSlPqTKWnQPepRiAJv5eoVBQ2aR72ffAQFWyHQQ01Jq8JsfbHbePt7fSNMByz44SfhsVuKAgf9UZKmcPWIovsUWsygKhJ5XBJQeVfibGXDXNVSl7JV6ews0oNyMHq85PlFuTHUUsgBZRNyslrMKxQHs2bR8VPmDmSIfndWcAGcYeQL44J-wymN_5z1ZA.RfVbT4K2jbbeU3j8.Hc38QUh-1gT-te5cMcfJiTI9PBmLuN8NQKs0P6lf8X2rHtTUpPjx7t3Th1WCENlW7LGLgiRgoAr-KtkEgNFh-ZCv0weDTKrhvER0WGnaORxFjo_M2QVOMmKstTNaTzJTCqA7AsVGZ0s5_L-jFQ-ZPPTZAiVQWKzaMHxCDox2QrhGc_FCiSoGrPA0h2cSLCASmBPClk3og8Kaom0BVB0y1IFDZs96WfzQRLlBDQshqt8jZxLIQQTJ7XAs0ZjCfN11FZCAbAFWg7VZ2fexdaLve-2N21UL_QO6x3TZ70MCHAt6z2illMlHD1mkN9d-yyLuWIX6ZQ1ZGNxsHe3XIbiBdtwjisdIxHPUHtQcSHjLsO6bIazor5E-nfssRcKS5YLEF_UUbzTuI5UaDYaYOEl3RAsJTzdACIR59MENjrjC52VGIgwYLVGKeUOs05oej2B7q2yo7KYKKz5orTSeE0MxOU-zbkBtV0plrgUWEFFt8ud5KYXbAorh9R9beZmgoLF7TfCyvEn-r65CrV7rrto0MHovS4Qc8y7r9KAuNMOcoJxXAjmC_59Qsis6yTrfGRjzGhu7zHHvk4d5BtQrqY_qquju42F7rlE2YLgViykn2WFj41QWRvTP_gOpBqLAkgTnm6a6liwjlUn89CoEywJcECZOZPPoi9ZF_c1r721rz75Mqy63j-aIjGkPa5bGeWY_g4exPLJisjG2txQFF9737IWelJLosxnCAXi6vkpqb1jhqsC_DXHAaWrPJas7w4hWNXCfacdJVtJbUysJcH8JehrJzXDgzv5f5fo4iUo3qBSLOiFt1PAw5ztrWzunGL07d4KxhH4pcrPrlVnPqCw9rZCycmrkZn_nWm3BcahC07uMhg_AwbJJYZ_rFoM.psevOPdyiO-S_dNsct81Lw";
-            request({
-                method: 'POST',
-                json: true,
-                headers: {
-                    'Authorization': 'Bearer ' + TOKEN_TEST_CARGO
-                },
-                url: "https://lifecardtest.viviet.vn/lifecard-app/area/req",
-                body: requestArea
-            }, function (error, res, body) {
-                if (!error && res.statusCode == 200) {
-                    response.json(body);
-                } else {
-                    console.log('thua');
-                }
-            });
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
-
-async function getArea(areaType, parentCode) {
-    let listArea = [];
-    let dataBody = {areaType: areaType, parentCode: parentCode};
-    try {
-        let dataBodyBase64 = buffer.from(JSON.stringify(dataBody)).toString('base64');
-        console.log('dataBodyBase64: ' + dataBodyBase64);
-
-        let requestArea = {
-            restHeader: {
-                channelCode: "VIVIET_APP",
-                clientAddress: "127.0.0.1",
-                clientRequestId: "1234567",
-                clientSessionId: "",
-                deviceId: "abc-123-def-456",
-                exchangeIV: "",
-                systemCode: "VIVIET",
-                language: "vi",
-                location: {
-                    latitude: "0",
-                    longitude: "0"
-                },
-                platform: "android",
-                platformVersion: "",
-                sdkId: "123",
-                secretKey: "",
-                signature: ""
-            },
-            body: dataBodyBase64
-        }
-        let TOKEN_TEST_CARGO = "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.GsHvc-8OefGRoN5FZPgHTz9P29NyWTb44s_LzdGRQo7ow3FNIIk9Vv8NFYxDSHeOevknSG891jKa83vMeNOA1p2rgAlVpwlY3VzsWld9QVnu3timrhicmynney9RjDEHSreeBLK919Ei9J0OUwyS-TMuCaDSlPqTKWnQPepRiAJv5eoVBQ2aR72ffAQFWyHQQ01Jq8JsfbHbePt7fSNMByz44SfhsVuKAgf9UZKmcPWIovsUWsygKhJ5XBJQeVfibGXDXNVSl7JV6ews0oNyMHq85PlFuTHUUsgBZRNyslrMKxQHs2bR8VPmDmSIfndWcAGcYeQL44J-wymN_5z1ZA.RfVbT4K2jbbeU3j8.Hc38QUh-1gT-te5cMcfJiTI9PBmLuN8NQKs0P6lf8X2rHtTUpPjx7t3Th1WCENlW7LGLgiRgoAr-KtkEgNFh-ZCv0weDTKrhvER0WGnaORxFjo_M2QVOMmKstTNaTzJTCqA7AsVGZ0s5_L-jFQ-ZPPTZAiVQWKzaMHxCDox2QrhGc_FCiSoGrPA0h2cSLCASmBPClk3og8Kaom0BVB0y1IFDZs96WfzQRLlBDQshqt8jZxLIQQTJ7XAs0ZjCfN11FZCAbAFWg7VZ2fexdaLve-2N21UL_QO6x3TZ70MCHAt6z2illMlHD1mkN9d-yyLuWIX6ZQ1ZGNxsHe3XIbiBdtwjisdIxHPUHtQcSHjLsO6bIazor5E-nfssRcKS5YLEF_UUbzTuI5UaDYaYOEl3RAsJTzdACIR59MENjrjC52VGIgwYLVGKeUOs05oej2B7q2yo7KYKKz5orTSeE0MxOU-zbkBtV0plrgUWEFFt8ud5KYXbAorh9R9beZmgoLF7TfCyvEn-r65CrV7rrto0MHovS4Qc8y7r9KAuNMOcoJxXAjmC_59Qsis6yTrfGRjzGhu7zHHvk4d5BtQrqY_qquju42F7rlE2YLgViykn2WFj41QWRvTP_gOpBqLAkgTnm6a6liwjlUn89CoEywJcECZOZPPoi9ZF_c1r721rz75Mqy63j-aIjGkPa5bGeWY_g4exPLJisjG2txQFF9737IWelJLosxnCAXi6vkpqb1jhqsC_DXHAaWrPJas7w4hWNXCfacdJVtJbUysJcH8JehrJzXDgzv5f5fo4iUo3qBSLOiFt1PAw5ztrWzunGL07d4KxhH4pcrPrlVnPqCw9rZCycmrkZn_nWm3BcahC07uMhg_AwbJJYZ_rFoM.psevOPdyiO-S_dNsct81Lw";
-        await request({
-            method: 'POST',
-            json: true,
-            headers: {
-                'Authorization': 'Bearer ' + TOKEN_TEST_CARGO
-            },
-            url: "https://lifecardtest.viviet.vn/lifecard-app/area/req",
-            body: requestArea
-        }, await function (error, res, body) {
-            if (!error && res.statusCode == 200) {
-                let bodyJSON = JSON.parse(buffer.from(JSON.stringify(body.body), 'base64').toString('utf8'));
-                listArea = bodyJSON.listArea;
-
-                console.log('list-area: ' + listArea.length);
-                return listArea;
-            } else {
-                listArea = [];
-                return listArea;
-            }
-        });
-    } catch (e) {
-        console.log('loi ne: ' + e);
-    }
-}

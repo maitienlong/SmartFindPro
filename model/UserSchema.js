@@ -1,5 +1,9 @@
 let mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
+    level: {
+        type: Number,
+        required: true
+    },
     password: {
         type: String,
         required: true
