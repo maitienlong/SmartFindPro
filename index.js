@@ -207,6 +207,7 @@ app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), fu
 //login
 app.post('/login', async function (request, response) {
     let name = 'LOGIN'
+    let res_body = {type: 'PHONE_NUMBER', user: null}
     try {
         let id = request.body.id;
         let account = request.body.account;
@@ -230,11 +231,10 @@ app.post('/login', async function (request, response) {
                         createAt: createAt
                     });
                     let confirPrd = await confirm.save();
-
-                    let res_body = {type: 'PHONE_NUMBER', user: userByPhone}
+                    res_body = {type: 'PHONE_NUMBER', user: null}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
-                    response.json(getResponse(name, 200, 'Fail', null))
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'Unknown user or password incorrect.', null))
@@ -253,15 +253,14 @@ app.post('/check-phone-number', async function (request, response) {
     try {
         let phoneNumber = request.body.phoneNumber;
         if (checkData(phoneNumber)) {
-            if (phonenumber(phoneNumber) == true) {
-                let user = await User.find({phone_number: phoneNumber}).lean();
-                if (user.length > 0) {
-                    response.json(getResponse(name, 200, 'Fail', null))
-                } else {
-                    response.json(getResponse(name, 200, sttOK, null))
-                }
+            let res_body = {status: null}
+            let user = await User.find({phone_number: phoneNumber}).lean();
+            if (user.length > 0) {
+                res_body = {status: 'Fail'}
+                response.json(getResponse(name, 200, 'Fail', res_body))
             } else {
-                response.json(getResponse(name, 200, 'Not a phone number', null))
+                res_body = {status: sttOK}
+                response.json(getResponse(name, 200, sttOK, res_body))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -280,11 +279,12 @@ app.post('/find-user', async function (request, response) {
             let user = await User.find({_id: id}).populate(['address']).lean();
             if (user.length > 0) {
                 user = user[0];
+                let res_body = {user: null}
                 if (user) {
-                    let res_body = {user: user}
+                    res_body = {user: user}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
-                    response.json(getResponse(name, 200, 'Fail', null))
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -336,10 +336,13 @@ app.post('/init-user', async function (request, response) {
                 createAt: createAt
             });
             let user = await newUser.save();
+            let res_body = {status: null};
             if (address && user) {
-                response.json(getResponse(name, 200, sttOK, null))
+                res_body = {status: sttOK}
+                response.json(getResponse(name, 200, sttOK, res_body))
             } else {
-                response.json(getResponse(name, 200, 'Fail', null))
+                res_body = {status: 'Fail'}
+                response.json(getResponse(name, 200, 'Fail', res_body))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
@@ -364,6 +367,8 @@ app.post('/update-user', async function (request, response) {
         let phoneNumber = request.body.phone_number;
         if (checkData(userId)) {
             let user = await User.find({_id: userId}).lean();
+
+            let res_body = {status: null};
             if (user.length > 0) {
                 user = user[0];
                 let address = await Address.findByIdAndUpdate(user.address._id, {
@@ -401,10 +406,11 @@ app.post('/update-user', async function (request, response) {
                     });
                     console.log(JSON.stringify(confirm));
                     let confirPrd = await confirm.save();
-                    response.json(getResponse(name, 200, sttOK, null))
+                    res_body = {status: sttOK};
+                    response.json(getResponse(name, 200, sttOK, res_body));
                 } else {
-                    console.log('loi ne: \n' + e)
-                    response.json(getResponse(name, 200, 'Fail', null))
+                    res_body = {status: "Fail"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -435,8 +441,10 @@ app.post('/find-product', async function (request, response) {
                     }
                 })
                 .lean();
+
+            let res_body = {products: null};
             if (prd.length <= 0) {
-                response.json(getResponse(name, 404, 'Product not found', null))
+                response.json(getResponse(name, 404, 'Product not found', res_body))
             } else {
                 let product = prd[0];
                 let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
@@ -449,7 +457,7 @@ app.post('/find-product', async function (request, response) {
                 });
                 console.log(JSON.stringify(confirm));
                 let confirPrd = await confirm.save();
-                let res_body = {products: product}
+                res_body = {products: product};
                 response.json(getResponse(name, 200, sttOK, res_body))
             }
         } else {
@@ -525,9 +533,11 @@ app.post('/init-product', async function (request, response) {
                     });
                     console.log(JSON.stringify(confirm));
                     let confirPrd = await confirm.save();
-                    response.json(getResponse(name, 200, sttOK, null))
+                    let res_body = {status: sttOK};
+                    response.json(getResponse(name, 200, sttOK, res_body));
                 } else {
-                    response.json(getResponse(name, 200, 'Fail', null))
+                    let res_body = {status: 'Fail'};
+                    response.json(getResponse(name, 200, 'Fail', res_body));
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -602,10 +612,11 @@ app.post('/update-product', async function (request, response) {
                         });
                         console.log(JSON.stringify(confirm));
                         let confirPrd = await confirm.save();
-
-                        response.json(getResponse(name, 200, sttOK, null))
+                        let res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
-                        response.json(getResponse(name, 200, 'Fail', null))
+                        let res_body = {status: 'Fail'};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
                     }
                 } else {
                     response.json(getResponse(name, 404, 'User not found', null))
@@ -650,8 +661,11 @@ app.post('/delete-product', async function (request, response) {
                             });
                             console.log(JSON.stringify(confirm));
                             let confirPrd = await confirm.save();
+                            let res_body = {status: sttOK};
+                            response.json(getResponse(name, 200, sttOK, res_body));
                         } else {
-                            response.json(getResponse(name, 200, 'Fail', null))
+                            let res_body = {status: 'Fail'};
+                            response.json(getResponse(name, 200, 'Fail', res_body));
                         }
                     } else {
                         response.json(getResponse(name, 404, 'Product not found', null))
@@ -671,9 +685,11 @@ app.post('/delete-product', async function (request, response) {
                         });
                         console.log(JSON.stringify(confirm));
                         let confirPrd = await confirm.save();
-                        response.json(getResponse(name, 200, sttOK, null))
+                        let res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
-                        response.json(getResponse(name, 200, 'Fail', null))
+                        let res_body = {status: 'Fail'};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
                     }
                 } else {
                     response.json(getResponse(name, 400, 'Bad request', null))
@@ -710,8 +726,14 @@ app.post('/user-product', async function (request, response) {
                         }
                     })
                     .lean();
-                let res_body = {products: allProduct}
-                response.json(getResponse(name, 200, sttOK, res_body))
+                let res_body = {products: null};
+                if (allProduct) {
+                    res_body = {products: allProduct};
+                    response.json(getResponse(name, 200, sttOK, res_body));
+                } else {
+                    res_body = {products: null};
+                    response.json(getResponse(name, 200, 'Fail', res_body));
+                }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
             }
@@ -742,13 +764,18 @@ app.post('/list-product', async function (request, response) {
                         }
                     })
                     .lean();
-                let res_body = {products: allProduct}
-                response.json(getResponse(name, 200, sttOK, res_body))
+                if (allProduct) {
+                    let res_body = {products: allProduct};
+                    response.json(getResponse(name, 200, sttOK, res_body));
+                } else {
+                    let res_body = {products: null};
+                    response.json(getResponse(name, 200, sttOK, res_body));
+                }
             } else {
-                response.json(getResponse(name, 404, 'User not found', null))
+                response.json(getResponse(name, 404, 'User not found', null));
             }
         } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
+            response.json(getResponse(name, 400, 'Bad request', null));
         }
     } catch (e) {
         console.log('loi ne: \n' + e)
@@ -758,7 +785,7 @@ app.post('/list-product', async function (request, response) {
 
 //Web
 //Khai bao bien web
-const sttOK = 'Succsess'
+const sttOK = 'Success'
 let nameDN = '', allAdmin = '';
 //start
 app.get('/', function (request, response) {
@@ -1157,9 +1184,12 @@ app.post('/confirm-product', async function (request, response) {
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
-                        response.json(getResponse(name, 200, sttOK, null))
+
+                        let res_body = {status: sttOK}
+                        response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
-                        response.json(getResponse(name, 200, 'Fail', null))
+                        let res_body = {status: 'Fail'}
+                        response.json(getResponse(name, 200, 'Fail', res_body))
                     }
                 } else {
                     response.json(getResponse(name, 404, 'Product not found', null))
@@ -1205,9 +1235,11 @@ app.post('/cancel-product', async function (request, response) {
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
-                        response.json(getResponse(name, 200, sttOK, null))
+                        let res_body = {status: sttOK}
+                        response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
-                        response.json(getResponse(name, 200, 'Fail', null))
+                        let res_body = {status: 'Fail'}
+                        response.json(getResponse(name, 200, 'Fail', res_body))
 
                     }
                 } else {

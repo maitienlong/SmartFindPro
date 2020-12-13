@@ -344,15 +344,16 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (res) {
-                if (!res) {
+                console.log(res)
+                if (!res || res.response_header.res_code != 200) {
                     content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
                     titleOK = 'Trở lại';
                     $('#successDialog').click(function () {
                         location.href = 'index';
                     });
                 } else {
-                    let resCode = res.response_header.res_code;
-                    if (resCode == 200) {
+                    let status = res.response_body.status;
+                    if (status == 'Success') {
                         $("#row-" + id).remove();
                         content = 'Xóa bài đăng thành công!';
                         titleOK = 'Trở lại';

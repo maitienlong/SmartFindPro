@@ -617,15 +617,15 @@
             contentType: "application/json",
             data: JSON.stringify(dataUpdate),
             success: function (res) {
-                if (!res) {
+                if (!res || res.response_header.res_code != 200) {
                     content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
                     titleOK = 'Trở lại';
                     $('#successDialog').click(function () {
                         location.href = 'index';
                     });
                 } else {
-                    let resCode = res.response_header.res_code;
-                    if (resCode == 200) {
+                    let status = res.response_body.status;
+                    if (status == 'Success') {
                         content = 'Duyệt dữ liệụ thành công!';
                         titleOK = 'Trở lại';
                         $('#successDialog').click(function () {
@@ -726,9 +726,10 @@
     }
 
     function deleteProduct(id, userId) {
+        let adminId = '5fd4d983c89b6cc9ccfc86f2';
         let data = {
             id: id,
-            userId: userId
+            adminId: adminId
         }
         console.log(data)
         $.ajax({
@@ -736,8 +737,32 @@
             url: "/delete-product",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function (data) {
-                alert('del ok: ' + JSON.stringify(data));
+            success: function (res) {
+                console.log(res)
+                if (!res || res.response_header.res_code != 200) {
+                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
+                    titleOK = 'Trở lại';
+                    $('#successDialog').click(function () {
+                        location.href = 'index';
+                    });
+                } else {
+                    let status = res.response_body.status;
+                    if (status == 'Success') {
+                        $("#row-" + id).remove();
+                        content = 'Xóa bài đăng thành công!';
+                        titleOK = 'Trở lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'postManage';
+                        });
+                    } else {
+                        content = 'Xóa bài đăng thất bại. Vui lòng thử lại sau!';
+                        titleOK = 'Thử lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'index';
+                        });
+                    }
+                }
+                showDialog(titleStt, content, titleOK);
             }
         });
     }
@@ -756,22 +781,22 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (res) {
-                if (!res) {
+                if (!res || res.response_header.res_code != 200) {
                     content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
                     titleOK = 'Trở lại';
                     $('#successDialog').click(function () {
                         location.href = 'index';
                     });
                 } else {
-                    let resCode = res.response_header.res_code;
-                    if (resCode == 200) {
-                        content = 'Duyệt dữ liệụ thành công!';
+                    let status = res.response_body.status;
+                    if (status == 'Success') {
+                        content = 'Từ chối duyệt dữ liệụ thành công!';
                         titleOK = 'Trở lại';
                         $('#successDialog').click(function () {
                             location.href = 'postManage';
                         });
                     } else {
-                        content = 'Duyệt dữ liệu thất bại. Vui lòng thử lại sau!';
+                        content = 'Từ chối duyệt dữ liệu thất bại. Vui lòng thử lại sau!';
                         titleOK = 'Thử lại';
                         $('#successDialog').click(function () {
                             location.href = 'index';
