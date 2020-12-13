@@ -11,10 +11,14 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +30,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
     private FragmentProfileBinding mBinding;
+    private List<Products> productsList;
 
 
     public ObservableField<String> nameInfor;
@@ -41,8 +46,10 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private void initData() {
         nameInfor = new ObservableField<>();
         getInfor();
-        getProduct();
+//        getProduct();
+        getProductApproved();
     }
+
 
     @Override
     public void subscribe() {
@@ -67,11 +74,13 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     @Override
     public void onClickPending() {
         mViewModel.onClickPending();
+        getProductPending();
     }
 
     @Override
     public void onClickApproved() {
         mViewModel.onClickApproved();
+        getProductApproved();
     }
 
     public void getInfor() {
@@ -82,9 +91,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-
                     showData(mProfile);
-
                 } else {
 
                 }
@@ -96,6 +103,66 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             }
         });
     }
+
+    private void getProductApproved(){
+        ProductRequest request = new ProductRequest();
+        request.setId(Config.TOKEN_USER);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.code() == 200) {
+                    productsList = new ArrayList<>();
+                    for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
+                        if (response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")){
+                            productsList.add(response.body().getResponseBody().getProducts().get(i));
+                        }
+                    }
+                    mViewModel.onShow(productsList);
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getProductPending(){ProductRequest request = new ProductRequest();
+        request.setId(Config.TOKEN_USER);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.code() == 200) {
+//                    if (response.body().getResponseBody().getProducts())
+//                    mViewModel.onShow(response.body().getResponseBody().getProducts());
+                    productsList = new ArrayList<>();
+                    for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
+                        if (!response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")){
+                            productsList.add(response.body().getResponseBody().getProducts().get(i));
+                        }
+                    }
+                    Log.d("list111", "onResponse: " + productsList.size());
+                    mViewModel.onShow(productsList);
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
     private void getProduct() {
         ProductRequest request = new ProductRequest();

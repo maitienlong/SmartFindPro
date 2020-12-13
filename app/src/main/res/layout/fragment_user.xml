@@ -27,9 +27,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/str_user"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                style="@style/textStyleBoldBlack_14dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,23 +56,19 @@
                     app:civ_border_width="2dp" />
 
                 <TextView
-
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@={presenter.nameInfor}"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/textStyleWhiteBold_20dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/title_layout"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    style="@style/textStyleWhite_15dp"/>
             </LinearLayout>
 
             <RelativeLayout
@@ -91,6 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/display_user">
 
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:id="@+id/imgSetting"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
@@ -108,12 +103,9 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/setting"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/textStyleWhiteBold_14dp" />
 
                 <TextView
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvSetting"
@@ -121,8 +113,7 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="2dp"
                     android:text="@string/content_layout"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
+                    style="@style/textStyleWhiteSemiBold_12dp"
                     app:layout_constraintTop_toBottomOf="@+id/tvSetting" />
             </RelativeLayout>
 
@@ -147,6 +138,7 @@
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="7dp"
+                    android:layout_centerVertical="true"
                     android:contentDescription="User image"
                     android:src="@drawable/ic_baseline_rule_24" />
 
@@ -158,9 +150,7 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/rules"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/textStyleWhiteBold_14dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,8 +160,8 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="2dp"
                     android:text="@string/content_layout1"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    style="@style/textStyleWhiteSemiBold_12dp"
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -189,6 +179,7 @@
 
                 <ImageView
                     android:id="@+id/imgFeedback"
+                    android:layout_centerVertical="true"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_marginStart="7dp"
@@ -205,9 +196,7 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/asistent_and_feedback"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/textStyleWhiteBold_14dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -217,8 +206,7 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="5dp"
                     android:text="Hỗ trợ người dùng và đánh giá ứng dụng"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    style="@style/textStyleWhiteSemiBold_12dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -236,6 +224,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/display_asistentAndFeedback">
 
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:id="@+id/imgLogout"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
@@ -246,15 +235,14 @@
                     android:src="@drawable/ic_baseline_logout_24" />
 
                 <TextView
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/imgLogout"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/log_out"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/textStyleWhiteBold_14dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.addressgoogle.Candidate;
 import com.poly.smartfindpro.data.model.area.req.BodyReq;
 import com.poly.smartfindpro.data.model.area.result.ListArea;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
@@ -18,14 +19,17 @@ import com.poly.smartfindpro.databinding.FragmentAddressPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.SpinnerAreaAdapter;
 import com.poly.smartfindpro.data.model.post.req.Address;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.ui.post.adressPost.chooselocation.ChooseLoactionFragment;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
 public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPostBinding, AddressPostPresenter> implements AddressPostContract.ViewModel {
     private PostRequest postRequest;
+    public static int REQUEST_CODE = 1;
 
     private String jsonPhoto;
 
@@ -46,7 +50,7 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
         ReciData();
 
-        mPresenter = new AddressPostPresenter(mActivity, this);
+        mPresenter = new AddressPostPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
         BodyReq proviceReq = new BodyReq("P", "");
@@ -106,12 +110,6 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
     }
 
-    public void onSubmitData(Address address) {
-
-        address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
-        postRequest.setAddress(address);
-        onNext(new Gson().toJson(postRequest));
-    }
 
     public void onShowProvince(ResultArea resultArea) {
         SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
@@ -130,6 +128,32 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
 
         mBinding.spnComune.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSubmitData(Address address, int status, List<Candidate> locationList) {
+        if (status == 0) {
+            address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
+
+            postRequest.setAddress(address);
+
+            onNext(new Gson().toJson(postRequest));
+
+        } else if (status == 1) {
+            Bundle bundle = new Bundle();
+
+            postRequest.setAddress(address);
+
+            bundle.putString(Config.DATA_CALL_BACK, new Gson().toJson(locationList));
+
+            bundle.putString(Config.POST_BUNDEL_RES, new Gson().toJson(postRequest));
+
+            bundle.putString(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
+
+            getBaseActivity().goToFragmentCallBackData(R.id.fl_post, new ChooseLoactionFragment(), bundle, getOnFragmentDataCallBack());
+
+        }
+
     }
 
     public void onNext(String jsonData) {

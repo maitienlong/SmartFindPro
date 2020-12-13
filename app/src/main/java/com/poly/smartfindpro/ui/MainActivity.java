@@ -17,6 +17,7 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
 import com.poly.smartfindpro.ui.home.HomeFragment;
+import com.poly.smartfindpro.ui.message.MessageFragment;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
 import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
@@ -86,9 +87,9 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     @Override
     public void onSelectMessager() {
         if (position < 2) {
-            goToFragmentReplaceLeft(R.id.fl_native, new HomeFragment(), null);
+            goToFragmentReplaceLeft(R.id.fl_native, new MessageFragment(), null);
         } else if (position > 2) {
-            goToFragmentReplaceRight(R.id.fl_native, new HomeFragment(), null);
+            goToFragmentReplaceRight(R.id.fl_native, new MessageFragment(), null);
 
         }
         position = 2;

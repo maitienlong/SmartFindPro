@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.home.res.Product;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 import com.poly.smartfindpro.ui.home.HomeContract;
@@ -39,10 +40,10 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
 
     private Context mContext;
     private FragmentManager mFragmentManager;
-    private List<Product> productList;
+    private List<Products> productList;
     FilterProductContact.ViewModel viewModel;
 
-    public void setListItem(List<Product> productList) {
+    public void setListItem(List<Products> productList) {
         this.productList = productList;
         notifyDataSetChanged();
     }
@@ -62,7 +63,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
 
     @Override
     public void onBindViewHolder(@NonNull FilterProductAdapter.ViewHolder holder, int position) {
-        Product item = productList.get(position);
+        Products item = productList.get(position);
 
         List<String> image = new ArrayList<>();
 

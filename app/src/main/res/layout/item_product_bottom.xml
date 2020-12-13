@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginVertical="@dimen/_8sdp"
         android:background="@drawable/border_item_product_bottom"
-        android:orientation="vertical"
-        android:layout_marginVertical="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,30 +19,30 @@
 
             <TextView
                 android:id="@+id/tvType"
+                style="@style/textStyleWhite_11dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Thuê phòng"
-                android:textColor="@color/white" />
+                android:text="Thuê phòng" />
 
             <TextView
                 android:id="@+id/tvAmount"
+                style="@style/textStyleWhite_11dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Thuê phòng"
-                android:textColor="@color/white" />
+                android:text="Thuê phòng" />
 
             <TextView
                 android:id="@+id/tvGender"
+                style="@style/textStyleWhite_11dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Thuê phòng"
-                android:textColor="@color/white" />
+                android:text="Thuê phòng" />
         </LinearLayout>
 
 
@@ -54,7 +53,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_5sdp"
             android:text="Giá: "
-            android:textColor="@color/white" />
+            style="@style/textStyleWhite_11dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:text="TextView"
-                    android:textColor="@color/white" />
+                    style="@style/textStyleWhite_11dp" />
             </LinearLayout>
 
         </LinearLayout>

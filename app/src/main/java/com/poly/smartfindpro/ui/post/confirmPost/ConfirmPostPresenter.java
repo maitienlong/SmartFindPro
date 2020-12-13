@@ -10,6 +10,7 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.post.res.ResImagePost;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
+import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentConfirmPostBinding;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
@@ -159,6 +160,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
 
         postRequest.setInformation(information);
 
+
         MyRetrofitSmartFind.getInstanceSmartFind().initPost(postRequest).enqueue(new Callback<PostResponse>() {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
@@ -166,6 +168,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                     mViewModel.hideLoading();
                     if (response.body().getPostResponseHeader().getResCode() == 200) {
                         mViewModel.onConfirm();
+                        Log.d("checkPhoto", new Gson().toJson(postRequest));
                     } else {
                         mViewModel.showMessage("Bài đăng bị lỗi: Code " + response.body().getPostResponseHeader().getResCode() + " - msg: " + response.body().getPostResponseHeader().getResMessage());
                     }
@@ -173,7 +176,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 } else {
                     mViewModel.hideLoading();
 
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng bài viết không thành công");
+                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - Code: " + response.code() + " - msg: Đăng bài viết không thành công");
 
                     Log.d("postProduct", response.code() + " - " + response.message());
 
@@ -183,6 +186,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
             @Override
             public void onFailure(Call<PostResponse> call, Throwable t) {
                 mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng bài viết không thành công");
+                Log.d("CheckUpLoadImage", t.toString());
                 mViewModel.hideLoading();
             }
         });
@@ -202,11 +206,11 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
 
             propertyImagePart = MultipartBody.Part.createFormData("photo", propertyImageFile.getAbsolutePath(), resBody);
 
-            MyRetrofitSmartFind.getInstanceSmartFind().postImage(propertyImagePart).enqueue(new Callback<ResImagePost>() {
+            MyRetrofitSmartFind.getInstanceSmartFind().postImage(propertyImagePart).enqueue(new Callback<ResponsePostPhoto>() {
                 @Override
-                public void onResponse(Call<ResImagePost> call, Response<ResImagePost> response) {
+                public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
                     if (response.code() == 200) {
-                        onSubmitToServer(response.body().getAddressImage());
+                        onSubmitToServer(response.body().getResponseBody().getAddressImage());
                     } else {
                         mViewModel.hideLoading();
                         mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
@@ -214,11 +218,13 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 }
 
                 @Override
-                public void onFailure(Call<ResImagePost> call, Throwable t) {
+                public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
                     mViewModel.hideLoading();
+                    Log.d("CheckUpLoadImage", t.toString());
                     mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
                 }
             });
+
 
         } else {
             surveyImagesParts = new MultipartBody.Part[imageInforPost.size()];
@@ -232,11 +238,12 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 surveyImagesParts[i] = MultipartBody.Part.createFormData("photo", file.getAbsolutePath(), resBody);
             }
 
-            MyRetrofitSmartFind.getInstanceSmartFind().postImageMulti(surveyImagesParts).enqueue(new Callback<ResImagePost>() {
+            MyRetrofitSmartFind.getInstanceSmartFind().postImageMulti(surveyImagesParts).enqueue(new Callback<ResponsePostPhoto>() {
                 @Override
-                public void onResponse(Call<ResImagePost> call, Response<ResImagePost> response) {
+                public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
                     if (response.code() == 200) {
-                        onSubmitToServer(response.body().getAddressImage());
+                        Log.d("checkResponsePhoto", "onResponse: ");
+                        onSubmitToServer(response.body().getResponseBody().getAddressImage());
                     } else {
                         mViewModel.hideLoading();
                         mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
@@ -244,13 +251,15 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                 }
 
                 @Override
-                public void onFailure(Call<ResImagePost> call, Throwable t) {
+                public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
                     mViewModel.hideLoading();
+                    Log.d("CheckUpLoadImage", t.toString());
                     mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
                 }
             });
         }
     }
+
 
     public void onRequestToServer() {
         if (mBinding.edtTitle.getText().toString().isEmpty()) {

@@ -8,9 +8,13 @@ public class Config {
 
     public static String POST_BUNDEL_RES_PHOTO = "postReqBundelPhoto";
 
+    public static String POST_BUNDEL_ID_OTP = "otpIdFirebase";
+
+    public static String POST_BUNDEL_SDT = "sdtFirebase";
+
     public static String DATA_CALL_BACK = "dataCallBack";
 
-    public static String TOKEN_USER = "5fb2073ff69b03b8f8875059";
+    public static String TOKEN_USER = "";
 
     public static ResponseBody PROFILE;
 }

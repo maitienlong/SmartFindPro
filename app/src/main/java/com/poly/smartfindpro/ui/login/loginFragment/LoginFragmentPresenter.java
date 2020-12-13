@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.login.loginFragment;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
@@ -43,6 +44,7 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
         } else if (mBinding.edtPassword.getText().toString().equals("")) {
             mViewmodel.showMessage("Vui lòng nhập Mật khẩu");
         } else {
+           //u Toast.makeText(mContex, "OK", Toast.LENGTH_SHORT).show();
             getLogin();
         }
 

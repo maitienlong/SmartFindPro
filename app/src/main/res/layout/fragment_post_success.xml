@@ -20,9 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Đăng thành công"
-            android:textColor="#000"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
+           style="@style/textStyleBoldBlack_16dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -30,7 +28,7 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:gravity="center"
             android:text="Bài viết đang được chờ duyệt"
-            android:textSize="@dimen/_12sdp" />
+            style="@style/textStyleHomePost_12dp"/>
 
         <Button
             android:id="@+id/btnContinue"

@@ -1,5 +1,7 @@
 package com.poly.smartfindpro.ui.login.createPassword;
 
+import android.os.Bundle;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
@@ -47,16 +49,10 @@ public class CreatePasswordFragment extends BaseDataBindFragment<FragmentCreateP
         getBaseActivity().onBackFragment();
     }
 
-//    @Override
-//    public void onClickRegister() {
-//        mPresenter.onClickRegister();
-//    }
-
-    private void checkData() {
-        if (mBinding.edtPassword.getText().toString() == mBinding.edtConfirmPassword.getText().toString()) {
-            getBaseActivity().goToFragment(R.id.fl_native, new LoginFragment(), null);
-        } else {
-            showMessage("mat khau chua chinh xac");
-        }
+    @Override
+    public void onGoToLogin(String phoneNumber) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.POST_BUNDEL_RES, String.valueOf(phoneNumber));
+        getBaseActivity().goToFragment(R.id.fl_Login, new LoginFragment(), bundle);
     }
 }

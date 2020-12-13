@@ -14,223 +14,222 @@
         android:background="@color/white"
         android:clickable="true"
         android:focusable="true">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <LinearLayout
 
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <com.poly.smartfindpro.widget.CommonToolbar
-                android:id="@+id/cmtb"
-                onBackClick="@{()->presenter.onBackClick()}"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp" />
+            android:layout_height="match_parent">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/_30sdp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tv_type"
-                    android:textSize="@dimen/_15sdp">
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
 
-                </TextView>
-
-                <Spinner
-                    android:id="@+id/spnType"
+                <com.poly.smartfindpro.widget.CommonToolbar
+                    android:id="@+id/cmtb"
+                    onBackClick="@{()->presenter.onBackClick()}"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:prompt="@string/app_name"
-                    >
+                    android:layout_height="@dimen/_40sdp" />
 
-
-                </Spinner>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tv_username"
-                    android:textSize="@dimen/_15sdp">
-
-                </TextView>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_telephone_number_profile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/custom_edt_change_pass"
-                         />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/_30sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="@string/tv_gender"
-                        android:textSize="@dimen/_15sdp">
+                        android:text="@string/tv_type"
+                        style="@style/textStyleNormal_15dp">
 
                     </TextView>
 
-                    <RadioGroup
-                        android:id="@+id/rgGender"
+                    <Spinner
+                        android:id="@+id/spnType"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:prompt="@string/app_name">
+
+
+                    </Spinner>
+
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="20dp"
+                        android:text="@string/tv_username"
+                        style="@style/textStyleNormal_15dp">
 
-                        <RadioButton
-                            android:id="@+id/rbMale"
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_telephone_number_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_edt_change_pass" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_male">
+                            android:layout_marginTop="20dp"
+                            android:text="@string/tv_gender"
+                            style="@style/textStyleNormal_15dp">
 
-                        </RadioButton>
+                        </TextView>
 
-                        <RadioButton
-                            android:id="@+id/rbFemale"
+                        <RadioGroup
+                            android:id="@+id/rgGender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_female">
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:orientation="horizontal">
 
-                        </RadioButton>
+                            <RadioButton
+                                android:id="@+id/rbMale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_male">
 
-                        <RadioButton
-                            android:id="@+id/rbAll"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tv_all">
+                            </RadioButton>
 
-                        </RadioButton>
-                    </RadioGroup>
+                            <RadioButton
+                                android:id="@+id/rbFemale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_female">
+
+                            </RadioButton>
+
+                            <RadioButton
+                                android:id="@+id/rbAll"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_all">
+
+                            </RadioButton>
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/tv_date"
+                        style="@style/textStyleNormal_15dp">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_edt_change_pass" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/tv_id_card"
+                        style="@style/textStyleNormal_15dp">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_id_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_edt_change_pass" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/tv_home_town"
+                        style="@style/textStyleNormal_15dp">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_address_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_edt_change_pass" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/tv_id_card"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="gone">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_email_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_edt_change_pass" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:layout_width="@dimen/_200sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:background="@drawable/custom_button_infor"
+                        android:text="@string/btn_confirm"
+                        android:textColor="@color/white" />
                 </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tv_date"
-                    android:textSize="@dimen/_15sdp">
-
-                </TextView>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/custom_edt_change_pass"
-                        />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tv_id_card"
-                    android:textSize="@dimen/_15sdp">
-
-                </TextView>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_id_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/custom_edt_change_pass"
-                        />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tv_home_town"
-                    android:textSize="@dimen/_15sdp">
-
-                </TextView>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_address_profile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/custom_edt_change_pass"
-                        />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tv_id_card"
-                    android:textSize="@dimen/_15sdp">
-
-                </TextView>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_email_profile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/custom_edt_change_pass"
-                        />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:layout_width="@dimen/_200sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:background="@drawable/custom_button_infor"
-                    android:text="@string/btn_confirm"
-                    android:textColor="@color/white" />
             </LinearLayout>
-        </LinearLayout>
-</ScrollView>
+        </ScrollView>
     </RelativeLayout>
 </layout>

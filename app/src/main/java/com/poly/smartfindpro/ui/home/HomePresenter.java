@@ -1,11 +1,22 @@
 package com.poly.smartfindpro.ui.home;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
+import com.poly.smartfindpro.data.model.home.res.Product;
+import com.poly.smartfindpro.data.model.product.req.ProductRequest;
+import com.poly.smartfindpro.data.model.product.res.ProductResponse;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentHomeBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,6 +26,7 @@ public class HomePresenter implements HomeContract.Presenter {
     private Context mContext;
     private HomeContract.ViewModel mViewmodel;
     private FragmentHomeBinding mBinding;
+    private List<Product> productsList;
 
     public HomePresenter(Context mContext, HomeContract.ViewModel mViewmodel, FragmentHomeBinding mBinding) {
         this.mContext = mContext;
@@ -22,13 +34,28 @@ public class HomePresenter implements HomeContract.Presenter {
         this.mBinding = mBinding;
         initData();
     }
+
     private void initData() {
 
-        getProduct();
+//        getProduct();
+        getProductRental();
     }
+
     @Override
     public void openPost() {
         mViewmodel.openPost();
+    }
+
+    @Override
+    public void onClickRentalRoom() {
+        mViewmodel.onCheckStatus(1);
+        getProductRental();
+    }
+
+    @Override
+    public void onClickShareRoom() {
+        mViewmodel.onCheckStatus(2);
+        getProductShare();
     }
 
     @Override
@@ -40,25 +67,74 @@ public class HomePresenter implements HomeContract.Presenter {
     public void unSubscribe() {
 
     }
-    private void getProduct() {
+
+    private void getProductRental() {
         HomeRequest request = new HomeRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
-                    mViewmodel.onShow(response.body().getResponseBody().getProducts());
+                    productsList = new ArrayList<>();
+
+                    for (Product item : response.body().getResponseBody().getProducts()) {
+                        if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
+                            productsList.add(item);
+                        }
+                    }
+
+
+                    mViewmodel.onShow(productsList);
+
 
                 } else {
-
+                    mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));
                 }
             }
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
-
+                mViewmodel.showMessage(mContext.getString(R.string.services_not_avail) + t.toString());
             }
         });
     }
+
+    private void getProductShare() {
+        mViewmodel.showLoading();
+        HomeRequest request = new HomeRequest();
+        request.setId(Config.TOKEN_USER);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
+            @Override
+            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                if (response.code() == 200) {
+                    mViewmodel.hideLoading();
+
+                    productsList = new ArrayList<>();
+
+                    for (Product item : response.body().getResponseBody().getProducts()) {
+                        if (item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
+                            productsList.add(item);
+                        }
+                    }
+
+                    mViewmodel.onShow(productsList);
+
+
+                } else {
+                    mViewmodel.hideLoading();
+
+                    mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeResponse> call, Throwable t) {
+                mViewmodel.hideLoading();
+                mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));
+            }
+        });
+    }
+
 }
