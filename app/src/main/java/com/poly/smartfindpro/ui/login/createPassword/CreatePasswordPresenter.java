@@ -59,7 +59,9 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
 
         } else {
             getRegister();
-            mViewModel.showMessage("đăng ký thành công! Vui lòng đăng nhập để tiếp tục");
+            mViewModel.showMessage("đăng ký thành công");
+            mViewModel.OnBackClick();
+            
 
 
         }
