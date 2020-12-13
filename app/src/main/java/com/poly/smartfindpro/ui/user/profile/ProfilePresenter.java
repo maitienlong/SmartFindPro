@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
@@ -103,7 +104,8 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         });
     }
 
-    private void getProductApproved(){
+    private void getProductApproved() {
+        mViewModel.showLoading();
         ProductRequest request = new ProductRequest();
         request.setId(Config.TOKEN_USER);
 
@@ -111,51 +113,62 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
+                   mViewModel.hideLoading();
                     productsList = new ArrayList<>();
-                    for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
-                        if (response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")){
-                            productsList.add(response.body().getResponseBody().getProducts().get(i));
+                    if (response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() != null) {
+                        for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
+                            if (response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")) {
+                                productsList.add(response.body().getResponseBody().getProducts().get(i));
+                            }
                         }
+                        mViewModel.onShow(productsList);
                     }
-                    mViewModel.onShow(productsList);
-
                 } else {
-
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-
+                mViewModel.hideLoading();
+                mViewModel.showMessage(context.getString(R.string.services_not_avail));
             }
         });
     }
 
-    private void getProductPending(){ProductRequest request = new ProductRequest();
+    private void getProductPending() {
+        mViewModel.showLoading();
+        ProductRequest request = new ProductRequest();
         request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
-//                    if (response.body().getResponseBody().getProducts())
-//                    mViewModel.onShow(response.body().getResponseBody().getProducts());
-                    productsList = new ArrayList<>();
-                    for (int i=0; i< response.body().getResponseBody().getProducts().size(); i++){
-                        if (!response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")){
-                            productsList.add(response.body().getResponseBody().getProducts().get(i));
+                    mViewModel.hideLoading();
+                    if(response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() !=null){
+                        productsList = new ArrayList<>();
+                        for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
+                            if (!response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")) {
+                                productsList.add(response.body().getResponseBody().getProducts().get(i));
+                            }
                         }
+
+                        mViewModel.onShow(productsList);
                     }
-                    Log.d("list111", "onResponse: " + productsList.size());
-                    mViewModel.onShow(productsList);
+
 
                 } else {
-
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                mViewModel.hideLoading();
+                mViewModel.showMessage(context.getString(R.string.services_not_avail));
 
             }
         });

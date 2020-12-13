@@ -77,7 +77,6 @@ public class UserPresenter implements UserContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-//                    Log.d("TAG",response.body().getResponseBody().getUser().getUserName());
                     showData(mProfile);
 
                 } else {
@@ -93,6 +92,7 @@ public class UserPresenter implements UserContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
+
         nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
         Glide.
                 with(context)
