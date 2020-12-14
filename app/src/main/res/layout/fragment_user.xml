@@ -10,9 +10,9 @@
     </data>
 
     <ScrollView
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -21,13 +21,13 @@
 
             <TextView
                 android:id="@+id/tvUserTitle"
+                style="@style/textStyleBoldBlack_14dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/str_user"
-                style="@style/textStyleBoldBlack_14dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +38,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/bg_blue_round_15_selector"
+                android:background="@drawable/background_hori"
                 android:gravity="center"
                 android:onClick="@{()->presenter.onClickProfile()}"
                 android:orientation="vertical"
@@ -57,18 +57,18 @@
 
                 <TextView
                     android:id="@+id/userName"
+                    style="@style/textStyleWhiteBold_20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@={presenter.nameInfor}"
-                    style="@style/textStyleWhiteBold_20dp"/>
+                    android:text="@={presenter.nameInfor}" />
 
                 <TextView
+                    style="@style/textStyleWhite_15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/title_layout"
-                    style="@style/textStyleWhite_15dp"/>
+                    android:text="@string/title_layout" />
             </LinearLayout>
 
             <RelativeLayout
@@ -85,27 +85,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/display_user">
 
                 <ImageView
-                    android:layout_centerVertical="true"
                     android:id="@+id/imgSetting"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="7dp"
                     android:contentDescription="User image"
+                    android:padding="@dimen/_8sdp"
                     android:src="@drawable/ic_baseline_settings_24" />
 
                 <TextView
                     android:id="@+id/tvSetting"
+                    style="@style/textStyleWhiteBold_14dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/imgSetting"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/setting"
-                    style="@style/textStyleWhiteBold_14dp" />
+                    android:text="@string/setting" />
 
                 <TextView
+                    style="@style/textStyleWhiteSemiBold_12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvSetting"
@@ -113,7 +115,6 @@
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="2dp"
                     android:text="@string/content_layout"
-                    style="@style/textStyleWhiteSemiBold_12dp"
                     app:layout_constraintTop_toBottomOf="@+id/tvSetting" />
             </RelativeLayout>
 
@@ -135,33 +136,33 @@
                     android:id="@+id/imgRules"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="7dp"
-                    android:layout_centerVertical="true"
                     android:contentDescription="User image"
+                    android:padding="@dimen/_8sdp"
                     android:src="@drawable/ic_baseline_rule_24" />
 
                 <TextView
                     android:id="@+id/tvRules"
+                    style="@style/textStyleWhiteBold_14dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/imgRules"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/rules"
-                    style="@style/textStyleWhiteBold_14dp" />
+                    android:text="@string/rules" />
 
                 <TextView
+                    style="@style/textStyleWhiteSemiBold_12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvRules"
                     android:layout_alignStart="@+id/imgRules"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="2dp"
-                    android:text="@string/content_layout1"
-                    style="@style/textStyleWhiteSemiBold_12dp"
-                    />
+                    android:text="@string/content_layout1" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -179,34 +180,35 @@
 
                 <ImageView
                     android:id="@+id/imgFeedback"
-                    android:layout_centerVertical="true"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="7dp"
                     android:contentDescription="User image"
+                    android:padding="@dimen/_8sdp"
                     android:src="@drawable/ic_baseline_help_24" />
 
                 <TextView
                     android:id="@+id/tvFeedback"
+                    style="@style/textStyleWhiteBold_14dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/imgFeedback"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/asistent_and_feedback"
-                    style="@style/textStyleWhiteBold_14dp" />
+                    android:text="@string/asistent_and_feedback" />
 
                 <TextView
+                    style="@style/textStyleWhiteSemiBold_12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvFeedback"
                     android:layout_alignStart="@+id/imgFeedback"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="5dp"
-                    android:text="Hỗ trợ người dùng và đánh giá ứng dụng"
-                    style="@style/textStyleWhiteSemiBold_12dp" />
+                    android:text="Hỗ trợ người dùng và đánh giá ứng dụng" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -224,25 +226,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/display_asistentAndFeedback">
 
                 <ImageView
-                    android:layout_centerVertical="true"
                     android:id="@+id/imgLogout"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="7dp"
                     android:contentDescription="User image"
+                    android:padding="@dimen/_8sdp"
                     android:src="@drawable/ic_baseline_logout_24" />
 
                 <TextView
-                    android:layout_centerVertical="true"
+                    style="@style/textStyleWhiteBold_14dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/imgLogout"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/log_out"
-                    style="@style/textStyleWhiteBold_14dp"/>
+                    android:text="@string/log_out" />
 
                 <TextView
                     android:layout_width="wrap_content"

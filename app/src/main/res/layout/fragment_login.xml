@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#80ffffff"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/background_login"
+            android:background="@color/background_button_login"
             android:onClick="@{()->presenter.sendRequestUser()}"
             android:text="@string/tv_dang_nhap"
             android:textColor="#fff" />

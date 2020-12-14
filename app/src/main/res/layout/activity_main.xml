@@ -35,7 +35,7 @@
                 android:id="@+id/ln_bottom_bar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:background="@color/background"
+                android:background="@drawable/background_app"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_post"
                 app:layout_constraintEnd_toEndOf="parent"
