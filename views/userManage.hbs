@@ -103,7 +103,9 @@
                                 <div class="form-group" style="display: none">
                                     <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
                                 </div>
-                                <button style="display: none" type="submit" name="update" value="1" class="btn btn-success">Duyệt</button>
+                                <button style="display: none" type="submit" name="update" value="1"
+                                        class="btn btn-success">Duyệt
+                                </button>
                             </form>
                             <button name="update" value="1" class="btn btn-danger"
                                     onclick="deleteUser('{{this._id}}')">
@@ -151,7 +153,9 @@
                                 <div class="form-group" style="display: none">
                                     <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
                                 </div>
-                                <button style="display: none"  type="submit" name="update" value="1" class="btn btn-success">Duyệt</button>
+                                <button style="display: none" type="submit" name="update" value="1"
+                                        class="btn btn-success">Duyệt
+                                </button>
                             </form>
                             <button name="update" value="1" class="btn btn-danger"
                                     onclick="deleteUser('{{this._id}}')">
@@ -199,7 +203,9 @@
                                 <div class="form-group" style="display: none">
                                     <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
                                 </div>
-                                <button style="display: none"  type="submit" name="update" value="1" class="btn btn-success">Duyệt</button>
+                                <button style="display: none" type="submit" name="update" value="1"
+                                        class="btn btn-success">Duyệt
+                                </button>
                             </form>
                             <button name="update" value="1" class="btn btn-danger"
                                     onclick="deleteUser('{{this._id}}')">
@@ -218,7 +224,6 @@
                 <tr>
                     <th scope="col">Thời gian</th>
                     <th scope="col">Thông tin người dùng</th>
-                    <th scope="col">Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -238,23 +243,19 @@
                             <div><b>Cập nhật:</b> {{this.updateAt}}</div>
                         </td>
                         <td>
+                            <div><b>Họ và tên: </b> {{this.full_name}}</div>
+                            <br>
                             <div><b>Số điện thoại: </b> {{this.phone_number}}</div>
-                            <div><b>Mật khẩu: </b> {{this.password}}</div>
+                            <br>
+                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
+                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}
+                            </div>
+                            <br>
+                            <div><b>Giới tính: </b> {{this.gender}}</div>
+                            <br>
+                            <div><b>Ngày sinh: </b> {{this.birth}}</div>
                         </td>
-                        <td>
 
-                            <form style="margin-bottom: 10px" action="/confirmUser" method="get">
-                                <div class="form-group" style="display: none">
-                                    <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                </div>
-                                <button style="display: none"  type="submit" name="update" value="1" class="btn btn-success"> Xem chi tiết
-                                </button>
-                            </form>
-                            <button name="update" value="1" class="btn btn-danger"
-                                    onclick="deleteUser('{{this._id}}')">
-                                Xóa
-                            </button>
-                        </td>
                     </tr>
                 {{/each}}
                 </tbody>
