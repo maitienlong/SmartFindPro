@@ -728,7 +728,7 @@ app.post('/user-product', async function (request, response) {
                     .lean();
                 let res_body = {products: null};
                 if (allProduct) {
-                    res_body = {products: allProduct};
+                    res_body = {products: allProduct.reverse()};
                     response.json(getResponse(name, 200, sttOK, res_body));
                 } else {
                     res_body = {products: null};
@@ -765,7 +765,7 @@ app.post('/list-product', async function (request, response) {
                     })
                     .lean();
                 if (allProduct) {
-                    let res_body = {products: allProduct};
+                    let res_body = {products: allProduct.reverse()};
                     response.json(getResponse(name, 200, sttOK, res_body));
                 } else {
                     let res_body = {products: null};
