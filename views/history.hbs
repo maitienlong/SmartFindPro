@@ -66,250 +66,34 @@
             </div>
         </div>
         <div class="col-sm-10 bg-light" style="padding-right: 2%">
-            <div class=" search" style="padding-top: 3%">
-                <div class="row" style="margin-bottom: 10px">
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <select class="form-control" id="year" name="year">
-                                    <option value="all">Trạng thái</option>
-                                    <option value="-1">Chưa duyệt</option>
-                                    <option value="0">Đang duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="month" name="month">
-                                    <option value="all">Tháng</option>
-                                    <option value="1">Tháng 1</option>
-                                    <option value="2">Tháng 2</option>
-                                    <option value="3">Tháng 3</option>
-                                    <option value="4">Tháng 4</option>
-                                    <option value="5">Tháng 5</option>
-                                    <option value="6">Tháng 6</option>
-                                    <option value="7">Tháng 7</option>
-                                    <option value="8">Tháng 8</option>
-                                    <option value="9">Tháng 9</option>
-                                    <option value="10">Tháng 10</option>
-                                    <option value="11">Tháng 11</option>
-                                    <option value="12">Tháng 12</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="year" name="year">
-                                    <option selected>Năm</option>
-                                    <option>2020</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="type" name="type">
-                                    <option>Thể loại phòng</option>
-                                    <option>Trọ</option>
-                                    <option>Nguyên Căn</option>
-                                    <option>Chung cư</option>
-                                    <option>Ở ghép</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Tìm kiếm
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <table style="margin-top: 10px" class="table table-bordered table-info">
+            <table class="table">
                 <thead class="thead-dark ">
                 <tr>
-                    <th colspan="5">Thống kê số bài đăng</th>
+                    <th colspan="3">Lịc sử</th>
                 </tr>
                 <tr>
-                    <th scope="col">Số bài chưa duyệt</th>
-                    <th scope="col">Số bài đang duyệt</th>
-                    <th scope="col">Số bài đã duyệt</th>
-                    <th scope="col">Tổng số</th>
+                    <th scope="col">Thời gian</th>
+                    <th scope="col">Thông tin</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>{{data.lengthOfUnapprovedPost}}</td>
-                    <td>{{data.lengthOfProcessingPost}}</td>
-                    <td>{{data.lengthOfSuccessPost}}</td>
-                    <td>{{data.lengthOfAllPost }}</td>
-                </tr>
+                {{#each data}}
+                    <tr id='row-{{this._id}}'>
+                        <td>
+                            <div><b>Trạng thái:</b>
+                                {{this.status}}</div>
+                            <br>
+                            <div><b>Thời gian:</b> {{this.createAt}}</div>
+                        </td>
+                        <td>
+                            <div><b>Id bài đăng: </b> {{this.product._id}}</div>
+                            <div><b>Nhân viên: </b> {{this.admin.username}}</div>
+                            <div><b>Người dùng: </b> {{this.user.full_name}}</div>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
             </table>
-            <div>
-                <table class="table">
-                    <thead class="thead-dark ">
-                    <tr>
-                        <th colspan="3">Danh sách số bài chưa duyệt</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Thời gian</th>
-                        <th scope="col">Thông tin bài đăng</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each data.unapprovedPost}}
-                        <tr id='row-{{this._id}}'>
-                            <td>
-                                <div><b>Trạng thái:</b>
-                                    {{#switch this.status}}
-                                        {{#case '-1'}} Chưa duyệt {{/case}}
-                                        {{#case '0'}} Đang duyệt {{/case}}
-                                        {{#case '1'}} Đã duyệt {{/case}}
-                                    {{/switch}}</div>
-                                <br>
-                                <div><b>Đăng:</b> {{this.createAt}}</div>
-                                <br>
-                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                            </td>
-                            <td>
-                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                                <br>
-                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
-                                <br>
-                                <div><b>Nội dung: </b> {{this.content}}</div>
-                                <br>
-                                <div><b>Giá
-                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
-                                </div>
-                            </td>
-                            <td>
-
-                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt</button>
-                                </form>
-                                <button name="update" value="1" class="btn btn-warning"
-                                        onclick="deleteProduct('{{this._id}}')">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead class="thead-dark ">
-                    <tr>
-                        <th colspan="3">Danh sách số bài đang duyệt</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Thời gian</th>
-                        <th scope="col">Thông tin bài đăng</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each data.processingPost}}
-                        <tr id='row-{{this._id}}'>
-                            <td>
-                                <div><b>Trạng thái:</b>
-                                    {{#switch this.status}}
-                                        {{#case '-1'}} Chưa duyệt {{/case}}
-                                        {{#case '0'}} Đang duyệt {{/case}}
-                                        {{#case '1'}} Đã duyệt {{/case}}
-                                    {{/switch}}</div>
-                                <br>
-                                <div><b>Đăng:</b> {{this.createAt}}</div>
-                                <br>
-                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                            </td>
-                            <td>
-                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                                <br>
-                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
-                                <br>
-                                <div><b>Nội dung: </b> {{this.content}}</div>
-                                <br>
-                                <div><b>Giá
-                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
-                                </div>
-                            </td>
-                            <td>
-
-                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-warning">Duyệt tiếp
-                                    </button>
-                                </form>
-                                <button name="update" value="1" class="btn btn-warning"
-                                        onclick="deleteProduct('{{this._id}}')">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead class="thead-dark ">
-                    <tr>
-                        <th colspan="3">Danh sách số bài đã duyệt</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Thời gian</th>
-                        <th scope="col">Thông tin bài đăng</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each data.successPost}}
-                        <tr id='row-{{this._id}}'>
-                            <td>
-                                <div><b>Trạng thái:</b>
-                                    {{#switch this.status}}
-                                        {{#case '-1'}} Chưa duyệt {{/case}}
-                                        {{#case '0'}} Đang duyệt {{/case}}
-                                        {{#case '1'}} Đã duyệt {{/case}}
-                                    {{/switch}}</div>
-                                <br>
-                                <div><b>Đăng:</b> {{this.createAt}}</div>
-                                <br>
-                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                            </td>
-                            <td>
-                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                                <br>
-                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
-                                <br>
-                                <div><b>Nội dung: </b> {{this.content}}</div>
-                                <br>
-                                <div><b>Giá
-                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
-                                </div>
-                            </td>
-                            <td>
-
-                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-warning">Xem chi tiết
-                                    </button>
-                                </form>
-                                <button name="update" value="1" class="btn btn-warning"
-                                        onclick="deleteProduct('{{this._id}}')">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-            </div>
-
         </div>
     </div>
 

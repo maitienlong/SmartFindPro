@@ -13,7 +13,9 @@ const buffer = require('buffer').Buffer;
 
 //anh xa model
 
-const PostManage = require('./model/confirmPost/PostManage');
+const UserManage = require('./model/modelWeb/UserManage');
+const PostManage = require('./model/modelWeb/PostManage');
+
 const confirmPostSchema = require('./model/ConfirmPostSchema');
 const ConfirmPost = db.model('ConfirmPost', confirmPostSchema, 'confirmPost');
 
@@ -227,7 +229,7 @@ app.post('/login', async function (request, response) {
                         product: id,
                         admin: null,
                         user: userByPhone,
-                        status: 'LOGIN',
+                        status: 'LOGIN-APP',
                         createAt: createAt
                     });
                     let confirPrd = await confirm.save();
@@ -424,6 +426,80 @@ app.post('/update-user', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
+// xoa nguoi dung
+app.post('/delete-user', async function (request, response) {
+    let name = 'DELETE-USER'
+    try {
+        let id = request.body.id;
+        let userId = request.body.userId;
+        let adminId = request.body.adminId;
+        if (checkData(id)) {
+            let user = await User.find({_id: id}).lean();
+            if (user.length > 0) {
+                user = user[0];
+                if (checkData(userId)) {
+                    if (user.user._id == userId) {
+                        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let deleteProduct = await Product.findByIdAndDelete(user._id);
+                        let deleteInforProduct = await InforProduct.findByIdAndDelete(user.product._id);
+                        let deleteAddress = await Address.findByIdAndDelete(user.address._id);
+
+                        if (deleteProduct && deleteInforProduct && deleteAddress) {
+                            response.json(getResponse(name, 200, sttOK, null))
+                            let confirm = await ConfirmPost({
+                                product: id,
+                                admin: null,
+                                user: userId,
+                                status: 'DELETE_PRODUCT',
+                                createAt: createAt
+                            });
+                            console.log(JSON.stringify(confirm));
+                            let confirPrd = await confirm.save();
+                            let res_body = {status: sttOK};
+                            response.json(getResponse(name, 200, sttOK, res_body));
+                        } else {
+                            let res_body = {status: 'Fail'};
+                            response.json(getResponse(name, 200, 'Fail', res_body));
+                        }
+                    } else {
+                        response.json(getResponse(name, 404, 'Product not found', null))
+                    }
+                } else if (checkData(adminId)) {
+                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let deleteUser = await User.findByIdAndDelete(user._id);
+                    let deleteAddress = await Address.findByIdAndDelete(user.address._id);
+                    if (deleteUser && deleteAddress) {
+                        let confirm = await ConfirmPost({
+                            product: null,
+                            admin: adminId,
+                            user: id,
+                            status: 'DELETE_USER',
+                            createAt: createAt
+                        });
+                        let confirPrd = await confirm.save();
+                        let res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body))
+                    } else {
+                        let res_body = {status: 'Fail'};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                } else {
+                    response.json(getResponse(name, 400, 'Bad request', null))
+                    return
+                }
+
+            } else {
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
 
 //tim kiem bai dang
 app.post('/find-product', async function (request, response) {
@@ -865,6 +941,15 @@ app.get('/index', async function (request, response) {
         let dataAdmin = await Admin.find({}).lean();
         dataUser = dataUser.length;
         dataAdmin = dataAdmin.length;
+        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+        let confirm = await ConfirmPost({
+            product: null,
+            admin: admins[0]._id,
+            user: null,
+            status: 'LOGIN-WEB-SERVER',
+            createAt: createAt
+        });
+        let confirPrd = await confirm.save();
         response.render('index', {
             status: 'none',
             user: nameDN,
@@ -1144,52 +1229,12 @@ app.get('/confirmPost', async function (request, response) {
 
 //quản lý người dùng
 app.get('/userManage', async function (request, response) {
-    //  let obj = await getArea('P', '');
-    //console.log('object: ' + obj);
-    var allProduct = await Product.find({
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var unapprovedPost = await Product.find({
-        status: '-1',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var processingPost = await Product.find({
-        status: '0',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var successPost = await Product.find({
-        status: '1',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+    var allUsers = await User.find({deleteAt: ''}).populate(['address']).lean();
+    var userLV0 = await User.find({deleteAt: '', level: '0'}).populate(['address']).lean();
+    var userLV1 = await User.find({deleteAt: '', level: 1}).populate(['address']).lean();
+    var userLV2 = await User.find({deleteAt: '', level: 2}).populate(['address']).lean();
+    var userLV3 = await User.find({deleteAt: '', level: '3'}).populate(['address']).lean();
+    let data = new UserManage(allUsers.reverse(), userLV0.reverse(), userLV1.reverse(), userLV2.reverse(), userLV3.reverse());
     response.render('userManage', {
         data: data
     });
@@ -1259,8 +1304,31 @@ app.get('/confirmUser', async function (request, response) {
 });
 
 //lịch sử
-app.get('/history', function (req, res) {
-    res.render('history', {});
+app.get('/history', async function (request, response) {
+    var confirmPost = await ConfirmPost.find({})
+        .populate(['admin'])
+        .populate({
+            path: 'product',
+            populate: {
+                path: 'address',
+                path: 'product',
+                populate: {
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                }
+            }
+        })
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'address'
+            }
+        })
+        .lean();
+    console.log(JSON.stringify(confirmPost))
+    response.render('history', {data: confirmPost.reverse()});
 });
 //API-WEB
 // duyet bai dang
