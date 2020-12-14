@@ -834,6 +834,9 @@
         let timeConfirm = $('#date-success').val();
         //lay thong tin nguoi dang bai
         let userId = '{{product.user._id}}';
+        let electricUnit = '{{product.product.information.electricUnit}}';
+        let waterUnit = '{{product.product.information.waterUnit}}';
+        let unit = '{{product.product.information.unit}}';
         //dia chi
         let address = $('#idAddress').val();
         //loai
@@ -895,7 +898,10 @@
             gender: gender,
             price: price,
             waterBill: waterPrice,
-            image: image
+            image: image,
+            waterUnit: waterUnit,
+            electricUnit: electricUnit,
+            unit: unit,
         }
         let dataUpdate = {
             id: '{{product._id}}',
