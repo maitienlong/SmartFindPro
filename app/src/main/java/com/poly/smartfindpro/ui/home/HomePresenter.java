@@ -78,6 +78,8 @@ public class HomePresenter implements HomeContract.Presenter {
                 if (response.code() == 200) {
                     productsList = new ArrayList<>();
 
+                    Log.d("CheckHomePresenter", new Gson().toJson(response.body()));
+
                     for (Product item : response.body().getResponseBody().getProducts()) {
                         if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
                             productsList.add(item);

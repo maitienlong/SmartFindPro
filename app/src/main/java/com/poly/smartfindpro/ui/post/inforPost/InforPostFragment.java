@@ -108,7 +108,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                     //  Lay duong dan thuc te
                     String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
 
-                    mPresenter.onDemoUri(realPath);
+                  //  mPresenter.onDemoUri(realPath);
                     // them du lieu vao object Image
                     try {
                         ImageInforPost item = new ImageInforPost(imageName, realPath, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
@@ -133,7 +133,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 //  Lay duong dan thuc te
                 String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
 
-                mPresenter.onDemoUri(realPath);
+              //  mPresenter.onDemoUri(realPath);
                 // them du lieu vao object Image
 
                 try {
