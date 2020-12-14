@@ -200,7 +200,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUser().getPhoneNumber());
+        nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
         Log.d("checkPhone", mProfile.getResponseBody().getUser().getPhoneNumber());
 
         Glide.
