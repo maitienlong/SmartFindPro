@@ -942,14 +942,18 @@ app.get('/index', async function (request, response) {
         dataUser = dataUser.length;
         dataAdmin = dataAdmin.length;
         let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-        let confirm = await ConfirmPost({
-            product: null,
-            admin: admins[0]._id,
-            user: null,
-            status: 'LOGIN-WEB-SERVER',
-            createAt: createAt
-        });
-        let confirPrd = await confirm.save();
+        if (admins.length > 0) {
+            let confirm = await ConfirmPost({
+                product: null,
+                admin: admins[0]._id,
+                user: null,
+                status: 'LOGIN-WEB-SERVER',
+                createAt: createAt
+            });
+            let confirPrd = await confirm.save();
+        }
+
+
         response.render('index', {
             status: 'none',
             user: nameDN,
