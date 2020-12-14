@@ -227,7 +227,7 @@
                                             android:orientation="horizontal">
 
                                             <RadioButton
-                                                android:id="@+id/rbMale"
+                                                android:id="@+id/rbMaleSearch"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginRight="@dimen/_16sdp"
@@ -236,7 +236,7 @@
                                             </RadioButton>
 
                                             <RadioButton
-                                                android:id="@+id/rbFemale"
+                                                android:id="@+id/rbFemaleSearch"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginRight="@dimen/_16sdp"
@@ -245,7 +245,7 @@
                                             </RadioButton>
 
                                             <RadioButton
-                                                android:id="@+id/rbAll"
+                                                android:id="@+id/rbAllSearch"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginRight="@dimen/_16sdp"

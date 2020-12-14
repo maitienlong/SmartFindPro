@@ -160,6 +160,7 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
 
         postRequest.setInformation(information);
 
+        Log.d("postProduct", new Gson().toJson(postRequest));
 
         MyRetrofitSmartFind.getInstanceSmartFind().initPost(postRequest).enqueue(new Callback<PostResponse>() {
             @Override
@@ -172,7 +173,6 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
                     } else {
                         mViewModel.showMessage("Bài đăng bị lỗi: Code " + response.body().getPostResponseHeader().getResCode() + " - msg: " + response.body().getPostResponseHeader().getResMessage());
                     }
-                    Log.d("postProduct", new Gson().toJson(response.body()));
                 } else {
                     mViewModel.hideLoading();
 

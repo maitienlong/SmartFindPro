@@ -19,8 +19,8 @@ public interface FilterProductContact {
     public interface Presenter {
         void onClickFilter();
 
-        void setData(String tieChiLoc, int tieuChiLoc);
-
         void onBackClick();
+
+        void onClickFilter(FilterTool filterTool, List<String> priority);
     }
 }
