@@ -128,7 +128,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         mBinding.btnFilterOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterProductActivity.this);
 
                 View alert = LayoutInflater.from(FilterProductActivity.this).inflate(R.layout.dialog_priority, null);

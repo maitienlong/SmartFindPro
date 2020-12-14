@@ -199,65 +199,37 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
 
         MultipartBody.Part[] surveyImagesParts;
 
-        if (imageInforPost.size() > 0 && imageInforPost.size() < 2) {
-            File propertyImageFile = new File(imageInforPost.get(0).getRealPath());
+        surveyImagesParts = new MultipartBody.Part[imageInforPost.size()];
 
-            RequestBody resBody = RequestBody.create(MediaType.parse("multipart/form-data"), propertyImageFile);
+        for (int i = 0; i < imageInforPost.size(); i++) {
 
-            propertyImagePart = MultipartBody.Part.createFormData("photo", propertyImageFile.getAbsolutePath(), resBody);
+            File file = new File(imageInforPost.get(i).getRealPath());
 
-            MyRetrofitSmartFind.getInstanceSmartFind().postImage(propertyImagePart).enqueue(new Callback<ResponsePostPhoto>() {
-                @Override
-                public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
-                    if (response.code() == 200) {
-                        onSubmitToServer(response.body().getResponseBody().getAddressImage());
-                    } else {
-                        mViewModel.hideLoading();
-                        mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
-                    }
-                }
+            RequestBody resBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-                @Override
-                public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
+            surveyImagesParts[i] = MultipartBody.Part.createFormData("photo", file.getAbsolutePath(), resBody);
+        }
+
+        MyRetrofitSmartFind.getInstanceSmartFind().postImageMulti(surveyImagesParts).enqueue(new Callback<ResponsePostPhoto>() {
+            @Override
+            public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
+                if (response.code() == 200) {
+                    Log.d("checkResponsePhoto", "onResponse: ");
+                    onSubmitToServer(response.body().getResponseBody().getAddressImage());
+                } else {
                     mViewModel.hideLoading();
-                    Log.d("CheckUpLoadImage", t.toString());
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
+                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
                 }
-            });
-
-
-        } else {
-            surveyImagesParts = new MultipartBody.Part[imageInforPost.size()];
-
-            for (int i = 0; i < imageInforPost.size(); i++) {
-
-                File file = new File(imageInforPost.get(i).getRealPath());
-
-                RequestBody resBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-                surveyImagesParts[i] = MultipartBody.Part.createFormData("photo", file.getAbsolutePath(), resBody);
             }
 
-            MyRetrofitSmartFind.getInstanceSmartFind().postImageMulti(surveyImagesParts).enqueue(new Callback<ResponsePostPhoto>() {
-                @Override
-                public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
-                    if (response.code() == 200) {
-                        Log.d("checkResponsePhoto", "onResponse: ");
-                        onSubmitToServer(response.body().getResponseBody().getAddressImage());
-                    } else {
-                        mViewModel.hideLoading();
-                        mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
-                    }
-                }
+            @Override
+            public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
+                mViewModel.hideLoading();
+                Log.d("CheckUpLoadImage", t.toString());
+                mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
+            }
+        });
 
-                @Override
-                public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
-                    mViewModel.hideLoading();
-                    Log.d("CheckUpLoadImage", t.toString());
-                    mViewModel.showMessage(contex.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
-                }
-            });
-        }
     }
 
 
