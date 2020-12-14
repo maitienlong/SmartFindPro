@@ -16,7 +16,6 @@ public interface InforPostContract {
     }
 
     interface Presenter extends BasePresenter {
-        void onDemoUri(String uri);
         void openChoosePhoto();
     }
 }

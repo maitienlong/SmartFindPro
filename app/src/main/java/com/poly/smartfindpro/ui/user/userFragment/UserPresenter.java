@@ -78,7 +78,6 @@ public class UserPresenter implements UserContact.Presenter {
                 if (response.code() == 200) {
                     mProfile = response.body();
                     showData(mProfile);
-
                 } else {
 
                 }

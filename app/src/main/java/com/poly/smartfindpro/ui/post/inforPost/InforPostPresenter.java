@@ -36,18 +36,7 @@ public class InforPostPresenter implements InforPostContract.Presenter {
     }
 
 
-    @Override
-    public void onDemoUri(String uri) {
 
-        File file = new File(uri);
-        String fileThat = file.getAbsolutePath();
-        if (fileThat != null) {
-            Log.d("DuMaNoa", fileThat);
-        } else {
-            Log.d("DuMaNob", "NONO");
-        }
-
-    }
 
     @Override
     public void subscribe() {

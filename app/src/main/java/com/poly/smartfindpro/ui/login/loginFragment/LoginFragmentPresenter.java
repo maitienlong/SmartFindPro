@@ -1,8 +1,10 @@
 package com.poly.smartfindpro.ui.login.loginFragment;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
@@ -67,6 +69,7 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
 
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
                     mViewmodel.hideLoading();
+                    Log.d("getUser", new Gson().toJson(response.body()));
                     String token = response.body().getResponseBody().getUser().getId();
                     Config.PROFILE = response.body().getResponseBody();
                     Config.TOKEN_USER = token;
