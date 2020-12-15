@@ -68,6 +68,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     private void initData() {
         key = new ObservableField<>();
         hint = new ObservableField<>();
+        hint.set("Nhập địa chỉ tìm kiếm");
         getProduct();
     }
 

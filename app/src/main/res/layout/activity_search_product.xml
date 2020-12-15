@@ -26,7 +26,7 @@
                 android:id="@+id/cardView3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@color/background"
+                android:background="@drawable/background_app"
                 android:orientation="vertical">
 
 
@@ -42,7 +42,7 @@
                         android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="16dp"
-                        android:src="@mipmap/marker" />
+                        android:src="@drawable/ic_baseline_location_chung_cu" />
 
                     <TextView
                         android:id="@+id/tv_address"
@@ -75,13 +75,13 @@
                             android:id="@+id/edtSearch"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColorHint="#fff"
+                            android:textColorHint="@color/gray2"
                             android:hint="@{presenter.hint}"
                             android:singleLine="true"
                             android:background="@drawable/bg_circle_editext_while"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_8sdp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
