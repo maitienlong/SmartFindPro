@@ -8,6 +8,8 @@ import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
@@ -69,4 +71,7 @@ public interface ListServices {
 
     @POST("/init-user")
     Call<RegisterResponse> getRegister(@Body RegisterRequest request);
+
+    @POST("/delete-product")
+    Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request );
 }

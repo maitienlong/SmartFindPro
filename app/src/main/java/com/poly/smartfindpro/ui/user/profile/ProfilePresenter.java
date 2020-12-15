@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.user.profile;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LifecycleOwner;
@@ -11,6 +12,8 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
@@ -31,6 +34,8 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private Context context;
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
+    private DeleteProductResponse mDelete;
+
     private FragmentProfileBinding mBinding;
     private List<Products> productsList;
 
@@ -115,7 +120,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
-                   mViewModel.hideLoading();
+                    mViewModel.hideLoading();
                     productsList = new ArrayList<>();
                     if (response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() != null) {
                         for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
@@ -149,7 +154,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
                     mViewModel.hideLoading();
-                    if(response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() !=null){
+                    if (response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() != null) {
                         productsList = new ArrayList<>();
                         for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
                             if (!response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")) {
@@ -176,6 +181,31 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     }
 
+    public void getDeleteProduct(String idPost) {
+        DeleteProductRequest request = new DeleteProductRequest();
+        request.setUserId(Config.TOKEN_USER);
+        request.setId(idPost);
+        MyRetrofitSmartFind.getInstanceSmartFind().getDeleteProduct(request).enqueue(new Callback<DeleteProductResponse>() {
+            @Override
+            public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
+                if (response.code() == 200) {
+
+                    mDelete = response.body();
+                    Log.d("checkDelete", mDelete.getResponseHeader().getResCode().toString());
+                    Toast.makeText(context, "Xóa Thành Công", Toast.LENGTH_SHORT).show();
+                    getProductPending();
+                    getProductApproved();
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void getProduct() {
         ProductRequest request = new ProductRequest();

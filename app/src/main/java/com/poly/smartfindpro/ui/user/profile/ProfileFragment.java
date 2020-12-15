@@ -24,7 +24,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     protected void initView() {
-        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
+        mPresenter = new ProfilePresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
 //        mBinding.btnApproved.setBackgroundColor(R.drawable.btn_category_pressed);
@@ -32,9 +32,9 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     protected void initData() {
-        mPresenter = new ProfilePresenter(mActivity, this,mBinding);
+        mPresenter = new ProfilePresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
-        profileAdapter = new ProfileAdapter(mActivity, mActivity.getSupportFragmentManager());
+        profileAdapter = new ProfileAdapter(mActivity, mActivity.getSupportFragmentManager(), this);
 
     }
 
@@ -47,7 +47,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     @Override
     public void onShow(List<Products> productList) {
         profileAdapter.setItemList(productList);
-        BindingUtils.setAdapter(mBinding.rcProfile,profileAdapter,true);
+        BindingUtils.setAdapter(mBinding.rcProfile, profileAdapter, true);
     }
 
 
@@ -71,5 +71,13 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         mBinding.btnPending.setTextColor(getResources().getColor(R.color.blue));
         mBinding.btnApproved.setBackground(getResources().getDrawable(R.drawable.btn_category_pressed));
         mBinding.btnApproved.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    @Override
+    public void onCallback(int type, String idPost) {
+
+        if (type == 0) {
+            mPresenter.getDeleteProduct(idPost);
+        }
     }
 }

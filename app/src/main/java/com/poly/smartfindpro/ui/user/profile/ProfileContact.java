@@ -18,6 +18,8 @@ public interface ProfileContact {
         void onClickPending();
 
         void onClickApproved();
+
+        void onCallback(int type, String idPost);
     }
 
     interface Presenter extends BasePresenter {

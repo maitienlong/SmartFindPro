@@ -21,9 +21,15 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
+import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
+import com.poly.smartfindpro.ui.user.profile.ProfileContact;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -33,22 +39,33 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
     private Context context;
 
     private FragmentManager mFragmentManager;
-
+    private DeleteProductResponse mDelete;
     private List<Products> productList;
 
+    private ProfileContact.ViewModel mViewmodel;
 
-    public ProfileAdapter(Context context, FragmentManager fragmentManager) {
+
+    public ProfileAdapter(Context context, FragmentManager fragmentManager, ProfileContact.ViewModel viewModel) {
         this.context = context;
         this.mFragmentManager = fragmentManager;
+        this.mViewmodel = viewModel;
     }
 
     public void setItemList(List<Products> productList) {
         this.productList = productList;
+    }
+
+    public void setmDelete(DeleteProductResponse mDelete) {
+        this.mDelete = mDelete;
     }
 
     @NonNull
@@ -159,10 +176,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             switch (menuItem.getItemId()) {
                                 case R.id.btn_delete_menu:
-                                    Toast.makeText(context, "Xóa", Toast.LENGTH_SHORT).show();
+                                    mViewmodel.onCallback(0, item.getId());
                                     break;
                                 case R.id.btn_edit_menu:
-                                    Toast.makeText(context, "Sửa", Toast.LENGTH_SHORT).show();
+//                                    mViewmodel.onCallback(1, item.getId());
+
                                     break;
                             }
                             return false;
@@ -177,7 +195,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DetailPostActivity.class);
                     intent.putExtra(Config.POST_BUNDEL_RES, new Gson().toJson(item));
-                        context.startActivity(intent);
+                    context.startActivity(intent);
 
                 }
             });
@@ -232,4 +250,5 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             img_avatar = itemView.findViewById(R.id.img_avatar);
         }
     }
+
 }

@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
     <Button
         android:id="@+id/btn_close"
-        android:background="@mipmap/close"
+        android:background="@drawable/ic_baseline_close_24"
         android:layout_width="@dimen/_15sdp"
         android:layout_height="@dimen/_15sdp"/>
 
