@@ -81,6 +81,8 @@
                 {{#each listUpgrade}}
                     <tr id='row-{{this._id}}'>
                         <td>
+                            <div><b>Cấp bậc tài khoản: </b> <br> {{this.user.level}}</div>
+                            <br>
                             <div><b>Ngày tạo yêu cầu: </b> <br>{{this.createAt}}</div>
                             <hr>
                             <div><b>Họ và tên: </b> <br> {{this.user.full_name}}</div>
@@ -222,14 +224,24 @@
                 } else {
                     let resCode = res.response_header.res_code;
                     if (resCode == 200) {
-                        $("#row-" + id).remove();
-                        content = 'Từ chối duyệt thành công!';
-                        titleOK = 'Trở lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'userManage';
-                        });
+                        let status = res.response_body.status
+                        if (status == 'Success') {
+                            $("#row-" + id).remove();
+                            content = 'Duyệt thành công!';
+                            titleOK = 'Trở lại';
+                            $('#successDialog').click(function () {
+                                location.href = 'userManage';
+                            });
+                        } else {
+                            content = 'Duyệt thất bại. Vui lòng thử lại sau!';
+                            titleOK = 'Trở lại';
+                            $('#successDialog').click(function () {
+                                location.href = 'userManage';
+                            });
+                        }
                     } else {
-                        content = 'Từ chối duyệt thất bại. Vui lòng thử lại sau!';
+                        let resMess = res.response_header.res_mess;
+                        content = resMess;
                         titleOK = 'Thử lại';
                         $('#successDialog').click(function () {
                             location.href = 'index';

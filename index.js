@@ -494,7 +494,9 @@ app.post('/upgrade-user', async function (request, response) {
                             let updateUser = new UpgradeUser({
                                 user: userId,
                                 identityCard: initIdentityCard._id,
-                                createAt: createAt
+                                createAt: createAt,
+                                updateAt: '',
+                                deleteAt: ''
                             });
                             let initUpdateUser = await updateUser.save();
                             if (initUpdateUser) {
@@ -515,27 +517,6 @@ app.post('/upgrade-user', async function (request, response) {
                         }
                     } else {
                         response.json(getResponse(name, 400, 'Bad request', null))
-                    }
-                } else if (user.level == 2) {
-                    name = name + '-LEVEL-3'
-                    let updateUser = await User.findByIdAndUpdate(userId, {
-                        level: 3,
-                        updateAt: createAt
-                    });
-                    if (updateUser) {
-                        let confirm = await ConfirmPost({
-                            product: null,
-                            admin: null,
-                            user: userId,
-                            status: name,
-                            createAt: createAt
-                        });
-                        let confirPrd = await confirm.save();
-                        res_body = {status: sttOK};
-                        response.json(getResponse(name, 200, sttOK, res_body));
-                    } else {
-                        res_body = {status: "Fail"};
-                        response.json(getResponse(name, 200, 'Fail', res_body))
                     }
                 } else {
                     response.json(getResponse(name, 403, 'User not permissions', null))
@@ -1370,7 +1351,7 @@ app.get('/userManage', async function (request, response) {
 //duyệt bài viết
 app.get('/confirmUser', async function (request, response) {
     try {
-        var listUpgrade = await UpgradeUser.find({})
+        var listUpgrade = await UpgradeUser.find({deleteAt: ''})
             .populate({
                 path: 'user',
                 populate: {
@@ -1533,113 +1514,125 @@ app.post('/cancel-product', async function (request, response) {
 });
 
 // duyet nang quyen
-app.post('/confirm-product', async function (request, response) {
-    let name = 'CONFIRM-PRODUCT'
-    try {
-        let adminId = request.body.adminId;
-        let id = request.body.id;
-        let utilities = request.body.utilities;
-        let category = request.body.category;
-        let information = request.body.information;
-        if (checkData(adminId) &&
-            checkData(id) &&
-            checkData(utilities) &&
-            checkData(category) &&
-            checkData(information)) {
-            let admin = await Admin.find({_id: adminId}).lean();
-            if (admin.length > 0) {
-                let oldProduct = await Product.find({_id: id}).lean();
-                if (oldProduct.length > 0) {
-                    oldProduct = oldProduct[0];
-                    let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
-                        category: category,
-                        information: information,
-                        utilities: utilities
+app.post('/confirm-upgrade', async function (request, response) {
+        let name = 'CONFIRM-UPGRADE'
+        try {
+            let adminId = request.body.adminId;
+            let id = request.body.id;
+            if (checkData(adminId) && checkData(id)) {
+                let admin = await Admin.find({_id: adminId}).lean();
+                if (admin.length > 0) {
+                    let updatedAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let user = await User.find({_id: id}).lean();
+                    let res_body = {status: null};
+                    let upgradeUser = await UpgradeUser.findByIdAndUpdate(id, {
+                        updatedAt: updatedAt
                     });
-                    // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                        status: '1',
-                        updateAt: updateAt
-                    });
-                    if (updateProduct && product) {
-                        let confirm = await ConfirmPost({
-                            product: id,
-                            admin: adminId,
-                            user: null,
-                            status: 'CONFIRM',
-                            createAt: updateAt
-                        })
-                        let confirPrd = await confirm.save();
-
-                        let res_body = {status: sttOK}
-                        response.json(getResponse(name, 200, sttOK, res_body))
+                    if (upgradeUser) {
+                        let user = await User.find({_id: upgradeUser.user}).lean();
+                        let identityCard = await IdentityCard.find({_id: upgradeUser.identityCard}).lean();
+                        if (user.length > 0 && identityCard.length > 0) {
+                            user = user[0];
+                            identityCard = identityCard[0];
+                            if (user.level == 1 || user.level == 2) {
+                                let number = 0;
+                                if (user.level == 1) {
+                                    number = 2;
+                                    name = name + '-LEVEL-2';
+                                    let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
+                                        updateAt: updatedAt
+                                    });
+                                } else {
+                                    number = 3;
+                                    name = name + '-LEVEL-3';
+                                    let deleteUpgradeUser = await UpgradeUser.findByIdAndDelete(id);
+                                }
+                                let updateUser = await User.findByIdAndUpdate(user._id, {
+                                    level: number,
+                                    updateAt: updatedAt
+                                });
+                                let updateIdentityCard = await IdentityCard.findByIdAndUpdate(identityCard._id, {
+                                    user: user._id,
+                                    updateAt: updatedAt
+                                });
+                                if (updateUser && updateIdentityCard) {
+                                    let confirm = await ConfirmPost({
+                                        product: null,
+                                        admin: adminId,
+                                        user: id,
+                                        status: name,
+                                        createAt: updatedAt
+                                    });
+                                    let confirPrd = await confirm.save();
+                                    res_body = {status: sttOK};
+                                    response.json(getResponse(name, 200, sttOK, res_body));
+                                } else {
+                                    res_body = {status: "Fail"};
+                                    response.json(getResponse(name, 200, 'Fail', res_body))
+                                }
+                            } else {
+                                response.json(getResponse(name, 403, 'User not permissions', null))
+                            }
+                        } else {
+                            response.json(getResponse(name, 404, 'Data not found', null))
+                        }
                     } else {
-                        let res_body = {status: 'Fail'}
-                        response.json(getResponse(name, 200, 'Fail', res_body))
+                        response.json(getResponse(name, 404, 'Upgrade user not found', null))
                     }
+
                 } else {
-                    response.json(getResponse(name, 404, 'Product not found', null))
+                    response.json(getResponse(name, 404, 'Admin not found', null))
                 }
             } else {
-                response.json(getResponse(name, 404, 'Admin not found', null))
+                response.json(getResponse(name, 400, 'Bad request', null))
             }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
+        } catch
+            (e) {
+            console.log('loi ne: \n' + e)
+            response.status(500).json(getResponse(name, 500, 'Server error', null))
         }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-});
+);
 // huy duyet nang quyen
-app.post('/cancel-product', async function (request, response) {
-    let name = 'CANCEL-PRODUCT'
-    try {
-        let adminId = request.body.adminId;
-        let id = request.body.id;
-        let status = request.body.status;
-        if (checkData(adminId) &&
-            checkData(id) &&
-            checkData(status)) {
-            let admin = await Admin.find({_id: adminId}).lean();
-            if (admin.length > 0) {
-                let oldProduct = await Product.find({_id: id}).lean();
-                if (oldProduct.length > 0) {
-                    oldProduct = oldProduct[0];
-                    // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                        status: status,
-                        updateAt: updateAt
-                    })
-                    if (updateProduct) {
+app.post('/cancel-upgrade', async function (request, response) {
+        let name = 'CANCEL-UPGRADE'
+        try {
+            let adminId = request.body.adminId;
+            let id = request.body.id;
+            if (checkData(adminId) &&
+                checkData(id)) {
+                let admin = await Admin.find({_id: adminId}).lean();
+                if (admin.length > 0) {
+                    let res_body = {status: null};
+                    let deleteAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
+                        deleteAt: deleteAt
+                    });
+                    if (updateUser) {
                         let confirm = await ConfirmPost({
-                            product: id,
+                            product: null,
                             admin: adminId,
                             user: null,
-                            status: 'CANCEL',
-                            createAt: updateAt
-                        })
+                            status: name,
+                            createAt: deleteAt
+                        });
                         let confirPrd = await confirm.save();
-                        let res_body = {status: sttOK}
-                        response.json(getResponse(name, 200, sttOK, res_body))
+                        res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
-                        let res_body = {status: 'Fail'}
+                        res_body = {status: "Fail"};
                         response.json(getResponse(name, 200, 'Fail', res_body))
-
                     }
                 } else {
-                    response.json(getResponse(name, 404, 'Product not found', null))
+                    response.json(getResponse(name, 404, 'Admin not found', null))
                 }
             } else {
-                response.json(getResponse(name, 404, 'Admin not found', null))
+                response.json(getResponse(name, 400, 'Bad request', null))
             }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
+        } catch
+            (e) {
+            console.log('loi ne: \n' + e)
+            response.status(500).json(getResponse(name, 500, 'Server error', null))
         }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-});
+);

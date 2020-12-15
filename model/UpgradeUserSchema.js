@@ -12,8 +12,15 @@ const UpgradeUserSchema = mongoose.Schema({
     },
     createAt: {
         type: String,
-        default: Date,
         required: true
+    },
+    updateAt: {
+        type: String,
+        required: false
+    },
+    deleteAt: {
+        type: String,
+        required: false
     }
 });
 module.exports = UpgradeUserSchema;
