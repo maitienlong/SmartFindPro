@@ -25,6 +25,12 @@ const Product = db.model('Product', postSchema, 'products');
 const userSchema = require('./model/UserSchema');
 const User = db.model('User', userSchema, 'users');
 
+const identityCardSchema = require('./model/IdentityCardSchema');
+const IdentityCard = db.model('IdentityCard', identityCardSchema, 'identityCard');
+
+const upgradeUserSchema = require('./model/UpgradeUserSchema');
+const UpgradeUser = db.model('UpgradeUser', upgradeUserSchema, 'upgradeUser');
+
 const adminSchema = require('./model/AdminSchema');
 const Admin = db.model('Admin', adminSchema, 'admin');
 
@@ -36,8 +42,7 @@ const InforProduct = db.model('InforProduct', inforProductSchema, 'product');
 
 const informationSchema = require('./model/InformationSchema');
 const Information = db.model('Information', informationSchema);
-const identityCardSchema = require('./model/IdentityCardSchema');
-const IdentityCard = db.model('IdentityCard', identityCardSchema);
+
 const postResponseSchema = require('./model/PostResponseSchema');
 const PostResponseSchema = db.model('PostResponseSchema', postResponseSchema);
 
@@ -369,7 +374,6 @@ app.post('/update-user', async function (request, response) {
         let phoneNumber = request.body.phone_number;
         if (checkData(userId)) {
             let user = await User.find({_id: userId}).lean();
-
             let res_body = {status: null};
             if (user.length > 0) {
                 user = user[0];
@@ -428,59 +432,113 @@ app.post('/update-user', async function (request, response) {
     }
 });
 // nang cap quyen
-app.post('/update-owner', async function (request, response) {
-    let name = 'UPDATE-OWNER'
+app.post('/upgrade-user', async function (request, response) {
+    let name = 'UPGRADE-USER'
     try {
         let userId = request.body.userId;
-        let type = request.body.type;
-        let code = request.body.code;
-        let name = request.body.name;
-        let date = request.body.date;
-        let gender = request.body.gender;
-        let issuedBy = request.body.issuedBy;
-        let expiryDate = request.body.expiryDate;
-        let homeTown = request.body.homeTown;
-        let resident = request.body.resident;
-        let image = request.body.image;
         if (checkData(userId)) {
             let user = await User.find({_id: userId}).lean();
             let res_body = {status: null};
             if (user.length > 0) {
                 user = user[0];
-                // update data vao bang chinh
                 let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                let updateUser = await User.findByIdAndUpdate(userId, {
-                    level: 2,
-                    updateAt: updateAt
-                });
-                let initIdentityCard = new IdentityCard({
-                    type: 1,
-                    code: checkData(address) ? address : user.address,
-                    name: checkData(avatar) ? avatar : user.avatar,
-                    date: checkData(coverImage) ? coverImage : user.coverImage,
-                    gender: checkData(gender) ? gender : user.gender,
-                    issuedBy: checkData(birth) ? birth : user.birth,
-                    expiryDate: checkData(fullName) ? fullName : user.full_name,
-                    image: checkData(phoneNumber) ? phoneNumber : user.phone_number,
-                    hometown: user.deleteAt,
-                    resident: updateAt,
-                    createAt: createAt
-                })
-                if (address && updateUser) {
-                    let confirm = await ConfirmPost({
-                        product: null,
-                        admin: null,
-                        user: userId,
-                        status: 'UPDATE_USER',
-                        createAt: updateAt
+                if (user.level == 1) {
+                    let type = request.body.type;
+                    let code = request.body.code;
+                    let full_name = request.body.name;
+                    let date = request.body.date;
+                    let gender = request.body.gender;
+                    let issuedBy = request.body.issuedBy;
+                    let expiryDate = request.body.expiryDate;
+                    let homeTown = request.body.homeTown;
+                    let resident = request.body.resident;
+                    let nationality = request.body.nationality;
+                    let previous = request.body.previous;
+                    let behind = request.body.behind;
+                    let hasFace = request.body.hasFace;
+                    if (checkData(type) &&
+                        checkData(code) &&
+                        checkData(full_name) &&
+                        checkData(date) &&
+                        checkData(gender) &&
+                        checkData(issuedBy) &&
+                        checkData(expiryDate) &&
+                        checkData(homeTown) &&
+                        checkData(resident) &&
+                        checkData(nationality) &&
+                        checkData(previous) &&
+                        checkData(behind) &&
+                        checkData(hasFace)) {
+                        name = name + '-LEVEL-2'
+                        let image = {
+                            previous: previous,
+                            behind: behind,
+                            hasFace: hasFace
+                        }
+                        let identityCard = new IdentityCard({
+                            type: type,
+                            code: code,
+                            name: full_name,
+                            date: date,
+                            gender: gender,
+                            issuedBy: issuedBy,
+                            expiryDate: expiryDate,
+                            image: image,
+                            homeTown: homeTown,
+                            resident: resident,
+                            nationality: nationality,
+                            createAt: createAt
+                        });
+                        let initIdentityCard = await identityCard.save();
+                        if (initIdentityCard) {
+                            let updateUser = new UpgradeUser({
+                                user: userId,
+                                identityCard: initIdentityCard._id,
+                                createAt: createAt
+                            });
+                            let initUpdateUser = await updateUser.save();
+                            if (initUpdateUser) {
+                                let confirm = await ConfirmPost({
+                                    product: null,
+                                    admin: null,
+                                    user: userId,
+                                    status: name,
+                                    createAt: createAt
+                                });
+                                let confirPrd = await confirm.save();
+                                res_body = {status: sttOK};
+                                response.json(getResponse(name, 200, sttOK, res_body));
+                            } else {
+                                res_body = {status: "Fail"};
+                                response.json(getResponse(name, 200, 'Fail', res_body))
+                            }
+                        }
+                    } else {
+                        response.json(getResponse(name, 400, 'Bad request', null))
+                    }
+                } else if (user.level == 2) {
+                    name = name + '-LEVEL-3'
+                    let updateUser = await User.findByIdAndUpdate(userId, {
+                        level: 3,
+                        updateAt: createAt
                     });
-                    console.log(JSON.stringify(confirm));
-                    let confirPrd = await confirm.save();
-                    res_body = {status: sttOK};
-                    response.json(getResponse(name, 200, sttOK, res_body));
+                    if (updateUser) {
+                        let confirm = await ConfirmPost({
+                            product: null,
+                            admin: null,
+                            user: userId,
+                            status: name,
+                            createAt: createAt
+                        });
+                        let confirPrd = await confirm.save();
+                        res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        res_body = {status: "Fail"};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
                 } else {
-                    res_body = {status: "Fail"};
-                    response.json(getResponse(name, 200, 'Fail', res_body))
+                    response.json(getResponse(name, 403, 'User not permissions', null))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -1299,71 +1357,33 @@ app.get('/confirmPost', async function (request, response) {
 //quản lý người dùng
 app.get('/userManage', async function (request, response) {
     var allUsers = await User.find({deleteAt: ''}).populate(['address']).lean();
-    var userLV0 = await User.find({deleteAt: '', level: '0'}).populate(['address']).lean();
+    var userLV0 = await User.find({deleteAt: '', level: 0}).populate(['address']).lean();
     var userLV1 = await User.find({deleteAt: '', level: 1}).populate(['address']).lean();
     var userLV2 = await User.find({deleteAt: '', level: 2}).populate(['address']).lean();
-    var userLV3 = await User.find({deleteAt: '', level: '3'}).populate(['address']).lean();
+    var userLV3 = await User.find({deleteAt: '', level: 3}).populate(['address']).lean();
     let data = new UserManage(allUsers.reverse(), userLV0.reverse(), userLV1.reverse(), userLV2.reverse(), userLV3.reverse());
     response.render('userManage', {
         data: data
     });
 });
+
 //duyệt bài viết
 app.get('/confirmUser', async function (request, response) {
-    let _id = request.query.idProduct;
     try {
-        let product = await Product.find({_id: _id}).populate(['address', 'product'])
+        var listUpgrade = await UpgradeUser.find({})
             .populate({
                 path: 'user',
                 populate: {
                     path: 'address'
                 }
             })
+            .populate({
+                path: 'identityCard'
+            })
             .lean();
-        //them cho moi image 1 truong id
-        let listImages = product[0].product.information.image;
-        let countListImages = listImages.length;
-        let listObjectImages = [];
-        for (let i = 0; i < countListImages; i++) {
-            listObjectImages.push({
-                id: i,
-                path: listImages[i]
-            })
-        }
-        //them cho moi tienich 1 truong id
-        let listUtilities = product[0].product.utilities;
-        let countListUtilities = listUtilities.length;
-        let listObjectUtilities = [];
-        for (let i = 0; i < countListUtilities; i++) {
-            listObjectUtilities.push({
-                id: i,
-                utilities: listUtilities[i]
-            })
-        }
-        let dataUtilities = [];
-        let countUtilities = 6
-        let utilities = ['Wifi', 'An ninh', 'Giờ giấc', 'Nhà ăn', 'Nhà vệ sinh', 'Phòng riêng', 'Giường', 'Để xe', 'Thú cưng', 'Trẻ em']
-        for (let i = 0; i < countUtilities; i++) {
-            dataUtilities.push({
-                id: i,
-                utilities: utilities[i]
-            })
-        }
-        var now = new Date();
-        var day = ("0" + now.getDate()).slice(-2);
-        var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
-        var today = now.getFullYear() + "-" + (month) + "-" + (day);
-        let info = {
-            admin: nameDN,
-            date: today
-        }
-        console.log(JSON.stringify(product[0].address));
+        console.log(JSON.stringify(listUpgrade))
         response.render('confirmUser', {
-            info: info,
-            product: product[0],
-            utilities: dataUtilities,
-            images: listObjectImages
+            listUpgrade: listUpgrade.reverse()
         });
     } catch (e) {
         console.log('Lỗi: ' + e)
@@ -1461,6 +1481,118 @@ app.post('/confirm-product', async function (request, response) {
     }
 });
 // huy duyet bai dang
+app.post('/cancel-product', async function (request, response) {
+    let name = 'CANCEL-PRODUCT'
+    try {
+        let adminId = request.body.adminId;
+        let id = request.body.id;
+        let status = request.body.status;
+        if (checkData(adminId) &&
+            checkData(id) &&
+            checkData(status)) {
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let oldProduct = await Product.find({_id: id}).lean();
+                if (oldProduct.length > 0) {
+                    oldProduct = oldProduct[0];
+                    // update data vao bang chinh
+                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                        status: status,
+                        updateAt: updateAt
+                    })
+                    if (updateProduct) {
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: adminId,
+                            user: null,
+                            status: 'CANCEL',
+                            createAt: updateAt
+                        })
+                        let confirPrd = await confirm.save();
+                        let res_body = {status: sttOK}
+                        response.json(getResponse(name, 200, sttOK, res_body))
+                    } else {
+                        let res_body = {status: 'Fail'}
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+
+                    }
+                } else {
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'Admin not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+// duyet nang quyen
+app.post('/confirm-product', async function (request, response) {
+    let name = 'CONFIRM-PRODUCT'
+    try {
+        let adminId = request.body.adminId;
+        let id = request.body.id;
+        let utilities = request.body.utilities;
+        let category = request.body.category;
+        let information = request.body.information;
+        if (checkData(adminId) &&
+            checkData(id) &&
+            checkData(utilities) &&
+            checkData(category) &&
+            checkData(information)) {
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let oldProduct = await Product.find({_id: id}).lean();
+                if (oldProduct.length > 0) {
+                    oldProduct = oldProduct[0];
+                    let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                        category: category,
+                        information: information,
+                        utilities: utilities
+                    });
+                    // update data vao bang chinh
+                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                        status: '1',
+                        updateAt: updateAt
+                    });
+                    if (updateProduct && product) {
+                        let confirm = await ConfirmPost({
+                            product: id,
+                            admin: adminId,
+                            user: null,
+                            status: 'CONFIRM',
+                            createAt: updateAt
+                        })
+                        let confirPrd = await confirm.save();
+
+                        let res_body = {status: sttOK}
+                        response.json(getResponse(name, 200, sttOK, res_body))
+                    } else {
+                        let res_body = {status: 'Fail'}
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                } else {
+                    response.json(getResponse(name, 404, 'Product not found', null))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'Admin not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// huy duyet nang quyen
 app.post('/cancel-product', async function (request, response) {
     let name = 'CANCEL-PRODUCT'
     try {

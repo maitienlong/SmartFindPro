@@ -66,6 +66,9 @@
             </div>
         </div>
         <div class="col-sm-10 bg-light" style="padding-right: 2%">
+            <button type="button" class="btn btn-success" onclick="location.href='/confirmUser';" style="margin: 20px">
+                Nâng cấp người dùng
+            </button>
             <table class="table">
                 <thead class="thead-dark ">
                 <tr>
@@ -89,7 +92,7 @@
                                     {{#case 3}} Chủ trọ {{/case}}
                                 {{/switch}}</div>
                             <br>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                            <div><b>Ngày tạo:</b> {{this.createAt}}</div>
                             <br>
                             <div><b>Cập nhật:</b> {{this.updateAt}}</div>
                         </td>
@@ -139,7 +142,7 @@
                                     {{#case 3}} Chủ trọ {{/case}}
                                 {{/switch}}</div>
                             <br>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                            <div><b>Ngày tạo: </b> {{this.createAt}}</div>
                             <br>
                             <div><b>Cập nhật:</b> {{this.updateAt}}</div>
                         </td>
@@ -189,7 +192,7 @@
                                     {{#case 3}} Chủ trọ {{/case}}
                                 {{/switch}}</div>
                             <br>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                            <div><b>Ngày tạo: </b> {{this.createAt}}</div>
                             <br>
                             <div><b>Cập nhật:</b> {{this.updateAt}}</div>
                         </td>
@@ -238,7 +241,7 @@
                                     {{#case 3}} Chủ trọ {{/case}}
                                 {{/switch}}</div>
                             <br>
-                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                            <div><b>Ngày tạo: </b> {{this.createAt}}</div>
                             <br>
                             <div><b>Cập nhật:</b> {{this.updateAt}}</div>
                         </td>
@@ -255,7 +258,6 @@
                             <br>
                             <div><b>Ngày sinh: </b> {{this.birth}}</div>
                         </td>
-
                     </tr>
                 {{/each}}
                 </tbody>

@@ -3,392 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý bài đăng</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
 
-<div>
-    <div style="padding-left: 3%;padding-right: 3%">
-        <div class="header">
-            <div class="row">
-                <div class="col">
-                    <h1>Duyệt phòng trọ</h1>
-                </div>
-                <div class=" column border" style="padding: 2%">
-                    <h6>Thời gian đăng bài: {{product.createAt}}</h6>
-                    <h6>Tài khoản duyệt: {{info.admin}}</h6>
-                </div>
+<div class="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/index">Tìm trọ Sever</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="  navbar-nav fmy-2 my-lg-0  mr-auto">
+                <li style="display: none" class="nav-item">
+                    <a class="nav-link" href="/createAdAc">Quản lý nhân viên</a>
+                </li>
+            </ul>
+
+            <ul class="  navbar-nav fmy-2 my-lg-0 ">
+                <li class="nav-item">
+
+                </li>
+                <li class="nav-item">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-dark text-light dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tài khoản
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="/index">Tài khoản của bạn</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/">Đăng xuất</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="list-group">
+
+                <a href="/index" class="list-group-item list-group-item-action">
+                    Thống kê
+                </a>
+                <a href="/postManage" class="list-group-item list-group-item-action">
+                    Quản lý bài đăng
+                </a>
+                <a href="/userManage" class="list-group-item list-group-item-action">
+                    Quản lý người dùng
+                </a>
+                <a href="/createAdAc" class="list-group-item list-group-item-action">
+                    Quản lý nhân viên
+                </a>
+                <a href="/history" class="list-group-item list-group-item-action">
+                    Lịch sử
+                </a>
             </div>
         </div>
-        <div class="body">
-            <h>Ngày khảo sát</h>
-            <input id="date-success" type="date" style="margin-left: 4%">
-
-            <h3>Thông tin người đăng</h3>
-            <div class="column" style="margin-left: 4%">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th style="width: 20%">Thông tin</th>
-                        <th style="width: 80%">Chi tiết</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>Họ và tên</th>
-                        <td>{{product.user.full_name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Địa chỉ</th>
-                        <td>{{product.user.address.detailAddress}}, {{product.user.address.communeWardTown}}
-                            , {{product.user.address.districtsTowns}}, {{product.user.address.provinceCity}}</td>
-                    </tr>
-                    <tr>
-                        <th>Điện thoại</th>
-                        <td>{{product.user.phone_number}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>Thông tin phòng</h3>
-            <div class="column" style="margin-left: 4%">
-                <table class="table  table-bordered">
-                    <thead>
-                    <tr>
-                        <th style="width: 15%">Loại</th>
-                        <th style="width: 70%">Chi tiết</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">Địa chỉ</th>
+        <div class="col-sm-10 bg-light" style="padding-right: 2%">
+            <table style="margin-left: 10px;margin-right: 10px" class="table  table-bordered">
+                <thead class="thead-dark ">
+                <tr>
+                    <th colspan="3">Nâng quyền người dùng</th>
+                </tr>
+                <tr>
+                    <th scope="col">Thông tin cơ bản</th>
+                    <th scope="col">Thông tin xác minh</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each listUpgrade}}
+                    <tr id='row-{{this._id}}'>
                         <td>
-                            <input class="form-control"
-                                   value="{{product.address.detailAddress}}, {{product.address.communeWardTown}}, {{product.address.districtsTowns}}, {{product.address.provinceCity}}"
-                                   type="text" id="idAddress" placeholder="Nhập địa chỉ ..." disabled>
-                            <!--                            <div class="d-flex flex-row-reverse">-->
-                            <!--                                <div class="p-2">-->
-                            <!--                                    <button id="updateAddress" type="button" class="btn btn-success">Sửa-->
-                            <!--                                    </button>-->
-                            <!--                                </div>-->
-                            <!--                                <div class="p-2">-->
-                            <!--                                    <button id="cancelUpdateAddress" type="button" class="btn btn-primary">Hủy-->
-                            <!--                                    </button>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
+                            <div><b>Ngày tạo yêu cầu: </b> <br>{{this.createAt}}</div>
+                            <hr>
+                            <div><b>Họ và tên: </b> <br> {{this.user.full_name}}</div>
+                            <br>
+                            <div><b>Số điện thoại: </b> <br>{{this.user.phone_number}}</div>
+                            <br>
+                            <div><b>Địa chỉ: </b> <br> {{this.user.address.detailAddress}}
+                                , {{this.user.address.communeWardTown}}
+                                , {{this.user.address.districtsTowns}}, {{this.user.address.provinceCity}}
+                            </div>
+                            <br>
+                            <div><b>Giới tính: </b> <br> {{this.user.gender}}</div>
+                            <br>
+                            <div><b>Ngày sinh: </b> <br> {{this.user.birth}}</div>
                         </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Thông tin phòng</th>
                         <td>
-                            <table class="table table-borderless">
-                                <tbody>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Loại</th>
-                                    <td scope="col">
-                                        <select name="type" id="slType" class="form-control" disabled>
-                                            <option value="Ở GHÉP">Ở ghép</option>
-                                            <option value="CHUNG CƯ">Chung cư</option>
-                                            <option value="NGUYÊN CĂN">Nguyên căn</option>
-                                            <option value="NHÀ TRỌ">Nhà trọ</option>
-                                        </select>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success" id="updateType">
-                                                    Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateType">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Số người</th>
-                                    <td scope="col">
-                                        <input class="form-control" type="number"
-                                               value="{{product.product.information.amountPeople}}"
-                                               id="idAmountPeople"
-                                               min="1"
-                                               max="100" disabled>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success"
-                                                        id="updateAmountPeople">Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateAmountPeople">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Giới tính</th>
-                                    <td scope="col">
-                                        <select name="gender" id="slGender" class="form-control" disabled>
-                                            <option value="NAM">Nam</option>
-                                            <option value="NỮ">Nữ</option>
-                                            <option value="TẤT CẢ">Tất cả</option>
-                                        </select>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success" id="updateGender">
-                                                    Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateGender">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Tiện ích</th>
-                                    <td scope="col">
-                                        <div id="idDivUtilities">
-                                            {{#each utilities}}
-                                                <input name="utilities" class="form-check-input" type="checkbox"
-                                                       value="{{this.utilities}}"
-                                                       id="cb-{{this.id}}">
-                                                <label class="form-check-label" for="cb-{{this.id}}">
-                                                    {{this.utilities}}
-                                                </label>
-                                                <br>
-                                            {{/each}}
-                                        </div>
-                                        <div style="margin-top: 10px">
-                                            <input class="form-control" type="text" id="idUtilities"
-                                                   placeholder="Nhập vào đây ..." disabled style="display: none">
-                                            <div class="d-flex flex-row-reverse">
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-success"
-                                                            id="updateUtilities">Thêm tiện ích
-                                                    </button>
-                                                </div>
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-primary"
-                                                            id="cancelUtilities" style="display: none">Hủy
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Giá phòng({{product.product.information.unit}})
-                                    </th>
-                                    <td scope="col">
-                                        <input class="form-control"
-                                               value="{{product.product.information.price}}"
-                                               step="10000" type="number"
-                                               id="idPrice"
-                                               placeholder="Nhập giá ..." disabled>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success" id="updatePrice">
-                                                    Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdatePrice">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Tiền cọc({{product.product.information.unit}})
-                                    </th>
-                                    <td scope="col">
-                                        <input class="form-control"
-                                               value="{{product.product.information.deposit}}"
-                                               step="10000" type="number"
-                                               id="idDeposit"
-                                               placeholder="Nhập giá ..." disabled>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success" id="updateDeposit">
-                                                    Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateDeposit">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Tiền điện (Đơn
-                                        vị:1 {{product.product.information.electricUnit}})
-                                    </th>
-                                    <td scope="col">
-
-                                        <div class="row align-items-center">
-                                            <input class="col-11 form-control"
-                                                   value="{{product.product.information.electricBill}}"
-                                                   step="10000" type="number"
-                                                   id="idElectric"
-                                                   placeholder="Nhập giá ..." disabled>
-                                            <b class="col-1">{{product.product.information.unit}}</b>
-                                        </div>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success"
-                                                        id="updateElectricBill">Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateElectricBill">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Tiền nước(Đơn
-                                        vị: {{product.product.information.waterUnit}})
-                                    </th>
-                                    <td scope="col">
-                                        <div class="row align-items-center">
-                                            <input class="col-11 form-control"
-                                                   value="{{product.product.information.waterBill}}"
-                                                   step="10000" type="number"
-                                                   id="idWater"
-                                                   placeholder="Nhập giá ..." disabled>
-                                            <b class="col-1">{{product.product.information.unit}}</b>
-
-                                        </div>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success"
-                                                        id="updateWaterBill">Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateWaterBill">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="col" style="width: 30%">Nội dung</th>
-                                    <td scope="col">
-                                        <textarea class="form-control" id="txtDescribe" rows="5"
-                                                  disabled>{{product.product.information.describe}}</textarea>
-                                        <div class="d-flex flex-row-reverse">
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-success"
-                                                        id="updateDescribe">Sửa
-                                                </button>
-                                            </div>
-                                            <div class="p-2">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="cancelUpdateDescribe">Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Ảnh phòng</th>
-                        <td>
-                            <table id="table-images" class="table table-borderless">
-                                <tbody>
-                                {{#each images}}
-                                    <tr id='tr-{{this.id}}'>
-                                        <td style="width: 80%">
-                                            <img name="image-product"
-                                                 id="image-{{this.id}}"
-                                                 width="250px"
-                                                 height="250px"
-                                                 src="http://128.199.99.9:9090/{{this.path}}" alt="{{this.path}}">
-                                        </td>
-                                        <td style="width: 20%">
-                                            <button type="button" onclick="deleteImage('tr-{{this.id}}')"
-                                                    class="btn btn-primary">Xóa ảnh
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {{/each}}
-                                <div style="display: none">
-                                    <div style="margin-bottom: 10px" class="custom-file">
-
-                                        <input type="file" class="custom-file-input" id="ipChangeImage"
-                                               onchange="readURL(this);" multiple style="display: none">
-                                        <label id="ipChooseImage" class="btn btn-success fa fa-folder"
-                                               for="ipChangeImage"
-                                               data-browse="Thêm ảnh"> Thêm ảnh</label>
-                                    </div>
+                            <div><b>Loại: </b> {{this.identityCard.type}}</div>
+                            <br>
+                            <div><b>Số: </b> {{this.identityCard.code}}</div>
+                            <br>
+                            <div><b>Họ và tên: </b> {{this.identityCard.name}}</div>
+                            <br>
+                            <div><b>Ngày, tháng, năm sinh: </b> {{this.identityCard.date}}</div>
+                            <br>
+                            <div><b>Giới tính: </b> {{this.identityCard.gender}}</div>
+                            <br>
+                            <div><b>Quên quán: </b> {{this.identityCard.homeTown}}</div>
+                            <br>
+                            <div><b>Nơi thường trú: </b> {{this.identityCard.resident}}</div>
+                            <br>
+                            <div><b>Quốc tịch: </b> {{this.identityCard.nationality}}</div>
+                            <br>
+                            <div><b>Nơi cấp: </b> {{this.identityCard.issuedBy}}</div>
+                            <br>
+                            <div><b>Có giá trị đến: </b> {{this.identityCard.expiryDate}}</div>
+                            <br>
+                            <div class="col">
+                                <div><b>Ảnh mặt trước</b><br>
+                                    <img name="image-product"
+                                         width="350px"
+                                         height="350px"
+                                         src="http://128.199.99.9:9090/{{this.identityCard.image.previous}}"
+                                         alt="{{this.identityCard.image.previous}}">
                                 </div>
-                                </tbody>
-                            </table>
+                                <br>
+                                <div><b>Ảnh mặt sau</b><br>
+                                    <img name="image-product"
+                                         width="350px"
+                                         height="350px"
+                                         src="http://128.199.99.9:9090/{{this.identityCard.image.behind}}"
+                                         alt="{{this.identityCard.image.behind}}">
+                                </div>
+                                <br>
+                                <div><b>Ảnh chụp cả mặt và mặt trước giấy tờ xác
+                                    minh</b><br>
+                                    <img name="image-product"
+                                         width="350px"
+                                         height="350px"
+                                         src="http://128.199.99.9:9090/{{this.identityCard.image.hasFace}}"
+                                         alt="{{this.identityCard.image.hasFace}}">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col">
+                                <button name="update" value="1"
+                                        class="btn btn-success" onclick="confirmUpgrade('{{this._id}}')">Duyệt
+                                </button>
+                                <button name="update" value="1" class="btn btn-danger"
+                                        onclick="cancelUpgrade('{{this._id}}')">
+                                    Từ chối duyệt
+                                </button>
+                            </div>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
+                {{/each}}
+                </tbody>
+            </table>
         </div>
-        <div class="footer">
-            <div class='row justify-content-center'>
-                <div class="row mx-lg-n5">
-                    <div class=" py-3 px-lg-5  bg-light">
-                        <button id="btn-confirm" type="button" class="btn btn-success">Xác nhận duyệt
-                        </button>
-                    </div>
-                    <div class=" py-3 px-lg-5  bg-light">
-                        <button id="btn-cancel" type="button" class="btn btn-danger">Từ chối duyệt</button>
-                    </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         aria-labelledby="titleDialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleDialog">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
-             aria-labelledby="titleDialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="titleDialog">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div id="contentDialog" class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button id="cancelDialog" type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                        </button>
-                        <button id="successDialog" type="button" class="btn btn-primary">Understood</button>
-                    </div>
+                <div id="contentDialog" class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelDialog" type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
+                    <button id="successDialog" type="button" class="btn btn-primary">Understood</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
@@ -403,329 +199,8 @@
     let content = '';
     let titleOK = '';
     let titleCancel = '';
-    $(document).ready(function () {
-        try {
-            let user = '{{product.user._id}}';
-            console.log('userId: ' + user)
-            if (user._id === '') {
-                content = 'Không thể thao tác với bài đăng này. Tài khoản đăng bài đã bị xóa!';
-                titleOK = 'Trở lại';
-                showDialog(titleStt, content, titleOK);
-                $('#successDialog').click(function () {
-                    location.href = 'index';
-                });
-            }
-        } catch (e) {
-            content = 'Không thể thao tác với bài đăng này. Tài khoản đăng bài đã bị xóa!';
-            titleOK = 'Trở lại';
-            showDialog(titleStt, content, titleOK);
-            $('#successDialog').click(function () {
-                location.href = 'index';
-            });
-        }
 
-        let status = "{{product.status}}";
-        console.log('status: ' + status);
-        let date = "{{info.date}}";
-        $('#date-success').val(date);
-        if (status == '1') {
-            $('#ipChooseImage').css("display", "none");
-            $('button').css("display", "none");
-            $('input[type=checkbox]').attr('disabled', 'true');
-        }
-        try {
-            let utilitiesArray = [];
-            let utilities = '{{product.product.utilities}}';
-            let trainindIdArray = utilities.split(',');
-            $.each(trainindIdArray, function (index, value) {
-                utilitiesArray.push({id: index, utilities: value})
-            });
-            $('input[type=checkbox]').each(function () {
-                for (let i = 0; i < utilitiesArray.length; i++) {
-                    let thisVal = this.value.toUpperCase().trim();
-                    let indexVal = utilitiesArray[i].utilities.toUpperCase().trim();
-                    if (indexVal === thisVal) {
-                        this.checked = true;
-                    }
-                }
-            });
-        } catch (e) {
-            console.log('ERROR: load Utilities')
-        }
-    });
-    //set data
-    let address = "{{product.address.detailAddress}}, " + "{{product.address.communeWardTown}}, " + "{{product.product.districtsTowns}}, " + "{{product.address.provinceCity}}";
-    $("#idAddress").val(address);
-    let category = "{{product.product.category}}"
-    $("#slType").val(category.toUpperCase());
-    let amountPeople = "{{product.product.information.amountPeople}}"
-    $("#idAmountPeople").val(amountPeople);
-    let gender = "{{product.product.information.gender}}";
-    $("#slGender").val(gender.toUpperCase());
-    let price = "{{product.product.information.price}}";
-    $("#idPrice").val(price);
-    let deposit = "{{product.product.information.deposit}}";
-    $("#idDeposit").val(deposit);
-    let electricBill = "{{product.product.information.electricBill}}";
-    $("#idElectric").val(electricBill);
-    let waterBill = "{{product.product.information.waterBill}}";
-    $("#idWater").val(waterBill);
-    let describe = '{{product.product.information.describe}}';
-    $("#txtDescribe").val(describe);
-
-    //update address
-    $('#updateAddress').click(function () {
-        $("#idAddress").removeAttr('disabled');
-    });
-    $("#cancelUpdateAddress").click(function () {
-        $("#idAddress").val(address);
-        $("#idAddress").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update type
-    $("#updateType").click(function () {
-        $("#slType").removeAttr('disabled');
-    });
-    $("#cancelUpdateType").click(function () {
-        $("#slType").val(category.toUpperCase());
-
-        $("#slType").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update amountPeople
-    $("#updateAmountPeople").click(function () {
-        $("#idAmountPeople").removeAttr('disabled');
-    });
-    $("#cancelUpdateAmountPeople").click(function () {
-        $("#idAmountPeople").val(amountPeople);
-
-        $("#idAmountPeople").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update gender
-    $("#updateGender").click(function () {
-        $("#slGender").removeAttr('disabled');
-    });
-    $("#cancelUpdateGender").click(function () {
-        $("#slGender").val(gender.toUpperCase());
-
-        $("#slGender").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update utilities
-    $('#updateUtilities').click(function () {
-        var isDisabled = $('#idUtilities').prop('disabled');
-        console.log('status: ' + isDisabled)
-        if (isDisabled == false) {
-            let count = $('#idDivUtilities input').length
-            let text = $('#idUtilities').val();
-            if (text == '') {
-                alert('Cần nhập tiện ích để thêm!')
-            } else
-                $("#idDivUtilities")
-                        .append($('<input>')
-                                        .attr('id', "cb-" + count)
-                                        .attr('class', 'form-check-input')
-                                        .attr('type', 'checkbox')
-                                        .attr('checked', 'checked'),
-                                $('<label>')
-                                        .attr('class', 'form-check-label')
-                                        .attr('for', "cb-" + count)
-                                        .text(text),
-                                $('<br>')
-                        );
-
-            $("#idUtilities").attr('disabled', 'true')
-                    .css("display", "none")
-                    .val("");
-            $("#cancelUtilities").css("display", "none");
-        } else {
-            $("#idUtilities").css("display", "block");
-            $("#cancelUtilities").css("display", "block");
-            $("#idUtilities").removeAttr('disabled');
-        }
-
-    });
-    $("#cancelUtilities").click(function () {
-        $("#idUtilities").attr({
-            'disabled': 'disabled'
-        });
-
-        $("#idUtilities").css("display", "none");
-        $("#cancelUtilities").css("display", "none");
-    });
-    //update price
-    $("#updatePrice").click(function () {
-        $("#idPrice").removeAttr('disabled');
-    });
-    $("#cancelUpdatePrice").click(function () {
-        $("#idPrice").val(price);
-        $("#idPrice").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update deposit
-    $("#updateDeposit").click(function () {
-        $("#idDeposit").removeAttr('disabled');
-    });
-    $("#cancelUpdateDeposit").click(function () {
-        $("#idDeposit").val(deposit);
-        $("#idDeposit").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update electricBill
-    $("#updateElectricBill").click(function () {
-        $("#idElectric").removeAttr('disabled');
-    });
-    $("#cancelUpdateElectricBill").click(function () {
-        $("#idElectric").val(electricBill);
-        $("#idElectric").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update waterBill
-    $("#updateWaterBill").click(function () {
-        $("#idWater").removeAttr('disabled');
-    });
-    $("#cancelUpdateWaterBill").click(function () {
-        $("#idWater").val(waterBill);
-        $("#idWater").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //update describe
-    $("#updateDescribe").click(function () {
-        $("#txtDescribe").removeAttr('disabled');
-    });
-    $("#cancelUpdateDescribe").click(function () {
-        $("#txtDescribe").val(describe);
-        $("#txtDescribe").attr({
-            'disabled': 'disabled'
-        });
-    });
-    //confirm product
-    $("#btn-confirm").click(function () {
-        let dataUpdate = getDataUpdate();
-        $.ajax({
-            type: "POST",
-            url: "/confirm-product",
-            contentType: "application/json",
-            data: JSON.stringify(dataUpdate),
-            success: function (res) {
-                if (!res || res.response_header.res_code != 200) {
-                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
-                    titleOK = 'Trở lại';
-                    $('#successDialog').click(function () {
-                        location.href = 'index';
-                    });
-                } else {
-                    let status = res.response_body.status;
-                    if (status == 'Success') {
-                        content = 'Duyệt dữ liệụ thành công!';
-                        titleOK = 'Trở lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'postManage';
-                        });
-                    } else {
-                        content = 'Duyệt dữ liệu thất bại. Vui lòng thử lại sau!';
-                        titleOK = 'Thử lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'postManage';
-                        });
-                    }
-                }
-                showDialog(titleStt, content, titleOK);
-            }
-        });
-    });
-    $("#btn-cancel").click(function () {
-        console.log('btn-cancel')
-        let status = "{{product.status}}";
-        if (status == '-1') {
-            cancelProduct('{{product._id}}', '5fb2073ff69b03b8f8875059', '0');
-        } else {
-            deleteProduct('{{product._id}}', '5fb2073ff69b03b8f8875059');
-        }
-    });
-
-
-    //function
-    function initImages(idTable, id, path, input) {
-        let name = input.files[0].name;
-        $("#" + idTable).find('tbody')
-                .append($('<tr>')
-                        .attr('id', id)
-                        .append($('<td>')
-                                        .attr('style', 'width: 80%')
-                                        .append($('<img>')
-                                                .attr('src', path)
-                                                .attr('width', '250px')
-                                                .attr('height', '250px')
-                                                .attr('id', 'image-' + path)
-                                                .attr('alt', name)
-                                                .attr('name', 'image-product')
-                                        ),
-                                $('<td>')
-                                        .attr('style', 'width: 20%')
-                                        .append($('<button>')
-                                                .attr('type', 'button')
-                                                .attr('class', 'btn btn-primary')
-                                                .text('Xóa ảnh')
-                                                .on('click', function () {
-                                                    deleteImage(id);
-                                                })
-                                        )
-                        )
-                );
-    }
-
-    function getExtension(filename) {
-        let parts = filename.split('.');
-        return parts[parts.length - 1];
-    }
-
-    function isImage(filename) {
-        let ext = getExtension(filename);
-        switch (ext.toLowerCase()) {
-            case 'jpg':
-            case 'gif':
-            case 'bmp':
-            case 'png':
-                //etc
-                return true;
-        }
-        return false;
-    }
-
-    function readURL(input) {
-        if (input.files) {
-            let len = input.files.length;
-            for (let i = 0; i < len; i++) {
-                let reader = new FileReader();
-                if (isImage(input.files[i].name)) {
-                    reader.onload = function (e) {
-                        var rowCount = $('#table-images tr').length;
-                        initImages('table-images', 'tr-' + rowCount, e.target.result, input)
-                    };
-                    reader.readAsDataURL(input.files[i]);
-                } else {
-                    alert('File không phải là ảnh!')
-                }
-            }
-        }
-    }
-
-    function deleteImage(id) {
-        console.log('del: ' + id);
-        $("#" + id).remove();
-    }
-
-    function deleteProduct(id, userId) {
+    function confirmUpgrade(id) {
         let adminId = '5fd4d983c89b6cc9ccfc86f2';
         let data = {
             id: id,
@@ -734,177 +209,77 @@
         console.log(data)
         $.ajax({
             type: "POST",
-            url: "/delete-product",
+            url: "/confirm-upgrade",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function (res) {
-                console.log(res)
-                if (!res || res.response_header.res_code != 200) {
-                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
-                    titleOK = 'Trở lại';
-                    $('#successDialog').click(function () {
-                        location.href = 'index';
-                    });
-                } else {
-                    let status = res.response_body.status;
-                    if (status == 'Success') {
-                        $("#row-" + id).remove();
-                        content = 'Xóa bài đăng thành công!';
-                        titleOK = 'Trở lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'postManage';
-                        });
-                    } else {
-                        content = 'Xóa bài đăng thất bại. Vui lòng thử lại sau!';
-                        titleOK = 'Thử lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'index';
-                        });
-                    }
-                }
-                showDialog(titleStt, content, titleOK);
-            }
-        });
-    }
-
-    function cancelProduct(id, adminId, stt) {
-        adminId = '5fd4d983c89b6cc9ccfc86f2';
-        let data = {
-            id: id,
-            adminId: adminId,
-            status: stt
-        }
-        console.log(data);
-        $.ajax({
-            type: "POST",
-            url: "/cancel-product",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (res) {
-                if (!res || res.response_header.res_code != 200) {
-                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
-                    titleOK = 'Trở lại';
-                    $('#successDialog').click(function () {
-                        location.href = 'index';
-                    });
-                } else {
-                    let status = res.response_body.status;
-                    if (status == 'Success') {
-                        content = 'Từ chối duyệt dữ liệụ thành công!';
-                        titleOK = 'Trở lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'postManage';
-                        });
-                    } else {
-                        content = 'Từ chối duyệt dữ liệu thất bại. Vui lòng thử lại sau!';
-                        titleOK = 'Thử lại';
-                        $('#successDialog').click(function () {
-                            location.href = 'index';
-                        });
-                    }
-                }
-                showDialog(titleStt, content, titleOK);
-            }
-        });
-    }
-
-    function getArea(areaType, parentCode) {
-        let dataBody = {areaType: areaType, parentCode: parentCode};
-        let dataBodyBase64 = {dataBody: btoa(JSON.stringify(dataBody))};
-        console.log(dataBodyBase64);
-        $.ajax({
-            type: "POST",
-            url: "/area",
-            contentType: "application/json",
-            data: JSON.stringify(dataBodyBase64),
             success: function (res) {
                 if (!res) {
-                    alert('KHÔNG THỂ TẢI DỮ LIỆU CÁC ĐỊA CHỈ!');
+                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
+                    titleOK = 'Trở lại';
+                    $('#successDialog').click(function () {
+                        location.href = 'index';
+                    });
                 } else {
-                    console.log('res.body: ' + res.body);
-                    let body = atob(res.body);
+                    let resCode = res.response_header.res_code;
+                    if (resCode == 200) {
+                        $("#row-" + id).remove();
+                        content = 'Từ chối duyệt thành công!';
+                        titleOK = 'Trở lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'userManage';
+                        });
+                    } else {
+                        content = 'Từ chối duyệt thất bại. Vui lòng thử lại sau!';
+                        titleOK = 'Thử lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'index';
+                        });
+                    }
                 }
+                showDialog(titleStt, content, titleOK);
             }
         });
     }
 
-    function getDataUpdate() {
-        //lay thong tin duyet
+    function cancelUpgrade(id) {
         let adminId = '5fd4d983c89b6cc9ccfc86f2';
-        let timeConfirm = $('#date-success').val();
-        //lay thong tin nguoi dang bai
-        let userId = '{{product.user._id}}';
-        //dia chi
-        let address = $('#idAddress').val();
-        //loai
-        let type = $('select[name=type] option').filter(':selected').val();
-        //songuoi
-        let amountPeople = $('#idAmountPeople').val();
-        //gioitinh
-        let gender = $('select[name=gender] option').filter(':selected').val();
-        //tienich
-        let utilities = [];
-        $('input[name=utilities]:checked').each(function () {
-            utilities.push(this.value);
-        });
-        //giaphong
-        let price = $('#idPrice').val();
-        //tien coc
-        let deposit = $('#idDeposit').val();
-        //tien dien
-        let electricPrice = $('#idElectric').val();
-        //tien nuoc
-        let waterPrice = $('#idWater').val();
-        //noi dung
-        let describe = $('#txtDescribe').val();
-        //anh
-        let image = [];
-        $('img[name=image-product]').each(function () {
-            let src = this.src;
-            if (src.match("http://128.199.99.9:9090/")) {
-                src = src.split("http://128.199.99.9:9090/");
-            } else {
-                console.log('update later!')
-                // try {
-                //     $.ajax({
-                //         type: "POST",
-                //         url: "/upload-photo-array",
-                //         contentType: "application/json",
-                //         data: "fd",
-                //         contentType: false,
-                //         processData: false,
-                //         success: function (res) {
-                //             if (!res) {
-                //                 console.log('upload image fail')
-                //             } else {
-                //                 console.log('upload image success \n' + JSON.stringify(res));
-                //             }
-                //         }
-                //     });
-                // } catch (e) {
-                //     console.log('loine: ' + e)
-                // }
+        let data = {
+            id: id,
+            adminId: adminId
+        }
+        console.log(data)
+        $.ajax({
+            type: "POST",
+            url: "/cancel-upgrade",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (res) {
+                if (!res) {
+                    content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
+                    titleOK = 'Trở lại';
+                    $('#successDialog').click(function () {
+                        location.href = 'index';
+                    });
+                } else {
+                    let resCode = res.response_header.res_code;
+                    if (resCode == 200) {
+                        $("#row-" + id).remove();
+                        content = 'Từ chối duyệt thành công!';
+                        titleOK = 'Trở lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'userManage';
+                        });
+                    } else {
+                        content = 'Từ chối duyệt thất bại. Vui lòng thử lại sau!';
+                        titleOK = 'Thử lại';
+                        $('#successDialog').click(function () {
+                            location.href = 'index';
+                        });
+                    }
+                }
+                showDialog(titleStt, content, titleOK);
             }
-            image.push(src[1]);
         });
-        let information = {
-            amountPeople: amountPeople,
-            deposit: deposit,
-            describe: describe,
-            electricBill: electricPrice,
-            gender: gender,
-            price: price,
-            waterBill: waterPrice,
-            image: image
-        }
-        let dataUpdate = {
-            id: '{{product._id}}',
-            adminId: adminId,
-            utilities: utilities,
-            category: type,
-            information: information
-        }
-        return dataUpdate
     }
 
     function showDialog(title, content, titleOK) {
