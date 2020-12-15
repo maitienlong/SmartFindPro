@@ -34,14 +34,12 @@ const IdentityCardSchema = mongoose.Schema({
     },
     image: {type: [String]},
     homeTown: {
-        type: Object,
-        required: true,
-        ref: 'Address',
+        type: String,
+        required: true
     },
     resident: {
-        type: Object,
-        required: true,
-        ref: 'Address',
+        type: String,
+        required: true
     }
 });
 module.exports = IdentityCardSchema;

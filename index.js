@@ -385,7 +385,76 @@ app.post('/update-user', async function (request, response) {
                 });
                 // update data vao bang chinh
                 let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
-                let updateUser = await Product.findByIdAndUpdate(userId, {
+                let updateUser = await User.findByIdAndUpdate(userId, {
+                    level: 1,
+                    password: checkData(password) ? password : user.password,
+                    address: checkData(address) ? address : user.address,
+                    avatar: checkData(avatar) ? avatar : user.avatar,
+                    coverImage: checkData(coverImage) ? coverImage : user.coverImage,
+                    gender: checkData(gender) ? gender : user.gender,
+                    birth: checkData(birth) ? birth : user.birth,
+                    full_name: checkData(fullName) ? fullName : user.full_name,
+                    phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
+                    deleteAt: user.deleteAt,
+                    updateAt: updateAt,
+                    createAt: createAt
+                })
+                if (address && updateUser) {
+                    let confirm = await ConfirmPost({
+                        product: null,
+                        admin: null,
+                        user: userId,
+                        status: 'UPDATE_USER',
+                        createAt: updateAt
+                    });
+                    console.log(JSON.stringify(confirm));
+                    let confirPrd = await confirm.save();
+                    res_body = {status: sttOK};
+                    response.json(getResponse(name, 200, sttOK, res_body));
+                } else {
+                    res_body = {status: "Fail"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch
+        (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// nang cap quyen
+app.post('/update-owner', async function (request, response) {
+    let name = 'UPDATE-OWNER'
+    try {
+        let userId = request.body.userId;
+        let type = request.body.type;
+        let code = request.body.code;
+        let name = request.body.name;
+        let date = request.body.date;
+        let gender = request.body.gender;
+        let issuedBy = request.body.issuedBy;
+        let expiryDate = request.body.expiryDate;
+        let homeTown = request.body.homeTown;
+        let resident = request.body.resident;
+        let image = request.body.image;
+        if (checkData(userId)) {
+            let user = await User.find({_id: userId}).lean();
+            let res_body = {status: null};
+            if (user.length > 0) {
+                user = user[0];
+                // update data vao bang chinh
+                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let updateUser = await User.findByIdAndUpdate(userId, {
+                    level: 2,
+                    updateAt: updateAt
+                })
+                let updateUser = await User.findByIdAndUpdate(userId, {
+                    level: 1,
                     password: checkData(password) ? password : user.password,
                     address: checkData(address) ? address : user.address,
                     avatar: checkData(avatar) ? avatar : user.avatar,
@@ -443,9 +512,7 @@ app.post('/delete-user', async function (request, response) {
                         let deleteProduct = await Product.findByIdAndDelete(user._id);
                         let deleteInforProduct = await InforProduct.findByIdAndDelete(user.product._id);
                         let deleteAddress = await Address.findByIdAndDelete(user.address._id);
-
                         if (deleteProduct && deleteInforProduct && deleteAddress) {
-                            response.json(getResponse(name, 200, sttOK, null))
                             let confirm = await ConfirmPost({
                                 product: id,
                                 admin: null,
