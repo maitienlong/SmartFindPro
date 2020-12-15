@@ -59,6 +59,7 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 hideLoading();
+                                FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
                                 showMessage("Xác thực bằng mã OTP không thành công, vui lòng thử lại - Lỗi: "+e.toString());
                             }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -7,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        android:layout_marginVertical="@dimen/_8sdp"
-        android:background="@drawable/border_item_product_bottom"
+        android:layout_marginHorizontal="@dimen/_3sdp"
+        android:layout_marginVertical="@dimen/_3sdp"
+        android:background="@color/background_app_gray"
         android:orientation="vertical">
 
         <LinearLayout
@@ -47,13 +48,14 @@
 
 
         <TextView
+            android:textColor="@color/red"
             android:id="@+id/tvPrice"
+            style="@style/textStyleBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="Giá: "
-            style="@style/textStyleWhite_11dp" />
+            android:text="Giá: " />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,15 +74,17 @@
                 <ImageView
                     android:id="@+id/imgMarker"
                     android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp" />
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_baseline_location_24"
+                    app:tint="@color/background" />
 
                 <TextView
                     android:id="@+id/tvAddress"
+                    style="@style/textStyleWhite_11dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:text="TextView"
-                    style="@style/textStyleWhite_11dp" />
+                    android:text="TextView" />
             </LinearLayout>
 
         </LinearLayout>

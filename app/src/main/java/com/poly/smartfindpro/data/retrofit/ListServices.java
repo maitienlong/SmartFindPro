@@ -68,5 +68,5 @@ public interface ListServices {
     Call<CheckPhoneResponse> getCheckNum(@Body CheckPhoneNumberRequest request );
 
     @POST("/init-user")
-    Call<RegisterResponse> getRegister(@Body RegisterRequest request );
+    Call<CheckPhoneResponse> getRegister(@Body RegisterRequest request );
 }

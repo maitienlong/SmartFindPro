@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.login.otp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -10,6 +11,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -22,6 +25,7 @@ import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.login.createPassword.CreatePasswordFragment;
 import com.poly.smartfindpro.ui.login.registerFragment.RegisterPresenter;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpBinding, ConfirmOTPPresenter> implements ConfirmOTPContract.ViewModel {
@@ -76,7 +80,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
         showLoadingDialog();
         PhoneAuthOptions phoneAuthOptions =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+84"+phone)       // Phone number to verify
+                        .setPhoneNumber("+84" + phone)       // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(mActivity)                 // Activity (for callback binding)
                         .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -106,6 +110,24 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
 
     }
 
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(mActivity, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = task.getResult().getUser();
+              
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                              showMessage("Lỗi đăng nhập firebase: " + task.getException());
+                            }
+                        }
+                    }
+                });
+    }
+
     private void onconfirmOTP() {
         showLoadingDialog();
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(idOTP, mBinding.edtOtp.getText().toString());
@@ -113,7 +135,8 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 hideLoading();
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
+                  //  signInWithPhoneAuthCredential(phoneAuthCredential);
                     Bundle bundle = new Bundle();
                     bundle.putString(Config.POST_BUNDEL_RES, getArguments().getString(Config.POST_BUNDEL_RES));
                     getBaseActivity().goToFragmentReplace(R.id.fl_Login, new CreatePasswordFragment(), bundle);

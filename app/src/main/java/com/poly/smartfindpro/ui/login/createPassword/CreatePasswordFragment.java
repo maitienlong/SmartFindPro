@@ -53,6 +53,6 @@ public class CreatePasswordFragment extends BaseDataBindFragment<FragmentCreateP
     public void onGoToLogin(String phoneNumber) {
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDEL_RES, String.valueOf(phoneNumber));
-        getBaseActivity().goToFragment(R.id.fl_Login, new LoginFragment(), bundle);
+        getBaseActivity().goToFragmentReplace(R.id.fl_Login, new LoginFragment(), bundle);
     }
 }

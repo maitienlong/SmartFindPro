@@ -38,6 +38,10 @@ public class User {
     @Expose
     private List<Share> share = null;
 
+    @SerializedName("level")
+    @Expose
+    private int level;
+
     public String getId() {
         return id;
     }
@@ -118,4 +122,11 @@ public class User {
         this.share = share;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }

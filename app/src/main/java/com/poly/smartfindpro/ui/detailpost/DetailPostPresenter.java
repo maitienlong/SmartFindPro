@@ -6,6 +6,7 @@ import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
@@ -86,8 +87,9 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         priceWaterDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getWaterBill()) + "đ/" + product.getProduct().getInformation().getWaterUnit());
         priceDepositDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getDeposit()) +" "+ product.getProduct().getInformation().getUnit());
         categoryDetail.set(product.getProduct().getCategory()+"  ");
-        phoneNumberDetail.set(product.getUser().getPhoneNumber());
-
+        if(Config.LEVEL_ACCOUNT > 0){
+            phoneNumberDetail.set(product.getUser().getPhoneNumber());
+        }
         mBinding.cmtb.setTitle("Bài viết");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -153,12 +155,21 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     @Override
     public void onClickCall() {
-        mViewModel.onClickCall();
+        if(Config.LEVEL_ACCOUNT > 0){
+            mViewModel.onClickCall();
+        }else {
+            mViewModel.showMessage("Vui lòng nâng cấp gói để liện hệ");
+        }
+
     }
 
     @Override
     public void onClickInbox() {
-        mViewModel.onClickInbox();
+        if(Config.LEVEL_ACCOUNT > 0){
+            mViewModel.onClickInbox();
+        }else {
+            mViewModel.showMessage("Vui lòng nâng cấp gói để liện hệ");
+        }
     }
 
     @Override
