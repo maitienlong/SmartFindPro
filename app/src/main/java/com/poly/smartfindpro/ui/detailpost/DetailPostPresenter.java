@@ -1,10 +1,12 @@
 package com.poly.smartfindpro.ui.detailpost;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
@@ -80,6 +82,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     public void setData(Products product) {
         priceDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getPrice()) +" "+ product.getProduct().getInformation().getUnit());
+        Log.d("TAG", new Gson().toJson(product));
         addressDetail.set(product.getAddress().getDetailAddress() + "," + product.getAddress().getCommuneWardTown() + "," + product.getAddress().getDistrictsTowns() + "," + product.getAddress().getProvinceCity());
         genderDetail.set(product.getProduct().getInformation().getGender());
         amountDetail.set(product.getProduct().getInformation().getAmountPeople().toString());

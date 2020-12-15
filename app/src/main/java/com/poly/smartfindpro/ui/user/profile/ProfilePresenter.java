@@ -2,8 +2,10 @@ package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -154,7 +156,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                                 productsList.add(response.body().getResponseBody().getProducts().get(i));
                             }
                         }
-
                         mViewModel.onShow(productsList);
                     }
 
@@ -200,6 +201,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     private void showData(ProfileResponse mProfile) {
         nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
+        Log.d("checkPhone", mProfile.getResponseBody().getUser().getPhoneNumber());
 
         Glide.
                 with(context)

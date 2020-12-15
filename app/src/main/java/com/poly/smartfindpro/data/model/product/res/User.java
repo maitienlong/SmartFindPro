@@ -19,7 +19,7 @@ public class User {
     @SerializedName("address")
     @Expose
     private Address address;
-    @SerializedName("phoneNumber")
+    @SerializedName("phone_number")
     @Expose
     private String phoneNumber;
     @SerializedName("age")
