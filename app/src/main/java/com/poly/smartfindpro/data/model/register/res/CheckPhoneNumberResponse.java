@@ -11,7 +11,7 @@ public class CheckPhoneNumberResponse {
     private ResponseHeader responseHeader;
     @SerializedName("response_body")
     @Expose
-    private Object responseBody;
+    private ResponseBody responseBody;
 
     public ResponseHeader getResponseHeader() {
         return responseHeader;
@@ -21,11 +21,11 @@ public class CheckPhoneNumberResponse {
         this.responseHeader = responseHeader;
     }
 
-    public Object getResponseBody() {
+    public ResponseBody getResponseBody() {
         return responseBody;
     }
 
-    public void setResponseBody(Object responseBody) {
+    public void setResponseBody(ResponseBody responseBody) {
         this.responseBody = responseBody;
     }
 

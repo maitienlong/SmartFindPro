@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View alertLayout = inflater.inflate(R.layout.custom_dia_log, null);
                 final ImageView img_detail = (ImageView) alertLayout.findViewById(R.id.img_detail);
+                final Button btn_close = (Button) alertLayout.findViewById(R.id.btn_close);
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
 //                alert.setTitle("Login");
                 alert.setView(alertLayout);
@@ -74,6 +76,12 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
                         .into(img_detail);
 //                Dialog.bui dialog = new Dialog(context);
 //                dialog.show();
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });

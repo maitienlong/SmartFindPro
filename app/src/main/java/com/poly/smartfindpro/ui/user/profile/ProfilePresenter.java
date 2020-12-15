@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LifecycleOwner;
@@ -155,7 +156,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                                 productsList.add(response.body().getResponseBody().getProducts().get(i));
                             }
                         }
-
                         mViewModel.onShow(productsList);
                     }
 

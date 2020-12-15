@@ -7,7 +7,6 @@ import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
-import com.poly.smartfindpro.data.model.post.res.ResImagePost;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
@@ -63,11 +62,11 @@ public interface ListServices {
                                                 @Query("key") String key);
 
     @POST("/login")
-    Call<LoginResponse> getLogin(@Body LoginRequest request );
+    Call<LoginResponse> getLogin(@Body LoginRequest request);
 
     @POST("/check-phone-Number")
-    Call<CheckPhoneNumberResponse> getCheckNum(@Body CheckPhoneNumberRequest request );
+    Call<CheckPhoneNumberResponse> getCheckNum(@Body CheckPhoneNumberRequest request);
 
     @POST("/init-user")
-    Call<RegisterResponse> getRegister(@Body RegisterRequest request );
+    Call<RegisterResponse> getRegister(@Body RegisterRequest request);
 }

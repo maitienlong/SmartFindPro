@@ -4,16 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.login.req.LoginRequest;
-import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.res.CheckPhoneNumberResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
-import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.databinding.FragmentRegisterBinding;
-import com.poly.smartfindpro.ui.login.loginFragment.LoginFragmentContract;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,12 +59,12 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             @Override
             public void onResponse(Call<CheckPhoneNumberResponse> call, Response<CheckPhoneNumberResponse> response) {
 
-                if (response.code() == 200 && response.body().getResponseHeader().getResMessage().equals("Succsess")) {
+                if (response.code() == 200 && response.body().getResponseBody().getStatus().equals("Success")) {
                     mViewmodel.hideLoading();
-                    Log.d("checkNum", String.valueOf(response.body().getResponseHeader().getResMessage()));
+                    Log.d("checkNum", String.valueOf(response.body().getResponseBody().getStatus()));
                     registerRequest.setPhoneNumber(mBinding.edtAccountNumberRegister.getText().toString());
                     mViewmodel.checkNumber(new Gson().toJson(registerRequest), mBinding.edtAccountNumberRegister.getText().toString());
-                }else if(response.code() == 200 && response.body().getResponseHeader().getResMessage().equals("Fail")){
+                }else if(response.code() == 200 && response.body().getResponseBody().getStatus().equals("Fail")){
                     mViewmodel.hideLoading();
                     mViewmodel.showMessage("Số điện thoại đã được đăng ký");
                 }else {

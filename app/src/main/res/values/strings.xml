@@ -125,7 +125,7 @@
     <string name="tv_home_town">Nguyên Quán</string>\
     <string name="tv_address_now">Địa chỉ thường trú</string>
     <string name="btn_confirm">Xác thực</string>
-
+    <string name="tv_status">Không có bài viết nào</string>
     <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>

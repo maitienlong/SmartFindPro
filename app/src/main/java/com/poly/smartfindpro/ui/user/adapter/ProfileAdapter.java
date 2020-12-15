@@ -177,7 +177,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DetailPostActivity.class);
                     intent.putExtra(Config.POST_BUNDEL_RES, new Gson().toJson(item));
-                    context.startActivity(intent);
+                        context.startActivity(intent);
 
                 }
             });

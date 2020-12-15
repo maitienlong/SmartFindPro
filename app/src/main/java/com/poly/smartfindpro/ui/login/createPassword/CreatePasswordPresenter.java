@@ -1,18 +1,12 @@
 package com.poly.smartfindpro.ui.login.createPassword;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
-import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
-import com.poly.smartfindpro.data.model.register.res.CheckPhoneNumberResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentCreatePasswordBinding;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
