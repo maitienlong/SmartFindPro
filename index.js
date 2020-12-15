@@ -452,19 +452,18 @@ app.post('/update-owner', async function (request, response) {
                 let updateUser = await User.findByIdAndUpdate(userId, {
                     level: 2,
                     updateAt: updateAt
-                })
-                let updateUser = await User.findByIdAndUpdate(userId, {
-                    level: 1,
-                    password: checkData(password) ? password : user.password,
-                    address: checkData(address) ? address : user.address,
-                    avatar: checkData(avatar) ? avatar : user.avatar,
-                    coverImage: checkData(coverImage) ? coverImage : user.coverImage,
+                });
+                let initIdentityCard = new IdentityCard({
+                    type: 1,
+                    code: checkData(address) ? address : user.address,
+                    name: checkData(avatar) ? avatar : user.avatar,
+                    date: checkData(coverImage) ? coverImage : user.coverImage,
                     gender: checkData(gender) ? gender : user.gender,
-                    birth: checkData(birth) ? birth : user.birth,
-                    full_name: checkData(fullName) ? fullName : user.full_name,
-                    phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
-                    deleteAt: user.deleteAt,
-                    updateAt: updateAt,
+                    issuedBy: checkData(birth) ? birth : user.birth,
+                    expiryDate: checkData(fullName) ? fullName : user.full_name,
+                    image: checkData(phoneNumber) ? phoneNumber : user.phone_number,
+                    hometown: user.deleteAt,
+                    resident: updateAt,
                     createAt: createAt
                 })
                 if (address && updateUser) {
@@ -794,7 +793,6 @@ app.post('/delete-product', async function (request, response) {
                         let deleteAddress = await Address.findByIdAndDelete(product.address._id);
 
                         if (deleteProduct && deleteInforProduct && deleteAddress) {
-                            response.json(getResponse(name, 200, sttOK, null))
                             let confirm = await ConfirmPost({
                                 product: id,
                                 admin: null,
