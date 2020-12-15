@@ -95,9 +95,9 @@ public class MapsFragment extends BaseDataBindFragment<FragmentMapsSearchBinding
         if (mListProduct != null && mListProduct.size() > 0) {
             List<Products> mListProductFilter = new ArrayList<>();
 
-            for (Products item : mListProduct){
-                if (item.getAddress().getLocation() != null){
-                    if(item.getAddress().getLocation().getLongitude() != null && item.getAddress().getLocation().getLatitude() != null){
+            for (Products item : mListProduct) {
+                if (item.getAddress().getLocation() != null) {
+                    if (item.getAddress().getLocation().getLongitude() != null && item.getAddress().getLocation().getLatitude() != null) {
                         mListProductFilter.add(item);
                     }
 
@@ -112,15 +112,13 @@ public class MapsFragment extends BaseDataBindFragment<FragmentMapsSearchBinding
 
             ArrayList<Marker> mListMarker = new ArrayList<>();
             for (int i = 0; i < mListProductFilter.size(); i++) {
-                Log.d("CheckMapLng", mListProduct.get(i).getAddress().getLocation().getLatitude().trim());
-                    LatLng sydney = new LatLng(Double.parseDouble(mListProduct.get(i).getAddress().getLocation().getLatitude().trim()), Double.parseDouble(mListProduct.get(i).getAddress().getLocation().getLongitude().trim()));
-                    Marker marker = gMap.addMarker(new MarkerOptions().position(sydney));
-                    marker.setTag(mListProduct.get(i).getId());
-                    mListMarker.add(marker);
+                LatLng sydney = new LatLng(Double.parseDouble(mListProduct.get(i).getAddress().getLocation().getLatitude().trim()), Double.parseDouble(mListProduct.get(i).getAddress().getLocation().getLongitude().trim()));
+                Marker marker = gMap.addMarker(new MarkerOptions().position(sydney));
+                marker.setTag(mListProduct.get(i).getId());
+                mListMarker.add(marker);
 
             }
-            Log.d("CheckMapMarkerMarker", new Gson().toJson(mListMarker));
-            if(mListMarker != null && mListMarker.size() > 0){
+            if (mListMarker != null && mListMarker.size() > 0) {
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
                 for (Marker marker : mListMarker) {

@@ -16,7 +16,7 @@ import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
-import com.poly.smartfindpro.data.model.register.res.CheckPhoneNumberResponse;
+import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 
 import okhttp3.MultipartBody;
@@ -65,7 +65,7 @@ public interface ListServices {
     Call<LoginResponse> getLogin(@Body LoginRequest request);
 
     @POST("/check-phone-Number")
-    Call<CheckPhoneNumberResponse> getCheckNum(@Body CheckPhoneNumberRequest request);
+    Call<CheckPhoneResponse> getCheckNum(@Body CheckPhoneNumberRequest request );
 
     @POST("/init-user")
     Call<RegisterResponse> getRegister(@Body RegisterRequest request);

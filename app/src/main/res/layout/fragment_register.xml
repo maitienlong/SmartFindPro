@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="@color/white"
+        android:background="#80ffffff"
         android:orientation="vertical">
         <LinearLayout
 
@@ -46,7 +46,7 @@
             android:onClick="@{()->presenter.onClickRegister()}"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/background_login"
+            android:background="@color/background_button_login"
             android:text="Tiếp tục"
             android:textColor="#fff" />
 

@@ -1,12 +1,12 @@
 package com.poly.smartfindpro.ui.login.registerFragment;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
-import com.poly.smartfindpro.data.model.register.res.CheckPhoneNumberResponse;
+import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentRegisterBinding;
 
@@ -17,11 +17,8 @@ import retrofit2.Response;
 public class RegisterPresenter implements RegisterContract.Presenter {
     private Context mContex;
     private RegisterContract.ViewModel mViewmodel;
-    private CheckPhoneNumberResponse mCheck;
     private FragmentRegisterBinding mBinding;
-
     private RegisterRequest registerRequest;
-    String phoneNumber;
 
     public RegisterPresenter(Context mContex, RegisterContract.ViewModel mViewmodel, FragmentRegisterBinding mBinding) {
         this.mContex = mContex;
@@ -29,7 +26,6 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         this.mBinding = mBinding;
         registerRequest = new RegisterRequest();
     }
-
 
 
     @Override
@@ -44,40 +40,40 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     @Override
     public void onClickRegister() {
-       if (mBinding.edtAccountNumberRegister.getText().toString().equals("")){
-           mViewmodel.showMessage("vui long nhap du thong tin");
-       }else {
-           getCheckNum();
-       }
+        if (mBinding.edtAccountNumberRegister.getText().toString().equals("")) {
+            mViewmodel.showMessage("vui long nhap du thong tin");
+        } else {
+            getCheckNum();
+        }
     }
 
     private void getCheckNum() {
         mViewmodel.showLoading();
         CheckPhoneNumberRequest request = new CheckPhoneNumberRequest();
         request.setPhoneNumber(mBinding.edtAccountNumberRegister.getText().toString());
-        MyRetrofitSmartFind.getInstanceSmartFind().getCheckNum(request).enqueue(new Callback<CheckPhoneNumberResponse>() {
+        MyRetrofitSmartFind.getInstanceSmartFind().getCheckNum(request).enqueue(new Callback<CheckPhoneResponse>() {
             @Override
-            public void onResponse(Call<CheckPhoneNumberResponse> call, Response<CheckPhoneNumberResponse> response) {
-
-                if (response.code() == 200 && response.body().getResponseBody().getStatus().equals("Success")) {
+            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                if (response.code() == 200) {
                     mViewmodel.hideLoading();
-                    Log.d("checkNum", String.valueOf(response.body().getResponseBody().getStatus()));
-                    registerRequest.setPhoneNumber(mBinding.edtAccountNumberRegister.getText().toString());
-                    mViewmodel.checkNumber(new Gson().toJson(registerRequest), mBinding.edtAccountNumberRegister.getText().toString());
-                }else if(response.code() == 200 && response.body().getResponseBody().getStatus().equals("Fail")){
+                    if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        registerRequest.setPhoneNumber(mBinding.edtAccountNumberRegister.getText().toString());
+                        mViewmodel.checkNumber(new Gson().toJson(registerRequest), mBinding.edtAccountNumberRegister.getText().toString());
+                    } else if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Fail")) {
+                        mViewmodel.showMessage("Số điện thoại đã được đăng ký");
+                    } else {
+                        mViewmodel.showMessage("Số điện thoại không chính xác");
+                    }
+                } else {
                     mViewmodel.hideLoading();
-                    mViewmodel.showMessage("Số điện thoại đã được đăng ký");
-                }else {
-                    mViewmodel.hideLoading();
-                    mViewmodel.showMessage("Số điện thoại không chính xác");
+                    mViewmodel.showMessage(mContex.getString(R.string.services_not_avail));
                 }
-
             }
 
-
             @Override
-            public void onFailure(Call<CheckPhoneNumberResponse> call, Throwable t) {
+            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
                 mViewmodel.hideLoading();
+                mViewmodel.showMessage(mContex.getString(R.string.services_not_avail));
             }
         });
     }

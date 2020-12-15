@@ -155,7 +155,6 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     @Override
     public void onDataCallBackMap(String tag) {
-        Log.d("ChecMap", "OK");
         List<Products> mListChoose = new ArrayList<>();
         for (Products products : mListProduct) {
             if (products.getId().equals(tag)) {

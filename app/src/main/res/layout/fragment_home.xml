@@ -11,7 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white"
+        android:background="@color/background_app_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -79,7 +79,7 @@
                         <View
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="match_parent"
-                            android:background="@color/blue" />
+                            android:background="@drawable/background_hori" />
 
                         <TextView
                             android:layout_width="match_parent"
