@@ -121,6 +121,24 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
 
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                              showMessage("Lỗi đăng nhập firebase: " + task.getException());
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(mActivity, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = task.getResult().getUser();
+
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 showMessage("Lỗi đăng nhập firebase: " + task.getException());
                             }
                         }
@@ -136,7 +154,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
             public void onComplete(@NonNull Task<AuthResult> task) {
                 hideLoading();
                 if (task.isSuccessful()) {
-                    //  signInWithPhoneAuthCredential(phoneAuthCredential);
+                  //  signInWithPhoneAuthCredential(phoneAuthCredential);
                     Bundle bundle = new Bundle();
                     bundle.putString(Config.POST_BUNDEL_RES, getArguments().getString(Config.POST_BUNDEL_RES));
                     getBaseActivity().goToFragmentReplace(R.id.fl_Login, new CreatePasswordFragment(), bundle);

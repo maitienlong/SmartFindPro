@@ -43,7 +43,22 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void openPost() {
-        mViewmodel.openPost();
+        switch (Config.LEVEL_ACCOUNT){
+            case 0:
+                mViewmodel.showMessage("Để đăng được bài, gói tài khoản của quý khách tối thiệu là gói 2, vui lòng vào cài đặt -> nâng cấp gói để nâng cấp tài khoản");
+                break;
+            case 1:
+                mViewmodel.showMessage("Để đăng được bài, gói tài khoản của quý khách tối thiệu là gói 2, vui lòng vào cài đặt -> nâng cấp gói để nâng cấp tài khoản");
+                break;
+            case 2:
+                mViewmodel.showMessage("Gói 3: Chỉ cho phép đăng bài 3 lượt/ ngày");
+                mViewmodel.openPost();
+                break;
+            case 3:
+                mViewmodel.openPost();
+                break;
+        }
+
     }
 
     @Override
@@ -71,24 +86,25 @@ public class HomePresenter implements HomeContract.Presenter {
     private void getProductRental() {
         HomeRequest request = new HomeRequest();
         request.setId(Config.TOKEN_USER);
-
+        Log.d("CheckHome", Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
-                    productsList = new ArrayList<>();
+                    if(response.body().getResponseBody() != null){
+                        productsList = new ArrayList<>();
 
-                    Log.d("CheckHomePresenter", new Gson().toJson(response.body()));
+                        Log.d("CheckHomePresenter", new Gson().toJson(response.body()));
 
-                    for (Product item : response.body().getResponseBody().getProducts()) {
-                        if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
-                            productsList.add(item);
+                        for (Product item : response.body().getResponseBody().getProducts()) {
+                            if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
+                                productsList.add(item);
+                            }
                         }
+                        mViewmodel.onShow(productsList);
+                    }else {
+                        mViewmodel.showMessage(response.body().getResponseHeader().getResCode()+" : "+response.body().getResponseHeader().getResMessage());
                     }
-
-
-                    mViewmodel.onShow(productsList);
-
 
                 } else {
                     mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));

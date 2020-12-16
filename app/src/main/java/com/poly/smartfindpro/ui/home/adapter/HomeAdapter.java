@@ -61,6 +61,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button btn_menu = inflate.findViewById(R.id.btn_menu_profile_post);
+        btn_menu.setVisibility(View.GONE);
         inflate.setLayoutParams(lp);
         return new HomeAdapter.ViewHolder(inflate);
     }

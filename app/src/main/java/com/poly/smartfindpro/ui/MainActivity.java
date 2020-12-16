@@ -1,14 +1,23 @@
 package com.poly.smartfindpro.ui;
 
 
+import android.content.res.ColorStateList;
 import android.graphics.ColorFilter;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.viewpager.widget.ViewPager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
+import com.poly.smartfindpro.ui.checklevel.CheckLevelAccount;
 import com.poly.smartfindpro.ui.home.HomeFragment;
 import com.poly.smartfindpro.ui.message.ListUserChatFragment;
 import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
@@ -78,15 +87,21 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onSelectMessager() {
-        if (position < 2) {
-            goToFragmentReplaceLeft(R.id.fl_native, new ListUserChatFragment(), null);
-        } else if (position > 2) {
-            goToFragmentReplaceRight(R.id.fl_native, new ListUserChatFragment(), null);
+        if (Config.LEVEL_ACCOUNT > 0) {
+            if (position < 2) {
+                goToFragmentReplaceLeft(R.id.fl_native, new MessageFragment(), null);
+            } else if (position > 2) {
+                goToFragmentReplaceRight(R.id.fl_native, new MessageFragment(), null);
 
+            }
+            position = 2;
+            checkAnimation(position);
+            setBottomNaviChange(1);
+        } else {
+            showMessage("Bạn đang ở gói 0, vui lòng nâng cấp gói");
+            CheckLevelAccount.onShowMessage(0);
         }
-        position = 2;
-        checkAnimation(position);
-        setBottomNaviChange(1);
+
     }
 
     @Override
