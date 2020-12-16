@@ -43,15 +43,15 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void openPost() {
-        switch (Config.LEVEL_ACCOUNT){
+        switch (Config.LEVEL_ACCOUNT) {
             case 0:
-                mViewmodel.showMessage("Để đăng được bài, gói tài khoản của quý khách tối thiệu là gói 2, vui lòng vào cài đặt -> nâng cấp gói để nâng cấp tài khoản");
+                mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
                 break;
             case 1:
-                mViewmodel.showMessage("Để đăng được bài, gói tài khoản của quý khách tối thiệu là gói 2, vui lòng vào cài đặt -> nâng cấp gói để nâng cấp tài khoản");
+                mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
                 break;
             case 2:
-                mViewmodel.showMessage("Gói 3: Chỉ cho phép đăng bài 3 lượt/ ngày");
+                mViewmodel.showMessage("Tài khoản của bạn bị giới hạn lượt đăng là 3 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
                 mViewmodel.openPost();
                 break;
             case 3:
@@ -86,15 +86,12 @@ public class HomePresenter implements HomeContract.Presenter {
     private void getProductRental() {
         HomeRequest request = new HomeRequest();
         request.setId(Config.TOKEN_USER);
-        Log.d("CheckHome", Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
-                    if(response.body().getResponseBody() != null){
+                    if (response.body().getResponseBody() != null) {
                         productsList = new ArrayList<>();
-
-                        Log.d("CheckHomePresenter", new Gson().toJson(response.body()));
 
                         for (Product item : response.body().getResponseBody().getProducts()) {
                             if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
@@ -102,8 +99,8 @@ public class HomePresenter implements HomeContract.Presenter {
                             }
                         }
                         mViewmodel.onShow(productsList);
-                    }else {
-                        mViewmodel.showMessage(response.body().getResponseHeader().getResCode()+" : "+response.body().getResponseHeader().getResMessage());
+                    } else {
+                        mViewmodel.showMessage(response.body().getResponseHeader().getResCode() + " : " + response.body().getResponseHeader().getResMessage());
                     }
 
                 } else {

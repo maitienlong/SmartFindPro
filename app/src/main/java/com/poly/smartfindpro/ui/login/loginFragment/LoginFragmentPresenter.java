@@ -74,7 +74,7 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
                     Log.d("getUser", new Gson().toJson(response.body()));
                     String token = response.body().getResponseBody().getUser().getId();
                     int level = response.body().getResponseBody().getUser().getLevel();
-                    Config.PROFILE = response.body().getResponseBody();
+                    Config.PROFILE = response.body().getResponseBody().getUser();
                     Config.TOKEN_USER = token;
                     Config.LEVEL_ACCOUNT = level;
 

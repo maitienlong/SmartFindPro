@@ -8,11 +8,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
-import com.poly.smartfindpro.data.model.area.Location;
 import com.poly.smartfindpro.data.model.area.req.AreaReqHeader;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
 import com.poly.smartfindpro.data.model.area.result.ResultArea;
+import com.poly.smartfindpro.data.model.base.Location;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.data.model.post.req.Address;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSearchAddressMap;
@@ -162,7 +162,7 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
                         }else if(response.body().getCandidates().size() == 1) {
                             String log = String.valueOf(response.body().getCandidates().get(0).getGeometry().getLocation().getLng()) ;
                             String lat = String.valueOf(response.body().getCandidates().get(0).getGeometry().getLocation().getLat()) ;
-                            com.poly.smartfindpro.data.model.post.req.Location location = new com.poly.smartfindpro.data.model.post.req.Location();
+                            Location location = new Location();
                             location.setLongitude(log);
                             location.setLatitude(lat);
                             address.setLocation(location);

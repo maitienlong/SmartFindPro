@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.model.post.req;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.base.Location;
 
 public class Address {
     @SerializedName("provinceCity")

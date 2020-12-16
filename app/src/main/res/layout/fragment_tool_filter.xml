@@ -385,7 +385,7 @@
                             android:layout_marginRight="@dimen/_8sdp"
                             android:layout_marginBottom="@dimen/_8sdp"
 
-                            android:background="@drawable/custom_button_infor"
+                            android:background="@drawable/background_button"
                             android:text="Tìm kiếm"
                             android:textColor="@color/white">
 

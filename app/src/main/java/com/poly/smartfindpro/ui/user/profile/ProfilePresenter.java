@@ -2,13 +2,10 @@ package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.LifecycleOwner;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
@@ -200,7 +197,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
+        nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
         Log.d("checkPhone", mProfile.getResponseBody().getUser().getPhoneNumber());
 
         Glide.

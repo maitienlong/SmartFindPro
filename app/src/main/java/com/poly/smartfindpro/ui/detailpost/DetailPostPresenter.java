@@ -122,7 +122,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         }
         utilitiesDetail.set(tIch);
         contentDetail.set(product.getContent());
-        userNameDetail.set(product.getUser().getUserName());
+        userNameDetail.set(product.getUser().getFullname());
 
     }
 
@@ -161,7 +161,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         if(Config.LEVEL_ACCOUNT > 0){
             mViewModel.onClickCall();
         }else {
-            mViewModel.showMessage("Vui lòng nâng cấp gói để liện hệ");
+            mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
         }
 
     }
@@ -171,7 +171,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         if(Config.LEVEL_ACCOUNT > 0){
             mViewModel.onClickInbox();
         }else {
-            mViewModel.showMessage("Vui lòng nâng cấp gói để liện hệ");
+            mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
         }
     }
 

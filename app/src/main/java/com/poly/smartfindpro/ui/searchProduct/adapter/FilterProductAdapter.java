@@ -20,12 +20,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
-import com.poly.smartfindpro.ui.home.HomeContract;
-import com.poly.smartfindpro.ui.home.adapter.HomeAdapter;
 import com.poly.smartfindpro.ui.searchProduct.filterProduct.FilterProductContact;
 
 import java.text.DateFormat;
@@ -78,7 +75,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
 
         }
 
-        holder.tv_username_post.setText(item.getUser().getUserName());
+        holder.tv_username_post.setText(item.getUser().getFullname());
         holder.tv_adress_profile.setText(item.getAddress().getDetailAddress()
                 + "," + item.getAddress().getCommuneWardTown() +
                 "," + item.getAddress().getDistrictsTowns() +

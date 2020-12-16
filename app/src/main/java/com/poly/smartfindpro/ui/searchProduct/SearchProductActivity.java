@@ -1,7 +1,6 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,8 +19,6 @@ import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.product.res.Location;
-import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
 import com.poly.smartfindpro.ui.searchProduct.adapter.ProductDetailBottomAdapter;

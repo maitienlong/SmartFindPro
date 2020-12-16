@@ -1,11 +1,8 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
 
-import android.widget.Adapter;
-
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
-import com.poly.smartfindpro.data.model.product.res.Location;
 import com.poly.smartfindpro.data.model.product.res.Products;
 
 import java.util.List;
