@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.message;
 
-public class MessagePresenter implements MessageContract.ViewModel {
+public class ListUserChatPresenter implements ListUserChatContract.ViewModel {
+
     @Override
     public void showLoading() {
 

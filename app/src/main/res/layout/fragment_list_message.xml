@@ -6,7 +6,7 @@
 
         <variable
             name="presenter"
-            type="com.poly.smartfindpro.ui.message.MessagePresenter" />
+            type="com.poly.smartfindpro.ui.message.ListUserChatPresenter" />
 
         <import type="android.view.View" />
     </data>
