@@ -53,6 +53,7 @@ public class IntroPresenter implements IntroContract.Presenter {
 
             request.setId(prefs.getString(ConfigSharedPreferences.TOKEN, "token"));
 
+
             if (!request.getId().equalsIgnoreCase("token")) {
 
                 MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
