@@ -6,7 +6,7 @@
     <string name="common_cancel">Hủy</string>
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
-    <string name="tv_category">Thể loại:</string>
+    <string name="tv_category">Thể loại</string>
     <string name="btn_pairing">Ở ghép</string>
     <string name="btn_rental_hous">Nhà trọ</string>
     <string name="btn_apartment">Chung cư</string>
@@ -17,17 +17,17 @@
     <string name="tv_amount_room">Số lượng phòng:</string>
     <string name="tv_amount_person">Số người</string>
     <string name="tv_price">Giá / Tháng: </string>
-    <string name="tv_deposit">Đặt cọc:</string>
+    <string name="tv_deposit">Đặt cọc</string>
     <string name="tv_gender">Giới tính:</string>
     <string name="tv_electricity_bill">Tiền điện / Tháng:</string>
     <string name="tv_water_bill">Tiền nước / Tháng:</string>
     <string name="btn_continue">Tiếp tục</string>
-    <string name="tv_address">Địa chỉ:</string>
+    <string name="tv_address">Địa chỉ</string>
     <string name="tv_province">Tỉnh/Thành phố </string>
     <string name="tv_district">Huyện/Thị xã </string>
     <string name="tv_commune">Xã/Phường/Thị trấn </string>
     <string name="tv_detail_address">Địa chỉ chi tiết </string>
-    <string name="tv_utilities">Tiện ích:</string>
+    <string name="tv_utilities">Tiện ích</string>
     <string name="tv_wc">Vệ sinh</string>
     <string name="tv_bathroom">Nhà tắm</string>
     <string name="tv_parking">Chỗ để xe </string>
@@ -55,8 +55,8 @@
     <string name="text_infor_location">Vị trí:</string>
     <string name="text_infor_gender">Giới tính:</string>
     <string name="text_infor_quantity">Số lượng:</string>
-    <string name="text_infor_price_electric">Tiền điện:</string>
-    <string name="text_infor_price_water">Tiền nước:</string>
+    <string name="text_infor_price_electric">Tiền điện</string>
+    <string name="text_infor_price_water">Tiền nước</string>
     <string name="text_infor_utilities">Tiện ích:</string>
     <string name="text_infor_chat">Nhắn tin</string>
     <string name="text_infor_call">Gọi điện</string>
@@ -125,7 +125,7 @@
     <string name="tv_home_town">Nguyên Quán</string>\
     <string name="tv_address_now">Địa chỉ thường trú</string>
     <string name="btn_confirm">Xác thực</string>
-
+    <string name="tv_status">Không có bài viết nào</string>
     <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
@@ -155,5 +155,6 @@
 
     </string-array>
     <string name="title_activity_maps">Map</string>
-    <string name="send_verify_token">Xác nhận mã OTP</string>
+
+    <string name="msg_đinhanh">Tài khoản của Bạn chưa được định danh để sử dụng chức năng này. Vui lòng vào mục "Cá nhân" -> "Cài đặt" -> "Định danh tài khoản", định danh tài khoản của mình để có trải nghiệp tốt nhất</string>
 </resources>

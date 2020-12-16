@@ -1,0 +1,33 @@
+
+package com.poly.smartfindpro.data.model.register.regisRes;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.base.ResponseHeader;
+
+public class RegisterResponse {
+
+    @SerializedName("response_header")
+    @Expose
+    private ResponseHeader responseHeader;
+    @SerializedName("response_body")
+    @Expose
+    private Object responseBody;
+
+    public ResponseHeader getResponseHeader() {
+        return responseHeader;
+    }
+
+    public void setResponseHeader(ResponseHeader responseHeader) {
+        this.responseHeader = responseHeader;
+    }
+
+    public Object getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(Object responseBody) {
+        this.responseBody = responseBody;
+    }
+
+}

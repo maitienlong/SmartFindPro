@@ -1,11 +1,14 @@
 package com.poly.smartfindpro.ui.detailpost;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
@@ -79,6 +82,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     public void setData(Products product) {
         priceDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getPrice()) +" "+ product.getProduct().getInformation().getUnit());
+        Log.d("TAG", new Gson().toJson(product));
         addressDetail.set(product.getAddress().getDetailAddress() + "," + product.getAddress().getCommuneWardTown() + "," + product.getAddress().getDistrictsTowns() + "," + product.getAddress().getProvinceCity());
         genderDetail.set(product.getProduct().getInformation().getGender());
         amountDetail.set(product.getProduct().getInformation().getAmountPeople().toString());
@@ -86,8 +90,9 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         priceWaterDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getWaterBill()) + "đ/" + product.getProduct().getInformation().getWaterUnit());
         priceDepositDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getDeposit()) +" "+ product.getProduct().getInformation().getUnit());
         categoryDetail.set(product.getProduct().getCategory()+"  ");
-        phoneNumberDetail.set(product.getUser().getPhoneNumber());
-
+        if(Config.LEVEL_ACCOUNT > 0){
+            phoneNumberDetail.set(product.getUser().getPhoneNumber());
+        }
         mBinding.cmtb.setTitle("Bài viết");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -95,7 +100,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + product.getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgAvatar);
 
         try {
@@ -117,7 +122,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         }
         utilitiesDetail.set(tIch);
         contentDetail.set(product.getContent());
-        userNameDetail.set(product.getUser().getUserName());
+        userNameDetail.set(product.getUser().getFullname());
 
     }
 
@@ -153,11 +158,25 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     @Override
     public void onClickCall() {
-        mViewModel.onClickCall();
+        if(Config.LEVEL_ACCOUNT > 0){
+            mViewModel.onClickCall();
+        }else {
+            mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
+        }
+
     }
 
     @Override
     public void onClickInbox() {
-        mViewModel.onClickInbox();
+        if(Config.LEVEL_ACCOUNT > 0){
+            mViewModel.onClickInbox();
+        }else {
+            mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
+        }
+    }
+
+    @Override
+    public void onClickProfile() {
+        mViewModel.onClickProfile();
     }
 }

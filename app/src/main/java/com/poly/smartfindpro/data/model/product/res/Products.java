@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.home.res.Address;
+import com.poly.smartfindpro.data.model.base.User;
 
 public class Products implements Parcelable {
 

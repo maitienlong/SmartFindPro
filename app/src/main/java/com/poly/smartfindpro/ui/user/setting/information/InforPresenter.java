@@ -1,10 +1,10 @@
 package com.poly.smartfindpro.ui.user.setting.information;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
@@ -58,13 +58,13 @@ public class InforPresenter implements InforContact.Presenter {
 
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-                    Log.d("TAG",response.body().getResponseBody().getUser().getUserName());
+//                    Log.d("TAG",response.body().getResponseBody().getUser().getFullName());
                     showData(mProfile);
 
                 } else {
@@ -80,8 +80,8 @@ public class InforPresenter implements InforContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
-//        addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
+        nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
+        addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
    //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
         phone.set(mProfile.getResponseBody().getUser().getPhoneNumber());
     }

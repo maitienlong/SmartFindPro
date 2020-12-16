@@ -3,17 +3,20 @@ package com.poly.smartfindpro.ui.login.loginFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.callback.AlertDialogListener;
+import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.ConfigSharedPreferences;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 
 
-
 public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, LoginFragmentPresenter> implements LoginFragmentContract.ViewModel {
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_login;
@@ -21,11 +24,19 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     @Override
     protected void initView() {
-
-        mPresenter = new LoginFragmentPresenter(mActivity, this);
+        getData();
+        mPresenter = new LoginFragmentPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
+    }
 
+    private void getData() {
+        if(getArguments() != null){
+            mBinding.edtAccountNumber.setText(getArguments().getString(Config.POST_BUNDEL_RES));
+        }
+
+        mBinding.edtAccountNumber.setText("0399551466");
+        mBinding.edtPassword.setText("Logate@21");
     }
 
     @Override
@@ -34,16 +45,17 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
     }
 
     @Override
-    public void saveLogin(String username, String password, String token) {
+    public void saveLogin(String username, String password, String token, int level) {
+
         getBaseActivity().showAlertDialog("Thông báo", "Bạn muốn ghi nhớ đăng nhập", "Có", "Không", true, new AlertDialogListener() {
             @Override
             public void onAccept() {
                 showLoadingDialog();
-                if (onSaveLogin(username, password, token)) {
+                if (onSaveLogin(username, password, token , level, true)) {
                     Intent intent = new Intent(mActivity, MainActivity.class);
                     startActivity(intent);
                     mActivity.finish();
-                }else {
+                } else {
                     showMessage("Lưu đăng nhập không thành công !");
                 }
 
@@ -52,21 +64,48 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
             @Override
             public void onCancel() {
                 showLoadingDialog();
-                Intent intent = new Intent(mActivity, MainActivity.class);
-                startActivity(intent);
-                mActivity.finish();
+                if (onSaveLogin(username, password, token, level, false)) {
+                    Intent intent = new Intent(mActivity, MainActivity.class);
+                    startActivity(intent);
+                    mActivity.finish();
+                } else {
+                    showMessage("Lưu đăng nhập không thành công !");
+                }
+            }
+        });
+//        }
+
+    }
+
+    @Override
+    public void onShowDialog(String msg) {
+        showAlertDialog("Thông báo", msg, "Đồng ý", "Từ chối", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+
+            }
+
+            @Override
+            public void onCancel() {
+
             }
         });
     }
 
-    private boolean onSaveLogin(String username, String password, String token) {
-        SharedPreferences sharedPreferences = mActivity.getSharedPreferences("smartFind", Context.MODE_PRIVATE);
+    @Override
+    public void onClickLogin() {
+
+    }
+
+    private boolean onSaveLogin(String username, String password, String token,int level, boolean isSave) {
+        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("username", username);
-        editor.putString("password", password);
-        editor.putString("token", token);
-        editor.putBoolean("savestatus", true);
+        editor.putString(ConfigSharedPreferences.USERNAME, username);
+        editor.putString(ConfigSharedPreferences.PASSWORD, password);
+        editor.putString(ConfigSharedPreferences.TOKEN, token);
+        editor.putInt(ConfigSharedPreferences.LEVEL, level);
+        editor.putBoolean(ConfigSharedPreferences.IS_SAVE, isSave);
 
         return editor.commit();
     }

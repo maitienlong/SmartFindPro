@@ -7,12 +7,17 @@ import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +29,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
     private FragmentProfileBinding mBinding;
+    private List<Products> productsList;
 
 
     public ObservableField<String> nameInfor;
@@ -39,8 +45,10 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private void initData() {
         nameInfor = new ObservableField<>();
         getInfor();
-        getProduct();
+//        getProduct();
+        getProductApproved();
     }
+
 
     @Override
     public void subscribe() {
@@ -65,24 +73,24 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     @Override
     public void onClickPending() {
         mViewModel.onClickPending();
+        getProductPending();
     }
 
     @Override
     public void onClickApproved() {
         mViewModel.onClickApproved();
+        getProductApproved();
     }
 
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-
                     showData(mProfile);
-
                 } else {
 
                 }
@@ -95,9 +103,80 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         });
     }
 
+    private void getProductApproved() {
+        mViewModel.showLoading();
+        ProductRequest request = new ProductRequest();
+        request.setId(Config.TOKEN_USER);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.code() == 200) {
+                   mViewModel.hideLoading();
+                    productsList = new ArrayList<>();
+                    if (response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() != null) {
+                        for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
+                            if (response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")) {
+                                productsList.add(response.body().getResponseBody().getProducts().get(i));
+                            }
+                        }
+                        mViewModel.onShow(productsList);
+                    }
+                } else {
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                mViewModel.hideLoading();
+                mViewModel.showMessage(context.getString(R.string.services_not_avail));
+            }
+        });
+    }
+
+    private void getProductPending() {
+        mViewModel.showLoading();
+        ProductRequest request = new ProductRequest();
+        request.setId(Config.TOKEN_USER);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.code() == 200) {
+                    mViewModel.hideLoading();
+                    if(response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() !=null){
+                        productsList = new ArrayList<>();
+                        for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
+                            if (!response.body().getResponseBody().getProducts().get(i).getStatus().equals("1")) {
+                                productsList.add(response.body().getResponseBody().getProducts().get(i));
+                            }
+                        }
+                        mViewModel.onShow(productsList);
+                    }
+
+
+                } else {
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                mViewModel.hideLoading();
+                mViewModel.showMessage(context.getString(R.string.services_not_avail));
+
+            }
+        });
+
+    }
+
+
     private void getProduct() {
         ProductRequest request = new ProductRequest();
-        request.setId("5fb2073ff69b03b8f8875059");
+        request.setId(Config.TOKEN_USER);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
@@ -118,19 +197,20 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void showData(ProfileResponse mProfile) {
-        nameInfor.set(mProfile.getResponseBody().getUser().getUserName());
+        nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
+        Log.d("checkPhone", mProfile.getResponseBody().getUser().getPhoneNumber());
 
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgAvatarProfile);
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getCoverImage())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
+                .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgCoverImage);
 
     }

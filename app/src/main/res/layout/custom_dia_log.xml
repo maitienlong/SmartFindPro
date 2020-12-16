@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btn_close"
+        android:background="@mipmap/close"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"/>
+
+    <ImageView
+        android:id="@+id/img_detail"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:src="@mipmap/imgplaceholder" />
+</RelativeLayout>
+
+</LinearLayout>

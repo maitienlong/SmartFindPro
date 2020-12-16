@@ -2,8 +2,10 @@ package com.poly.smartfindpro.ui.user.userFragment;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentSettingUserBinding;
 import com.poly.smartfindpro.databinding.FragmentUserBinding;
+import com.poly.smartfindpro.ui.login.LoginActivity;
 import com.poly.smartfindpro.ui.user.help.HelpFragment;
 import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
 import com.poly.smartfindpro.ui.user.rules.RulesFragment;
@@ -48,6 +50,8 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     public void onClickLogOut() {
-
+        Config.TOKEN_USER = "";
+        mActivity.finish();
+        getBaseActivity().openActivity(LoginActivity.class);
     }
 }

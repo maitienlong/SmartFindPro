@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+
+        android:id="@+id/btn_filter_address"
+        android:title="Lọc theo địa chỉ"
+
+        />
+    <item
+
+        android:id="@+id/btn_filter_price"
+        android:title="Lọc theo giá tiền"
+
+        />
+
+    <item
+
+        android:id="@+id/btn_filter_advanced"
+        android:title="Lọc nâng cao"
+
+        />
+</menu>

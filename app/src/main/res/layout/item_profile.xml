@@ -7,22 +7,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_3sdp"
         android:background="@drawable/border_item_post"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_10sdp">
+        android:paddingHorizontal="@dimen/_6sdp"
+        android:paddingVertical="@dimen/_6sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.github.siyamed.shapeimageview.CircularImageView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/img_avatar"
-                android:scaleType="centerCrop"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
- />
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="@dimen/_200sdp"
@@ -35,16 +35,15 @@
                     android:id="@+id/tv_username_post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                   android:textSize="@dimen/_15sdp"
                     android:text="@string/tv_username"
-                    android:textColor="@color/white" />
+                    style="@style/textStyleWhite_13dp"/>
 
                 <TextView
                     android:id="@+id/tv_time_post"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="1 giờ trước"
-                    android:textColor="@color/white" />
+                    style="@style/textStyleWhite_10dp"/>
 
             </LinearLayout>
 
@@ -55,6 +54,7 @@
 
 
                 <Button
+                    android:layout_gravity="top"
                     android:id="@+id/btn_menu_profile_post"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
@@ -70,42 +70,42 @@
             android:orientation="vertical">
 
             <TextView
+                android:text="gfdgf"
                 android:id="@+id/tv_title_post"
                 android:layout_width="wrap_content"
-                android:lines="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white" />
+                android:lines="1"
+                android:layout_marginBottom="@dimen/_10sdp"
+                style="@style/textStyleWhite_13dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp">
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post1"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                     />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post2"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                    />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post3"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                     />
+                    android:scaleType="centerCrop" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,52 +118,55 @@
                     android:src="@drawable/ic_baseline_coin_on_24" />
 
                 <TextView
+                    android:text="ffbfb"
                     android:id="@+id/tv_price_product"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:textColor="@color/white" />
+                    style="@style/textStyleWhite_11dp"/>
             </LinearLayout>
 
             <LinearLayout
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_location_on_24" />
+                    android:src="@drawable/ic_baseline_location_chung_cu" />
 
                 <TextView
+                    android:text="dgfgf"
                     android:id="@+id/tv_adress_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:textColor="@color/white" />
+                    style="@style/textStyleWhite_11dp"/>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/_10sdp">
 
-<LinearLayout
-    android:gravity="right|center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Button
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center">
 
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_30sdp"
-        android:background="@drawable/ic_baseline_message_24" />
+                    <Button
 
-    <Button
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:background="@drawable/ic_baseline_share_24" />
-</LinearLayout>
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:background="@drawable/ic_baseline_message_24" />
+
+                    <Button
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/ic_baseline_share_24" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

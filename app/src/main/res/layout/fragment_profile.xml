@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/background_app_gray"
         android:clickable="true"
         android:focusable="true">
 
@@ -59,7 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_50sdp"
 
-                            android:background="@color/white">
+                            android:background="@color/background_app_gray">
 
                         </LinearLayout>
 
@@ -73,11 +73,10 @@
                         android:src="@mipmap/imgplaceholder"
                         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                         />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <LinearLayout
-
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -88,21 +87,20 @@
 
                         <TextView
                             android:id="@+id/textView10"
+                            style="@style/textStyleBlue_15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_gravity="center"
 
+                            android:layout_weight="1"
                             android:text="@{presenter.nameInfor}"
-                            android:textColor="@color/blue"
-                            android:textSize="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
                         <Button
                             android:id="@+id/btn_edit_name"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
-                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginLeft="@dimen/_3sdp"
                             android:background="@drawable/ic_baseline_edit_24"
                             android:onClick="@{()->presenter.onClickEditUser()}" />
                     </LinearLayout>
@@ -113,7 +111,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
-                    android:background="@color/bg_gray">
+                    android:background="@color/french_grey">
 
                 </LinearLayout>
 
@@ -125,27 +123,40 @@
 
 
                     <Button
-                        android:onClick="@{()->presenter.onClickPending()}"
+                        android:id="@+id/btn_approved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/btn_category_pressed"
+                        android:onClick="@{()->presenter.onClickApproved()}"
+                        android:text="@string/btn_approved"
+                        android:textColor="@color/white">
+
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btn_pending"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/btn_category"
+                        android:onClick="@{()->presenter.onClickPending()}"
                         android:text="@string/btn_pending"
                         android:textColor="@color/blue">
 
                     </Button>
 
-                    <Button
-                        android:onClick="@{()->presenter.onClickApproved()}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_25sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:background="@drawable/btn_category"
-                        android:text="@string/btn_approved"
-                        android:textColor="@color/blue">
-
-                    </Button>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:gravity="center"
+                    android:text="@string/tv_status"
+                    android:visibility="gone"
+                     />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rc_profile"

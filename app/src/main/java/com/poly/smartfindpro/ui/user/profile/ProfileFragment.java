@@ -27,6 +27,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         mPresenter = new ProfilePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
+//        mBinding.btnApproved.setBackgroundColor(R.drawable.btn_category_pressed);
     }
 
     @Override
@@ -57,12 +58,18 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onClickPending() {
-        Toast.makeText(mActivity, "Pending", Toast.LENGTH_SHORT).show();
-
+        mBinding.btnPending.setBackground(getResources().getDrawable(R.drawable.btn_category_pressed));
+        mBinding.btnPending.setTextColor(getResources().getColor(R.color.white));
+        mBinding.btnApproved.setBackground(getResources().getDrawable(R.drawable.btn_category));
+        mBinding.btnApproved.setTextColor(getResources().getColor(R.color.blue));
     }
 
     @Override
     public void onClickApproved() {
-        Toast.makeText(mActivity, "Approved", Toast.LENGTH_SHORT).show();
+//        mPresenter.onClickApproved();
+        mBinding.btnPending.setBackground(getResources().getDrawable(R.drawable.btn_category));
+        mBinding.btnPending.setTextColor(getResources().getColor(R.color.blue));
+        mBinding.btnApproved.setBackground(getResources().getDrawable(R.drawable.btn_category_pressed));
+        mBinding.btnApproved.setTextColor(getResources().getColor(R.color.white));
     }
 }

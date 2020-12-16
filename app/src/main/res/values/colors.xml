@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1C58C9</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#0084ff</color>
+    <color name="colorPrimary">#0081da</color>
+    <color name="colorPrimaryDark">#0091c9</color>
+    <color name="colorAccent">#0081da</color>
     <color name="actionbar_background">#27a5df</color>
     <color name="blue_vice">#09577E</color>
     <color name="black_opacity_30">#4D000000</color>
@@ -101,7 +101,7 @@
     <color name="line_color_2">#f5f6f7</color>
     <color name="edt_line_color">#0092ff</color>
     <color name="edt_line_selected_color">#027BD6</color>
-    <!--interest_rate-->
+
     <color name="text_blue">#006bb7</color>
     <color name="text_gray">#bfbfbf</color>
     <color name="bg_gray">#eeeeee</color>
@@ -109,7 +109,7 @@
 
     <color name="mask_qr">#55000000</color>
     <color name="gray2">#cccccc</color>
-
+    <color name="background_app_gray">#efeded</color>
     <color name="color_button">#b2bec3</color>
 
     <color name="background_login">#1C58C9</color>
@@ -120,4 +120,6 @@
     <color name="black_overlay">#66000000</color>
     <color name="background">#1C58C9</color>
     <color name="color_progress_loading">#2680EB</color>
+
+    <color name="background_button_login">#33000000</color>
 </resources>

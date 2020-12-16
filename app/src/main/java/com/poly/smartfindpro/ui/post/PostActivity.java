@@ -1,15 +1,21 @@
 package com.poly.smartfindpro.ui.post;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
@@ -37,6 +43,8 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     private int position = 0;
 
+    private static final int MY_PERMISSIONS_REQUEST = 1001;
+
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +60,18 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
         mBinding.pbTientrinh.getIndeterminateDrawable().setTint(R.color.color_progress_loading);
 
-        goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
+            } else {
+                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
+            }
+        } else {
+            goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
+        }
+
+
 
         statusProress("1");
     }
@@ -163,7 +182,18 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     @Override
     public void onBackClick() {
-        finish();
+        showAlertDialog("Thông báo", "Bạn muốn hủy bài đăng", "Đồng ý", "Hủy", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 
 
@@ -180,5 +210,16 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
+                } else {
+                    showMessage("Quyền truy cập đã được từ chối");
+                }
+        }
+    }
 }
