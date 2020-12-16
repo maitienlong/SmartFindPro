@@ -53,14 +53,23 @@ public class IntroPresenter implements IntroContract.Presenter {
 
             request.setId(prefs.getString(ConfigSharedPreferences.TOKEN, "token"));
 
+            Log.d("CheckInfo", request.getId());
 
-            if (!request.getId().equalsIgnoreCase("token")) {
+
+            if (request.getId().equalsIgnoreCase("token")) {
+
+                mViewModel.onNextSceen();
+
+            } else {
+
 
                 MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
                     @Override
                     public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-
+                        Log.d("CheckInfo", new Gson().toJson(response.body()));
                         if (response.code() == 200) {
+
+
 
                             if (response.body().getResponseHeader().getResCode() == 200) {
 
@@ -82,9 +91,6 @@ public class IntroPresenter implements IntroContract.Presenter {
                         mViewModel.onShowDialogMsg("Vui lòng kiểm tra lại kết nối mạng");
                     }
                 });
-
-            } else {
-                mViewModel.onNextSceen();
             }
 
         } else {

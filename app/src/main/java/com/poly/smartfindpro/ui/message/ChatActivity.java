@@ -41,6 +41,6 @@ public class ChatActivity extends BaseDataBindActivity<ActivityMessageBinding, C
         mProduct = new Products();
         mProduct = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES), type);
 
-        mBinding.cmtbUsername.setTitle(mProduct.getUser().getUserName());
+        mBinding.cmtbUsername.setTitle(mProduct.getUser().getFullname());
     }
 }
