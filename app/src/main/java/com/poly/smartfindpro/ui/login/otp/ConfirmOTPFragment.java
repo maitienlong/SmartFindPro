@@ -128,23 +128,6 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
                 });
     }
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mActivity, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = task.getResult().getUser();
-
-                        } else {
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                showMessage("Lỗi đăng nhập firebase: " + task.getException());
-                            }
-                        }
-                    }
-                });
-    }
 
     private void onconfirmOTP() {
         showLoadingDialog();

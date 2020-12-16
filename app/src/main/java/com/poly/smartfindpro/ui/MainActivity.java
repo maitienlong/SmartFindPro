@@ -89,9 +89,9 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     public void onSelectMessager() {
         if (Config.LEVEL_ACCOUNT > 0) {
             if (position < 2) {
-                goToFragmentReplaceLeft(R.id.fl_native, new MessageFragment(), null);
+                goToFragmentReplaceLeft(R.id.fl_native, new ListUserChatFragment(), null);
             } else if (position > 2) {
-                goToFragmentReplaceRight(R.id.fl_native, new MessageFragment(), null);
+                goToFragmentReplaceRight(R.id.fl_native, new ListUserChatFragment()                      , null);
 
             }
             position = 2;
