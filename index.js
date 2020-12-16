@@ -12,6 +12,10 @@ const Handlebars = require('handlebars');
 const buffer = require('buffer').Buffer;
 
 //anh xa model
+const commentSchema = require('./model/CommentSchema');
+const Comment = db.model('Comment', commentSchema, 'comment');
+const favoriteSchema = require('./model/FavoriteSchema');
+const Favorite = db.model('Favorite', favoriteSchema, 'favorite');
 
 const UserManage = require('./model/modelWeb/UserManage');
 const PostManage = require('./model/modelWeb/PostManage');
@@ -365,7 +369,7 @@ app.post('/update-user', async function (request, response) {
     try {
         let userId = request.body.userId;
         let password = request.body.password;
-        let address = request.body.address;
+        let mAddress = request.body.address;
         let avatar = request.body.avatar;
         let converImage = request.body.coverImage;
         let gender = request.body.gender;
@@ -373,37 +377,42 @@ app.post('/update-user', async function (request, response) {
         let fullName = request.body.full_name;
         let phoneNumber = request.body.phone_number;
         if (checkData(userId)) {
-            let user = await User.find({_id: userId}).lean();
+            let user = await User.find({_id: userId}).populate(['address']).lean();
+            console.log(JSON.stringify(user))
             let res_body = {status: null};
             if (user.length > 0) {
                 user = user[0];
-                let address = await Address.findByIdAndUpdate(user.address._id, {
-                    provinceCity: mAddress.provinceCity,
-                    districtsTowns: mAddress.districtsTowns,
-                    communeWardTown: mAddress.communeWardTown,
-                    detailAddress: mAddress.detailAddress,
-                    location: {
-                        latitude: mAddress.location.latitude,
-                        longitude: mAddress.location.longitude
-                    }
-                });
+                console.log("USER_ADDRESS_ID: " + user.address._id);
+                let address = '';
+                if (checkData(mAddress)) {
+                    address = await Address.findByIdAndUpdate(user.address._id, {
+                        provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
+                        districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
+                        communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
+                        detailAddress: checkData(mAddress.detailAddress) ? mAddress.detailAddress : user.address.detailAddress,
+                        location: {
+                            latitude: checkData(mAddress.location.latitude) ? mAddress.location.latitude : user.address.location.latitude,
+                            longitude: checkData(mAddress.location.longitude) ? mAddress.location.longitude : user.address.location.longitude
+                        }
+                    });
+                }
                 // update data vao bang chinh
                 let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
                 let updateUser = await User.findByIdAndUpdate(userId, {
                     level: 1,
                     password: checkData(password) ? password : user.password,
-                    address: checkData(address) ? address : user.address,
+                    address: checkData(address) ? address._id : user.address._id,
                     avatar: checkData(avatar) ? avatar : user.avatar,
-                    coverImage: checkData(coverImage) ? coverImage : user.coverImage,
+                    coverImage: checkData(converImage) ? converImage : user.converImage,
                     gender: checkData(gender) ? gender : user.gender,
                     birth: checkData(birth) ? birth : user.birth,
                     full_name: checkData(fullName) ? fullName : user.full_name,
                     phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
                     deleteAt: user.deleteAt,
                     updateAt: updateAt,
-                    createAt: createAt
+                    createAt: user.createAt
                 })
-                if (address && updateUser) {
+                if (updateUser) {
                     let confirm = await ConfirmPost({
                         product: null,
                         admin: null,
@@ -1636,3 +1645,142 @@ app.post('/cancel-upgrade', async function (request, response) {
         }
     }
 );
+
+//comment
+app.post('/init-comment', async function (request, response) {
+    let name = 'INIT-COMMENT'
+    try {
+        let user = request.body.user;
+        let product = request.body.product;
+        let title = request.body.title;
+        let oldComment = request.body.oldComment;
+        let favorite = request.body.favorite;
+        if (checkData(user) &&
+            checkData(product) &&
+            checkData(title)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length < 0) {
+                response.json(getResponse(name, 404, 'User not found', null))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length < 0) {
+                response.json(getResponse(name, 404, 'Product not found', null))
+                return
+            }
+
+            let savedComment = null;
+            let savedFavorite = null;
+            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+            if (checkData(oldComment)) {
+                let findOldComment = await Comment.find({_id: oldComment}).lean();
+                if (findOldComment.length < 0) {
+                    response.json(getResponse(name, 404, 'Comment not found', null))
+                    return
+                }
+                savedComment = oldComment;
+            }
+            if (checkData(favorite)) {
+                let findFavFavorite = await Favorite.find({_id: oldComment}).lean();
+                if (findFavFavorite.length < 0) {
+                    response.json(getResponse(name, 404, 'Favorite not found', null))
+                    return
+                }
+                savedFavorite = favorite;
+            }
+            let newComment = new Comment({
+                user: user,
+                product: product,
+                title: title,
+                oldComment: savedComment,
+                favorite: savedFavorite,
+                updateAt: "",
+                deleteAt: "",
+                createAt: createAt
+            });
+            let initComment = await newComment.save();
+            let res_body = {status: null};
+            if (initComment) {
+                res_body = {status: sttOK}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } else {
+                res_body = {status: 'Fail'}
+                response.json(getResponse(name, 200, 'Fail', res_body))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+//favorite
+app.post('/init-favorite', async function (request, response) {
+    let name = 'INIT-FAVORITE'
+    try {
+        let user = request.body.user;
+        let product = request.body.product;
+        let comment = request.body.comment;
+        if (checkData(user) &&
+            checkData(product)) {
+            let listUsers = [], addComment = null, count = 0;
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length < 0) {
+                response.json(getResponse(name, 404, 'User not found', null))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length < 0) {
+                response.json(getResponse(name, 404, 'Product not found', null))
+                return
+            }
+            try {
+                if (checkData(comment)) {
+                    addComment = comment;
+                } else {
+                    addComment = null;
+                }
+                let findFavorite = await Favorite.find({product: product, status: status}).lean();
+                if (findFavorite.length < 0) {
+                    listUsers.push(user)
+                    count++;
+                } else {
+                    findFavorite = findFavorite[0];
+                    listUsers = findFavorite.user
+                    listUsers.push(user)
+                    count = findFavorite.count + 1;
+                }
+            } catch (e) {
+                console.log("findFavorite: " + e)
+            }
+            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+
+            let newComment = new Comment({
+                count: count,
+                product: product,
+                users: listUsers,
+                comment: comment,
+                status: status,
+                updateAt: "",
+                deleteAt: "",
+                createAt: createAt
+            });
+            let initComment = await newComment.save();
+            let res_body = {status: null};
+            if (initComment) {
+                res_body = {status: sttOK}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } else {
+                res_body = {status: 'Fail'}
+                response.json(getResponse(name, 200, 'Fail', res_body))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
