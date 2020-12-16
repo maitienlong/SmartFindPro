@@ -3,7 +3,7 @@ package com.poly.smartfindpro.data.model.area.req;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.poly.smartfindpro.data.model.area.Location;
+import com.poly.smartfindpro.data.model.base.Location;
 
 public class AreaReqHeader {
 

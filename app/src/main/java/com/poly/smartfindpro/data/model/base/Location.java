@@ -1,10 +1,10 @@
 
-package com.poly.smartfindpro.data.model.home.res;
+package com.poly.smartfindpro.data.model.base;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location_ {
+public class Location {
 
     @SerializedName("latitude")
     @Expose

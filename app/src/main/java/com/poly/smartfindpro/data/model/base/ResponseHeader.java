@@ -1,5 +1,5 @@
 
-package com.poly.smartfindpro.data.model.profile.res;
+package com.poly.smartfindpro.data.model.base;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

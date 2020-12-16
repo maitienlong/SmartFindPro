@@ -4,29 +4,22 @@ package com.poly.smartfindpro.ui.intro;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.viewpager.widget.ViewPager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.ConfigSharedPreferences;
-import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
 import com.poly.smartfindpro.databinding.ActivityIntroBinding;
-import com.poly.smartfindpro.databinding.ActivityMainBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.login.LoginActivity;
-import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 
 
 public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
@@ -46,29 +39,16 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!checkSaveLogin()) {
-                    onNext();
-                } else {
-                    onNextHome();
-                }
-
-
-            }
-        }, 3000);
-
     }
+
 
     @Override
     protected void initData() {
-
-
+        mPresenter = new IntroPresenter(this, this);
+        mBinding.setPresenter(mPresenter);
     }
 
-    private void onNext() {
+    private void onNextLogin() {
         Animation animation = new AnimationUtils().loadAnimation(this, R.anim.slide_up);
         animation.setFillAfter(true);
         mBinding.imgLogo.startAnimation(animation);
@@ -125,5 +105,28 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         Config.TOKEN_USER = prefs.getString(ConfigSharedPreferences.TOKEN, "token");
         Config.LEVEL_ACCOUNT = prefs.getInt(ConfigSharedPreferences.LEVEL, 0);
         return prefs.getBoolean(ConfigSharedPreferences.IS_SAVE, false);
+    }
+
+    public void onShowDialogMsg(String msg) {
+        showAlertDialog(msg, "Thử lại", new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                mPresenter.getUpdateUser();
+            }
+
+            @Override
+            public void onCancel() {
+                mPresenter.getUpdateUser();
+            }
+        });
+    }
+
+    @Override
+    public void onNextSceen() {
+        if (!checkSaveLogin()) {
+            onNextLogin();
+        } else {
+            onNextHome();
+        }
     }
 }

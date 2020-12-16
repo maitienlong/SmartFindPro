@@ -3,7 +3,6 @@
     <item
 
         android:id="@+id/btn_filter_address"
-
         android:title="Lọc theo địa chỉ"
 
         />

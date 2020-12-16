@@ -99,7 +99,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
             checkAnimation(position);
             setBottomNaviChange(1);
         } else {
-            showMessage("Bạn đang ở gói 0, vui lòng nâng cấp gói");
+            showMessage(getString(R.string.msg_đinhanh));
             CheckLevelAccount.onShowMessage(0);
         }
 

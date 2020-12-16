@@ -92,7 +92,7 @@ public class UserPresenter implements UserContact.Presenter {
 
     private void showData(ProfileResponse mProfile) {
 
-        nameInfor.set(mProfile.getResponseBody().getUser().getFullName());
+        nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())

@@ -1,20 +1,32 @@
 
-package com.poly.smartfindpro.data.model.profile.res;
+package com.poly.smartfindpro.data.model.base;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.home.res.Address;
+import com.poly.smartfindpro.data.model.product.res.Share;
 
 public class User {
 
     @SerializedName("_id")
     @Expose
     private String id;
+    @SerializedName("full_name")
+    @Expose
+    private String fullname;
     @SerializedName("password")
     @Expose
     private String password;
     @SerializedName("address")
     @Expose
     private Address address;
+    @SerializedName("phone_number")
+    @Expose
+    private String phoneNumber;
+    @SerializedName("age")
+    @Expose
+    private String age;
     @SerializedName("avatar")
     @Expose
     private String avatar;
@@ -24,24 +36,13 @@ public class User {
     @SerializedName("gender")
     @Expose
     private String gender;
-    @SerializedName("birth")
+    @SerializedName("share")
     @Expose
-    private String birth;
-    @SerializedName("full_name")
+    private List<Share> share = null;
+
+    @SerializedName("level")
     @Expose
-    private String fullName;
-    @SerializedName("phone_number")
-    @Expose
-    private String phoneNumber;
-    @SerializedName("createAt")
-    @Expose
-    private String createAt;
-    @SerializedName("updateAt")
-    @Expose
-    private String updateAt;
-    @SerializedName("deleteAt")
-    @Expose
-    private String deleteAt;
+    private int level;
 
     public String getId() {
         return id;
@@ -49,6 +50,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPassword() {
@@ -65,6 +74,22 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getAvatar() {
@@ -91,52 +116,19 @@ public class User {
         this.gender = gender;
     }
 
-    public String getBirth() {
-        return birth;
+    public List<Share> getShare() {
+        return share;
     }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
+    public void setShare(List<Share> share) {
+        this.share = share;
     }
 
-    public String getFullName() {
-        return fullName;
+    public int getLevel() {
+        return level;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setLevel(int level) {
+        this.level = level;
     }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(String createAt) {
-        this.createAt = createAt;
-    }
-
-    public String getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(String updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public String getDeleteAt() {
-        return deleteAt;
-    }
-
-    public void setDeleteAt(String deleteAt) {
-        this.deleteAt = deleteAt;
-    }
-
 }

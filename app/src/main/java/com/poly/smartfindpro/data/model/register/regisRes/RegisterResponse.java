@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.model.register.regisRes;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.base.ResponseHeader;
 
 public class RegisterResponse {
 

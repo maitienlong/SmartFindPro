@@ -1,23 +1,7 @@
 package com.poly.smartfindpro.ui.searchProduct.map;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,18 +17,8 @@ import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
-import com.poly.smartfindpro.data.model.post.req.Information;
-import com.poly.smartfindpro.data.model.post.req.Location;
-import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.product.res.Products;
-import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.databinding.FragmentMapsSearchBinding;
-import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
-import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
-import com.poly.smartfindpro.ui.post.inforPost.InforPostContract;
-import com.poly.smartfindpro.ui.post.inforPost.InforPostPresenter;
-import com.poly.smartfindpro.ui.post.inforPost.RealPathUtil;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

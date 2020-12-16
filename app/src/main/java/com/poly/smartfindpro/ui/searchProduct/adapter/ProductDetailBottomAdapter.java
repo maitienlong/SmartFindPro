@@ -2,7 +2,6 @@ package com.poly.smartfindpro.ui.searchProduct.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,7 @@ public class ProductDetailBottomAdapter extends RecyclerView.Adapter<ProductDeta
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Products item = mList.get(position);
-        holder.tv_nguoi_dang.setText(item.getUser().getUserName());
+        holder.tv_nguoi_dang.setText(item.getUser().getFullname());
         holder.tv_the_loai.setText(item.getProduct().getCategory());
         holder.tv_so_luong.setText(item.getProduct().getInformation().getAmountPeople() + "");
         holder.tv_dia_chi.setText(item.getAddress().getDetailAddress() + ", " + item.getAddress().getCommuneWardTown() + ", " + item.getAddress().getDistrictsTowns() + ", " + item.getAddress().getProvinceCity());
