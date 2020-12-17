@@ -14,15 +14,24 @@ const CommentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    reply: {
+        type: [mongoose.Types.ObjectId],
+        required: false,
+        ref: 'Comment'
+    },
     oldComment: {
         type: mongoose.Types.ObjectId,
         required: false,
         ref: 'Comment'
     },
-    favorite: {
-        type: mongoose.Types.ObjectId,
+    favorites: {
+        type: [mongoose.Types.ObjectId],
         required: false,
         ref: 'Favorite'
+    },
+    status: {
+        type: String,
+        required: false
     },
     deleteAt: {
         type: String,
