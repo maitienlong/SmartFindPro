@@ -1,70 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Đăng nhập</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png"
+          href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+    <link rel="stylesheet" type="text/css" href="public/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="public/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="public/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="public/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="public/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="public/css/util.css">
+    <link rel="stylesheet" type="text/css" href="public/css/main.css">
 </head>
 
 <body>
-
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark rounded-bottom bg-dark">
-        <div class="container collapse navbar-collapse col-4">
-            <a class="navbar-brand " href="#"><span class="text-capitalize display-4">Đăng nhập</span></a>
-        </div>
-    </nav>
-    <div class="container rounded-bottom" style="margin-top: 10px">
-        <div class="row">
-            <div class="col-7">
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-pic js-tilt" data-tilt>
                 <img src="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"
-                     class="img-fluid" alt="Responsive image">
+                     class="img-fluid" alt="tim_tro_thong_minh_image">
             </div>
-            <div class="col bg-light rounded"><br>
-                <div class="container" style="padding: 20px">
+            <form class="login100-form validate-form" action="/index" method="get">
+					<span class="login100-form-title">
+						Đăng nhập
+					</span>
 
-                    <form action="/index" method="get">
-                        <h1 for="InputUsername">Xin chào,</h1>
-                        <br><br>
-                        <div class="form-group">
-                            <label for="InputUsername">Tài khoản</label>
-                            <input value="{{user}}" type="text" name="user" class="form-control" id="InputUsername"
-                                   required
-                                   placeholder="Nhập tài khoản">
-                        </div>
-                        <div class="form-group">
-                            <label for="InputPassword">Mật khẩu</label>
-                            <input value="{{pass}}" type="password" name="pass" class="form-control" id="InputPassword"
-                                   required
-                                   placeholder="Nhập mật khẩu">
-                        </div>
-                        <br>
-                        <div class="row justify-content-center">
-                            <div class="col-7">
-                                <button type="submit" name="sm" value="1" class="btn btn-outline-dark col-sm-12 "
-                                        aria-describedby="lgHelp">Đăng nhập
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <br> <br>
-                    <div style="display: {{status}}" class="alert alert-warning alert-dismissible fade show"
-                         role="alert">
-                        {{data}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-
+                <div class="wrap-input100">
+                    <input value="{{user}}" type="text" name="user" class="input100" id="InputUsername"
+                           required
+                           placeholder="Nhập tài khoản">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
                 </div>
 
-            </div>
-        </div>
+                <div class="wrap-input100">
+                    <input value="{{pass}}" type="password" name="pass" class="input100" id="InputPassword"
+                           required
+                           placeholder="Nhập mật khẩu">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+                </div>
 
+                <div class="container-login100-form-btn">
+                    <button type="submit" name="sm" value="1" class="login100-form-btn"
+                            aria-describedby="lgHelp">Đăng nhập
+                    </button>
+                </div>
+
+                <div class="text-center p-t-60">
+	                <span class="txt1">
+                        SmartFindPro&copy;
+					</span>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<script src="public/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="public/vendor/bootstrap/js/popper.js"></script>
+<script src="public/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="public/vendor/select2/select2.min.js"></script>
+<script src="public/vendor/tilt/tilt.jquery.min.js"></script>
+<script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
+<script src="public/js/main.js"></script>
+
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

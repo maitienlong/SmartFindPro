@@ -29,6 +29,9 @@
     "validate-phone-number-node-js": "0.0.1"
   },
   "devDependencies": {
-    "handlebars": "^4.7.6"
+    "handlebars": "^4.7.6",
+    "stylelint": "^13.8.0",
+    "stylelint-config-standard": "^20.0.0",
+    "extends": "stylelint-config-standard"
   }
 }
