@@ -1835,6 +1835,7 @@ app.post('/product-comment', async function (request, response) {
                 deleteAt: '', status: 'COMMENT', product: product
             }).lean();
             if (allComments) {
+                allComments = allComments.reverse();
                 let listResponse = [];
                 for (let i = 0; i < allComments.length; i++) {
                     let stt = false;
