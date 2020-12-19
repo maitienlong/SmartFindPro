@@ -1840,11 +1840,17 @@ app.post('/product-comment', async function (request, response) {
                     let stt = false;
                     let replyCount = 0;
                     let favoriteCount = 0;
-                    if (allComments[i].user._id == user) {
-                        stt = true;
-                    } else {
+                    try {
+                        let findFavorite = await Favorite.find({user: user, comment: allComments[i]._id}).lean();
+                        if (findFavorite.length > 0) {
+                            stt = true;
+                        } else {
+                            stt = false;
+                        }
+                    } catch (e) {
                         stt = false;
                     }
+
                     if (checkData(allComments[i].favorites.length)) {
                         favoriteCount = allComments[i].favorites.length
                     }
