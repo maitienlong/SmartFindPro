@@ -285,39 +285,55 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
                         <div class="d-md-flex mb-3">
-                            <h3 class="box-title mb-0">Top những người có nhiều bài đăng</h3>
+                            <h3 class="box-title mb-0">Top đăng bài nhiều nhất</h3>
                             <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
-                                <select class="form-control row border-top">
-                                    <option>March 2017</option>
-                                    <option>April 2017</option>
-                                    <option>May 2017</option>
-                                    <option>June 2017</option>
-                                    <option>July 2017</option>
-                                </select>
+                                <!--                                <select class="form-control row border-top">-->
+                                <!--                                    <option>March 2017</option>-->
+                                <!--                                    <option>April 2017</option>-->
+                                <!--                                    <option>May 2017</option>-->
+                                <!--                                    <option>June 2017</option>-->
+                                <!--                                    <option>July 2017</option>-->
+                                <!--                                </select>-->
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table no-wrap">
                                 <thead>
                                 <tr>
-                                    <th class="border-top-0">#</th>
+                                    <th class="border-top-0">TOP</th>
+                                    <th class="border-top-0">ẢNH ĐẠI DIỆN</th>
                                     <th class="border-top-0">HỌ VÀ TÊN</th>
                                     <th class="border-top-0">SỐ BÀI ĐĂNG</th>
-                                    <th class="border-top-0">SỐ ĐIỆN THOẠI</th>
-                                    <th class="border-top-0">ĐỊA CHỈ</th>
+                                    <th class="border-top-0"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {{#each listUserPost}}
                                     <tr>
                                         <td>{{this.id}}</td>
+                                        <td>
+                                            <img name="image-user"
+                                                 id="image-{{this.id}}"
+                                                 width="70px"
+                                                 height="70px"
+                                                 src="http://128.199.99.9:9090/{{this.user.avatar}}"
+                                                 alt="{{this.user.avatar}}">
+                                        </td>
                                         <td class="txt-oflo">{{this.user.full_name}}</td>
                                         <td>{{this.count}}</td>
-                                        <td class="txt-oflo">{{this.user.phone_number}}</td>
-                                        <td><span class="txt-oflo">{{this.user.address.detailAddress}}
-                                            , {{this.user.address.communeWardTown}}
-                                            , {{this.user.address.districtsTowns}}, {{this.user.address.provinceCity}}
                                         </span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary"
+                                                    onclick="showDialogUserDetail('http://128.199.99.9:9090/{{this.user.avatar}}',
+                                                            '{{this.user._id}}',
+                                                            '{{this.user.full_name}}',
+                                                            '{{this.user.birth}}',
+                                                            '{{this.user.gender}}',
+                                                            '{{this.user.phone_number}}',
+                                                            '{{this.user.address.detailAddress}}, {{this.user.address.communeWardTown}}, {{this.user.address.districtsTowns}}, {{this.user.address.provinceCity}}')">
+                                                Chi tiết
+                                            </button>
+                                        </td>
                                     </tr>
                                 {{/each}}
                                 </tbody>
@@ -409,6 +425,87 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="dialog" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thông tin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner" id="listImages">
+                                    <div class="carousel-item active align-content-lg-center"
+                                         style="height: 400px;align-content: center;"
+                                         name="containerImage">
+                                        <img id="avatarUser"
+                                             width="250px"
+                                             height="400px"
+                                             class="d-block w-100" name="images"
+                                             src="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png">
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 12px;" class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"
+                                          style="width: 150px;">id</span>
+                                    </div>
+                                    <input type="text" id="userId" disabled="" class="form-control"
+                                           aria-describedby="basic-addon1" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"
+                                          style="width: 150px;">Họ và tên</span>
+                                    </div>
+                                    <input type="text" id="fullName" disabled="" class="form-control"
+                                           aria-describedby="basic-addon1" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"
+                                          style="width: 150px;">Số điện thoại</span>
+                                    </div>
+                                    <input type="text" id="phoneNumber" name="favoritePersons" disabled=""
+                                           class="form-control"
+                                           aria-describedby="basic-addon1" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"
+                                          style="width: 150px;">Ngày sinh</span>
+                                    </div>
+                                    <input type="text" id="dateOfBirth" name="favoritePersons" disabled=""
+                                           class="form-control"
+                                           aria-describedby="basic-addon1" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"
+                                          style="width: 150px;">Giới tính</span>
+                                    </div>
+                                    <input type="text" id="gender" name="idReporters" disabled="" class="form-control"
+                                           aria-describedby="basic-addon1" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"
+                                          style="width: 150px;">Địa chỉ</span>
+                                    </div>
+                                    <input type="text" id="address" name="idComments" disabled="" class="form-control"
+                                           aria-describedby="basic-addon1" required="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center"> 2020 © SmartFind Admin brought to you by <a
@@ -424,10 +521,18 @@
     </div>
 </div>
 <!-- ============================================================== -->
-<!-- End Wrapper -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- All Jquery -->
+<script>
+    function showDialogUserDetail(img, userId, fullName, dateOfBirth, gender, phoneNumber, address) {
+        $('#dialog').modal('show');
+        $('#avatarUser').attr("src", img);
+        $('#userId').val(userId);
+        $('#fullName').val(fullName);
+        $('#dateOfBirth').val(dateOfBirth);
+        $('#gender').val(gender);
+        $('#phoneNumber').val(phoneNumber);
+        $('#address').val(address);
+    }
+</script>
 <!-- ============================================================== -->
 <script src="public/interface/plugins/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
