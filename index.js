@@ -1009,51 +1009,84 @@ app.get('/index', async function (request, response) {
     } else {
         var allProduct = await Product.find({
             deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
+        }).lean();
         var unapprovedPost = await Product.find({
             status: '-1',
             deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
+        }).lean();
         var processingPost = await Product.find({
             status: '0',
             deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            })
-            .lean();
+        }).lean();
         var successPost = await Product.find({
             status: '1',
             deleteAt: ''
-        }).populate(['address', 'product'])
-            .populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
+        }).lean();
+        let allUser = await User.find({
+            deleteAt: ''
+        }).lean();
+        let uLv0 = await User.find({
+            deleteAt: '',
+            level: 0
+        }).lean();
+        let uLv1 = await User.find({
+            deleteAt: '',
+            level: 1
+        }).lean();
+        let uLv2 = await User.find({
+            deleteAt: '',
+            level: 2
+        }).lean();
+        let ulv3 = await User.find({
+            deleteAt: '',
+            level: 3
+        }).lean();
+        let listAmoutPost = []
+        listAmoutPost.length = 10;
+        let listUserPost = [];
+
+        for (let i = 0; i < allUser.length; i++) {
+            let count = 0;
+            for (let j = 0; j < allProduct.length; j++) {
+                console.log(allUser[i]._id + ', ' + allProduct[j].user)
+                if (allUser[i]._id.toString() == allProduct[j].user.toString()) {
+                    count++;
                 }
-            })
-            .lean();
+            }
+            if (count > 0) {
+                let item = {
+                    user: allUser[i]._id,
+                    count: count
+                }
+                listAmoutPost.push(item);
+            }
+        }
+        listAmoutPost = (listAmoutPost.sort(function (a, b) {
+            return b.count - a.count;
+
+        }));
+        for (let i = 0; i < listAmoutPost.length; i++) {
+            if (checkData(listAmoutPost[i])) {
+                let uItem = await User.find({
+                    deleteAt: '',
+                    _id: listAmoutPost[i].user
+                }).populate('address').lean();
+                if (uItem.length > 0) {
+                    listUserPost.push({
+                        id: (i + 1),
+                        user: uItem[0],
+                        count: listAmoutPost[i].count
+                    });
+                }
+            }
+        }
+
+
+        console.log(listUserPost)
         let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-        let dataUser = await User.find({}).populate(['address']).lean();
+        let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
+
         let dataAdmin = await Admin.find({}).lean();
-        dataUser = dataUser.length;
         dataAdmin = dataAdmin.length;
         let createAt = moment(Date.now()).format(formatDate);
         if (admins.length > 0) {
@@ -1066,15 +1099,13 @@ app.get('/index', async function (request, response) {
             });
             let confirPrd = await confirm.save();
         }
-
-
         response.render('index', {
             status: 'none',
             user: nameDN,
-            pass: pass,
             dataProduct: dataProduct,
             dataUser: dataUser,
-            dataAdmin: dataAdmin
+            dataAdmin: dataAdmin,
+            listUserPost: listUserPost
         });
     }
 });
@@ -1773,6 +1804,7 @@ app.post('/init-favorite', async function (request, response) {
             let newFavorite = new Favorite({
                 product: product,
                 user: user,
+                comment: findComment,
                 status: status,
                 updateAt: "",
                 deleteAt: "",
@@ -1834,14 +1866,19 @@ app.post('/product-comment', async function (request, response) {
                     let reply = [];
                     let favorite = [];
                     try {
-                        let findFavorite = await Favorite.find({user: user, comment: allComments[i]._id}).lean();
+                        let findFavorite = await Favorite
+                            .find({
+                                user: user,
+                                comment: allComments[i]._id,
+                                status: 'COMMENT'
+                            }).lean();
                         if (findFavorite.length > 0) {
                             stt = true;
                         } else {
                             stt = false;
                         }
                     } catch (e) {
-                        console.log('findFavorite: ' + e)
+                        console.log('findFavorite comment: ' + e)
                     }
                     try {
                         let allReplyOfComment = await Comment.find({

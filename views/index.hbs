@@ -1,141 +1,451 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>home</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
+    <meta name="description"
+          content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Thống kê ứng dụng</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/"/>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png"
+          href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+    <!-- Custom CSS -->
+    <link href="public/interface/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <!-- Custom CSS -->
+    <link href="public/interface/css/style.min.css" rel="stylesheet">
 </head>
+
 <body>
-
-<div class="">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/index">Tìm trọ Sever</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <ul class="  navbar-nav fmy-2 my-lg-0  mr-auto">
-                <li style="display: none" class="nav-item">
-                    <a class="nav-link" href="/createAdAc">Quản lý nhân viên</a>
-                </li>
-            </ul>
-
-            <ul class="  navbar-nav fmy-2 my-lg-0 ">
-                <li class="nav-item">
-
-                </li>
-                <li class="nav-item">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-dark text-light dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tài khoản
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/index">Tài khoản của bạn</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/">Đăng xuất</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="list-group">
-
-                <a href="/index" class="list-group-item list-group-item-action">
-                    Thống kê
-                </a>
-                <a href="/postManage" class="list-group-item list-group-item-action">
-                    Quản lý bài đăng
-                </a>
-                <a href="/userManage" class="list-group-item list-group-item-action">
-                    Quản lý người dùng
-                </a>
-                <a href="/createAdAc" class="list-group-item list-group-item-action">
-                    Quản lý nhân viên
-                </a>
-                <a href="/history" class="list-group-item list-group-item-action">
-                    Lịch sử
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-10 bg-light" style="padding-right: 3%">
-            <div class="container col-sm-12 bg-success">
-                <h2>Xin chào tài khoản {{user}}</h2>
-                <div>Chúc bạn ngày mới tốt lành</div>
-                <hr>
-            </div>
-
-            <table style="margin-top: 10px" class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th colspan="5">Thống kê bài đăng</th>
-                </tr>
-                <tr>
-                    <th scope="col">Số bài chưa duyệt</th>
-                    <th scope="col">Số bài đang duyệt</th>
-                    <th scope="col">Số bài đã duyệt</th>
-                    <th scope="col">Tổng số</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{dataProduct.lengthOfUnapprovedPost}}</td>
-                    <td>{{dataProduct.lengthOfProcessingPost}}</td>
-                    <td>{{dataProduct.lengthOfSuccessPost}}</td>
-                    <td>{{dataProduct.lengthOfAllPost }}</td>
-                </tr>
-            </table>
-            <table class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th scope="col">Thống kê người dùng</th>
-                    <th scope="col">Số người chưa xác thực tài khoản</th>
-                    <th scope="col">Số người đã xác thực tài khoản</th>
-                    <th scope="col">Tổng số</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">Số lượng</th>
-                    <td>{{dataUser}}</td>
-                    <td>{{dataUser}}</td>
-                    <td>{{dataUser}}</td>
-                </tr>
-            </table>
-
-            <table class="table table-bordered table-info">
-                <thead class="thead-dark ">
-                <tr>
-                    <th scope="col">Thống kê số tài khoản quản lý</th>
-                    <th scope="col">Tổng số</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">Số lượng</th>
-                    <td>{{dataAdmin}}</td>
-                </tr>
-            </table>
-        </div>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin6">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <a class="navbar-brand" href="index">
+                    <span class="span-title-e">SmartFindPro</span>
+                </a>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                   href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <ul class="navbar-nav d-none d-md-block d-lg-none">
+                    <li class="nav-item">
+                        <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                           href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    </li>
+                </ul>
+                <!-- ============================================================== -->
+                <!-- Right side toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
+
+                    <!-- ============================================================== -->
+                    <!-- Search -->
+                    <!-- ============================================================== -->
+                    <li class=" in">
+                        <form role="search" class="app-search d-none d-md-block mr-3">
+                            <input type="text" placeholder="Tìm kiếm..." class="form-control mt-0">
+                            <a href="" class="active">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <li>
+                        <a class="profile-pic" href="#">
+                            <span class="text-white font-medium">{{user}}</span></a>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin6">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <!-- User Profile-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index"
+                           aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="postManage"
+                           aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="postManage"
+                           aria-expanded="false">
+                            <i class="fas fa-folder-open" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Bài viết</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createAdAc"
+                           aria-expanded="false">
+                            <i class="fas fa-id-card-alt" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Nhân viên</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="history"
+                           aria-expanded="false">
+                            <i class="fas fa-history" aria-hidden="true"></i>
+                            <span class="hide-menu">Lịch sử Hoạt động</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="blank.html"
+                           aria-expanded="false">
+                            <i class="fas fa-comment-slash" aria-hidden="true"></i>
+                            <span class="hide-menu">Báo cáo</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="404.html"
+                           aria-expanded="false">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <span class="hide-menu">Error 404</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Three charts -->
+            <!-- ============================================================== -->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Bài viết</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <div id="sparklinedash">
+                                    <canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                </div>
+                            </li>
+                            <li class="ml-auto">
+                                <span class="counter text-success">{{dataProduct.lengthOfAllPost }}</span>
+                            </li>
+                        </ul>
+                        <p>
+                            <button style="margin-top: 10px;"
+                                    class="btn btn-outline-success" type="button" data-toggle="collapse"
+                                    data-target="#collapsePost" aria-expanded="false"
+                                    aria-controls="collapsePost">
+                                More
+                            </button>
+                        </p>
+                        <div style="padding: 8px;" class="collapse" id="collapsePost">
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <span class="counter text-success text-title">Số bài chưa duyệt</span>
+                                    <br><span class="counter text-success">Số bài đang duyệt</span>
+                                    <br><span class="counter text-success">	Số bài đã duyệt</span>
+                                </li>
+                                <li class="ml-auto">
+                                    <span
+                                            class="counter text-success">{{dataProduct.lengthOfUnapprovedPost }}</span>
+                                    <br><span
+                                        class="counter text-success">{{dataProduct.lengthOfProcessingPost }}</span>
+                                    <br><span class="counter text-success">{{dataProduct.lengthOfSuccessPost }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Người dùng</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <div id="sparklinedash2">
+                                    <canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                </div>
+                            </li>
+                            <li class="ml-auto">
+                                <span class="counter text-purple">{{dataUser.allUsers}}</span>
+                            </li>
+                        </ul>
+                        <p>
+                            <button style="margin-top: 10px;"
+                                    class="btn btn-outline-primary" type="button" data-toggle="collapse"
+                                    data-target="#collapseUser" aria-expanded="false"
+                                    aria-controls="collapseUser">
+                                More
+                            </button>
+                        </p>
+                        <div style="padding: 8px;" class="collapse" id="collapseUser">
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <span class="counter text-purple">Tài khoản khách</span>
+                                    <br><span class="counter text-purple">Tài khoản cấp 1</span>
+                                    <br><span class="counter text-purple">Tài khoản cấp 2</span>
+                                    <br><span class="counter text-purple">Tài khoản cấp 3</span>
+                                </li>
+                                <li class="ml-auto">
+                                    <span class="counter text-purple">{{dataUser.userLV0}}</span>
+                                    <br><span class="counter text-purple">{{dataUser.userLV1}}</span>
+                                    <br><span class="counter text-purple">{{dataUser.userLV2}}</span>
+                                    <br><span class="counter text-purple">{{dataUser.userLV3}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Nhân viên</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <div id="sparklinedash3">
+                                    <canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                </div>
+                            </li>
+                            <li class="ml-auto">
+                                <span class="counter text-info">{{dataAdmin}}</span>
+                            </li>
+                        </ul>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Top những người có nhiều bài đăng</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <select class="form-control row border-top">
+                                    <option>March 2017</option>
+                                    <option>April 2017</option>
+                                    <option>May 2017</option>
+                                    <option>June 2017</option>
+                                    <option>July 2017</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-wrap">
+                                <thead>
+                                <tr>
+                                    <th class="border-top-0">#</th>
+                                    <th class="border-top-0">HỌ VÀ TÊN</th>
+                                    <th class="border-top-0">SỐ BÀI ĐĂNG</th>
+                                    <th class="border-top-0">SỐ ĐIỆN THOẠI</th>
+                                    <th class="border-top-0">ĐỊA CHỈ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each listUserPost}}
+                                    <tr>
+                                        <td>{{this.id}}</td>
+                                        <td class="txt-oflo">{{this.user.full_name}}</td>
+                                        <td>{{this.count}}</td>
+                                        <td class="txt-oflo">{{this.user.phone_number}}</td>
+                                        <td><span class="txt-oflo">{{this.user.address.detailAddress}}
+                                            , {{this.user.address.communeWardTown}}
+                                            , {{this.user.address.districtsTowns}}, {{this.user.address.provinceCity}}
+                                        </span></td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Top những bài đăng được yêu thích nhất</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <select class="form-control row border-top">
+                                    <option>March 2017</option>
+                                    <option>April 2017</option>
+                                    <option>May 2017</option>
+                                    <option>June 2017</option>
+                                    <option>July 2017</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-wrap">
+                                <thead>
+                                <tr>
+                                    <th class="border-top-0">#</th>
+                                    <th class="border-top-0">HỌ VÀ TÊN</th>
+                                    <th class="border-top-0">SỐ BÀI ĐĂNG</th>
+                                    <th class="border-top-0">SỐ ĐIỆN THOẠI</th>
+                                    <th class="border-top-0">ĐỊA CHỈ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td class="txt-oflo">Elite admin</td>
+                                    <td>SALE</td>
+                                    <td class="txt-oflo">April 18, 2017</td>
+                                    <td><span class="text-success">$24</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td class="txt-oflo">Real Homes WP Theme</td>
+                                    <td>EXTENDED</td>
+                                    <td class="txt-oflo">April 19, 2017</td>
+                                    <td><span class="text-info">$1250</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td class="txt-oflo">Ample Admin</td>
+                                    <td>EXTENDED</td>
+                                    <td class="txt-oflo">April 19, 2017</td>
+                                    <td><span class="text-info">$1250</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td class="txt-oflo">Medical Pro WP Theme</td>
+                                    <td>TAX</td>
+                                    <td class="txt-oflo">April 20, 2017</td>
+                                    <td><span class="text-danger">-$24</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td class="txt-oflo">Hosting press html</td>
+                                    <td>SALE</td>
+                                    <td class="txt-oflo">April 21, 2017</td>
+                                    <td><span class="text-success">$24</span></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td class="txt-oflo">Digital Agency PSD</td>
+                                    <td>SALE</td>
+                                    <td class="txt-oflo">April 23, 2017</td>
+                                    <td><span class="text-danger">-$14</span></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td class="txt-oflo">Helping Hands WP Theme</td>
+                                    <td>MEMBER</td>
+                                    <td class="txt-oflo">April 22, 2017</td>
+                                    <td><span class="text-success">$64</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center"> 2020 © SmartFind Admin brought to you by <a
+                    href="http://smartfind.me/">Smartfind.me</a>
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="public/interface/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="public/interface/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="public/interface/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="public/interface/js/app-style-switcher.js"></script>
+<script src="public/interface/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+<!--Wave Effects -->
+<script src="public/interface/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="public/interface/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="public/interface/js/custom.js"></script>
+<!--This page JavaScript -->
+<!--chartis chart-->
+<script src="public/interface/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+<script src="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="public/interface/js/pages/dashboards/dashboard1.js"></script>
 </body>
+
 </html>

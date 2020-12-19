@@ -10,6 +10,11 @@ const FavoriteSchema = mongoose.Schema({
         required: true,
         ref: 'Product'
     },
+    comment: {
+        type: mongoose.Types.ObjectId,
+        required: false,
+        ref: 'Comment'
+    },
     deleteAt: {
         type: String,
         required: false
