@@ -9,85 +9,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png"
           href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="public/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="public/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="public/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="public/vendor/animate/animate.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="public/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="public/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="public/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="public/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="public/css/util.css">
     <link rel="stylesheet" type="text/css" href="public/css/main.css">
+    <!--===============================================================================================-->
 </head>
-
 <body>
+
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"
-                     class="img-fluid" alt="tim_tro_thong_minh_image">
-            </div>
-            <form class="login100-form validate-form" action="/index" method="get">
-					<span class="login100-form-title">
-						Đăng nhập
+            <div class="login100-form-title" style="background-image: url('public/images/bg-01.jpg');">
+					<span class="login100-form-title-1">
+						Hệ thống quản trị SmartFind
 					</span>
+            </div>
 
-                <div class="wrap-input100">
+            <form class="login100-form validate-form" action="/index" method="get">
+                <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                    <span class="label-input100">Tài khoản</span>
                     <input value="{{user}}" type="text" name="user" class="input100" id="InputUsername"
                            required
                            placeholder="Nhập tài khoản">
                     <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-							<i class="fa fa-user" aria-hidden="true"></i>
-						</span>
                 </div>
 
-                <div class="wrap-input100">
+                <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                    <span class="label-input100">Mật khẩu</span>
                     <input value="{{pass}}" type="password" name="pass" class="input100" id="InputPassword"
                            required
                            placeholder="Nhập mật khẩu">
                     <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
                 </div>
 
-                <div class="container-login100-form-btn">
+                <div class="container-login100-form-btn  p-t-60">
                     <button type="submit" name="sm" value="1" class="login100-form-btn"
                             aria-describedby="lgHelp">Đăng nhập
                     </button>
                 </div>
-
-                <div class="text-center p-t-60">
+            </form>
+            <div class="text-center">
 	                <span class="txt1">
                         SmartFindPro&copy;
-					</span>
-                </div>
-            </form>
+                    </span>
+            </div>
         </div>
+
     </div>
-</div>
+    <!--===============================================================================================-->
+    <script src="public/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="public/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="public/vendor/bootstrap/js/popper.js"></script>
+    <script src="public/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="public/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="public/vendor/daterangepicker/moment.min.js"></script>
+    <script src="public/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="public/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="public/js/main.js"></script>
 
-<script src="public/vendor/jquery/jquery-3.2.1.min.js"></script>
-<script src="public/vendor/bootstrap/js/popper.js"></script>
-<script src="public/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="public/vendor/select2/select2.min.js"></script>
-<script src="public/vendor/tilt/tilt.jquery.min.js"></script>
-<script>
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
-</script>
-<script src="public/js/main.js"></script>
 
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 </body>
 </html>

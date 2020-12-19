@@ -50,6 +50,7 @@ const Information = db.model('Information', informationSchema);
 const postResponseSchema = require('./model/PostResponseSchema');
 const PostResponseSchema = db.model('PostResponseSchema', postResponseSchema);
 
+const formatDate = 'YYYY-MM-DD HH:mm:ss'
 //conect mongodb
 db.connect('mongodb+srv://Nhom5qlda14351:quanlyduan123@cluster0-z9led.mongodb.net/TimtroDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -233,7 +234,7 @@ app.post('/login', async function (request, response) {
             if (userByPhone.length > 0) {
                 userByPhone = userByPhone[0];
                 if (userByPhone) {
-                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let createAt = moment(Date.now()).format(formatDate);
                     let confirm = await ConfirmPost({
                         product: id,
                         admin: null,
@@ -331,7 +332,7 @@ app.post('/init-user', async function (request, response) {
             let address = await newProductAddress.save();
             //luu data vao cac bang phu
             let level = 0;
-            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+            let createAt = moment(Date.now()).format(formatDate);
             let newUser = new User({
                 level: level,
                 password: password,
@@ -397,7 +398,7 @@ app.post('/update-user', async function (request, response) {
                     });
                 }
                 // update data vao bang chinh
-                let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let updateAt = moment(Date.now()).format(formatDate);
                 let updateUser = await User.findByIdAndUpdate(userId, {
                     level: 1,
                     password: checkData(password) ? password : user.password,
@@ -450,7 +451,7 @@ app.post('/upgrade-user', async function (request, response) {
             let res_body = {status: null};
             if (user.length > 0) {
                 user = user[0];
-                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let createAt = moment(Date.now()).format(formatDate);
                 if (user.level == 1) {
                     let type = request.body.type;
                     let code = request.body.code;
@@ -555,7 +556,7 @@ app.post('/delete-user', async function (request, response) {
                 user = user[0];
                 if (checkData(userId)) {
                     if (user.user._id == userId) {
-                        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let createAt = moment(Date.now()).format(formatDate);
                         let deleteProduct = await Product.findByIdAndDelete(user._id);
                         let deleteInforProduct = await InforProduct.findByIdAndDelete(user.product._id);
                         let deleteAddress = await Address.findByIdAndDelete(user.address._id);
@@ -579,7 +580,7 @@ app.post('/delete-user', async function (request, response) {
                         response.json(getResponse(name, 404, 'Product not found', null))
                     }
                 } else if (checkData(adminId)) {
-                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let createAt = moment(Date.now()).format(formatDate);
                     let deleteUser = await User.findByIdAndDelete(user._id);
                     let deleteAddress = await Address.findByIdAndDelete(user.address._id);
                     if (deleteUser && deleteAddress) {
@@ -637,7 +638,7 @@ app.post('/find-product', async function (request, response) {
                 response.json(getResponse(name, 404, 'Product not found', res_body))
             } else {
                 let product = prd[0];
-                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let createAt = moment(Date.now()).format(formatDate);
                 let confirm = await ConfirmPost({
                     product: id,
                     admin: null,
@@ -699,7 +700,7 @@ app.post('/init-product', async function (request, response) {
                 console.log('product: ', product._id)
                 let address = await newProductAddress.save();
                 // luu data vao bang chinh
-                let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                let createAt = moment(Date.now()).format(formatDate);
                 let status = '-1'
                 let newProduct = new Product({
                     product: product._id,
@@ -780,7 +781,7 @@ app.post('/update-product', async function (request, response) {
                         }
                     });
                     // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateAt = moment(Date.now()).format(formatDate);
                     let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
                         product: product._id,
                         address: address._id,
@@ -835,7 +836,7 @@ app.post('/delete-product', async function (request, response) {
                 product = product[0];
                 if (checkData(userId)) {
                     if (product.user._id == userId) {
-                        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                        let createAt = moment(Date.now()).format(formatDate);
                         let deleteProduct = await Product.findByIdAndDelete(product._id);
                         let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
                         let deleteAddress = await Address.findByIdAndDelete(product.address._id);
@@ -860,7 +861,7 @@ app.post('/delete-product', async function (request, response) {
                         response.json(getResponse(name, 404, 'Product not found', null))
                     }
                 } else if (checkData(adminId)) {
-                    let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let createAt = moment(Date.now()).format(formatDate);
                     let deleteProduct = await Product.findByIdAndDelete(product._id);
                     let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
                     let deleteAddress = await Address.findByIdAndDelete(product.address._id);
@@ -1054,7 +1055,7 @@ app.get('/index', async function (request, response) {
         let dataAdmin = await Admin.find({}).lean();
         dataUser = dataUser.length;
         dataAdmin = dataAdmin.length;
-        let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+        let createAt = moment(Date.now()).format(formatDate);
         if (admins.length > 0) {
             let confirm = await ConfirmPost({
                 product: null,
@@ -1435,7 +1436,7 @@ app.post('/confirm-product', async function (request, response) {
                         utilities: utilities
                     });
                     // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateAt = moment(Date.now()).format(formatDate);
                     let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
                         status: '1',
                         updateAt: updateAt
@@ -1486,7 +1487,7 @@ app.post('/cancel-product', async function (request, response) {
                 if (oldProduct.length > 0) {
                     oldProduct = oldProduct[0];
                     // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updateAt = moment(Date.now()).format(formatDate);
                     let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
                         status: status,
                         updateAt: updateAt
@@ -1531,7 +1532,7 @@ app.post('/confirm-upgrade', async function (request, response) {
             if (checkData(adminId) && checkData(id)) {
                 let admin = await Admin.find({_id: adminId}).lean();
                 if (admin.length > 0) {
-                    let updatedAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let updatedAt = moment(Date.now()).format(formatDate);
                     let user = await User.find({_id: id}).lean();
                     let res_body = {status: null};
                     let upgradeUser = await UpgradeUser.findByIdAndUpdate(id, {
@@ -1613,7 +1614,7 @@ app.post('/cancel-upgrade', async function (request, response) {
                 let admin = await Admin.find({_id: adminId}).lean();
                 if (admin.length > 0) {
                     let res_body = {status: null};
-                    let deleteAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+                    let deleteAt = moment(Date.now()).format(formatDate);
                     let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
                         deleteAt: deleteAt
                     });
@@ -1672,7 +1673,7 @@ app.post('/init-comment', async function (request, response) {
                 return
             }
 
-            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+            let createAt = moment(Date.now()).format(formatDate);
             if (checkData(oldComment)) {
                 findOldComment = await Comment.find({_id: oldComment}).lean();
                 if (findOldComment.length < 0) {
@@ -1772,7 +1773,7 @@ app.post('/init-favorite', async function (request, response) {
             // } catch (e) {
             //     console.log("del favorite: " + e)
             // }
-            let createAt = moment(Date.now()).format('YYYY-MM-DD hh:mm:ss');
+            let createAt = moment(Date.now()).format(formatDate);
             let newFavorite = new Favorite({
                 product: product,
                 user: user,
@@ -1831,7 +1832,7 @@ app.post('/product-comment', async function (request, response) {
                 return
             }
             let allComments = await Comment.find({
-                deleteAt: '', status: 'COMMENT'
+                deleteAt: '', status: 'COMMENT', product: product
             }).lean();
             if (allComments) {
                 let listResponse = [];
@@ -1841,6 +1842,8 @@ app.post('/product-comment', async function (request, response) {
                     let favoriteCount = 0;
                     if (allComments[i].user._id == user) {
                         stt = true;
+                    } else {
+                        stt = false;
                     }
                     if (checkData(allComments[i].favorites.length)) {
                         favoriteCount = allComments[i].favorites.length
