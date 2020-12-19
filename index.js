@@ -1692,8 +1692,6 @@ app.post('/init-comment', async function (request, response) {
                 product: product,
                 title: title,
                 oldComment: savedComment,
-                reply: [],
-                favorites: [],
                 updateAt: "",
                 deleteAt: "",
                 status: status,
@@ -1701,17 +1699,6 @@ app.post('/init-comment', async function (request, response) {
             });
 
             let initComment = await newComment.save();
-            try {
-                if (checkData(findOldComment)) {
-                    let listReply = findOldComment.reply;
-                    listReply.push(initComment._id);
-                    comment = await Comment.findByIdAndUpdate(oldComment, {
-                        reply: listReply
-                    });
-                }
-            } catch (e) {
-                console.log("update comment: " + e)
-            }
             if (initComment) {
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
@@ -1764,15 +1751,24 @@ app.post('/init-favorite', async function (request, response) {
             } else {
                 status = "POST";
             }
-            // try {
-            //     let findFavorite = await Favorite.find({user: user, product: product, comment: comment}).lean();
-            //     if (findFavorite.length > 0) {
-            //         findFavorite = findFavorite[0];
-            //         let deleteFavorite = await Favorite.findByIdAndDelete(findFavorite._id);
-            //     }
-            // } catch (e) {
-            //     console.log("del favorite: " + e)
-            // }
+            try {
+                let findFavorite = await Favorite.find({user: user, product: product, comment: comment}).lean();
+                if (findFavorite.length > 0) {
+                    name = 'DELETE-FAVORITE'
+                    findFavorite = findFavorite[0];
+                    let deleteFavorite = await Favorite.findByIdAndDelete(findFavorite._id);
+                    if (deleteFavorite) {
+                        res_body = {status: sttOK}
+                        response.json(getResponse(name, 200, sttOK, res_body))
+                    } else {
+                        res_body = {status: 'Fail'}
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                    return
+                }
+            } catch (e) {
+                console.log("del favorite: " + e)
+            }
             let createAt = moment(Date.now()).format(formatDate);
             let newFavorite = new Favorite({
                 product: product,
@@ -1783,17 +1779,6 @@ app.post('/init-favorite', async function (request, response) {
                 createAt: createAt
             });
             let initFavorite = await newFavorite.save();
-            try {
-                if (checkData(findComment)) {
-                    let listFavorite = findComment.favorites;
-                    listFavorite.push(initFavorite._id);
-                    comment = await Comment.findByIdAndUpdate(comment, {
-                        favorites: listFavorite
-                    });
-                }
-            } catch (e) {
-                console.log("update comment: " + e)
-            }
             if (initFavorite) {
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
@@ -1841,6 +1826,8 @@ app.post('/product-comment', async function (request, response) {
                     let stt = false;
                     let replyCount = 0;
                     let favoriteCount = 0;
+                    let reply = [];
+                    let favorite = [];
                     try {
                         let findFavorite = await Favorite.find({user: user, comment: allComments[i]._id}).lean();
                         if (findFavorite.length > 0) {
@@ -1849,28 +1836,42 @@ app.post('/product-comment', async function (request, response) {
                             stt = false;
                         }
                     } catch (e) {
-                        stt = false;
+                        console.log('findFavorite: ' + e)
                     }
-
-                    if (checkData(allComments[i].favorites.length)) {
-                        favoriteCount = allComments[i].favorites.length
+                    try {
+                        let allReplyOfComment = await Comment.find({
+                            deleteAt: '', status: 'REPLY', product: product, oldComment: allComments[i]._id
+                        }).lean();
+                        if (allReplyOfComment.length > 0) {
+                            reply = allReplyOfComment.reverse();
+                            replyCount = allReplyOfComment.length;
+                        }
+                    } catch (e) {
+                        console.log('allReplyOfComment: ' + e)
                     }
-
-                    if (checkData(allComments[i].reply.length)) {
-                        replyCount = allComments[i].reply.length
+                    try {
+                        let allFavoriteOfComment = await Favorite.find({
+                            deleteAt: '', status: 'COMMENT', product: product, comment: allComments[i]._id
+                        }).lean();
+                        if (allFavoriteOfComment.length > 0) {
+                            favorite = allFavoriteOfComment.reverse();
+                            favoriteCount = allFavoriteOfComment.length;
+                        }
+                    } catch (e) {
+                        console.log('allFavoriteOfComment: ' + e)
                     }
                     let item = {
                         is_favorite: stt,
-                        reply_count: replyCount,
-                        favorite_count: favoriteCount,
-                        comment: allComments[i]
+                        comment: allComments[i],
+                        reply: {count: replyCount, list: reply},
+                        favorites: {count: favoriteCount, list: favorite}
                     }
                     listResponse.push(item);
                 }
-                res_body = {comments: listResponse};
+                res_body = {count: listResponse.length, comments: listResponse};
                 response.json(getResponse(name, 200, sttOK, res_body));
             } else {
-                res_body = {comments: null};
+                res_body = {count: listResponse.length, comments: null};
                 response.json(getResponse(name, 200, 'Fail', res_body));
             }
         } else {
