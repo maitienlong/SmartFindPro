@@ -1818,6 +1818,11 @@ app.post('/product-comment', async function (request, response) {
             }
             let allComments = await Comment.find({
                 deleteAt: '', status: 'COMMENT', product: product
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
             }).lean();
             if (allComments) {
                 allComments = allComments.reverse();
