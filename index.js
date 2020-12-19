@@ -1083,6 +1083,7 @@ app.get('/index', async function (request, response) {
 
 
         console.log(listUserPost)
+
         let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
         let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
 
@@ -1829,7 +1830,7 @@ app.post('/init-favorite', async function (request, response) {
 
 //trả ve danh sách comment cua bai dang
 app.post('/product-comment', async function (request, response) {
-    let name = 'COMMENT-PRODUCT'
+    let name = 'PRODUCT-COMMENT'
     try {
         let res_body = {status: null};
         let user = request.body.user;
@@ -1914,6 +1915,73 @@ app.post('/product-comment', async function (request, response) {
                 response.json(getResponse(name, 200, sttOK, res_body));
             } else {
                 res_body = {count: listResponse.length, comments: null};
+                response.json(getResponse(name, 200, 'Fail', res_body));
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+//trả ve yêu thích của bài đăng
+app.post('/product-favorite', async function (request, response) {
+    let name = 'PRODUCT-FAVORITE'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let product = request.body.product;
+        if (checkData(user) &&
+            checkData(product)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length < 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length < 0) {
+                let res_body = {status: 'Product not found'};
+                response.json(getResponse(name, 404, 'Product not found', res_body))
+                return
+            }
+            let productFavorite = await Favorite.find({
+                deleteAt: '', status: 'POST', product: product
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            listUserNew = [];
+            if (productFavorite.length > 0) {
+                productFavorite = productFavorite.reverse();
+                let listUser = [];
+                let stt = false;
+                for (let i = 0; i < productFavorite.length; i++) {
+                    try {
+                        if (productFavorite[i].user == user) {
+                            stt = true;
+                        }
+                        listUser.push(user);
+                    } catch (e) {
+                        console.log('productFavorite post: ' + e)
+                    }
+                }
+                if (listUser.length > 0) {
+                    let count = listUser.length;
+                    for (let i = 0; i < count; i++) {
+                        let findUser = await User.find({_id: user}).populate('address').lean();
+                        if (findUser.length > 0) {
+                            listUserNew.push(findUser)
+                        }
+                    }
+                }
+                res_body = {count: productFavorite.length, is_favorite: stt, list_user: listUserNew};
+                response.json(getResponse(name, 200, sttOK, res_body));
+            } else {
+                res_body ={count: productFavorite.length, is_favorite: false, list_user: listUserNew};
                 response.json(getResponse(name, 200, 'Fail', res_body));
             }
         } else {
