@@ -1007,107 +1007,137 @@ app.get('/index', async function (request, response) {
             pass: ''
         });
     } else {
-        var allProduct = await Product.find({
-            deleteAt: ''
-        }).lean();
-        var unapprovedPost = await Product.find({
-            status: '-1',
-            deleteAt: ''
-        }).lean();
-        var processingPost = await Product.find({
-            status: '0',
-            deleteAt: ''
-        }).lean();
-        var successPost = await Product.find({
-            status: '1',
-            deleteAt: ''
-        }).lean();
-        let allUser = await User.find({
-            deleteAt: ''
-        }).lean();
-        let uLv0 = await User.find({
-            deleteAt: '',
-            level: 0
-        }).lean();
-        let uLv1 = await User.find({
-            deleteAt: '',
-            level: 1
-        }).lean();
-        let uLv2 = await User.find({
-            deleteAt: '',
-            level: 2
-        }).lean();
-        let ulv3 = await User.find({
-            deleteAt: '',
-            level: 3
-        }).lean();
         let listAmoutPost = []
         listAmoutPost.length = 10;
         let listUserPost = [];
-
-        for (let i = 0; i < allUser.length; i++) {
-            let count = 0;
-            for (let j = 0; j < allProduct.length; j++) {
-                console.log(allUser[i]._id + ', ' + allProduct[j].user)
-                if (allUser[i]._id.toString() == allProduct[j].user.toString()) {
-                    count++;
+        try {
+            var allProduct = await Product.find({
+                deleteAt: ''
+            }).lean();
+            var unapprovedPost = await Product.find({
+                status: '-1',
+                deleteAt: ''
+            }).lean();
+            var processingPost = await Product.find({
+                status: '0',
+                deleteAt: ''
+            }).lean();
+            var successPost = await Product.find({
+                status: '1',
+                deleteAt: ''
+            }).lean();
+            let allUser = await User.find({
+                deleteAt: ''
+            }).lean();
+            let uLv0 = await User.find({
+                deleteAt: '',
+                level: 0
+            }).lean();
+            let uLv1 = await User.find({
+                deleteAt: '',
+                level: 1
+            }).lean();
+            let uLv2 = await User.find({
+                deleteAt: '',
+                level: 2
+            }).lean();
+            let ulv3 = await User.find({
+                deleteAt: '',
+                level: 3
+            }).lean();
+// lay danh sach nguoi dung dang nhieu bai nhat
+            for (let i = 0; i < allUser.length; i++) {
+                let count = 0;
+                for (let j = 0; j < successPost.length; j++) {
+                    console.log(allUser[i]._id + ', ' + successPost[j].user)
+                    if (allUser[i]._id.toString() == successPost[j].user.toString()) {
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    let item = {
+                        user: allUser[i]._id,
+                        count: count
+                    }
+                    listAmoutPost.push(item);
                 }
             }
-            if (count > 0) {
-                let item = {
-                    user: allUser[i]._id,
-                    count: count
-                }
-                listAmoutPost.push(item);
-            }
-        }
-        listAmoutPost = (listAmoutPost.sort(function (a, b) {
-            return b.count - a.count;
+            listAmoutPost = (listAmoutPost.sort(function (a, b) {
+                return b.count - a.count;
 
-        }));
-        for (let i = 0; i < listAmoutPost.length; i++) {
-            if (checkData(listAmoutPost[i])) {
-                let uItem = await User.find({
-                    deleteAt: '',
-                    _id: listAmoutPost[i].user
-                }).populate('address').lean();
-                if (uItem.length > 0) {
-                    listUserPost.push({
-                        id: (i + 1),
-                        user: uItem[0],
-                        count: listAmoutPost[i].count
-                    });
+            }));
+            for (let i = 0; i < listAmoutPost.length; i++) {
+                if (checkData(listAmoutPost[i])) {
+                    let uItem = await User.find({
+                        deleteAt: '',
+                        _id: listAmoutPost[i].user
+                    }).populate('address').lean();
+                    if (uItem.length > 0) {
+                        listUserPost.push({
+                            id: (i + 1),
+                            user: uItem[0],
+                            count: listAmoutPost[i].count
+                        });
+                    }
                 }
             }
-        }
+// lay danh sach bai dang duoc yeu thich nhat
+//         for (let i = 0; i < successPost.length; i++) {
+//             let count = 0;
+//             for (let j = 0; j < successPost.length; j++) {
+//                 console.log(allUser[i]._id + ', ' + successPost[j].user)
+//                 if (allUser[i]._id.toString() == successPost[j].user.toString()) {
+//                     count++;
+//                 }
+//             }
+//             if (count > 0) {
+//                 let item = {
+//                     user: allUser[i]._id,
+//                     count: count
+//                 }
+//                 listAmoutPost.push(item);
+//             }
+//         }
 
+            console.log(listUserPost)
 
-        console.log(listUserPost)
+            let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+            let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
+            let dataAdmin = await Admin.find({}).lean();
 
-        let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-        let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
-
-        let dataAdmin = await Admin.find({}).lean();
-        dataAdmin = dataAdmin.length;
-        let createAt = moment(Date.now()).format(formatDate);
-        if (admins.length > 0) {
-            let confirm = await ConfirmPost({
-                product: null,
-                admin: admins[0]._id,
-                user: null,
-                status: 'LOGIN-WEB-SERVER',
-                createAt: createAt
+            dataAdmin = dataAdmin.length;
+            let createAt = moment(Date.now()).format(formatDate);
+            if (admins.length > 0) {
+                let confirm = await ConfirmPost({
+                    product: null,
+                    admin: admins[0]._id,
+                    user: null,
+                    status: 'LOGIN-WEB-SERVER',
+                    createAt: createAt
+                });
+                let confirPrd = await confirm.save();
+            }
+            response.render('index', {
+                status: 'none',
+                user: nameDN,
+                dataProduct: dataProduct,
+                dataUser: dataUser,
+                dataAdmin: dataAdmin,
+                listUserPost: listUserPost
             });
-            let confirPrd = await confirm.save();
+        } catch (e) {
+            let dataProduct = new PostManage([], [], [], [])
+            let dataUser = new UserManage(0, 0, 0, 0, 0)
+            let dataAdmin = await Admin.find({}).lean();
+            response.render('index', {
+                status: 'none',
+                user: nameDN,
+                dataProduct: dataProduct,
+                dataUser: dataUser,
+                dataAdmin: dataAdmin,
+                listUserPost: listUserPost
+            });
         }
-        response.render('index', {
-            status: 'none',
-            user: nameDN,
-            dataProduct: dataProduct,
-            dataUser: dataUser,
-            dataAdmin: dataAdmin,
-            listUserPost: listUserPost
-        });
     }
 });
 
@@ -1857,7 +1887,7 @@ app.post('/product-comment', async function (request, response) {
                     path: 'address'
                 }
             }).lean();
-            if (allComments) {
+            if (allComments.length > 0) {
                 allComments = allComments.reverse();
                 let listResponse = [];
                 for (let i = 0; i < allComments.length; i++) {
@@ -1882,11 +1912,28 @@ app.post('/product-comment', async function (request, response) {
                         console.log('findFavorite comment: ' + e)
                     }
                     try {
+                        let is_favorite_reply = false;
                         let allReplyOfComment = await Comment.find({
                             deleteAt: '', status: 'REPLY', product: product, oldComment: allComments[i]._id
+                        }).populate({
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
                         }).lean();
                         if (allReplyOfComment.length > 0) {
-                            reply = allReplyOfComment.reverse();
+                            allReplyOfComment = allReplyOfComment.reverse();
+                            for (let j = 0; j < allReplyOfComment.length; j++) {
+                                if (user === allReplyOfComment[j].user._id) {
+                                    is_favorite_reply = true;
+                                } else {
+                                    is_favorite_reply = false;
+                                }
+                                reply.push({
+                                    is_favorite_reply: is_favorite_reply,
+                                    comment: allReplyOfComment[j],
+                                })
+                            }
                             replyCount = allReplyOfComment.length;
                         }
                     } catch (e) {
@@ -1981,7 +2028,119 @@ app.post('/product-favorite', async function (request, response) {
                 res_body = {count: productFavorite.length, is_favorite: stt, list_user: listUserNew};
                 response.json(getResponse(name, 200, sttOK, res_body));
             } else {
-                res_body ={count: productFavorite.length, is_favorite: false, list_user: listUserNew};
+                res_body = {count: productFavorite.length, is_favorite: false, list_user: listUserNew};
+                response.json(getResponse(name, 200, 'Fail', res_body));
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+//tim kiem comment
+app.post('/find-comment', async function (request, response) {
+    let name = 'FIND-COMMENT'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let comment = request.body.comment;
+        if (checkData(user) &&
+            checkData(comment)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length < 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            let findComment = await Comment.find({_id: comment}).lean();
+            if (findComment.length < 0) {
+                let res_body = {status: 'Product not found'};
+                response.json(getResponse(name, 404, 'Comment not found', res_body))
+                return
+            }
+            let allComments = await Comment.find({
+                deleteAt: '', status: 'COMMENT', _id: comment
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            if (allComments.length > 0) {
+                allComments = allComments[0];
+                let listResponse = [];
+                let stt = false;
+                let replyCount = 0;
+                let favoriteCount = 0;
+                let reply = [];
+                let favorite = [];
+                try {
+                    let findFavorite = await Favorite
+                        .find({
+                            user: user,
+                            comment: allComments._id,
+                            status: 'COMMENT'
+                        }).lean();
+                    if (findFavorite.length > 0) {
+                        stt = true;
+                    } else {
+                        stt = false;
+                    }
+                } catch (e) {
+                    console.log('findFavorite comment: ' + e)
+                }
+                try {
+                    let is_favorite_reply = false;
+                    let allReplyOfComment = await Comment.find({
+                        deleteAt: '', status: 'REPLY', oldComment: allComments._id
+                    }).populate({
+                        path: 'user',
+                        populate: {
+                            path: 'address'
+                        }
+                    }).lean();
+                    if (allReplyOfComment.length > 0) {
+                        allReplyOfComment = allReplyOfComment.reverse();
+                        for (let j = 0; j < allReplyOfComment.length; j++) {
+                            if (user === allReplyOfComment[j].user._id) {
+                                is_favorite_reply = true;
+                            } else {
+                                is_favorite_reply = false;
+                            }
+                            reply.push({
+                                is_favorite_reply: is_favorite_reply,
+                                comment: allReplyOfComment[j],
+                            })
+                        }
+                        replyCount = allReplyOfComment.length;
+                    }
+                } catch (e) {
+                    console.log('allReplyOfComment: ' + e)
+                }
+                try {
+                    let allFavoriteOfComment = await Favorite.find({
+                        deleteAt: '', status: 'COMMENT', product: product, comment: allComments._id
+                    }).lean();
+                    if (allFavoriteOfComment.length > 0) {
+                        favorite = allFavoriteOfComment.reverse();
+                        favoriteCount = allFavoriteOfComment.length;
+                    }
+                } catch (e) {
+                    console.log('allFavoriteOfComment: ' + e)
+                }
+                let item = {
+                    is_favorite: stt,
+                    comment: allComments,
+                    reply: {count: replyCount, list: reply},
+                    favorites: {count: favoriteCount, list: favorite}
+                }
+                res_body = {comment: item};
+                response.json(getResponse(name, 200, sttOK, res_body));
+            } else {
+                res_body = {comments: null};
                 response.json(getResponse(name, 200, 'Fail', res_body));
             }
         } else {
