@@ -1009,6 +1009,8 @@ app.get('/index', async function (request, response) {
     } else {
         let listAmoutPost = []
         listAmoutPost.length = 10;
+        let listAmoutFavorite = []
+        listAmoutFavorite.length = 10;
         let listUserPost = [];
         try {
             var allProduct = await Product.find({
@@ -1025,7 +1027,13 @@ app.get('/index', async function (request, response) {
             var successPost = await Product.find({
                 status: '1',
                 deleteAt: ''
-            }).lean();
+            }).populate(['address', 'product'])
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                }).lean();
             let allUser = await User.find({
                 deleteAt: ''
             }).lean();
@@ -1049,8 +1057,8 @@ app.get('/index', async function (request, response) {
             for (let i = 0; i < allUser.length; i++) {
                 let count = 0;
                 for (let j = 0; j < successPost.length; j++) {
-                    console.log(allUser[i]._id + ', ' + successPost[j].user)
-                    if (allUser[i]._id.toString() == successPost[j].user.toString()) {
+                    console.log(allUser[i]._id + ', ' + successPost[j].user._id)
+                    if (allUser[i]._id.toString() == successPost[j].user._id.toString()) {
                         count++;
                     }
                 }
@@ -1081,30 +1089,33 @@ app.get('/index', async function (request, response) {
                     }
                 }
             }
+            console.log(listAmoutPost)
 // lay danh sach bai dang duoc yeu thich nhat
-//         for (let i = 0; i < successPost.length; i++) {
-//             let count = 0;
-//             for (let j = 0; j < successPost.length; j++) {
-//                 console.log(allUser[i]._id + ', ' + successPost[j].user)
-//                 if (allUser[i]._id.toString() == successPost[j].user.toString()) {
-//                     count++;
-//                 }
-//             }
-//             if (count > 0) {
-//                 let item = {
-//                     user: allUser[i]._id,
-//                     count: count
-//                 }
-//                 listAmoutPost.push(item);
-//             }
-//         }
-
-            console.log(listUserPost)
-
+            for (let i = 0; i < successPost.length; i++) {
+                let count = 0;
+                let findFavorite = await Favorite
+                    .find({
+                        product: successPost[i]._id,
+                        status: 'POST'
+                    }).populate('user').lean();
+                if (findFavorite.length > 0) {
+                    count = findFavorite.length;
+                }
+                if (count > 0) {
+                    let item = {
+                        id: (i + 1),
+                        product: successPost[i],
+                        count: count
+                    }
+                    listAmoutFavorite.push(item);
+                }
+            }
             let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
             let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
             let dataAdmin = await Admin.find({}).lean();
-
+            let dataComment = await Comment.find({deleteAt: ''}).lean();
+            let dataShare = 0;
+            let dataDownload = 0;
             dataAdmin = dataAdmin.length;
             let createAt = moment(Date.now()).format(formatDate);
             if (admins.length > 0) {
@@ -1123,9 +1134,17 @@ app.get('/index', async function (request, response) {
                 dataProduct: dataProduct,
                 dataUser: dataUser,
                 dataAdmin: dataAdmin,
-                listUserPost: listUserPost
+                listUserPost: listUserPost,
+                listAmoutFavorite: listAmoutFavorite,
+                dataComment: dataComment.length > 0 ? dataComment.length : 0,
+                dataShare: dataShare,
+                dataDownload: dataDownload
             });
         } catch (e) {
+            let dataComment = 0;
+            let dataShare = 0;
+            let dataDownload = 0;
+            dataAdmin = dataAdmin.length;
             let dataProduct = new PostManage([], [], [], [])
             let dataUser = new UserManage(0, 0, 0, 0, 0)
             let dataAdmin = await Admin.find({}).lean();
@@ -1135,7 +1154,11 @@ app.get('/index', async function (request, response) {
                 dataProduct: dataProduct,
                 dataUser: dataUser,
                 dataAdmin: dataAdmin,
-                listUserPost: listUserPost
+                listUserPost: listUserPost,
+                listAmoutFavorite: listAmoutFavorite,
+                dataComment: dataComment,
+                dataShare: dataShare,
+                dataDownload: dataDownload
             });
         }
     }
@@ -2061,7 +2084,7 @@ app.post('/find-comment', async function (request, response) {
                 response.json(getResponse(name, 404, 'Comment not found', res_body))
                 return
             }
-            let allComments = await Comment.find({
+            let getComment = await Comment.find({
                 deleteAt: '', status: 'COMMENT', _id: comment
             }).populate({
                 path: 'user',
@@ -2069,8 +2092,8 @@ app.post('/find-comment', async function (request, response) {
                     path: 'address'
                 }
             }).lean();
-            if (allComments.length > 0) {
-                allComments = allComments[0];
+            if (getComment.length > 0) {
+                getComment = getComment[0];
                 let listResponse = [];
                 let stt = false;
                 let replyCount = 0;
@@ -2081,7 +2104,7 @@ app.post('/find-comment', async function (request, response) {
                     let findFavorite = await Favorite
                         .find({
                             user: user,
-                            comment: allComments._id,
+                            comment: getComment._id,
                             status: 'COMMENT'
                         }).lean();
                     if (findFavorite.length > 0) {
@@ -2095,7 +2118,7 @@ app.post('/find-comment', async function (request, response) {
                 try {
                     let is_favorite_reply = false;
                     let allReplyOfComment = await Comment.find({
-                        deleteAt: '', status: 'REPLY', oldComment: allComments._id
+                        deleteAt: '', status: 'REPLY', oldComment: getComment._id
                     }).populate({
                         path: 'user',
                         populate: {
@@ -2122,7 +2145,7 @@ app.post('/find-comment', async function (request, response) {
                 }
                 try {
                     let allFavoriteOfComment = await Favorite.find({
-                        deleteAt: '', status: 'COMMENT', product: product, comment: allComments._id
+                        deleteAt: '', status: 'COMMENT', product: product, comment: getComment._id
                     }).lean();
                     if (allFavoriteOfComment.length > 0) {
                         favorite = allFavoriteOfComment.reverse();
@@ -2133,7 +2156,7 @@ app.post('/find-comment', async function (request, response) {
                 }
                 let item = {
                     is_favorite: stt,
-                    comment: allComments,
+                    comment: getComment,
                     reply: {count: replyCount, list: reply},
                     favorites: {count: favoriteCount, list: favorite}
                 }

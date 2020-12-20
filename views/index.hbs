@@ -181,15 +181,53 @@
             <!-- Three charts -->
             <!-- ============================================================== -->
             <div class="row justify-content-center">
+
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Số bình luận</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fas fa-comments"></i>
+                            </li>
+                            <li class="ml-auto">
+                                <span class="counter text-info">{{dataComment}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Số lượng chia sẻ</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fas fa-share-alt-square"></i>
+                            </li>
+                            <li class="ml-auto">
+                                <span class="counter text-info">{{dataShare}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Số lượt tải</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fas fa-download"></i>
+                            </li>
+                            <li class="ml-auto">
+                                <span class="counter text-info">{{dataDownload}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="white-box analytics-info">
                         <h3 class="box-title">Bài viết</h3>
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                             <li>
-                                <div id="sparklinedash">
-                                    <canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                </div>
+                                <i class="fas fa-folder-open"></i>
                             </li>
                             <li class="ml-auto">
                                 <span class="counter text-success">{{dataProduct.lengthOfAllPost }}</span>
@@ -226,10 +264,7 @@
                         <h3 class="box-title">Người dùng</h3>
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                             <li>
-                                <div id="sparklinedash2">
-                                    <canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                </div>
+                                <i class="fa fa-user"></i>
                             </li>
                             <li class="ml-auto">
                                 <span class="counter text-purple">{{dataUser.allUsers}}</span>
@@ -266,10 +301,7 @@
                         <h3 class="box-title">Nhân viên</h3>
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                             <li>
-                                <div id="sparklinedash3">
-                                    <canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
-                                </div>
+                                <i class="fas fa-id-card-alt"></i>
                             </li>
                             <li class="ml-auto">
                                 <span class="counter text-info">{{dataAdmin}}</span>
@@ -281,6 +313,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- table -->
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
@@ -342,91 +376,71 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
                         <div class="d-md-flex mb-3">
-                            <h3 class="box-title mb-0">Top những bài đăng được theo dõi nhiều nhất</h3>
+                            <h3 class="box-title mb-0">Top bài đăng được quan tâm nhất</h3>
                             <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
-                                <select class="form-control row border-top">
-                                    <option>March 2017</option>
-                                    <option>April 2017</option>
-                                    <option>May 2017</option>
-                                    <option>June 2017</option>
-                                    <option>July 2017</option>
-                                </select>
+                                <!--                                <select class="form-control row border-top">-->
+                                <!--                                    <option>March 2017</option>-->
+                                <!--                                    <option>April 2017</option>-->
+                                <!--                                    <option>May 2017</option>-->
+                                <!--                                    <option>June 2017</option>-->
+                                <!--                                    <option>July 2017</option>-->
+                                <!--                                </select>-->
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table no-wrap">
                                 <thead>
                                 <tr>
-                                    <th class="border-top-0">#</th>
-                                    <th class="border-top-0">HỌ VÀ TÊN</th>
-                                    <th class="border-top-0">SỐ BÀI ĐĂNG</th>
-                                    <th class="border-top-0">SỐ ĐIỆN THOẠI</th>
-                                    <th class="border-top-0">ĐỊA CHỈ</th>
+                                    <th class="border-top-0">TOP</th>
+                                    <th class="border-top-0">ẢNH BÀI VIẾT</th>
+                                    <th class="border-top-0">NGƯỜI ĐĂNG</th>
+                                    <th class="border-top-0">LƯỢT YÊU THÍCH</th>
+                                    <th class="border-top-0"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="txt-oflo">Elite admin</td>
-                                    <td>SALE</td>
-                                    <td class="txt-oflo">April 18, 2017</td>
-                                    <td><span class="text-success">$24</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td class="txt-oflo">Real Homes WP Theme</td>
-                                    <td>EXTENDED</td>
-                                    <td class="txt-oflo">April 19, 2017</td>
-                                    <td><span class="text-info">$1250</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td class="txt-oflo">Ample Admin</td>
-                                    <td>EXTENDED</td>
-                                    <td class="txt-oflo">April 19, 2017</td>
-                                    <td><span class="text-info">$1250</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="txt-oflo">Medical Pro WP Theme</td>
-                                    <td>TAX</td>
-                                    <td class="txt-oflo">April 20, 2017</td>
-                                    <td><span class="text-danger">-$24</span></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td class="txt-oflo">Hosting press html</td>
-                                    <td>SALE</td>
-                                    <td class="txt-oflo">April 21, 2017</td>
-                                    <td><span class="text-success">$24</span></td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td class="txt-oflo">Digital Agency PSD</td>
-                                    <td>SALE</td>
-                                    <td class="txt-oflo">April 23, 2017</td>
-                                    <td><span class="text-danger">-$14</span></td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td class="txt-oflo">Helping Hands WP Theme</td>
-                                    <td>MEMBER</td>
-                                    <td class="txt-oflo">April 22, 2017</td>
-                                    <td><span class="text-success">$64</span></td>
-                                </tr>
+                                {{#each listAmoutFavorite}}
+                                    <tr>
+                                        <td>{{this.id}}</td>
+                                        <td>
+                                            {{#with this.product.product.information.image.[1]}}
+                                                <img name="image-user"
+                                                     width="70px"
+                                                     height="70px"
+                                                     src="http://128.199.99.9:9090/{{this}}"
+                                                     alt="{{this}}">
+                                            {{/with}}
+                                        </td>
+                                        <td class="txt-oflo">
+                                            <img width="20px"
+                                                 height="20px"
+                                                 src="http://128.199.99.9:9090/{{this.product.user.avatar}}"
+                                                 alt="{{this.product.user.avatar}}">
+                                            {{this.product.user.full_name}}</td>
+                                        <td>{{this.count}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary"
+                                                    onclick="showDialogPostDetail('http://128.199.99.9:9090/{{this.product.product.information.image.[1]}}',
+                                                            '{{this.product._id}}',
+                                                            '{{this.product.user._id}}',
+                                                            '{{this.product.address.detailAddress}}, {{this.product.address.communeWardTown}}, {{this.product.address.districtsTowns}}, {{this.product.address.provinceCity}}')">
+                                                Chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="dialog" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <!-- modal -->
+            <div class="modal fade" id="dialog-user" tabindex="-1" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -452,53 +466,108 @@
 
                                 <div style="margin-top: 12px;" class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"
+                                    <span class="input-group-text" id="t-userId"
                                           style="width: 150px;">id</span>
                                     </div>
                                     <input type="text" id="userId" disabled="" class="form-control"
-                                           aria-describedby="basic-addon1" required="">
+                                           aria-describedby="t-userId" required="">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"
+                                    <span class="input-group-text" id="t-fullName"
                                           style="width: 150px;">Họ và tên</span>
                                     </div>
                                     <input type="text" id="fullName" disabled="" class="form-control"
-                                           aria-describedby="basic-addon1" required="">
+                                           aria-describedby="t-fullName" required="">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"
+                                    <span class="input-group-text" id="t-phoneNumber"
                                           style="width: 150px;">Số điện thoại</span>
                                     </div>
                                     <input type="text" id="phoneNumber" name="favoritePersons" disabled=""
                                            class="form-control"
-                                           aria-describedby="basic-addon1" required="">
+                                           aria-describedby="t-phoneNumber" required="">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"
+                                    <span class="input-group-text" id="t-dateOfBirth"
                                           style="width: 150px;">Ngày sinh</span>
                                     </div>
                                     <input type="text" id="dateOfBirth" name="favoritePersons" disabled=""
                                            class="form-control"
-                                           aria-describedby="basic-addon1" required="">
+                                           aria-describedby="t-dateOfBirth" required="">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"
+                                    <span class="input-group-text" id="t-gender"
                                           style="width: 150px;">Giới tính</span>
                                     </div>
                                     <input type="text" id="gender" name="idReporters" disabled="" class="form-control"
-                                           aria-describedby="basic-addon1" required="">
+                                           aria-describedby="t-gender" required="">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"
+                                    <span class="input-group-text" id="t-address"
                                           style="width: 150px;">Địa chỉ</span>
                                     </div>
                                     <input type="text" id="address" name="idComments" disabled="" class="form-control"
-                                           aria-describedby="basic-addon1" required="">
+                                           aria-describedby="t-address" required="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="dialog-post" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thông tin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner" id="listImages">
+                                    <div class="carousel-item active align-content-lg-center"
+                                         style="height: 400px;align-content: center;"
+                                         name="containerImage">
+                                        <img id="avatarPost"
+                                             width="250px"
+                                             height="400px"
+                                             class="d-block w-100" name="images"
+                                             src="http://128.199.99.9:9090/public/uploads/3fa2359d05f6939in1d42cea22e54ef1e2.png">
+                                    </div>
+                                </div>
+                                <div style="margin-top: 12px;" class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="t-postId"
+                                          style="width: 150px;">Id bài đăng</span>
+                                    </div>
+                                    <input type="text" id="postId" disabled="" class="form-control"
+                                           aria-describedby="t-postId" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="t-userPostId"
+                                          style="width: 150px;">Id người đăng</span>
+                                    </div>
+                                    <input type="text" id="userPostId" name="favoritePersons" disabled=""
+                                           class="form-control"
+                                           aria-describedby="t-userPostId" required="">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="t-addressPost"
+                                          style="width: 150px;">Địa chỉ</span>
+                                    </div>
+                                    <input type="text" id="addressPost" name="favoritePersons" disabled=""
+                                           class="form-control"
+                                           aria-describedby="t-addressPost" required="">
                                 </div>
                             </div>
 
@@ -523,7 +592,7 @@
 <!-- ============================================================== -->
 <script>
     function showDialogUserDetail(img, userId, fullName, dateOfBirth, gender, phoneNumber, address) {
-        $('#dialog').modal('show');
+        $('#dialog-user').modal('show');
         $('#avatarUser').attr("src", img);
         $('#userId').val(userId);
         $('#fullName').val(fullName);
@@ -531,6 +600,14 @@
         $('#gender').val(gender);
         $('#phoneNumber').val(phoneNumber);
         $('#address').val(address);
+    }
+
+    function showDialogPostDetail(img, postId, userPostId, address) {
+        $('#dialog-post').modal('show');
+        $('#avatarPost').attr("src", img);
+        $('#postId').val(postId);
+        $('#userPostId').val(userPostId);
+        $('#addressPost').val(address);
     }
 </script>
 <!-- ============================================================== -->
