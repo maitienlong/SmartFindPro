@@ -1952,8 +1952,22 @@ app.post('/product-comment', async function (request, response) {
                                 } else {
                                     is_favorite_reply = false;
                                 }
+                                let favoriteReplyComment = [];
+                                let favoriteCountReplyComment = 0;
+                                try {
+                                    let allFavoriteOfReplyComment = await Favorite.find({
+                                        deleteAt: '', status: 'COMMENT', comment: allReplyOfComment[j]._id
+                                    }).lean();
+                                    if (allFavoriteOfReplyComment.length > 0) {
+                                        favoriteReplyComment = allFavoriteOfReplyComment.reverse();
+                                        favoriteCountReplyComment = allFavoriteOfReplyComment.length;
+                                    }
+                                } catch (e) {
+                                    console.log('allFavoriteOfComment: ' + e)
+                                }
                                 reply.push({
                                     is_favorite_reply: is_favorite_reply,
+                                    favorites: {count: favoriteCountReplyComment, list: favoriteReplyComment},
                                     comment: allReplyOfComment[j],
                                 })
                             }
@@ -2031,21 +2045,21 @@ app.post('/product-favorite', async function (request, response) {
                 let stt = false;
                 for (let i = 0; i < productFavorite.length; i++) {
                     try {
-                        if (productFavorite[i].user == user) {
+                        if (productFavorite[i].user._id == user) {
                             stt = true;
                         }
-                        listUser.push(user);
+                        let count = 0;
+                        try {
+                            let findUser = await User.find({_id: productFavorite[i].user._id}).populate('address').lean();
+                            if (findUser.length > 0) {
+                                listUserNew.push(findUser[0])
+                                count++;
+                            }
+                        } catch (e) {
+                            console.log('findUser: ' + e)
+                        }
                     } catch (e) {
                         console.log('productFavorite post: ' + e)
-                    }
-                }
-                if (listUser.length > 0) {
-                    let count = listUser.length;
-                    for (let i = 0; i < count; i++) {
-                        let findUser = await User.find({_id: user}).populate('address').lean();
-                        if (findUser.length > 0) {
-                            listUserNew.push(findUser)
-                        }
                     }
                 }
                 res_body = {count: productFavorite.length, is_favorite: stt, list_user: listUserNew};
@@ -2133,8 +2147,22 @@ app.post('/find-comment', async function (request, response) {
                             } else {
                                 is_favorite_reply = false;
                             }
+                            let favoriteReplyComment = [];
+                            let favoriteCountReplyComment = 0;
+                            try {
+                                let allFavoriteOfReplyComment = await Favorite.find({
+                                    deleteAt: '', status: 'COMMENT', comment: allReplyOfComment[j]._id
+                                }).lean();
+                                if (allFavoriteOfReplyComment.length > 0) {
+                                    favoriteReplyComment = allFavoriteOfReplyComment.reverse();
+                                    favoriteCountReplyComment = allFavoriteOfReplyComment.length;
+                                }
+                            } catch (e) {
+                                console.log('allFavoriteOfComment: ' + e)
+                            }
                             reply.push({
                                 is_favorite_reply: is_favorite_reply,
+                                favorites: {count: favoriteCountReplyComment, list: favoriteReplyComment},
                                 comment: allReplyOfComment[j],
                             })
                         }
