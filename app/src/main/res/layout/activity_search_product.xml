@@ -97,12 +97,12 @@
                         android:tintMode="@color/white" />
 
                     <ImageView
-                        android:onClick="@{()-> presenter.onSelectTypeFilter()}"
                         android:id="@+id/type_filter"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="3"
+                        android:onClick="@{()-> presenter.onSelectTypeFilter()}"
                         android:padding="@dimen/_2sdp"
                         android:src="@drawable/ic_baseline_filter_alt_24"
                         app:tint="@color/white" />

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/btn_edit_menu"
+        android:icon="@drawable/ic_share"
+        android:title="Chia sẻ lên trang cá nhân"
+
+        />
+    <item
+android:icon="@drawable/ic_baseline_add_24"
+        android:id="@+id/btn_delete_menu"
+        android:title="Chia sẻ lên bản tin"
+
+        />
+</menu>

@@ -53,7 +53,6 @@ public class IntroPresenter implements IntroContract.Presenter {
 
             request.setId(prefs.getString(ConfigSharedPreferences.TOKEN, "token"));
 
-
             if (!request.getId().equalsIgnoreCase("token")) {
 
                 MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
@@ -69,11 +68,17 @@ public class IntroPresenter implements IntroContract.Presenter {
                                 Config.PROFILE = response.body().getResponseBody().getUser();
 
                                 mViewModel.onNextSceen();
+                            } else if (response.body().getResponseHeader().getResCode() == 404) {
+
+                                mViewModel.onNextLogin();
+
+                            } else {
+                                mViewModel.onShowDialogMsg(mContex.getString(R.string.services_not_avail));
                             }
 
                         } else {
-                            Log.d("CheckInfor", new Gson().toJson(response.body()));
-                            //   mViewModel.onShowDialogMsg("Vui lòng kiểm tra lại kết nối mạng");
+
+                            mViewModel.onShowDialogMsg("Vui lòng kiểm tra lại kết nối mạng rescode: "+response.code());
                         }
                     }
 

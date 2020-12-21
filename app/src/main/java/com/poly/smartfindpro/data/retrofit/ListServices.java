@@ -3,8 +3,14 @@ package com.poly.smartfindpro.data.retrofit;
 import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
+import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
+import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
+import com.poly.smartfindpro.data.model.comment.getcomment.req.CommentRequest;
+import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
+import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
@@ -14,7 +20,6 @@ import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
-import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
@@ -62,11 +67,23 @@ public interface ListServices {
                                                 @Query("key") String key);
 
     @POST("/login")
-    Call<LoginResponse> getLogin(@Body LoginRequest request );
+    Call<LoginResponse> getLogin(@Body LoginRequest request);
 
     @POST("/check-phone-Number")
-    Call<CheckPhoneResponse> getCheckNum(@Body CheckPhoneNumberRequest request );
+    Call<CheckPhoneResponse> getCheckNum(@Body CheckPhoneNumberRequest request);
 
     @POST("/init-user")
-    Call<CheckPhoneResponse> getRegister(@Body RegisterRequest request );
+    Call<CheckPhoneResponse> getRegister(@Body RegisterRequest request);
+
+    @POST("/product-comment")
+    Call<CommentResponse> getComment(@Body CommentRequest request);
+
+    @POST("/init-comment")
+    Call<CheckPhoneResponse> initComment(@Body InitComment request);
+
+    @POST("/init-favorite")
+    Call<CheckPhoneResponse> initFavorite(@Body InitFavorite request);
+
+    @POST("/find-comment")
+    Call<ReplycommentResponse> getReplyComment(@Body CommentDetailRequest request);
 }
