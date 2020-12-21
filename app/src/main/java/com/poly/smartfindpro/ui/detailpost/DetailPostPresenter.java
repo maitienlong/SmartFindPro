@@ -16,6 +16,7 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.getcomment.req.CommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
+import com.poly.smartfindpro.data.model.favorite.ResponseFavoritePost;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
@@ -55,6 +56,8 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     public ObservableField<String> categoryDetail;
     public ObservableField<String> phoneNumberDetail;
 
+    public ObservableField<String> favoriteCount;
+
 
     public DetailPostPresenter(Context context, DetailPostContact.ViewModel mViewModel, ActivityInformationPostBinding binding) {
         this.context = context;
@@ -77,6 +80,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         priceDepositDetail = new ObservableField<>();
         categoryDetail = new ObservableField<>();
         phoneNumberDetail = new ObservableField<>();
+        favoriteCount = new ObservableField<>();
         getProduct();
     }
 
@@ -101,6 +105,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
             public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
                     mViewModel.onShowComment(response.body().getResponseBody().getComments());
+
                 } else {
                     mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
                 }
@@ -159,6 +164,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         userNameDetail.set(product.getUser().getFullname());
 
         onRequestComment(product.getId());
+        onGetFavorite(product.getId());
 
     }
 
@@ -187,6 +193,39 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         DateFormat dateFormat = simpleDateFormat;
         Log.d("CheckTime", dateFormat.format(date));
         return dateFormat.format(date);
+    }
+
+    private void onGetFavorite(String productID){
+        InitFavorite request = new InitFavorite();
+        request.setUser(Config.TOKEN_USER);
+        request.setProduct(productID);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getFavorite(request).enqueue(new Callback<ResponseFavoritePost>() {
+            @Override
+            public void onResponse(Call<ResponseFavoritePost> call, Response<ResponseFavoritePost> response) {
+                if(response.code() == 200 && response.body().getResponseHeader().getResCode() == 200){
+
+                    favoriteCount.set(String.valueOf(response.body().getResponseBody().getCount()));
+
+
+                    Log.d("CheckLogDetail", String.valueOf(response.body().getResponseBody().getIsFavorite()));
+                    if(response.body().getResponseBody().getIsFavorite()){
+                        mBinding.imgFavorite.setImageResource(R.drawable.ic_favorite_full);
+                    }else {
+                        mBinding.imgFavorite.setImageResource(R.drawable.ic_love_border);
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseFavoritePost> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 
@@ -234,7 +273,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
             @Override
             public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
-
+                    onGetFavorite(mProduct.getId());
                 } else {
                     mViewModel.showMessage("Hiện tại bạn không thể thích bài viết này, vui lòng thử lại sau");
                 }

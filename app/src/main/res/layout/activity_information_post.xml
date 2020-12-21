@@ -396,6 +396,7 @@
                             android:onClick="@{() -> presenter.onClickLike()}">
 
                             <ImageView
+                                android:id="@+id/img_favorite"
                                 android:layout_width="@dimen/_35sdp"
                                 android:layout_height="@dimen/_35sdp"
                                 android:padding="@dimen/_6sdp"
@@ -403,11 +404,12 @@
 
                             <TextView
                                 style="@style/textStyleRegular"
+                                android:id="@+id/tv_count_favorite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/_8sdp"
-                                android:text="Thích" />
+                                android:text="@={presenter.favoriteCount}" />
                         </LinearLayout>
 
                         <LinearLayout

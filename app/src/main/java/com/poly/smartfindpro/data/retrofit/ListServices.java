@@ -8,6 +8,7 @@ import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailR
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
 import com.poly.smartfindpro.data.model.comment.getcomment.req.CommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
+import com.poly.smartfindpro.data.model.favorite.ResponseFavoritePost;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
@@ -86,4 +87,9 @@ public interface ListServices {
 
     @POST("/find-comment")
     Call<ReplycommentResponse> getReplyComment(@Body CommentDetailRequest request);
+
+    @POST("/product-favorite")
+    Call<ResponseFavoritePost> getFavorite(@Body InitFavorite request);
+
+
 }
