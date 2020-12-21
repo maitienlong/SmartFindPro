@@ -1,294 +1,409 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Quản lý bài đăng</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
+    <meta name="description"
+          content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Quản lý Bài viết</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/"/>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png"
+          href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+    <!-- Custom CSS -->
+    <link href="public/interface/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <!-- Custom CSS -->
+    <link href="public/interface/css/style.min.css" rel="stylesheet">
 </head>
+
 <body>
-
-<div class="">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/index">Tìm trọ Sever</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="  navbar-nav fmy-2 my-lg-0  mr-auto">
-                <li style="display: none" class="nav-item">
-                    <a class="nav-link" href="/createAdAc">Quản lý nhân viên</a>
-                </li>
-            </ul>
-
-            <ul class="  navbar-nav fmy-2 my-lg-0 ">
-                <li class="nav-item">
-
-                </li>
-                <li class="nav-item">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-dark text-light dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tài khoản
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/index">Tài khoản của bạn</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/">Đăng xuất</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="list-group">
-
-                <a href="/index" class="list-group-item list-group-item-action">
-                    Thống kê
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin6">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <a class="navbar-brand" href="index">
+                    <span class="span-title-e">SmartFindPro</span>
                 </a>
-                <a href="/postManage" class="list-group-item list-group-item-action">
-                    Quản lý bài đăng
-                </a>
-                <a href="/userManage" class="list-group-item list-group-item-action">
-                    Quản lý người dùng
-                </a>
-                <a href="/createAdAc" class="list-group-item list-group-item-action">
-                    Quản lý nhân viên
-                </a>
-                <a href="/history" class="list-group-item list-group-item-action">
-                    Lịch sử
-                </a>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                   href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
             </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <ul class="navbar-nav d-none d-md-block d-lg-none">
+                    <li class="nav-item">
+                        <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                           href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    </li>
+                </ul>
+                <!-- ============================================================== -->
+                <!-- Right side toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
+
+                    <!-- ============================================================== -->
+                    <!-- Search -->
+                    <!-- ============================================================== -->
+                    <li class=" in">
+                        <form role="search" class="app-search d-none d-md-block mr-3">
+                            <input type="text" placeholder="Tìm kiếm..." class="form-control mt-0">
+                            <a href="" class="active">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <li>
+                        <a class="profile-pic" href="#">
+                            <span class="text-white font-medium">{{user}}</span></a>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin6">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <!-- User Profile-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index"
+                           aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="userManage"
+                           aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="postManage"
+                           aria-expanded="false">
+                            <i class="fas fa-folder-open" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Bài viết</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createAdAc"
+                           aria-expanded="false">
+                            <i class="fas fa-id-card-alt" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Nhân viên</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="history"
+                           aria-expanded="false">
+                            <i class="fas fa-history" aria-hidden="true"></i>
+                            <span class="hide-menu">Lịch sử Hoạt động</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="blank.html"
+                           aria-expanded="false">
+                            <i class="fas fa-comment-slash" aria-hidden="true"></i>
+                            <span class="hide-menu">Báo cáo</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="confirmUser"
+                           aria-expanded="false">
+                            <i class=" fas fa-arrow-circle-up" aria-hidden="true"></i>
+                            <span class="hide-menu">Nâng cấp Tài khoản</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+            <!-- End Sidebar navigation -->
         </div>
-        <div class="col-sm-10 bg-light" style="padding-right: 2%">
-            <div class=" search" style="display: none">
-                <div class="row" style="margin-bottom: 10px">
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col">
-                                <select class="form-control" id="year" name="year">
-                                    <option value="all">Trạng thái</option>
-                                    <option value="-1">Chưa duyệt</option>
-                                    <option value="0">Đang duyệt</option>
-                                    <option value="1">Đã duyệt</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="month" name="month">
-                                    <option value="all">Tháng</option>
-                                    <option value="1">Tháng 1</option>
-                                    <option value="2">Tháng 2</option>
-                                    <option value="3">Tháng 3</option>
-                                    <option value="4">Tháng 4</option>
-                                    <option value="5">Tháng 5</option>
-                                    <option value="6">Tháng 6</option>
-                                    <option value="7">Tháng 7</option>
-                                    <option value="8">Tháng 8</option>
-                                    <option value="9">Tháng 9</option>
-                                    <option value="10">Tháng 10</option>
-                                    <option value="11">Tháng 11</option>
-                                    <option value="12">Tháng 12</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="year" name="year">
-                                    <option selected>Năm</option>
-                                    <option>2020</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" id="type" name="type">
-                                    <option>Thể loại phòng</option>
-                                    <option>Trọ</option>
-                                    <option>Nguyên Căn</option>
-                                    <option>Chung cư</option>
-                                    <option>Ở ghép</option>
-                                </select>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Danh sách số bài chưa duyệt</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class=" fas fa-folder"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfUnapprovedPost}}</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Tìm kiếm
-                        </button>
+                        <div class="table-responsive">
+                            <table id="unapprovedPost" class="table no-wrap">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Thông tin bài đăng</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.unapprovedPost}}
+                                    <tr id='row-{{this._id}}'>
+                                        <td>
+                                            <div><b>Trạng thái:</b>
+                                                {{#switch this.status}}
+                                                    {{#case '-1'}} Chưa duyệt {{/case}}
+                                                    {{#case '0'}} Đang duyệt {{/case}}
+                                                    {{#case '1'}} Đã duyệt {{/case}}
+                                                {{/switch}}</div>
+                                            <br>
+                                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                                            <br>
+                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                        </td>
+                                        <td>
+                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
+                                                , {{this.address.communeWardTown}}
+                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                            <br>
+                                            <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                            <br>
+                                            <div><b>Nội dung: </b> {{this.content}}</div>
+                                            <br>
+                                            <div><b>Giá
+                                                phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                                <div class="form-group" style="display: none">
+                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                           class="form-control">
+                                                </div>
+                                                <button type="submit" name="update" value="1" class="btn btn-success">
+                                                    Duyệt
+                                                </button>
+                                            </form>
+                                            <button name="update" value="1" class="btn btn-danger"
+                                                    onclick="deleteProduct('{{this._id}}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <table class="table">
-                    <thead class="thead-dark ">
-                    <tr>
-                        <th colspan="3">Danh sách số bài chưa duyệt</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Thời gian</th>
-                        <th scope="col">Thông tin bài đăng</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each data.unapprovedPost}}
-                        <tr id='row-{{this._id}}'>
-                            <td>
-                                <div><b>Trạng thái:</b>
-                                    {{#switch this.status}}
-                                        {{#case '-1'}} Chưa duyệt {{/case}}
-                                        {{#case '0'}} Đang duyệt {{/case}}
-                                        {{#case '1'}} Đã duyệt {{/case}}
-                                    {{/switch}}</div>
-                                <br>
-                                <div><b>Đăng:</b> {{this.createAt}}</div>
-                                <br>
-                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                            </td>
-                            <td>
-                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                                <br>
-                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
-                                <br>
-                                <div><b>Nội dung: </b> {{this.content}}</div>
-                                <br>
-                                <div><b>Giá
-                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
-                                </div>
-                            </td>
-                            <td>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Danh sách số bài đã từ chối duyệt</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class=" fas fa-folder"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfProcessingPost}}</span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="processingPost" class="table no-wrap">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Thông tin bài đăng</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.processingPost}}
+                                    <tr id='row-{{this._id}}'>
+                                        <td>
+                                            <div><b>Trạng thái:</b>
+                                                {{#switch this.status}}
+                                                    {{#case '-1'}} Chưa duyệt {{/case}}
+                                                    {{#case '0'}} Đang duyệt {{/case}}
+                                                    {{#case '1'}} Đã duyệt {{/case}}
+                                                {{/switch}}</div>
+                                            <br>
+                                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                                            <br>
+                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                        </td>
+                                        <td>
+                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
+                                                , {{this.address.communeWardTown}}
+                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                            <br>
+                                            <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                            <br>
+                                            <div><b>Nội dung: </b> {{this.content}}</div>
+                                            <br>
+                                            <div><b>Giá
+                                                phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
+                                            </div>
+                                        </td>
+                                        <td>
 
-                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-success">Duyệt</button>
-                                </form>
-                                <button name="update" value="1" class="btn btn-danger"
-                                        onclick="deleteProduct('{{this._id}}')">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead class="thead-dark ">
-                    <tr>
-                        <th colspan="3">Danh sách số bài đã từ chối duyệt</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Thời gian</th>
-                        <th scope="col">Thông tin bài đăng</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each data.processingPost}}
-                        <tr id='row-{{this._id}}'>
-                            <td>
-                                <div><b>Trạng thái:</b>
-                                    {{#switch this.status}}
-                                        {{#case '-1'}} Chưa duyệt {{/case}}
-                                        {{#case '0'}} Đang duyệt {{/case}}
-                                        {{#case '1'}} Đã duyệt {{/case}}
-                                    {{/switch}}</div>
-                                <br>
-                                <div><b>Đăng:</b> {{this.createAt}}</div>
-                                <br>
-                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                            </td>
-                            <td>
-                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                                <br>
-                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
-                                <br>
-                                <div><b>Nội dung: </b> {{this.content}}</div>
-                                <br>
-                                <div><b>Giá
-                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
-                                </div>
-                            </td>
-                            <td>
-
-                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-success">Duyệt lại
-                                    </button>
-                                </form>
-                                <button name="update" value="1" class="btn btn-danger"
-                                        onclick="deleteProduct('{{this._id}}')">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead class="thead-dark ">
-                    <tr>
-                        <th colspan="3">Danh sách số bài đã duyệt</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Thời gian</th>
-                        <th scope="col">Thông tin bài đăng</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each data.successPost}}
-                        <tr id='row-{{this._id}}'>
-                            <td>
-                                <div><b>Trạng thái:</b>
-                                    {{#switch this.status}}
-                                        {{#case '-1'}} Chưa duyệt {{/case}}
-                                        {{#case '0'}} Đang duyệt {{/case}}
-                                        {{#case '1'}} Đã duyệt {{/case}}
-                                    {{/switch}}</div>
-                                <br>
-                                <div><b>Đăng:</b> {{this.createAt}}</div>
-                                <br>
-                                <div><b>Cập nhật:</b> {{this.updateAt}}</div>
-                            </td>
-                            <td>
-                                <div><b>Địa chỉ: </b> {{this.address.detailAddress}}, {{this.address.communeWardTown}}
-                                    , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
-                                <br>
-                                <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
-                                <br>
-                                <div><b>Nội dung: </b> {{this.content}}</div>
-                                <br>
-                                <div><b>Giá
-                                    phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
-                                </div>
-                            </td>
-                            <td>
-
-                                <form style="margin-bottom: 10px" action="/confirmPost" method="get">
-                                    <div class="form-group" style="display: none">
-                                        <input type="text" name="idProduct" value="{{this._id}}" class="form-control">
-                                    </div>
-                                    <button type="submit" name="update" value="1" class="btn btn-warning">Xem chi tiết
-                                    </button>
-                                </form>
-                                <button name="update" value="1" class="btn btn-danger"
-                                        onclick="deleteProduct('{{this._id}}')">
-                                    Xóa
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
+                                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                                <div class="form-group" style="display: none">
+                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                           class="form-control">
+                                                </div>
+                                                <button type="submit" name="update" value="1" class="btn btn-success">
+                                                    Duyệt
+                                                    lại
+                                                </button>
+                                            </form>
+                                            <button name="update" value="1" class="btn btn-danger"
+                                                    onclick="deleteProduct('{{this._id}}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Danh sách số bài đã duyệt</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class=" fas fa-folder"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfSuccessPost}}</span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="successPost" class="table no-wrap">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Thông tin bài đăng</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.successPost}}
+                                    <tr id='row-{{this._id}}'>
+                                        <td>
+                                            <div><b>Trạng thái:</b>
+                                                {{#switch this.status}}
+                                                    {{#case '-1'}} Chưa duyệt {{/case}}
+                                                    {{#case '0'}} Đang duyệt {{/case}}
+                                                    {{#case '1'}} Đã duyệt {{/case}}
+                                                {{/switch}}</div>
+                                            <br>
+                                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                                            <br>
+                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                        </td>
+                                        <td>
+                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
+                                                , {{this.address.communeWardTown}}
+                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                            <br>
+                                            <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                            <br>
+                                            <div><b>Nội dung: </b> {{this.content}}</div>
+                                            <br>
+                                            <div><b>Giá
+                                                phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                                <div class="form-group" style="display: none">
+                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                           class="form-control">
+                                                </div>
+                                                <button type="submit" name="update" value="1" class="btn btn-warning">
+                                                    Xem
+                                                    chi tiết
+                                                </button>
+                                            </form>
+                                            <button name="update" value="1" class="btn btn-danger"
+                                                    onclick="deleteProduct('{{this._id}}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center"> 2020 © SmartFind Admin brought to you by <a
+                    href="http://smartfind.me/">Smartfind.me</a>
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
 
         </div>
     </div>
@@ -381,5 +496,24 @@
         $('#successDialog').text(titleOK);
     }
 </script>
+<!-- ============================================================== -->
+<script src="public/interface/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="public/interface/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="public/interface/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="public/interface/js/app-style-switcher.js"></script>
+<script src="public/interface/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+<!--Wave Effects -->
+<script src="public/interface/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="public/interface/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="public/interface/js/custom.js"></script>
+<!--This page JavaScript -->
+<!--chartis chart-->
+<script src="public/interface/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+<script src="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="public/interface/js/pages/dashboards/dashboard1.js"></script>
 </body>
+
 </html>

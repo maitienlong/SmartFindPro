@@ -1,169 +1,418 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Quản lý bài đăng</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
+    <meta name="description"
+          content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Nâng cấp Tài khoản</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/"/>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png"
+          href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+    <!-- Custom CSS -->
+    <link href="public/interface/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <!-- Custom CSS -->
+    <link href="public/interface/css/style.min.css" rel="stylesheet">
 </head>
+
 <body>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin6">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <a class="navbar-brand" href="index">
+                    <span class="span-title-e">SmartFindPro</span>
+                </a>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                   href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <ul class="navbar-nav d-none d-md-block d-lg-none">
+                    <li class="nav-item">
+                        <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                           href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    </li>
+                </ul>
+                <!-- ============================================================== -->
+                <!-- Right side toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
 
-<div class="">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/index">Tìm trọ Sever</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                    <!-- ============================================================== -->
+                    <!-- Search -->
+                    <!-- ============================================================== -->
+                    <li class=" in">
+                        <form role="search" class="app-search d-none d-md-block mr-3">
+                            <input type="text" placeholder="Tìm kiếm..." class="form-control mt-0">
+                            <a href="" class="active">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <li>
+                        <a class="profile-pic" href="#">
+                            <span class="text-white font-medium">{{user}}</span></a>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin6">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <!-- User Profile-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index"
+                           aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="userManage"
+                           aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="postManage"
+                           aria-expanded="false">
+                            <i class="fas fa-folder-open" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Bài viết</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createAdAc"
+                           aria-expanded="false">
+                            <i class="fas fa-id-card-alt" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Nhân viên</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="history"
+                           aria-expanded="false">
+                            <i class="fas fa-history" aria-hidden="true"></i>
+                            <span class="hide-menu">Lịch sử Hoạt động</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="blank.html"
+                           aria-expanded="false">
+                            <i class="fas fa-comment-slash" aria-hidden="true"></i>
+                            <span class="hide-menu">Báo cáo</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="confirmUser"
+                           aria-expanded="false">
+                            <i class=" fas fa-arrow-circle-up" aria-hidden="true"></i>
+                            <span class="hide-menu">Nâng cấp Tài khoản</span>
+                        </a>
+                    </li>
+                </ul>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="  navbar-nav fmy-2 my-lg-0  mr-auto">
-                <li style="display: none" class="nav-item">
-                    <a class="nav-link" href="/createAdAc">Quản lý nhân viên</a>
-                </li>
-            </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
 
-            <ul class="  navbar-nav fmy-2 my-lg-0 ">
-                <li class="nav-item">
 
-                </li>
-                <li class="nav-item">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-dark text-light dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tài khoản
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/index">Tài khoản của bạn</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/">Đăng xuất</a>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Nâng cấp Tài khoản cấp 2</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class="fa fa-user"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfLv1}}</span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Thông tin Cơ bản</th>
+                                    <th scope="col">Thông tin Xác minh</th>
+                                    <th scope="col">Ảnh xác minh</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.listLv1}}
+                                    <tr id='row-{{this._id}}'>
+                                        <td>
+                                            <div><b>Cấp bậc tài khoản: </b> <br> {{this.user.level}}</div>
+                                            <br>
+                                            <div><b>Ngày tạo yêu cầu: </b> <br>{{this.createAt}}</div>
+                                            <hr>
+                                            <div><b>Họ và tên: </b> <br> {{this.user.full_name}}</div>
+                                            <br>
+                                            <div><b>Số điện thoại: </b> <br>{{this.user.phone_number}}</div>
+                                            <br>
+                                            <div><b>Địa chỉ: </b> <br> {{this.user.address.detailAddress}}
+                                                , {{this.user.address.communeWardTown}}
+                                                , {{this.user.address.districtsTowns}}
+                                                , {{this.user.address.provinceCity}}
+                                            </div>
+                                            <br>
+                                            <div><b>Giới tính: </b> <br> {{this.user.gender}}</div>
+                                            <br>
+                                            <div><b>Ngày sinh: </b> <br> {{this.user.birth}}</div>
+                                        </td>
+                                        <td>
+                                            <div><b>Loại: </b> {{this.identityCard.type}}</div>
+                                            <br>
+                                            <div><b>Số: </b> {{this.identityCard.code}}</div>
+                                            <br>
+                                            <div><b>Họ và tên: </b> {{this.identityCard.name}}</div>
+                                            <br>
+                                            <div><b>Ngày, tháng, năm sinh: </b> {{this.identityCard.date}}</div>
+                                            <br>
+                                            <div><b>Giới tính: </b> {{this.identityCard.gender}}</div>
+                                            <br>
+                                            <div><b>Quên quán: </b> {{this.identityCard.homeTown}}</div>
+                                            <br>
+                                            <div><b>Nơi thường trú: </b> {{this.identityCard.resident}}</div>
+                                            <br>
+                                            <div><b>Quốc tịch: </b> {{this.identityCard.nationality}}</div>
+                                            <br>
+                                            <div><b>Nơi cấp: </b> {{this.identityCard.issuedBy}}</div>
+                                            <br>
+                                            <div><b>Có giá trị đến: </b> {{this.identityCard.expiryDate}}</div>
+
+                                        </td>
+                                        <td>
+                                            <div class="col">
+                                                <div><b>Ảnh mặt trước</b><br>
+                                                    <img name="image-product"
+                                                         width="175px"
+                                                         height="175px"
+                                                         src="http://128.199.99.9:9090/{{this.identityCard.image.previous}}"
+                                                         alt="{{this.identityCard.image.previous}}">
+                                                </div>
+                                                <br>
+                                                <div><b>Ảnh mặt sau</b><br>
+                                                    <img name="image-product"
+                                                         width="175px"
+                                                         height="175px"
+                                                         src="http://128.199.99.9:9090/{{this.identityCard.image.behind}}"
+                                                         alt="{{this.identityCard.image.behind}}">
+                                                </div>
+                                                <br>
+                                                <div><b>Ảnh chụp cả mặt và mặt trước giấy tờ xác
+                                                    minh</b><br>
+                                                    <img name="image-product"
+                                                         width="175px"
+                                                         height="175px"
+                                                         src="http://128.199.99.9:9090/{{this.identityCard.image.hasFace}}"
+                                                         alt="{{this.identityCard.image.hasFace}}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col">
+                                                <button name="update" value="1"
+                                                        class="btn btn-success"
+                                                        onclick="confirmUpgrade('{{this._id}}')">Duyệt
+                                                </button>
+                                                <br><br>
+                                                <button name="update" value="1" class="btn btn-danger"
+                                                        onclick="cancelUpgrade('{{this._id}}')">
+                                                    Từ chối
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="list-group">
-
-                <a href="/index" class="list-group-item list-group-item-action">
-                    Thống kê
-                </a>
-                <a href="/postManage" class="list-group-item list-group-item-action">
-                    Quản lý bài đăng
-                </a>
-                <a href="/userManage" class="list-group-item list-group-item-action">
-                    Quản lý người dùng
-                </a>
-                <a href="/createAdAc" class="list-group-item list-group-item-action">
-                    Quản lý nhân viên
-                </a>
-                <a href="/history" class="list-group-item list-group-item-action">
-                    Lịch sử
-                </a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-10 bg-light" style="padding-right: 2%">
-            <table style="margin-left: 10px;margin-right: 10px" class="table  table-bordered">
-                <thead class="thead-dark ">
-                <tr>
-                    <th colspan="3">Nâng quyền người dùng</th>
-                </tr>
-                <tr>
-                    <th scope="col">Thông tin cơ bản</th>
-                    <th scope="col">Thông tin xác minh</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each listUpgrade}}
-                    <tr id='row-{{this._id}}'>
-                        <td>
-                            <div><b>Cấp bậc tài khoản: </b> <br> {{this.user.level}}</div>
-                            <br>
-                            <div><b>Ngày tạo yêu cầu: </b> <br>{{this.createAt}}</div>
-                            <hr>
-                            <div><b>Họ và tên: </b> <br> {{this.user.full_name}}</div>
-                            <br>
-                            <div><b>Số điện thoại: </b> <br>{{this.user.phone_number}}</div>
-                            <br>
-                            <div><b>Địa chỉ: </b> <br> {{this.user.address.detailAddress}}
-                                , {{this.user.address.communeWardTown}}
-                                , {{this.user.address.districtsTowns}}, {{this.user.address.provinceCity}}
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Nâng cấp Tài khoản cấp 3</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class="fa fa-user"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfLv2}}</span>
                             </div>
-                            <br>
-                            <div><b>Giới tính: </b> <br> {{this.user.gender}}</div>
-                            <br>
-                            <div><b>Ngày sinh: </b> <br> {{this.user.birth}}</div>
-                        </td>
-                        <td>
-                            <div><b>Loại: </b> {{this.identityCard.type}}</div>
-                            <br>
-                            <div><b>Số: </b> {{this.identityCard.code}}</div>
-                            <br>
-                            <div><b>Họ và tên: </b> {{this.identityCard.name}}</div>
-                            <br>
-                            <div><b>Ngày, tháng, năm sinh: </b> {{this.identityCard.date}}</div>
-                            <br>
-                            <div><b>Giới tính: </b> {{this.identityCard.gender}}</div>
-                            <br>
-                            <div><b>Quên quán: </b> {{this.identityCard.homeTown}}</div>
-                            <br>
-                            <div><b>Nơi thường trú: </b> {{this.identityCard.resident}}</div>
-                            <br>
-                            <div><b>Quốc tịch: </b> {{this.identityCard.nationality}}</div>
-                            <br>
-                            <div><b>Nơi cấp: </b> {{this.identityCard.issuedBy}}</div>
-                            <br>
-                            <div><b>Có giá trị đến: </b> {{this.identityCard.expiryDate}}</div>
-                            <br>
-                            <div class="col">
-                                <div><b>Ảnh mặt trước</b><br>
-                                    <img name="image-product"
-                                         width="350px"
-                                         height="350px"
-                                         src="http://128.199.99.9:9090/{{this.identityCard.image.previous}}"
-                                         alt="{{this.identityCard.image.previous}}">
-                                </div>
-                                <br>
-                                <div><b>Ảnh mặt sau</b><br>
-                                    <img name="image-product"
-                                         width="350px"
-                                         height="350px"
-                                         src="http://128.199.99.9:9090/{{this.identityCard.image.behind}}"
-                                         alt="{{this.identityCard.image.behind}}">
-                                </div>
-                                <br>
-                                <div><b>Ảnh chụp cả mặt và mặt trước giấy tờ xác
-                                    minh</b><br>
-                                    <img name="image-product"
-                                         width="350px"
-                                         height="350px"
-                                         src="http://128.199.99.9:9090/{{this.identityCard.image.hasFace}}"
-                                         alt="{{this.identityCard.image.hasFace}}">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="col">
-                                <button name="update" value="1"
-                                        class="btn btn-success" onclick="confirmUpgrade('{{this._id}}')">Duyệt
-                                </button>
-                                <button name="update" value="1" class="btn btn-danger"
-                                        onclick="cancelUpgrade('{{this._id}}')">
-                                    Từ chối duyệt
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Thông tin Cơ bản</th>
+                                    <th scope="col">Thông tin Xác minh</th>
+                                    <th scope="col">Ảnh xác minh</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.listLv2}}
+                                    <tr id='row-{{this._id}}'>
+                                        <td>
+                                            <div><b>Cấp bậc tài khoản: </b> <br> {{this.user.level}}</div>
+                                            <br>
+                                            <div><b>Ngày tạo yêu cầu: </b> <br>{{this.createAt}}</div>
+                                            <hr>
+                                            <div><b>Họ và tên: </b> <br> {{this.user.full_name}}</div>
+                                            <br>
+                                            <div><b>Số điện thoại: </b> <br>{{this.user.phone_number}}</div>
+                                            <br>
+                                            <div><b>Địa chỉ: </b> <br> {{this.user.address.detailAddress}}
+                                                , {{this.user.address.communeWardTown}}
+                                                , {{this.user.address.districtsTowns}}
+                                                , {{this.user.address.provinceCity}}
+                                            </div>
+                                            <br>
+                                            <div><b>Giới tính: </b> <br> {{this.user.gender}}</div>
+                                            <br>
+                                            <div><b>Ngày sinh: </b> <br> {{this.user.birth}}</div>
+                                        </td>
+                                        <td>
+                                            <div><b>Loại: </b> {{this.identityCard.type}}</div>
+                                            <br>
+                                            <div><b>Số: </b> {{this.identityCard.code}}</div>
+                                            <br>
+                                            <div><b>Họ và tên: </b> {{this.identityCard.name}}</div>
+                                            <br>
+                                            <div><b>Ngày, tháng, năm sinh: </b> {{this.identityCard.date}}</div>
+                                            <br>
+                                            <div><b>Giới tính: </b> {{this.identityCard.gender}}</div>
+                                            <br>
+                                            <div><b>Quên quán: </b> {{this.identityCard.homeTown}}</div>
+                                            <br>
+                                            <div><b>Nơi thường trú: </b> {{this.identityCard.resident}}</div>
+                                            <br>
+                                            <div><b>Quốc tịch: </b> {{this.identityCard.nationality}}</div>
+                                            <br>
+                                            <div><b>Nơi cấp: </b> {{this.identityCard.issuedBy}}</div>
+                                            <br>
+                                            <div><b>Có giá trị đến: </b> {{this.identityCard.expiryDate}}</div>
+
+                                        </td>
+                                        <td>
+                                            <div class="col">
+                                                <div><b>Ảnh mặt trước</b><br>
+                                                    <img name="image-product"
+                                                         width="175px"
+                                                         height="175px"
+                                                         src="http://128.199.99.9:9090/{{this.identityCard.image.previous}}"
+                                                         alt="{{this.identityCard.image.previous}}">
+                                                </div>
+                                                <br>
+                                                <div><b>Ảnh mặt sau</b><br>
+                                                    <img name="image-product"
+                                                         width="175px"
+                                                         height="175px"
+                                                         src="http://128.199.99.9:9090/{{this.identityCard.image.behind}}"
+                                                         alt="{{this.identityCard.image.behind}}">
+                                                </div>
+                                                <br>
+                                                <div><b>Ảnh chụp cả mặt và mặt trước giấy tờ xác
+                                                    minh</b><br>
+                                                    <img name="image-product"
+                                                         width="175px"
+                                                         height="175px"
+                                                         src="http://128.199.99.9:9090/{{this.identityCard.image.hasFace}}"
+                                                         alt="{{this.identityCard.image.hasFace}}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col">
+                                                <button name="update" value="1"
+                                                        class="btn btn-success"
+                                                        onclick="confirmUpgrade('{{this._id}}')">Duyệt
+                                                </button>
+                                                <br><br>
+                                                <button name="update" value="1" class="btn btn-danger"
+                                                        onclick="cancelUpgrade('{{this._id}}')">
+                                                    Từ chối
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer text-center"> 2020 © SmartFind Admin brought to you by <a
+                    href="http://smartfind.me/">Smartfind.me</a>
+            </footer>
         </div>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
          aria-labelledby="titleDialog" aria-hidden="true">
@@ -302,5 +551,24 @@
         $('#successDialog').text(titleOK);
     }
 </script>
+<!-- ============================================================== -->
+<script src="public/interface/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="public/interface/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="public/interface/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="public/interface/js/app-style-switcher.js"></script>
+<script src="public/interface/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+<!--Wave Effects -->
+<script src="public/interface/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="public/interface/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="public/interface/js/custom.js"></script>
+<!--This page JavaScript -->
+<!--chartis chart-->
+<script src="public/interface/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+<script src="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="public/interface/js/pages/dashboards/dashboard1.js"></script>
 </body>
+
 </html>

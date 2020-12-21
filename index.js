@@ -1457,10 +1457,37 @@ app.get('/confirmUser', async function (request, response) {
                 path: 'identityCard'
             })
             .lean();
-        console.log(JSON.stringify(listUpgrade))
-        response.render('confirmUser', {
-            listUpgrade: listUpgrade.reverse()
-        });
+        if (listUpgrade.length > 0) {
+            let listLv1 = [];
+            let listLv2 = [];
+            for (let i = 0; i < listUpgrade.length; i++) {
+                if (listUpgrade[i].user.level == 1) {
+                    listLv1.push(listUpgrade[i]);
+                } else if (listUpgrade[i].user.level == 2) {
+                    listLv2.push(listUpgrade[i]);
+                }
+            }
+            let lengthOfLv1 = listLv1.length;
+            let lengthOfLv2 = listLv2.length;
+            response.render('confirmUser', {
+                data: {
+                    listLv1: listLv1,
+                    lengthOfLv1: lengthOfLv1,
+                    lengthOfLv2: lengthOfLv2,
+                    listLv2: listLv2
+                }
+            });
+        } else {
+            response.render('confirmUser', {
+                data: {
+                    listLv1: [],
+                    lengthOfLv1: 0,
+                    lengthOfLv2: 0,
+                    listLv2: []
+                }
+            });
+        }
+
     } catch (e) {
         console.log('Lỗi: ' + e)
         response.render('login', {status: 'none', user: '', pass: ''});
