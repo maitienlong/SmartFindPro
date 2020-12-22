@@ -929,8 +929,8 @@ app.post('/total-people-lease-product', async function (request, response) {
                 }).lean();
             if (oldProduct.length > 0) {
                 oldProduct = oldProduct[0];
-                if (user.status == true) {
-                    if (oldProduct.user._id == userId) {
+                if (oldProduct.user._id == userId) {
+                    if (oldProduct.user.status == true) {
                         if (oldProduct.product.information.amountPeople < total_people_lease) {
                             let res_body = {status: 'The number of tenants is full'};
                             response.json(getResponse(name, 200, 'Fail', res_body))
@@ -1058,7 +1058,7 @@ app.post('/user-product', async function (request, response) {
         if (checkData(id)) {
             let user = await User.find({_id: id}).lean();
             if (user.length > 0) {
-                user = userNo[0];
+                user = user[0];
                 if (user.status == true) {
                     let allProduct = await Product.find({
                         deleteAt: '', user: id
@@ -1071,8 +1071,18 @@ app.post('/user-product', async function (request, response) {
                         })
                         .lean();
                     let res_body = {products: null};
+                    let products = [];
                     if (allProduct) {
-                        res_body = {products: allProduct.reverse()};
+                        if (allProduct.length > 0) {
+                            allProduct = allProduct.reverse();
+                            console.log(allProduct.length)
+                            for (let i = 0; i < allProduct.length; i++) {
+                                if (allProduct[i].total_people_lease < allProduct[i].product.information.amountPeople) {
+                                    products.push(allProduct[i]);
+                                }
+                            }
+                        }
+                        res_body = {products: products};
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
                         res_body = {products: null};
@@ -1114,12 +1124,23 @@ app.post('/list-product', async function (request, response) {
                             }
                         })
                         .lean();
+                    let res_body = {products: null};
+                    let products = [];
                     if (allProduct) {
-                        let res_body = {products: allProduct.reverse()};
+                        if (allProduct.length > 0) {
+                            allProduct = allProduct.reverse();
+                            console.log(allProduct.length)
+                            for (let i = 0; i < allProduct.length; i++) {
+                                if (allProduct[i].total_people_lease < allProduct[i].product.information.amountPeople) {
+                                    products.push(allProduct[i]);
+                                }
+                            }
+                        }
+                        res_body = {products: products};
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
-                        let res_body = {products: null};
-                        response.json(getResponse(name, 200, sttOK, res_body));
+                        res_body = {products: null};
+                        response.json(getResponse(name, 200, 'Fail', res_body));
                     }
                 } else {
                     res_body = {status: "The account has been locked"};
@@ -1176,6 +1197,9 @@ app.get('/index', async function (request, response) {
         let listAmoutFavorite = []
         listAmoutFavorite.length = 10;
         let listUserPost = [];
+        let dataLease = 0;
+        let dataNotLease = 0;
+        let dataFindSuccess = 0;
         try {
             var allProduct = await Product.find({
                 deleteAt: ''
@@ -1274,13 +1298,19 @@ app.get('/index', async function (request, response) {
                     listAmoutFavorite.push(item);
                 }
             }
-// lay so luong phong da cho thue
-            let dataLease = 0;
-// lay so luong phong chua cho thue
-            let dataNotLease = 0;
-// lay so luong nguoi da tim duoc tro
-            let dataFindSuccess = 0;
+            try {
+                for (let i = 0; i < successPost.length; i++) {
+                    dataFindSuccess += successPost[i].total_people_lease
+                    if (successPost[i].total_people_lease > 0) {
+                        dataLease++;
+                    } else if (successPost[i].total_people_lease == 0) {
+                        dataNotLease++;
+                    }
+                }
 
+            } catch (e) {
+                console.log('loi ne: ' + e)
+            }
             let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
             let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
             let dataAdmin = await Admin.find({}).lean();
@@ -1309,13 +1339,16 @@ app.get('/index', async function (request, response) {
                 listAmoutFavorite: listAmoutFavorite,
                 dataComment: dataComment.length > 0 ? dataComment.length : 0,
                 dataShare: dataShare,
-                dataDownload: dataDownload
+                dataLease: dataLease,
+                dataDownload: dataDownload,
+                dataNotLease: dataNotLease,
+                dataFindSuccess: dataFindSuccess
             });
         } catch (e) {
             let dataComment = 0;
             let dataShare = 0;
             let dataDownload = 0;
-            dataAdmin = dataAdmin.length;
+
             let dataProduct = new PostManage([], [], [], [])
             let dataUser = new UserManage(0, 0, 0, 0, 0)
             let dataAdmin = await Admin.find({}).lean();
@@ -1324,12 +1357,15 @@ app.get('/index', async function (request, response) {
                 user: nameDN,
                 dataProduct: dataProduct,
                 dataUser: dataUser,
-                dataAdmin: dataAdmin,
+                dataAdmin: dataAdmin.length,
                 listUserPost: listUserPost,
                 listAmoutFavorite: listAmoutFavorite,
                 dataComment: dataComment,
                 dataShare: dataShare,
-                dataDownload: dataDownload
+                dataDownload: dataDownload,
+                dataLease: dataLease,
+                dataNotLease: dataNotLease,
+                dataFindSuccess: dataFindSuccess
             });
         }
     }
@@ -1558,7 +1594,6 @@ app.get('/postManage', async function (request, response) {
 
             successPost[i] = {
                 product: successPost[i],
-                status: 'Chưa xác định',
                 countOfProductComment: allComments.length,
                 countOfProductFavorite: productFavorite.length,
                 productShare: productShare.length
@@ -1654,16 +1689,27 @@ app.get('/userManage', async function (request, response) {
                 user: userLV2[i]._id,
                 status: '1'
             }).lean();
-            let prdLeased = [];
+            let prdLeased = await Product.find({
+                deleteAt: '',
+                user: userLV2[i]._id
+            }).lean();
+            let newPrdLeased = [];
+            if (prdLeased.length > 0) {
+                for (let j = 0; j < prdLeased.length; j++) {
+                    if (prdLeased[j].total_people_lease > 0) {
+                        newPrdLeased.push(prdLeased[j]);
+                    }
+                }
+            }
             let prdBlocked = await Product.find({
                 deleteAt: '',
                 user: userLV2[i]._id,
                 status: '0'
             }).lean();
             userLV2[i] = {
-                product: userLV2[i],
+                product: userLV3[i],
                 post: prdPost.length,
-                leased: prdLeased.length,
+                leased: newPrdLeased.length,
                 blocked: prdBlocked.length,
             }
         }
@@ -1674,7 +1720,18 @@ app.get('/userManage', async function (request, response) {
                 user: userLV3[i]._id,
                 status: '1'
             }).lean();
-            let prdLeased = [];
+            let prdLeased = await Product.find({
+                deleteAt: '',
+                user: userLV3[i]._id
+            }).lean();
+            let newPrdLeased = [];
+            if (prdLeased.length > 0) {
+                for (let j = 0; j < prdLeased.length; j++) {
+                    if (prdLeased[j].total_people_lease > 0) {
+                        newPrdLeased.push(prdLeased[j]);
+                    }
+                }
+            }
             let prdBlocked = await Product.find({
                 deleteAt: '',
                 user: userLV3[i]._id,
@@ -1683,7 +1740,7 @@ app.get('/userManage', async function (request, response) {
             userLV3[i] = {
                 product: userLV3[i],
                 post: prdPost.length,
-                leased: prdLeased.length,
+                leased: newPrdLeased.length,
                 blocked: prdBlocked.length,
             }
         }
