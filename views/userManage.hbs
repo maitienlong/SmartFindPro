@@ -22,6 +22,11 @@
           href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
     <!-- Custom CSS -->
     <link href="public/interface/css/style.min.css" rel="stylesheet">
+    <style>
+        b {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -242,7 +247,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
@@ -325,6 +329,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
@@ -349,49 +354,53 @@
                                 </thead>
                                 <tbody>
                                 {{#each data.userLV2}}
-                                    <tr id='row-{{this._id}}'>
+                                    <tr id='row-{{this.product._id}}'>
                                         <td>
                                             <div><b>Trạng thái:</b>
-                                                {{#switch this.level}}
+                                                {{#switch this.product.level}}
                                                     {{#case 0}} Khách {{/case}}
                                                     {{#case 1}} Người tìm trọ {{/case}}
                                                     {{#case 2}} Chủ trọ(Tạm thời) {{/case}}
                                                     {{#case 3}} Chủ trọ {{/case}}
                                                 {{/switch}}</div>
                                             <br>
-                                            <div><b>Ngày tạo: </b> {{this.createAt}}</div>
+                                            <div><b>Ngày tạo: </b> {{this.product.createAt}}</div>
                                             <br>
-                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                            <div><b>Cập nhật:</b> {{this.product.updateAt}}</div>
                                         </td>
                                         <td>
                                             <img name="image-user"
                                                  width="70px"
                                                  height="70px"
-                                                 src="http://128.199.99.9:9090/{{this.avatar}}"
-                                                 alt="{{this.avatar}}">
+                                                 src="http://128.199.99.9:9090/{{this.product.avatar}}"
+                                                 alt="{{this.product.avatar}}">
                                         </td>
                                         <td>
-                                            <div><b>Họ và tên: </b> {{this.full_name}}</div>
+                                            <div><b>Họ và tên: </b> {{this.product.full_name}}</div>
                                             <br>
-                                            <div><b>Số điện thoại: </b> {{this.phone_number}}</div>
+                                            <div><b>Số điện thoại: </b> {{this.product.phone_number}}</div>
                                             <br>
-                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
-                                                , {{this.address.communeWardTown}}
-                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}
+                                            <div><b>Địa chỉ: </b> {{this.product.address.detailAddress}}
+                                                , {{this.product.address.communeWardTown}}
+                                                , {{this.product.address.districtsTowns}}
+                                                , {{this.product.address.provinceCity}}
                                             </div>
                                             <br>
-                                            <div><b>Giới tính: </b> {{this.gender}}</div>
+                                            <div><b>Giới tính: </b> {{this.product.gender}}</div>
                                             <br>
-                                            <div><b>Ngày sinh: </b> {{this.birth}}</div>
+                                            <div><b>Ngày sinh: </b> {{this.product.birth}}</div>
                                         </td>
                                         <td>
-                                            chua lam
+                                            <div><b>Số bài đăng: </b> {{this.post}}</div>
+                                            <br>
+                                            <div><b>Nhà đã cho thuê: </b> {{this.leased}}</div>
+                                            <br>
+                                            <div><b>Số bài đã bị chặn: </b> {{this.blocked}}</div>
                                         </td>
                                         <td>
-
                                             <form style="margin-bottom: 10px" action="/confirmUser" method="get">
                                                 <div class="form-group" style="display: none">
-                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                    <input type="text" name="idProduct" value="{{this.product._id}}"
                                                            class="form-control">
                                                 </div>
                                                 <button style="display: none" type="submit" name="update" value="1"
@@ -399,7 +408,7 @@
                                                 </button>
                                             </form>
                                             <button name="update" value="1" class="btn btn-danger"
-                                                    onclick="deleteUser('{{this._id}}')">
+                                                    onclick="deleteUser('{{this.product._id}}')">
                                                 Xóa
                                             </button>
                                         </td>
@@ -430,47 +439,68 @@
                                     <th scope="col">Ảnh đại diện</th>
                                     <th scope="col">Thông tin Cá nhân</th>
                                     <th scope="col">Thông tin Đăng bài</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {{#each data.userLV3}}
-                                    <tr id='row-{{this._id}}'>
+                                    <tr id='row-{{this.product._id}}'>
                                         <td>
                                             <div><b>Trạng thái:</b>
-                                                {{#switch this.level}}
+                                                {{#switch this.product.level}}
                                                     {{#case 0}} Khách {{/case}}
                                                     {{#case 1}} Người tìm trọ {{/case}}
                                                     {{#case 2}} Chủ trọ(Tạm thời) {{/case}}
                                                     {{#case 3}} Chủ trọ {{/case}}
                                                 {{/switch}}</div>
                                             <br>
-                                            <div><b>Ngày tạo: </b> {{this.createAt}}</div>
+                                            <div><b>Ngày tạo: </b> {{this.product.createAt}}</div>
                                             <br>
-                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                            <div><b>Cập nhật:</b> {{this.product.updateAt}}</div>
                                         </td>
                                         <td>
                                             <img name="image-user"
                                                  width="70px"
                                                  height="70px"
-                                                 src="http://128.199.99.9:9090/{{this.avatar}}"
-                                                 alt="{{this.avatar}}">
+                                                 src="http://128.199.99.9:9090/{{this.product.avatar}}"
+                                                 alt="{{this.product.avatar}}">
                                         </td>
                                         <td>
-                                            <div><b>Họ và tên: </b> {{this.full_name}}</div>
+                                            <div><b>Họ và tên: </b> {{this.product.full_name}}</div>
                                             <br>
-                                            <div><b>Số điện thoại: </b> {{this.phone_number}}</div>
+                                            <div><b>Số điện thoại: </b> {{this.product.phone_number}}</div>
                                             <br>
-                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
-                                                , {{this.address.communeWardTown}}
-                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}
+                                            <div><b>Địa chỉ: </b> {{this.product.address.detailAddress}}
+                                                , {{this.product.address.communeWardTown}}
+                                                , {{this.product.address.districtsTowns}}
+                                                , {{this.product.address.provinceCity}}
                                             </div>
                                             <br>
-                                            <div><b>Giới tính: </b> {{this.gender}}</div>
+                                            <div><b>Giới tính: </b> {{this.product.gender}}</div>
                                             <br>
-                                            <div><b>Ngày sinh: </b> {{this.birth}}</div>
+                                            <div><b>Ngày sinh: </b> {{this.product.birth}}</div>
                                         </td>
                                         <td>
-                                            chua lam
+                                            <div><b>Số bài đã đăng: </b> {{this.post}}</div>
+                                            <br>
+                                            <div><b>Nhà đã cho thuê: </b> {{this.leased}}</div>
+                                            <br>
+                                            <div><b>Số bài đã bị chặn: </b> {{this.blocked}}</div>
+                                        </td>
+                                        <td>
+                                            <form style="margin-bottom: 10px" action="/confirmUser" method="get">
+                                                <div class="form-group" style="display: none">
+                                                    <input type="text" name="idProduct" value="{{this.product._id}}"
+                                                           class="form-control">
+                                                </div>
+                                                <button style="display: none" type="submit" name="update" value="1"
+                                                        class="btn btn-success">Duyệt
+                                                </button>
+                                            </form>
+                                            <button name="update" value="1" class="btn btn-danger"
+                                                    onclick="deleteUser('{{this.product._id}}')">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 {{/each}}

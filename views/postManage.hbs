@@ -22,6 +22,11 @@
           href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
     <!-- Custom CSS -->
     <link href="public/interface/css/style.min.css" rel="stylesheet">
+    <style>
+        b {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -194,7 +199,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Thời gian</th>
-                                    <th scope="col">Thông tin bài đăng</th>
+                                    <th scope="col">Thông tin Chi tiết</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                                 </thead>
@@ -266,7 +271,7 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Thời gian</th>
-                                    <th scope="col">Thông tin bài đăng</th>
+                                    <th scope="col">Thông tin Chi tiết</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                                 </thead>
@@ -339,43 +344,54 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Thời gian</th>
-                                    <th scope="col">Thông tin bài đăng</th>
+                                    <th scope="col">Thông tin Chi tiết</th>
+                                    <th scope="col">Tương tác</th>
                                     <th scope="col">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {{#each data.successPost}}
-                                    <tr id='row-{{this._id}}'>
+                                    <tr id='row-{{this.product._id}}'>
                                         <td>
                                             <div><b>Trạng thái:</b>
-                                                {{#switch this.status}}
+                                                {{#switch this.product.status}}
                                                     {{#case '-1'}} Chưa duyệt {{/case}}
                                                     {{#case '0'}} Đang duyệt {{/case}}
                                                     {{#case '1'}} Đã duyệt {{/case}}
                                                 {{/switch}}</div>
                                             <br>
-                                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                                            <div><b>Đăng:</b> {{this.product.createAt}}</div>
                                             <br>
-                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                            <div><b>Cập nhật:</b> {{this.product.updateAt}}</div>
                                         </td>
                                         <td>
-                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
-                                                , {{this.address.communeWardTown}}
-                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                            <div><b>Địa chỉ: </b> {{this.product.address.detailAddress}}
+                                                , {{this.product.address.communeWardTown}}
+                                                , {{this.product.address.districtsTowns}}
+                                                , {{this.product.address.provinceCity}}</div>
                                             <br>
-                                            <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                            <div><b>Loại bài đăng: </b> {{this.product.product.category}}</div>
                                             <br>
-                                            <div><b>Nội dung: </b> {{this.content}}</div>
+                                            <div><b>Nội dung: </b> {{this.product.content}}</div>
                                             <br>
                                             <div><b>Giá
-                                                phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
+                                                phòng: </b> {{this.product.product.information.price}} {{this.product.product.information.unit}}
                                             </div>
+                                        </td>
+                                        <td>
+                                            <div><b>Trạng thái: </b> {{this.status}}</div>
+                                            <br>
+                                            <div><b>Số lượt theo dõi: </b> {{this.countOfProductFavorite}}</div>
+                                            <br>
+                                            <div><b>Số bình luận: </b> {{this.countOfProductComment}}</div>
+                                            <br>
+                                            <div><b>Số lượt chi sẻ: </b> {{this.productShare}}</div>
                                         </td>
                                         <td>
 
                                             <form style="margin-bottom: 10px" action="/confirmPost" method="get">
                                                 <div class="form-group" style="display: none">
-                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                    <input type="text" name="idProduct" value="{{this.product._id}}"
                                                            class="form-control">
                                                 </div>
                                                 <button type="submit" name="update" value="1" class="btn btn-warning">
@@ -384,7 +400,7 @@
                                                 </button>
                                             </form>
                                             <button name="update" value="1" class="btn btn-danger"
-                                                    onclick="deleteProduct('{{this._id}}')">
+                                                    onclick="deleteProduct('{{this.product._id}}')">
                                                 Xóa
                                             </button>
                                         </td>

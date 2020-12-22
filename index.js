@@ -399,8 +399,14 @@ app.post('/update-user', async function (request, response) {
                 }
                 // update data vao bang chinh
                 let updateAt = moment(Date.now()).format(formatDate);
+                let lvUp = 0;
+                if (user.level === 0) {
+                    lvUp = 1;
+                } else {
+                    lvUp = user.level
+                }
                 let updateUser = await User.findByIdAndUpdate(userId, {
-                    level: 1,
+                    level: lvUp,
                     password: checkData(password) ? password : user.password,
                     address: checkData(address) ? address._id : user.address._id,
                     avatar: checkData(avatar) ? avatar : user.avatar,
@@ -1318,53 +1324,91 @@ app.get('/updateAdAc', async function (request, response) {
 app.get('/postManage', async function (request, response) {
     //  let obj = await getArea('P', '');
     //console.log('object: ' + obj);
-    var allProduct = await Product.find({
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
+    try {
+        var allProduct = await Product.find({
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var unapprovedPost = await Product.find({
+            status: '-1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var processingPost = await Product.find({
+            status: '0',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var successPost = await Product.find({
+            status: '1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        successPost = successPost.reverse();
+        let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost)
+
+        for (let i = 0; i < data.lengthOfSuccessPost; i++) {
+            let productFavorite = await Favorite.find({
+                deleteAt: '', status: 'POST', product: successPost[i]._id
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+
+            let allComments = await Comment.find({
+                deleteAt: '', status: 'COMMENT', product: successPost[i]._id
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            let productShare = [];
+
+            successPost[i] = {
+                product: successPost[i],
+                status: 'Chưa xác định',
+                countOfProductComment: allComments.length,
+                countOfProductFavorite: productFavorite.length,
+                productShare: productShare.length
             }
-        })
-        .lean();
-    var unapprovedPost = await Product.find({
-        status: '-1',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var processingPost = await Product.find({
-        status: '0',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    var successPost = await Product.find({
-        status: '1',
-        deleteAt: ''
-    }).populate(['address', 'product'])
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-    response.render('postManage', {
-        data: data
-    });
+        }
+        console.log(JSON.stringify(successPost))
+        response.render('postManage', {
+            data: data
+        });
+    } catch (e) {
+        let data = new PostManage([], [], [], []);
+        response.render('postManage', {
+            data: data
+        });
+    }
 });
 //duyệt bài viết
 app.get('/confirmPost', async function (request, response) {
@@ -1432,15 +1476,64 @@ app.get('/confirmPost', async function (request, response) {
 
 //quản lý người dùng
 app.get('/userManage', async function (request, response) {
-    var allUsers = await User.find({deleteAt: ''}).populate(['address']).lean();
-    var userLV0 = await User.find({deleteAt: '', level: 0}).populate(['address']).lean();
-    var userLV1 = await User.find({deleteAt: '', level: 1}).populate(['address']).lean();
-    var userLV2 = await User.find({deleteAt: '', level: 2}).populate(['address']).lean();
-    var userLV3 = await User.find({deleteAt: '', level: 3}).populate(['address']).lean();
-    let data = new UserManage(allUsers.reverse(), userLV0.reverse(), userLV1.reverse(), userLV2.reverse(), userLV3.reverse());
-    response.render('userManage', {
-        data: data
-    });
+    try {
+        var allUsers = await User.find({deleteAt: ''}).populate(['address']).lean();
+        var userLV0 = await User.find({deleteAt: '', level: 0}).populate(['address']).lean();
+        var userLV1 = await User.find({deleteAt: '', level: 1}).populate(['address']).lean();
+        var userLV2 = await User.find({deleteAt: '', level: 2}).populate(['address']).lean();
+        var userLV3 = await User.find({deleteAt: '', level: 3}).populate(['address']).lean();
+        userLV2 = userLV2.reverse();
+        for (let i = 0; i < userLV2.length; i++) {
+            let prdPost = await Product.find({
+                deleteAt: '',
+                user: userLV2[i]._id,
+                status: '1'
+            }).lean();
+            let prdLeased = [];
+            let prdBlocked = await Product.find({
+                deleteAt: '',
+                user: userLV2[i]._id,
+                status: '0'
+            }).lean();
+            userLV2[i] = {
+                product: userLV2[i],
+                post: prdPost.length,
+                leased: prdLeased.length,
+                blocked: prdBlocked.length,
+            }
+        }
+        userLV3 = userLV3.reverse();
+        for (let i = 0; i < userLV3.length; i++) {
+            let prdPost = await Product.find({
+                deleteAt: '',
+                user: userLV3[i]._id,
+                status: '1'
+            }).lean();
+            let prdLeased = [];
+            let prdBlocked = await Product.find({
+                deleteAt: '',
+                user: userLV3[i]._id,
+                status: '0'
+            }).lean();
+            userLV3[i] = {
+                product: userLV3[i],
+                post: prdPost.length,
+                leased: prdLeased.length,
+                blocked: prdBlocked.length,
+            }
+        }
+
+        let data = new UserManage(allUsers.reverse(), userLV0.reverse(), userLV1.reverse(), userLV2, userLV3);
+        response.render('userManage', {
+            data: data
+        });
+
+    } catch (e) {
+        let data = new UserManage([], [], [], [], []);
+        response.render('userManage', {
+            data: data
+        });
+    }
 });
 
 //duyệt bài viết
