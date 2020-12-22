@@ -365,12 +365,60 @@ app.post('/init-user', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
+// cap nhat mat khau nguoi dung
+app.post('/update-user-password', async function (request, response) {
+    let name = 'UPDATE-USER-PASSWORD'
+    try {
+        let userId = request.body.userId;
+        let password = request.body.password;
+        if (checkData(userId) && checkData(password)) {
+            let user = await User.find({_id: userId}).populate(['address']).lean();
+            console.log(JSON.stringify(user))
+            let res_body = {status: null};
+            if (user.length > 0) {
+                user = user[0];
+                if (user.status == true) {
+                    let updateAt = moment(Date.now()).format(formatDate);
+                    let updateUser = await User.findByIdAndUpdate(userId, {
+                        password: password,
+                        updateAt: updateAt,
+                    })
+                    if (updateUser) {
+                        let confirm = await ConfirmPost({
+                            product: null,
+                            admin: null,
+                            user: userId,
+                            status: name,
+                            createAt: updateAt
+                        });
+                        let confirPrd = await confirm.save();
+                        res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        res_body = {status: "Fail"};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                } else {
+                    res_body = {status: "The account has been locked"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch
+        (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
 // cap nhat nguoi dung
 app.post('/update-user', async function (request, response) {
     let name = 'UPDATE-USER'
     try {
         let userId = request.body.userId;
-        let password = request.body.password;
         let mAddress = request.body.address;
         let avatar = request.body.avatar;
         let converImage = request.body.coverImage;
@@ -409,7 +457,7 @@ app.post('/update-user', async function (request, response) {
                     }
                     let updateUser = await User.findByIdAndUpdate(userId, {
                         level: lvUp,
-                        password: checkData(password) ? password : user.password,
+                        password: user.password,
                         address: checkData(address) ? address._id : user.address._id,
                         avatar: checkData(avatar) ? avatar : user.avatar,
                         coverImage: checkData(converImage) ? converImage : user.converImage,
