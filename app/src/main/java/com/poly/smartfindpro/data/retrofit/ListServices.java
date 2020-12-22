@@ -15,6 +15,8 @@ import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
@@ -91,5 +93,6 @@ public interface ListServices {
     @POST("/product-favorite")
     Call<ResponseFavoritePost> getFavorite(@Body InitFavorite request);
 
-
+    @POST("/delete-product")
+    Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request );
 }

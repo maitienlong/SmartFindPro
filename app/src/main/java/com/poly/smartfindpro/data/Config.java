@@ -14,6 +14,7 @@ public class Config {
     public static String POST_BUNDEL_SDT = "sdtFirebase";
 
     public static String DATA_CALL_BACK = "dataCallBack";
+    public static String POST_BUNDlE_RES_ID = "postReqBundleId";
 
     public static String TOKEN_USER = "";
 

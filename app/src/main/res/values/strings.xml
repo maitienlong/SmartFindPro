@@ -45,6 +45,7 @@
     <string name="tv_male">Nam</string>
     <string name="tv_female">Nữ</string>
     <string name="tv_all">Tất cả</string>
+    <string name="tv_both">Cả 2</string>
     <string name="tv_confirm">Xác nhận</string>
     <string name="tv_dang_nhap">Đăng nhập</string>
     <string name="tv_dang_ky">Đăng ký</string>

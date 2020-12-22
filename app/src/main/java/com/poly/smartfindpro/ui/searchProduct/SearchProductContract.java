@@ -20,6 +20,8 @@ public interface SearchProductContract {
         void onSelectTypeFilter();
 
         void filterAdvance(String jsonData);
+
+        void onBackClick();
     }
 
     interface Presenter extends BasePresenter {
@@ -37,5 +39,7 @@ public interface SearchProductContract {
         void filterPrice();
 
         void filterAdvance();
+
+        void onBackClick();
     }
 }

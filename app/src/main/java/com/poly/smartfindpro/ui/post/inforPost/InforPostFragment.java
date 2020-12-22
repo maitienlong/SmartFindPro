@@ -49,6 +49,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     String mElectricityBill = "";
     String mWaterBill = "";
     String mDescription = "";
+    String idPost;
 
     private PostRequest postRequest;
     private Information information;
@@ -201,7 +202,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         postRequest.setCategory(category);
         postRequest.setInformation(information);
         if (imageListPath != null && imageListPath.size() > 0) {
-            onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath));
+            onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath),new Gson().toJson(idPost));
         } else {
             showMessage("Bạn phải có ít nhất 1 ảnh");
         }
@@ -295,15 +296,21 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         mBinding.rvImages.setAdapter(imagePostAdapter);
     }
 
-    public void onNext(String jsonData, String jsonPhoto) {
+    public void onNext(String jsonData, String jsonPhoto,String idPost) {
         Log.d("CheckLog", jsonData);
-        Log.d("CheckLogPhoto", jsonPhoto);
 
         Bundle bundle = new Bundle();
 
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
 
         bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
+
+        if(getArguments() != null){
+            bundle.putString(Config.POST_BUNDlE_RES_ID, getArguments().getString(Config.POST_BUNDlE_RES_ID));
+            Log.d("CheckBundle",idPost );
+        }else {
+            Toast.makeText(mActivity, "loi", Toast.LENGTH_SHORT).show();
+        }
 
         Intent intent = new Intent();
 
