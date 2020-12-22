@@ -20,6 +20,10 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    total_people_lease: {
+        type: Number,
+        required: false
+    },
     status: {type: String},
     deleteAt: {
         type: String,

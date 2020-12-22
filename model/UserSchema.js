@@ -51,6 +51,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: Date,
         required: false
-    }
+    },
+    status: {
+        type: Boolean,
+        required: false
+    },
 });
 module.exports = UserSchema;

@@ -345,7 +345,8 @@ app.post('/init-user', async function (request, response) {
                 phone_number: phoneNumber,
                 deleteAt: '',
                 updateAt: '',
-                createAt: createAt
+                createAt: createAt,
+                status: true
             });
             let user = await newUser.save();
             let res_body = {status: null};
@@ -383,56 +384,62 @@ app.post('/update-user', async function (request, response) {
             let res_body = {status: null};
             if (user.length > 0) {
                 user = user[0];
-                console.log("USER_ADDRESS_ID: " + user.address._id);
-                let address = '';
-                if (checkData(mAddress)) {
-                    address = await Address.findByIdAndUpdate(user.address._id, {
-                        provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
-                        districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
-                        communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
-                        detailAddress: checkData(mAddress.detailAddress) ? mAddress.detailAddress : user.address.detailAddress,
-                        location: {
-                            latitude: checkData(mAddress.location.latitude) ? mAddress.location.latitude : user.address.location.latitude,
-                            longitude: checkData(mAddress.location.longitude) ? mAddress.location.longitude : user.address.location.longitude
-                        }
-                    });
-                }
-                // update data vao bang chinh
-                let updateAt = moment(Date.now()).format(formatDate);
-                let lvUp = 0;
-                if (user.level === 0) {
-                    lvUp = 1;
+                if (user.status == true) {
+                    console.log("USER_ADDRESS_ID: " + user.address._id);
+                    let address = '';
+                    if (checkData(mAddress)) {
+                        address = await Address.findByIdAndUpdate(user.address._id, {
+                            provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
+                            districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
+                            communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
+                            detailAddress: checkData(mAddress.detailAddress) ? mAddress.detailAddress : user.address.detailAddress,
+                            location: {
+                                latitude: checkData(mAddress.location.latitude) ? mAddress.location.latitude : user.address.location.latitude,
+                                longitude: checkData(mAddress.location.longitude) ? mAddress.location.longitude : user.address.location.longitude
+                            }
+                        });
+                    }
+                    // update data vao bang chinh
+                    let updateAt = moment(Date.now()).format(formatDate);
+                    let lvUp = 0;
+                    if (user.level === 0) {
+                        lvUp = 1;
+                    } else {
+                        lvUp = user.level
+                    }
+                    let updateUser = await User.findByIdAndUpdate(userId, {
+                        level: lvUp,
+                        password: checkData(password) ? password : user.password,
+                        address: checkData(address) ? address._id : user.address._id,
+                        avatar: checkData(avatar) ? avatar : user.avatar,
+                        coverImage: checkData(converImage) ? converImage : user.converImage,
+                        gender: checkData(gender) ? gender : user.gender,
+                        birth: checkData(birth) ? birth : user.birth,
+                        full_name: checkData(fullName) ? fullName : user.full_name,
+                        phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
+                        deleteAt: user.deleteAt,
+                        updateAt: updateAt,
+                        createAt: user.createAt,
+                        status: user.status
+                    })
+                    if (updateUser) {
+                        let confirm = await ConfirmPost({
+                            product: null,
+                            admin: null,
+                            user: userId,
+                            status: 'UPDATE_USER',
+                            createAt: updateAt
+                        });
+                        console.log(JSON.stringify(confirm));
+                        let confirPrd = await confirm.save();
+                        res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        res_body = {status: "Fail"};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
                 } else {
-                    lvUp = user.level
-                }
-                let updateUser = await User.findByIdAndUpdate(userId, {
-                    level: lvUp,
-                    password: checkData(password) ? password : user.password,
-                    address: checkData(address) ? address._id : user.address._id,
-                    avatar: checkData(avatar) ? avatar : user.avatar,
-                    coverImage: checkData(converImage) ? converImage : user.converImage,
-                    gender: checkData(gender) ? gender : user.gender,
-                    birth: checkData(birth) ? birth : user.birth,
-                    full_name: checkData(fullName) ? fullName : user.full_name,
-                    phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
-                    deleteAt: user.deleteAt,
-                    updateAt: updateAt,
-                    createAt: user.createAt
-                })
-                if (updateUser) {
-                    let confirm = await ConfirmPost({
-                        product: null,
-                        admin: null,
-                        user: userId,
-                        status: 'UPDATE_USER',
-                        createAt: updateAt
-                    });
-                    console.log(JSON.stringify(confirm));
-                    let confirPrd = await confirm.save();
-                    res_body = {status: sttOK};
-                    response.json(getResponse(name, 200, sttOK, res_body));
-                } else {
-                    res_body = {status: "Fail"};
+                    res_body = {status: "The account has been locked"};
                     response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
@@ -458,84 +465,89 @@ app.post('/upgrade-user', async function (request, response) {
             if (user.length > 0) {
                 user = user[0];
                 let createAt = moment(Date.now()).format(formatDate);
-                if (user.level == 1) {
-                    let type = request.body.type;
-                    let code = request.body.code;
-                    let full_name = request.body.name;
-                    let date = request.body.date;
-                    let gender = request.body.gender;
-                    let issuedBy = request.body.issuedBy;
-                    let expiryDate = request.body.expiryDate;
-                    let homeTown = request.body.homeTown;
-                    let resident = request.body.resident;
-                    let nationality = request.body.nationality;
-                    let previous = request.body.previous;
-                    let behind = request.body.behind;
-                    let hasFace = request.body.hasFace;
-                    if (checkData(type) &&
-                        checkData(code) &&
-                        checkData(full_name) &&
-                        checkData(date) &&
-                        checkData(gender) &&
-                        checkData(issuedBy) &&
-                        checkData(expiryDate) &&
-                        checkData(homeTown) &&
-                        checkData(resident) &&
-                        checkData(nationality) &&
-                        checkData(previous) &&
-                        checkData(behind) &&
-                        checkData(hasFace)) {
-                        name = name + '-LEVEL-2'
-                        let image = {
-                            previous: previous,
-                            behind: behind,
-                            hasFace: hasFace
-                        }
-                        let identityCard = new IdentityCard({
-                            type: type,
-                            code: code,
-                            name: full_name,
-                            date: date,
-                            gender: gender,
-                            issuedBy: issuedBy,
-                            expiryDate: expiryDate,
-                            image: image,
-                            homeTown: homeTown,
-                            resident: resident,
-                            nationality: nationality,
-                            createAt: createAt
-                        });
-                        let initIdentityCard = await identityCard.save();
-                        if (initIdentityCard) {
-                            let updateUser = new UpgradeUser({
-                                user: userId,
-                                identityCard: initIdentityCard._id,
-                                createAt: createAt,
-                                updateAt: '',
-                                deleteAt: ''
-                            });
-                            let initUpdateUser = await updateUser.save();
-                            if (initUpdateUser) {
-                                let confirm = await ConfirmPost({
-                                    product: null,
-                                    admin: null,
-                                    user: userId,
-                                    status: name,
-                                    createAt: createAt
-                                });
-                                let confirPrd = await confirm.save();
-                                res_body = {status: sttOK};
-                                response.json(getResponse(name, 200, sttOK, res_body));
-                            } else {
-                                res_body = {status: "Fail"};
-                                response.json(getResponse(name, 200, 'Fail', res_body))
+                if (user.status == true) {
+                    if (user.level == 1) {
+                        let type = request.body.type;
+                        let code = request.body.code;
+                        let full_name = request.body.name;
+                        let date = request.body.date;
+                        let gender = request.body.gender;
+                        let issuedBy = request.body.issuedBy;
+                        let expiryDate = request.body.expiryDate;
+                        let homeTown = request.body.homeTown;
+                        let resident = request.body.resident;
+                        let nationality = request.body.nationality;
+                        let previous = request.body.previous;
+                        let behind = request.body.behind;
+                        let hasFace = request.body.hasFace;
+                        if (checkData(type) &&
+                            checkData(code) &&
+                            checkData(full_name) &&
+                            checkData(date) &&
+                            checkData(gender) &&
+                            checkData(issuedBy) &&
+                            checkData(expiryDate) &&
+                            checkData(homeTown) &&
+                            checkData(resident) &&
+                            checkData(nationality) &&
+                            checkData(previous) &&
+                            checkData(behind) &&
+                            checkData(hasFace)) {
+                            name = name + '-LEVEL-2'
+                            let image = {
+                                previous: previous,
+                                behind: behind,
+                                hasFace: hasFace
                             }
+                            let identityCard = new IdentityCard({
+                                type: type,
+                                code: code,
+                                name: full_name,
+                                date: date,
+                                gender: gender,
+                                issuedBy: issuedBy,
+                                expiryDate: expiryDate,
+                                image: image,
+                                homeTown: homeTown,
+                                resident: resident,
+                                nationality: nationality,
+                                createAt: createAt
+                            });
+                            let initIdentityCard = await identityCard.save();
+                            if (initIdentityCard) {
+                                let updateUser = new UpgradeUser({
+                                    user: userId,
+                                    identityCard: initIdentityCard._id,
+                                    createAt: createAt,
+                                    updateAt: '',
+                                    deleteAt: ''
+                                });
+                                let initUpdateUser = await updateUser.save();
+                                if (initUpdateUser) {
+                                    let confirm = await ConfirmPost({
+                                        product: null,
+                                        admin: null,
+                                        user: userId,
+                                        status: name,
+                                        createAt: createAt
+                                    });
+                                    let confirPrd = await confirm.save();
+                                    res_body = {status: sttOK};
+                                    response.json(getResponse(name, 200, sttOK, res_body));
+                                } else {
+                                    res_body = {status: "Fail"};
+                                    response.json(getResponse(name, 200, 'Fail', res_body))
+                                }
+                            }
+                        } else {
+                            response.json(getResponse(name, 400, 'Bad request', null))
                         }
                     } else {
-                        response.json(getResponse(name, 400, 'Bad request', null))
+                        response.json(getResponse(name, 403, 'User not permissions', null))
                     }
                 } else {
-                    response.json(getResponse(name, 403, 'User not permissions', null))
+                    res_body = {status: "The account has been locked"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -550,7 +562,7 @@ app.post('/upgrade-user', async function (request, response) {
     }
 });
 // xoa nguoi dung
-app.post('/delete-user', async function (request, response) {
+app.post('/delete-user-not-use', async function (request, response) {
     let name = 'DELETE-USER'
     try {
         let id = request.body.id;
@@ -595,6 +607,61 @@ app.post('/delete-user', async function (request, response) {
                             admin: adminId,
                             user: id,
                             status: 'DELETE_USER',
+                            createAt: createAt
+                        });
+                        let confirPrd = await confirm.save();
+                        let res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body))
+                    } else {
+                        let res_body = {status: 'Fail'};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                } else {
+                    response.json(getResponse(name, 400, 'Bad request', null))
+                    return
+                }
+
+            } else {
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// khoa nguoi dung
+app.post('/disable-user', async function (request, response) {
+    let name = 'DISABLE-USER'
+    try {
+        let id = request.body.id;
+        let adminId = request.body.adminId;
+        if (checkData(id)) {
+            let user = await User.find({_id: id}).lean();
+            if (user.length > 0) {
+                user = user[0];
+                if (checkData(adminId)) {
+                    let createAt = moment(Date.now()).format(formatDate);
+                    let uSTT = user.status;
+                    if (user.status == true) {
+                        uSTT = false;
+                        name = 'DISABLE-USER'
+                    } else {
+                        uSTT = true;
+                        name = 'ENABLE-USER'
+                    }
+                    let disableUser = await User.findByIdAndUpdate(user._id, {
+                        status: uSTT,
+                        updateAt: createAt
+                    });
+                    if (disableUser) {
+                        let confirm = await ConfirmPost({
+                            product: null,
+                            admin: adminId,
+                            user: id,
+                            status: name,
                             createAt: createAt
                         });
                         let confirPrd = await confirm.save();
@@ -685,56 +752,63 @@ app.post('/init-product', async function (request, response) {
             checkData(linkProduct)) {
             let user = await User.find({_id: id}).lean();
             if (user.length > 0) {
-                //luu data vao cac bang phu
-                let newInforProduct = new InforProduct({
-                    category: category,
-                    information: information,
-                    utilities: utilities
-                });
-                let newProductAddress = new Address({
-                    provinceCity: mAddress.provinceCity,
-                    districtsTowns: mAddress.districtsTowns,
-                    communeWardTown: mAddress.communeWardTown,
-                    detailAddress: mAddress.detailAddress,
-                    location: {
-                        latitude: mAddress.location.latitude,
-                        longitude: mAddress.location.longitude
-                    }
-                });
-
-                let product = await newInforProduct.save();
-                console.log('product: ', product._id)
-                let address = await newProductAddress.save();
-                // luu data vao bang chinh
-                let createAt = moment(Date.now()).format(formatDate);
-                let status = '-1'
-                let newProduct = new Product({
-                    product: product._id,
-                    address: address._id,
-                    user: id,
-                    content: content,
-                    status: status,
-                    createAt: createAt,
-                    updateAt: "",
-                    deleteAt: "",
-                    linkProduct: ""
-                });
-                let initProduct = await newProduct.save();
-                if (product && address && initProduct) {
-                    let confirm = await ConfirmPost({
-                        product: initProduct._id,
-                        admin: null,
-                        user: id,
-                        status: 'INIT_PRODUCT',
-                        createAt: createAt
+                user = user[0];
+                if (user.status == true) {
+                    //luu data vao cac bang phu
+                    let newInforProduct = new InforProduct({
+                        category: category,
+                        information: information,
+                        utilities: utilities
                     });
-                    console.log(JSON.stringify(confirm));
-                    let confirPrd = await confirm.save();
-                    let res_body = {status: sttOK};
-                    response.json(getResponse(name, 200, sttOK, res_body));
+                    let newProductAddress = new Address({
+                        provinceCity: mAddress.provinceCity,
+                        districtsTowns: mAddress.districtsTowns,
+                        communeWardTown: mAddress.communeWardTown,
+                        detailAddress: mAddress.detailAddress,
+                        location: {
+                            latitude: mAddress.location.latitude,
+                            longitude: mAddress.location.longitude
+                        }
+                    });
+
+                    let product = await newInforProduct.save();
+                    console.log('product: ', product._id)
+                    let address = await newProductAddress.save();
+                    // luu data vao bang chinh
+                    let createAt = moment(Date.now()).format(formatDate);
+                    let status = '-1'
+                    let newProduct = new Product({
+                        product: product._id,
+                        address: address._id,
+                        user: id,
+                        content: content,
+                        status: status,
+                        createAt: createAt,
+                        total_people_lease: 0,
+                        updateAt: "",
+                        deleteAt: "",
+                        linkProduct: ""
+                    });
+                    let initProduct = await newProduct.save();
+                    if (product && address && initProduct) {
+                        let confirm = await ConfirmPost({
+                            product: initProduct._id,
+                            admin: null,
+                            user: id,
+                            status: 'INIT_PRODUCT',
+                            createAt: createAt
+                        });
+                        console.log(JSON.stringify(confirm));
+                        let confirPrd = await confirm.save();
+                        let res_body = {status: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        let res_body = {status: 'Fail'};
+                        response.json(getResponse(name, 200, 'Fail', res_body));
+                    }
                 } else {
-                    let res_body = {status: 'Fail'};
-                    response.json(getResponse(name, 200, 'Fail', res_body));
+                    res_body = {status: "The account has been locked"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -770,49 +844,121 @@ app.post('/update-product', async function (request, response) {
             let oldProduct = await Product.find({_id: id}).lean();
             if (oldProduct.length > 0) {
                 oldProduct = oldProduct[0];
-                if (oldProduct.user._id == userId) {
-                    let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
-                        category: category,
-                        information: information,
-                        utilities: utilities
-                    });
-                    let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
-                        provinceCity: mAddress.provinceCity,
-                        districtsTowns: mAddress.districtsTowns,
-                        communeWardTown: mAddress.communeWardTown,
-                        detailAddress: mAddress.detailAddress,
-                        location: {
-                            latitude: mAddress.location.latitude,
-                            longitude: mAddress.location.longitude
-                        }
-                    });
-                    // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format(formatDate);
-                    let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
-                        product: product._id,
-                        address: address._id,
-                        user: oldProduct.user,
-                        content: content,
-                        status: oldProduct.status,
-                        createAt: oldProduct.createAt,
-                        updateAt: updateAt,
-                        deleteAt: oldProduct.deleteAt,
-                        linkProduct: oldProduct.linkProduct
-                    })
-                    if (updateProduct && product && address) {
-                        let confirm = await ConfirmPost({
-                            product: id,
-                            admin: null,
-                            user: userId,
-                            status: 'UPDATE_PRODUCT',
-                            createAt: updateAt
+                if (user.status == true) {
+                    if (oldProduct.user._id == userId) {
+                        let product = await InforProduct.findByIdAndUpdate(oldProduct.product._id, {
+                            category: category,
+                            information: information,
+                            utilities: utilities
                         });
-                        console.log(JSON.stringify(confirm));
-                        let confirPrd = await confirm.save();
-                        let res_body = {status: sttOK};
-                        response.json(getResponse(name, 200, sttOK, res_body))
+                        let address = await Address.findByIdAndUpdate(oldProduct.address._id, {
+                            provinceCity: mAddress.provinceCity,
+                            districtsTowns: mAddress.districtsTowns,
+                            communeWardTown: mAddress.communeWardTown,
+                            detailAddress: mAddress.detailAddress,
+                            location: {
+                                latitude: mAddress.location.latitude,
+                                longitude: mAddress.location.longitude
+                            }
+                        });
+                        // update data vao bang chinh
+                        let updateAt = moment(Date.now()).format(formatDate);
+                        let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                            product: product._id,
+                            address: address._id,
+                            user: oldProduct.user,
+                            content: content,
+                            status: oldProduct.status,
+                            createAt: oldProduct.createAt,
+                            updateAt: updateAt,
+                            deleteAt: oldProduct.deleteAt,
+                            linkProduct: oldProduct.linkProduct,
+                            total_people_lease: oldProduct.total_people_lease
+                        })
+                        if (updateProduct && product && address) {
+                            let confirm = await ConfirmPost({
+                                product: id,
+                                admin: null,
+                                user: userId,
+                                status: 'UPDATE_PRODUCT',
+                                createAt: updateAt
+                            });
+                            console.log(JSON.stringify(confirm));
+                            let confirPrd = await confirm.save();
+                            let res_body = {status: sttOK};
+                            response.json(getResponse(name, 200, sttOK, res_body))
+                        } else {
+                            let res_body = {status: 'Fail'};
+                            response.json(getResponse(name, 200, 'Fail', res_body))
+                        }
                     } else {
-                        let res_body = {status: 'Fail'};
+                        res_body = {status: "The account has been locked"};
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                } else {
+                    response.json(getResponse(name, 404, 'User not found', null))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'Product not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+// cap nhat so luong nguoi thue bai dang
+app.post('/total-people-lease-product', async function (request, response) {
+    let name = 'UPDATE-TOTAL-PEOPLE-LEASE'
+    try {
+        let userId = request.body.userId;
+        let id = request.body.id;
+        let total_people_lease = request.body.total_people_lease;
+        if (checkData(userId) &&
+            checkData(id) &&
+            checkData(total_people_lease) &&
+            !isNaN(total_people_lease)) {
+            let oldProduct = await Product.find({_id: id}).populate(['address', 'product'])
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                }).lean();
+            if (oldProduct.length > 0) {
+                oldProduct = oldProduct[0];
+                if (user.status == true) {
+                    if (oldProduct.user._id == userId) {
+                        if (oldProduct.product.information.amountPeople < total_people_lease) {
+                            let res_body = {status: 'The number of tenants is full'};
+                            response.json(getResponse(name, 200, 'Fail', res_body))
+                        } else {
+                            // update data vao bang chinh
+                            let updateAt = moment(Date.now()).format(formatDate);
+                            let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
+                                total_people_lease: total_people_lease,
+                                updateAt: updateAt
+                            })
+                            if (updateProduct) {
+                                let confirm = await ConfirmPost({
+                                    product: id,
+                                    admin: null,
+                                    user: userId,
+                                    status: name,
+                                    createAt: updateAt
+                                });
+                                let confirPrd = await confirm.save();
+                                let res_body = {status: sttOK};
+                                response.json(getResponse(name, 200, sttOK, res_body))
+                            } else {
+                                let res_body = {status: 'Fail'};
+                                response.json(getResponse(name, 200, 'Fail', res_body))
+                            }
+                        }
+                    } else {
+                        res_body = {status: "The account has been locked"};
                         response.json(getResponse(name, 200, 'Fail', res_body))
                     }
                 } else {
@@ -910,25 +1056,31 @@ app.post('/user-product', async function (request, response) {
     try {
         let id = request.body.id;
         if (checkData(id)) {
-            let userNo = await User.find({_id: id}).lean();
-            if (userNo.length > 0) {
-                let allProduct = await Product.find({
-                    deleteAt: '', user: id
-                }).populate(['address', 'product'])
-                    .populate({
-                        path: 'user',
-                        populate: {
-                            path: 'address'
-                        }
-                    })
-                    .lean();
-                let res_body = {products: null};
-                if (allProduct) {
-                    res_body = {products: allProduct.reverse()};
-                    response.json(getResponse(name, 200, sttOK, res_body));
+            let user = await User.find({_id: id}).lean();
+            if (user.length > 0) {
+                user = userNo[0];
+                if (user.status == true) {
+                    let allProduct = await Product.find({
+                        deleteAt: '', user: id
+                    }).populate(['address', 'product'])
+                        .populate({
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
+                        })
+                        .lean();
+                    let res_body = {products: null};
+                    if (allProduct) {
+                        res_body = {products: allProduct.reverse()};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        res_body = {products: null};
+                        response.json(getResponse(name, 200, 'Fail', res_body));
+                    }
                 } else {
-                    res_body = {products: null};
-                    response.json(getResponse(name, 200, 'Fail', res_body));
+                    res_body = {status: "The account has been locked"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null))
@@ -949,23 +1101,29 @@ app.post('/list-product', async function (request, response) {
         if (checkData(id)) {
             let user = await User.find({_id: id}).lean();
             if (user.length > 0) {
-                let allProduct = await Product.find({
-                    status: '1',
-                    deleteAt: ''
-                }).populate(['address', 'product'])
-                    .populate({
-                        path: 'user',
-                        populate: {
-                            path: 'address'
-                        }
-                    })
-                    .lean();
-                if (allProduct) {
-                    let res_body = {products: allProduct.reverse()};
-                    response.json(getResponse(name, 200, sttOK, res_body));
+                user = user[0];
+                if (user.status == true) {
+                    let allProduct = await Product.find({
+                        status: '1',
+                        deleteAt: ''
+                    }).populate(['address', 'product'])
+                        .populate({
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
+                        })
+                        .lean();
+                    if (allProduct) {
+                        let res_body = {products: allProduct.reverse()};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        let res_body = {products: null};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    }
                 } else {
-                    let res_body = {products: null};
-                    response.json(getResponse(name, 200, sttOK, res_body));
+                    res_body = {status: "The account has been locked"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
                 response.json(getResponse(name, 404, 'User not found', null));
@@ -1116,6 +1274,13 @@ app.get('/index', async function (request, response) {
                     listAmoutFavorite.push(item);
                 }
             }
+// lay so luong phong da cho thue
+            let dataLease = 0;
+// lay so luong phong chua cho thue
+            let dataNotLease = 0;
+// lay so luong nguoi da tim duoc tro
+            let dataFindSuccess = 0;
+
             let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
             let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
             let dataAdmin = await Admin.find({}).lean();
@@ -1644,6 +1809,7 @@ app.post('/confirm-product', async function (request, response) {
                     let updateAt = moment(Date.now()).format(formatDate);
                     let updateProduct = await Product.findByIdAndUpdate(oldProduct._id, {
                         status: '1',
+                        total_people_lease: oldProduct.total_people_lease,
                         updateAt: updateAt
                     });
                     if (updateProduct && product) {
@@ -1871,6 +2037,11 @@ app.post('/init-comment', async function (request, response) {
                 response.json(getResponse(name, 404, 'User not found', res_body))
                 return
             }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
             let findProduct = await Product.find({_id: product}).lean();
             if (findProduct.length < 0) {
                 res_body = {status: "Product not found"};
@@ -2016,6 +2187,11 @@ app.post('/product-comment', async function (request, response) {
                 response.json(getResponse(name, 404, 'User not found', res_body))
                 return
             }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
             let findProduct = await Product.find({_id: product}).lean();
             if (findProduct.length < 0) {
                 let res_body = {status: 'Product not found'};
@@ -2144,6 +2320,11 @@ app.post('/product-favorite', async function (request, response) {
                 response.json(getResponse(name, 404, 'User not found', res_body))
                 return
             }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
             let findProduct = await Product.find({_id: product}).lean();
             if (findProduct.length < 0) {
                 let res_body = {status: 'Product not found'};
@@ -2210,6 +2391,11 @@ app.post('/find-comment', async function (request, response) {
             if (findUser.length < 0) {
                 let res_body = {status: 'User not found'};
                 response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
                 return
             }
             let findComment = await Comment.find({_id: comment}).lean();

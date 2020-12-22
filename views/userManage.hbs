@@ -236,7 +236,10 @@
                                             </form>
                                             <button name="update" value="1" class="btn btn-danger"
                                                     onclick="deleteUser('{{this._id}}')">
-                                                Xóa
+                                                {{#switch this.status}}
+                                                    {{#case true}} Khóa tài khoản {{/case}}
+                                                    {{#case false}} Mở khóa tài khoản {{/case}}
+                                                {{/switch}}
                                             </button>
                                         </td>
                                     </tr>
@@ -318,7 +321,10 @@
                                             </form>
                                             <button name="update" value="1" class="btn btn-danger"
                                                     onclick="deleteUser('{{this._id}}')">
-                                                Xóa
+                                                {{#switch this.status}}
+                                                    {{#case true}} Khóa tài khoản {{/case}}
+                                                    {{#case false}} Mở khóa tài khoản {{/case}}
+                                                {{/switch}}
                                             </button>
                                         </td>
                                     </tr>
@@ -409,7 +415,10 @@
                                             </form>
                                             <button name="update" value="1" class="btn btn-danger"
                                                     onclick="deleteUser('{{this.product._id}}')">
-                                                Xóa
+                                                {{#switch this.product.status}}
+                                                    {{#case true}} Khóa tài khoản {{/case}}
+                                                    {{#case false}} Mở khóa tài khoản {{/case}}
+                                                {{/switch}}
                                             </button>
                                         </td>
                                     </tr>
@@ -497,9 +506,12 @@
                                                         class="btn btn-success">Duyệt
                                                 </button>
                                             </form>
-                                            <button name="update" value="1" class="btn btn-danger"
+                                            <button id="hihi" name="update" value="1" class="btn btn-danger"
                                                     onclick="deleteUser('{{this.product._id}}')">
-                                                Xóa
+                                                {{#switch this.product.status}}
+                                                    {{#case true}} Khóa tài khoản {{/case}}
+                                                    {{#case false}} Mở khóa tài khoản {{/case}}
+                                                {{/switch}}
                                             </button>
                                         </td>
                                     </tr>
@@ -565,7 +577,7 @@
         console.log(data)
         $.ajax({
             type: "POST",
-            url: "/delete-user",
+            url: "/disable-user",
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (res) {
@@ -578,14 +590,14 @@
                 } else {
                     let resCode = res.response_header.res_code;
                     if (resCode == 200) {
-                        $("#row-" + id).remove();
-                        content = 'Xóa người dùng thành công!';
+                        // $("#row-" + id).remove();
+                        content = 'Thao tác thành công!';
                         titleOK = 'Trở lại';
                         $('#successDialog').click(function () {
                             location.href = 'userManage';
                         });
                     } else {
-                        content = 'Xóa người dùng thất bại. Vui lòng thử lại sau!';
+                        content = 'Thao tác thất bại. Vui lòng thử lại sau!';
                         titleOK = 'Thử lại';
                         $('#successDialog').click(function () {
                             location.href = 'index';
