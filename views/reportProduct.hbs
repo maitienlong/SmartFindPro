@@ -11,7 +11,7 @@
     <meta name="description"
           content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Lịch sử</title>
+    <title>Báo cáo</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/"/>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png"
@@ -22,6 +22,11 @@
           href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
     <!-- Custom CSS -->
     <link href="public/interface/css/style.min.css" rel="stylesheet">
+    <style>
+        b {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -175,35 +180,72 @@
     <!-- ============================================================== -->
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
+
     <div class="page-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="white-box">
                         <div class="d-md-flex mb-3">
-                            <h3 class="box-title mb-0">Lịch sử</h3>
+                            <h3 class="box-title mb-0">Bài viết bị báo cáo</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class=" fas fa-folder"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfUnapprovedPost}}</span>
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table id="unapprovedPost" class="table no-wrap">
                                 <thead>
                                 <tr>
                                     <th scope="col">Thời gian</th>
-                                    <th scope="col">Thông tin</th>
+                                    <th scope="col">Thông tin Chi tiết</th>
+                                    <th scope="col">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{#each data}}
+                                {{#each data.unapprovedPost}}
                                     <tr id='row-{{this._id}}'>
                                         <td>
                                             <div><b>Trạng thái:</b>
-                                                {{this.status}}</div>
+                                                {{#switch this.status}}
+                                                    {{#case '-1'}} Chưa duyệt {{/case}}
+                                                    {{#case '0'}} Đang duyệt {{/case}}
+                                                    {{#case '1'}} Đã duyệt {{/case}}
+                                                {{/switch}}</div>
                                             <br>
-                                            <div><b>Thời gian:</b> {{this.createAt}}</div>
+                                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                                            <br>
+                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
                                         </td>
                                         <td>
-                                            <div><b>Id bài đăng: </b> {{this.product._id}}</div>
-                                            <div><b>Nhân viên: </b> {{this.admin.username}}</div>
-                                            <div><b>Người dùng: </b> {{this.user.full_name}}</div>
+                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
+                                                , {{this.address.communeWardTown}}
+                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                            <br>
+                                            <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                            <br>
+                                            <div><b>Nội dung: </b> {{this.content}}</div>
+                                            <br>
+                                            <div><b>Giá
+                                                phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                                <div class="form-group" style="display: none">
+                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                           class="form-control">
+                                                </div>
+                                                <button type="submit" name="update" value="1" class="btn btn-success">
+                                                    Duyệt
+                                                </button>
+                                            </form>
+                                            <button name="update" value="1" class="btn btn-danger"
+                                                    onclick="deleteProduct('{{this._id}}')">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 {{/each}}
@@ -213,9 +255,88 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Tài khoản bị báo cáo</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <i class=" fas fa-folder"></i>
+                                <span class="counter text-info"
+                                      style="font-size: 1.875em;">{{data.lengthOfProcessingPost}}</span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="processingPost" class="table no-wrap">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Thời gian</th>
+                                    <th scope="col">Thông tin Chi tiết</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.processingPost}}
+                                    <tr id='row-{{this._id}}'>
+                                        <td>
+                                            <div><b>Trạng thái:</b>
+                                                {{#switch this.status}}
+                                                    {{#case '-1'}} Chưa duyệt {{/case}}
+                                                    {{#case '0'}} Đang duyệt {{/case}}
+                                                    {{#case '1'}} Đã duyệt {{/case}}
+                                                {{/switch}}</div>
+                                            <br>
+                                            <div><b>Đăng:</b> {{this.createAt}}</div>
+                                            <br>
+                                            <div><b>Cập nhật:</b> {{this.updateAt}}</div>
+                                        </td>
+                                        <td>
+                                            <div><b>Địa chỉ: </b> {{this.address.detailAddress}}
+                                                , {{this.address.communeWardTown}}
+                                                , {{this.address.districtsTowns}}, {{this.address.provinceCity}}</div>
+                                            <br>
+                                            <div><b>Loại bài đăng: </b> {{this.product.category}}</div>
+                                            <br>
+                                            <div><b>Nội dung: </b> {{this.content}}</div>
+                                            <br>
+                                            <div><b>Giá
+                                                phòng: </b> {{this.product.information.price}} {{this.product.information.unit}}
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <form style="margin-bottom: 10px" action="/confirmPost" method="get">
+                                                <div class="form-group" style="display: none">
+                                                    <input type="text" name="idProduct" value="{{this._id}}"
+                                                           class="form-control">
+                                                </div>
+                                                <button type="submit" name="update" value="1" class="btn btn-success">
+                                                    Duyệt
+                                                    lại
+                                                </button>
+                                            </form>
+                                            <button name="update" value="1" class="btn btn-danger"
+                                                    onclick="deleteProduct('{{this._id}}')">
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer -->
+            <!-- ============================================================== -->
             <footer class="footer text-center"> 2020 © SmartFind Admin brought to you by <a
                     href="http://smartfind.me/">Smartfind.me</a>
             </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+
         </div>
     </div>
 
@@ -242,6 +363,15 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 <script>
     let titleStt = 'Thông báo';
     let content = '';
@@ -261,15 +391,16 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (res) {
-                if (!res) {
+                console.log(res)
+                if (!res || res.response_header.res_code != 200) {
                     content = 'Có lỗi sảy ra. Vui lòng thử lại sau!';
                     titleOK = 'Trở lại';
                     $('#successDialog').click(function () {
                         location.href = 'index';
                     });
                 } else {
-                    let resCode = res.response_header.res_code;
-                    if (resCode == 200) {
+                    let status = res.response_body.status;
+                    if (status == 'Success') {
                         $("#row-" + id).remove();
                         content = 'Xóa bài đăng thành công!';
                         titleOK = 'Trở lại';

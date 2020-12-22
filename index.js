@@ -1505,7 +1505,16 @@ app.get('/updateAdAc', async function (request, response) {
     let nName = request.query.nameAD;
     let nPhone = request.query.phoneAD;
     let nAddress = request.query.addressAD;
-    // let admins = await Admin.find({username: userAD, password: passAD}).lean();   //dk
+    let mAddress = "";
+    console.log(nAddress)
+    let addressAD = await Address.find({_id: nAddress}).lean();   //dk
+    console.log(addressAD)
+    if (addressAD.length > 0) {
+        addressAD = addressAD[0];
+        mAddress = addressAD.detailAddress + ', ' + addressAD.communeWardTown + ', ' + addressAD.districtsTowns + ', ' + addressAD.provinceCity;
+    } else {
+        console.log('dasda');
+    }
     response.render('updateAdAc', {
         status: 'none',
         user: userAD,
@@ -1516,11 +1525,100 @@ app.get('/updateAdAc', async function (request, response) {
         // address:admins.address,
         name: nName,
         phone: nPhone,
-        address: nAddress,
+        address: mAddress,
     });
 
 });
 
+// Báo cáo
+app.get('/reportProduct', async function (request, response) {
+    //  let obj = await getArea('P', '');
+    //console.log('object: ' + obj);
+    try {
+        var allProduct = await Product.find({
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var unapprovedPost = await Product.find({
+            status: '-1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var processingPost = await Product.find({
+            status: '0',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        var successPost = await Product.find({
+            status: '1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        successPost = successPost.reverse();
+        let data = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost)
+
+        for (let i = 0; i < data.lengthOfSuccessPost; i++) {
+            let productFavorite = await Favorite.find({
+                deleteAt: '', status: 'POST', product: successPost[i]._id
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+
+            let allComments = await Comment.find({
+                deleteAt: '', status: 'COMMENT', product: successPost[i]._id
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            let productShare = [];
+
+            successPost[i] = {
+                product: successPost[i],
+                countOfProductComment: allComments.length,
+                countOfProductFavorite: productFavorite.length,
+                productShare: productShare.length
+            }
+        }
+        console.log(JSON.stringify(successPost))
+        response.render('reportProduct', {
+            data: data
+        });
+    } catch (e) {
+        let data = new PostManage([], [], [], []);
+        response.render('reportProduct', {
+            data: data
+        });
+    }
+});
 // quản lý bài viết
 app.get('/postManage', async function (request, response) {
     //  let obj = await getArea('P', '');

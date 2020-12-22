@@ -1,129 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 4 admin, bootstrap 4, css3 dashboard, bootstrap 4 dashboard, Ample lite admin bootstrap 4 dashboard, frontend, responsive bootstrap 4 admin template, Ample admin lite dashboard bootstrap 4 dashboard template">
+    <meta name="description"
+          content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
     <title>{{title}}</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/"/>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png"
+          href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+    <!-- Custom CSS -->
+    <link href="public/interface/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <!-- Custom CSS -->
+    <link href="public/interface/css/style.min.css" rel="stylesheet">
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/index">Tìm trọ Sever</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin6">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <a class="navbar-brand" href="index">
+                    <span class="span-title-e">SmartFindPro</span>
+                </a>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                   href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <ul class="navbar-nav d-none d-md-block d-lg-none">
+                    <li class="nav-item">
+                        <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                           href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    </li>
+                </ul>
+                <!-- ============================================================== -->
+                <!-- Right side toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- Search -->
+                    <!-- ============================================================== -->
+                    <li class=" in">
+                        <form role="search" class="app-search d-none d-md-block mr-3">
+                            <input type="text" placeholder="Tìm kiếm..." class="form-control mt-0">
+                            <a href="" class="active">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </form>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <li>
+                        <a class="profile-pic" href="#">
+                            <span class="text-white font-medium">{{user}}</span></a>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin6">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav">
+                    <!-- User Profile-->
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index"
+                           aria-expanded="false">
+                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <span class="hide-menu">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="userManage"
+                           aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="postManage"
+                           aria-expanded="false">
+                            <i class="fas fa-folder-open" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Bài viết</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createAdAc"
+                           aria-expanded="false">
+                            <i class="fas fa-id-card-alt" aria-hidden="true"></i>
+                            <span class="hide-menu">Quản lý Nhân viên</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="history"
+                           aria-expanded="false">
+                            <i class="fas fa-history" aria-hidden="true"></i>
+                            <span class="hide-menu">Lịch sử Hoạt động</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="reportProduct"
+                           aria-expanded="false">
+                            <i class="fas fa-comment-slash" aria-hidden="true"></i>
+                            <span class="hide-menu">Báo cáo</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="confirmUser"
+                           aria-expanded="false">
+                            <i class=" fas fa-arrow-circle-up" aria-hidden="true"></i>
+                            <span class="hide-menu">Nâng cấp Tài khoản</span>
+                        </a>
+                    </li>
+                </ul>
 
-        <ul class="  navbar-nav fmy-2 my-lg-0  mr-auto">
-            <li style="display: none" class="nav-item">
-                <a class="nav-link" href="/createAdAc">Quản lý nhân viên</a>
-            </li>
-        </ul>
-
-
-        <ul class="  navbar-nav fmy-2 my-lg-0 ">
-            <li class="nav-item">
-
-            </li>
-            <li class="nav-item">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-outline-dark text-light dropdown-toggle"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tài khoản
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="white-box">
+                <div style="display: {{status}}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{textAlert}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="/index">Tài khoản của bạn</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/">Đăng xuất</a>
+                </div>
+                <form action="createAdAc" class="container col-8" id="formUD">
+                    <input type="text" name="nId" value="{{id}}" class="form-control" id="InputId" required
+                           style="display: none">
+                    <div class="form-group">
+                        <label for="InputUsername">Tên đăng nhập</label>
+                        <input type="text" name="nUser" value="{{user}}" class="form-control" id="InputUsername"
+                               required
+                               placeholder="Tên đăng nhập">
                     </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="row">
-    <div class="col-sm-2">
-        <div class="list-group">
+                    <div class="form-group">
+                        <label for="InputPassword">Mật khẩu</label>
+                        <input name="nPass" value="{{pass}}" class="form-control" id="InputPassword" required
+                               placeholder="Mật khẩu">
+                    </div>
+                    <!--            <div id="ConfirmPassword" class="form-group">-->
+                    <!--                <label for="InputConfirmPassword">Nhập lại mật khẩu</label>-->
+                    <!--                <input  name="cfPass" class="form-control" id="InputConfirmPassword" required-->
+                    <!--                       placeholder="nhập lại mật khẩu">-->
+                    <!--                <span id='message'></span>-->
+                    <!--            </div>-->
+                    <div class="form-group">
+                        <label for="InputName">Tên nhân viên</label>
+                        <input type="text" name="nName" value="{{name}}" class="form-control" id="InputName" required
+                               placeholder="">
+                    </div>
 
-            <a href="/index" class="list-group-item list-group-item-action">
-                Thống kê
-            </a>
-            <a href="/postManage" class="list-group-item list-group-item-action">
-                Quản lý bài đăng
-            </a>
-            <a href="/userManage" class="list-group-item list-group-item-action">
-                Quản lý người dùng
-            </a>
-            <a href="/createAdAc" class="list-group-item list-group-item-action">
-                Quản lý nhân viên
-            </a>
-            <a href="/history" class="list-group-item list-group-item-action">
-                Lịch sử
-            </a>
+                    <div class="form-group">
+                        <label for="InputPhone">Số điện thoại</label>
+                        <input type="text" name="nPhone" value="{{phone}}" class="form-control" id="InputPhone" required
+                               placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputAddress">Địa chỉ</label>
+                        <input type="text" name="nAddress" value="{{address}}" class="form-control" id="InputAddress"
+                               required
+                               placeholder="">
+                    </div>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col-4">
+                            <button type="submit" name="ud" value="1" class="btn btn-outline-dark col-sm-12 ">Cập nhật
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <a href="createAdAc" name="cancel" class="btn btn-outline-dark col-sm-12 ">
+                                Hủy tạo
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="footer text-center"> 2020 © SmartFind Admin brought to you by <a
+                    href="http://smartfind.me/">Smartfind.me</a>
+            </footer>
         </div>
-    </div>
-
-    <div class="col-sm-10  rounded-bottom bg-light " style="padding-right: 3%">
-        <hr>
-        <hr>
-        <div style="display: {{status}}" class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{textAlert}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form action="createAdAc" class="container col-8" id="formUD">
-            <input type="text" name="nId" value="{{id}}" class="form-control" id="InputId" required
-                   style="display: none">
-            <div class="form-group">
-                <label for="InputUsername">Tên đăng nhập</label>
-                <input type="text" name="nUser" value="{{user}}" class="form-control" id="InputUsername" required
-                       placeholder="Tên đăng nhập">
-            </div>
-            <div class="form-group">
-                <label for="InputPassword">Mật khẩu</label>
-                <input name="nPass" value="{{pass}}" class="form-control" id="InputPassword" required
-                       placeholder="Mật khẩu">
-            </div>
-<!--            <div id="ConfirmPassword" class="form-group">-->
-<!--                <label for="InputConfirmPassword">Nhập lại mật khẩu</label>-->
-<!--                <input  name="cfPass" class="form-control" id="InputConfirmPassword" required-->
-<!--                       placeholder="nhập lại mật khẩu">-->
-<!--                <span id='message'></span>-->
-<!--            </div>-->
-            <div class="form-group">
-                <label for="InputName">Tên nhân viên</label>
-                <input type="text" name="nName" value="{{name}}" class="form-control" id="InputName" required
-                       placeholder="">
-            </div>
-
-            <div class="form-group">
-                <label for="InputPhone">Số điện thoại</label>
-                <input type="text" name="nPhone" value="{{phone}}" class="form-control" id="InputPhone" required
-                       placeholder="">
-            </div>
-
-            <div class="form-group">
-                <label for="InputAddress">Địa chỉ</label>
-                <input type="text" name="nAddress" value="{{address}}"class="form-control" id="InputAddress" required
-                       placeholder="">
-            </div>
-            <br>
-            <div class="row justify-content-center">
-                <div class="col-4">
-                    <button type="submit" name="ud" value="1" class="btn btn-outline-dark col-sm-12 ">Cập nhật</button>
-                </div>
-                <div class="col-4">
-                    <a href="createAdAc" name="cancel" class="btn btn-outline-dark col-sm-12 ">
-                        Hủy tạo
-                    </a>
-                </div>
-            </div>
-        </form>
-        <br> <br> <br>
     </div>
 </div>
 <script>
@@ -134,15 +250,24 @@
             $('#message').html('Not Matching').css('color', 'red');
     });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+<!-- ============================================================== -->
+<script src="public/interface/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="public/interface/plugins/bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="public/interface/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="public/interface/js/app-style-switcher.js"></script>
+<script src="public/interface/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+<!--Wave Effects -->
+<script src="public/interface/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="public/interface/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="public/interface/js/custom.js"></script>
+<!--This page JavaScript -->
+<!--chartis chart-->
+<script src="public/interface/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+<script src="public/interface/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="public/interface/js/pages/dashboards/dashboard1.js"></script>
 </body>
+
 </html>
