@@ -156,4 +156,11 @@
 
     </string-array>
     <string name="title_activity_maps">Map</string>
+
+    <string name="msg_đinhanh">Tài khoản của Bạn chưa được định danh để sử dụng chức năng này. Vui lòng vào mục "Cá nhân" -> "Cài đặt" -> "Định danh tài khoản", định danh tài khoản của mình để có trải nghiệp tốt nhất</string>
+
+    <string name="facebook_app_id">176696500819373</string>
+    <string name="fb_login_protocol_scheme">fb176696500819373</string>
+
+
 </resources>

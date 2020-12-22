@@ -43,7 +43,22 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void openPost() {
-        mViewmodel.openPost();
+        switch (Config.LEVEL_ACCOUNT) {
+            case 0:
+                mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
+                break;
+            case 1:
+                mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
+                break;
+            case 2:
+                mViewmodel.showMessage("Tài khoản của bạn bị giới hạn lượt đăng là 3 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
+                mViewmodel.openPost();
+                break;
+            case 3:
+                mViewmodel.openPost();
+                break;
+        }
+
     }
 
     @Override
@@ -71,24 +86,22 @@ public class HomePresenter implements HomeContract.Presenter {
     private void getProductRental() {
         HomeRequest request = new HomeRequest();
         request.setId(Config.TOKEN_USER);
-
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 if (response.code() == 200) {
-                    productsList = new ArrayList<>();
+                    if (response.body().getResponseBody() != null) {
+                        productsList = new ArrayList<>();
 
-                    Log.d("CheckHomePresenter", new Gson().toJson(response.body()));
-
-                    for (Product item : response.body().getResponseBody().getProducts()) {
-                        if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
-                            productsList.add(item);
+                        for (Product item : response.body().getResponseBody().getProducts()) {
+                            if (!item.getProduct().getCategory().toLowerCase().contains("ở ghép")) {
+                                productsList.add(item);
+                            }
                         }
+                        mViewmodel.onShow(productsList);
+                    } else {
+                        mViewmodel.showMessage(response.body().getResponseHeader().getResCode() + " : " + response.body().getResponseHeader().getResMessage());
                     }
-
-
-                    mViewmodel.onShow(productsList);
-
 
                 } else {
                     mViewmodel.showMessage(mContext.getString(R.string.services_not_avail));

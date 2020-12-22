@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.data;
 
+import com.poly.smartfindpro.data.model.base.User;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.login.res.ResponseBody;
 
@@ -17,5 +18,9 @@ public class Config {
 
     public static String TOKEN_USER = "";
 
-    public static ResponseBody PROFILE;
+    public static User PROFILE;
+
+    public static int LEVEL_ACCOUNT = 0;
+
+    public static String NAME_FILE_PREFERENCE = "smartFind";
 }

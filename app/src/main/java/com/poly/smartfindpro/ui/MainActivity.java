@@ -15,7 +15,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
+import com.poly.smartfindpro.ui.checklevel.CheckLevelAccount;
 import com.poly.smartfindpro.ui.home.HomeFragment;
 import com.poly.smartfindpro.ui.message.MessageFragment;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
@@ -86,15 +88,21 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onSelectMessager() {
-        if (position < 2) {
-            goToFragmentReplaceLeft(R.id.fl_native, new MessageFragment(), null);
-        } else if (position > 2) {
-            goToFragmentReplaceRight(R.id.fl_native, new MessageFragment(), null);
+        if (Config.LEVEL_ACCOUNT > 0) {
+            if (position < 2) {
+                goToFragmentReplaceLeft(R.id.fl_native, new MessageFragment(), null);
+            } else if (position > 2) {
+                goToFragmentReplaceRight(R.id.fl_native, new MessageFragment(), null);
 
+            }
+            position = 2;
+            checkAnimation(position);
+            setBottomNaviChange(1);
+        } else {
+            showMessage(getString(R.string.msg_đinhanh));
+            CheckLevelAccount.onShowMessage(0);
         }
-        position = 2;
-        checkAnimation(position);
-        setBottomNaviChange(1);
+
     }
 
     @Override

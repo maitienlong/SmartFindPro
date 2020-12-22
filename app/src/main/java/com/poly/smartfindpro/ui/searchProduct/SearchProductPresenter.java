@@ -1,36 +1,16 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
-import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
-import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
-import com.poly.smartfindpro.data.model.product.res.Location;
-import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
-import com.poly.smartfindpro.ui.listProduct.ListProductFragment;
-import com.poly.smartfindpro.ui.searchProduct.filterProduct.FilterProductActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +48,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     private void initData() {
         key = new ObservableField<>();
         hint = new ObservableField<>();
+        hint.set("Nhập địa chỉ tìm kiếm");
         getProduct();
     }
 

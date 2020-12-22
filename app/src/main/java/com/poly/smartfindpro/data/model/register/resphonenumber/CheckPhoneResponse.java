@@ -3,8 +3,7 @@ package com.poly.smartfindpro.data.model.register.resphonenumber;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.poly.smartfindpro.data.model.register.resphonenumber.ResponseBody;
-import com.poly.smartfindpro.data.model.register.resphonenumber.ResponseHeader;
+import com.poly.smartfindpro.data.model.base.ResponseHeader;
 
 public class CheckPhoneResponse {
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface LoginFragmentContract {
     interface ViewModel extends BaseView {
-        void saveLogin(String username, String password, String token);
+        void saveLogin(String username, String password, String token, int level);
 
         void onShowDialog(String msg);
 

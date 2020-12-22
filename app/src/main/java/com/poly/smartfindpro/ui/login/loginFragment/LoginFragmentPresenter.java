@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.login.loginFragment;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,8 +46,9 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
             mViewmodel.showMessage("Vui lòng nhập tài khoản");
         } else if (mBinding.edtPassword.getText().toString().equals("")) {
             mViewmodel.showMessage("Vui lòng nhập Mật khẩu");
-        } else {
-           //u Toast.makeText(mContex, "OK", Toast.LENGTH_SHORT).show();
+        } else if(!isNetworkConnected()) {
+            mViewmodel.showMessage("Vui lòng kiểm tra kết nối mạng");
+        }else {
             getLogin();
         }
 
@@ -71,10 +73,12 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
                     mViewmodel.hideLoading();
                     Log.d("getUser", new Gson().toJson(response.body()));
                     String token = response.body().getResponseBody().getUser().getId();
-                    Config.PROFILE = response.body().getResponseBody();
+                    int level = response.body().getResponseBody().getUser().getLevel();
+                    Config.PROFILE = response.body().getResponseBody().getUser();
                     Config.TOKEN_USER = token;
+                    Config.LEVEL_ACCOUNT = level;
 
-                    mViewmodel.saveLogin(username, password, token);
+                    mViewmodel.saveLogin(username, password, token, level);
                 } else {
                     mViewmodel.hideLoading();
                     mViewmodel.showMessage("Tài khoản hoặc mật khẩu không chính xác");
@@ -86,10 +90,17 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 mViewmodel.hideLoading();
+                mViewmodel.showMessage("Vui lòng kiểm tra kết nối mạng");
             }
         });
 
 
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) mContex.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

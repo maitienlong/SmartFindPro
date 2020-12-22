@@ -17,7 +17,8 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_margin="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -96,8 +97,7 @@
                     android:id="@+id/edtDetialAdress"
                     android:layout_width="match_parent"
                     android:gravity="start"
-                    android:layout_height="match_parent"
-
+                    android:layout_height="@dimen/_60sdp"
                     android:background="@drawable/bg_circle_editext" />
 
 
@@ -107,10 +107,10 @@
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:onClick="@{()->presenter.onNext()}"
                 android:id="@+id/btnContinue"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="@drawable/custom_button_infor"
+                android:background="@drawable/background_button"
                 android:text="@string/btn_continue"
                 android:textColor="@color/white" />
         </LinearLayout>

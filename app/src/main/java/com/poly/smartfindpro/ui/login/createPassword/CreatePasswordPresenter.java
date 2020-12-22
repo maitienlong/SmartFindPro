@@ -1,10 +1,12 @@
 package com.poly.smartfindpro.ui.login.createPassword;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
+import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentCreatePasswordBinding;
 
@@ -63,23 +65,33 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
         registerRequest.setPassword(mBinding.edtPassword.getText().toString());
         registerRequest.setFullName(registerRequest.getPhoneNumber());
 
-        MyRetrofitSmartFind.getInstanceSmartFind().getRegister(registerRequest).enqueue(new Callback<RegisterResponse>() {
+        MyRetrofitSmartFind.getInstanceSmartFind().getRegister(registerRequest).enqueue(new Callback<CheckPhoneResponse>() {
             @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-
-                if (response.code() == 200 && response.body().getResponseHeader().getResMessage().equals("Succsess")) {
+            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                Log.d("CheckCreate", "onResponse: ");
+                if (response.code() == 200) {
                     mViewModel.hideLoading();
-                    mViewModel.onGoToLogin(registerRequest.getPhoneNumber());
+                    if (response.body().getResponseHeader().getResCode() == 200) {
+                        if (response.body().getResponseBody().getStatus().equalsIgnoreCase("success")) {
+                            mViewModel.hideLoading();
+                            mViewModel.onGoToLogin(registerRequest.getPhoneNumber());
+                        } else {
+
+                            mViewModel.showMessage("Tài khoản đã được đăng ký trước đó");
+                        }
+                    } else {
+
+                        mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                    }
+
                 } else {
                     mViewModel.hideLoading();
-                    mViewModel.showMessage("Tài khoản đã được đăng ký trước đó");
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
                 }
-
             }
 
-
             @Override
-            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
                 mViewModel.hideLoading();
                 mViewModel.showMessage(context.getString(R.string.services_not_avail));
             }
