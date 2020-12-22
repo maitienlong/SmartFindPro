@@ -2649,7 +2649,7 @@ app.post('/find-comment', async function (request, response) {
                         }
                     }).lean();
                     if (allReplyOfComment.length > 0) {
-                        allReplyOfComment = allReplyOfComment.reverse();
+                        allReplyOfComment = allReplyOfComment;
                         for (let j = 0; j < allReplyOfComment.length; j++) {
                             if (user === allReplyOfComment[j].user._id) {
                                 is_favorite_reply = true;
