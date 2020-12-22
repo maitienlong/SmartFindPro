@@ -131,6 +131,7 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_amount_person"
+                                android:text=""
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/custom_edt_change_pass"

@@ -21,9 +21,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
@@ -31,6 +33,7 @@ import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.data.model.post.req.Information;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +81,23 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         mBinding.btnChungCu.setOnTouchListener(this);
         mBinding.btnContinue.setOnClickListener(this);
         mBinding.imgAddImages.setOnClickListener(this);
-    }
+        getData();
 
+    }
+    private void getData() {
+        if(getArguments() != null){
+            Type type = new TypeToken<PostRequest>() {
+            }.getType();
+
+            idPost = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
+
+//            Intent intent = getBaseActivity().getIntent();
+
+//            idPost = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDlE_RES_ID),type);
+
+
+        }
+    }
 
     @Override
     protected void initData() {

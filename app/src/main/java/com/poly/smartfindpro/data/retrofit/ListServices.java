@@ -23,6 +23,7 @@ import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
+import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
@@ -76,7 +77,7 @@ public interface ListServices {
     Call<CheckPhoneResponse> getCheckNum(@Body CheckPhoneNumberRequest request);
 
     @POST("/init-user")
-    Call<RegisterResponse> getRegister(@Body RegisterRequest request);
+    Call<CheckPhoneResponse> getRegister(@Body RegisterRequest request);
 
     @POST("/delete-product")
     Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request );
@@ -97,5 +98,7 @@ public interface ListServices {
     @POST("/product-favorite")
     Call<ResponseFavoritePost> getFavorite(@Body InitFavorite request);
 
+    @POST("/update-product")
+    Call<CheckPhoneResponse> getUpdateProduct(@Body PostRequest request);
 
 }

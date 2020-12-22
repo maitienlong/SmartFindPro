@@ -88,7 +88,7 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         try {
             Date date = dateFormatter.parse(item.getComment().getCreateAt());
             holder.time.setText(getTime(date));
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -96,17 +96,17 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         holder.sartCount.setText(String.valueOf(item.getFavorites().getCount()));
 
         // favoris
-        if(item.getIsFavorite()){
+        if (item.getIsFavorite()) {
             holder.favoris.setTextColor(Color.BLUE);
-        }else {
+        } else {
             holder.favoris.setTextColor(Color.BLACK);
         }
 
         // recomment count
-        if(item.getReply().getCount() == 0){
+        if (item.getReply().getCount() == 0) {
             holder.tv_recoment_view.setVisibility(View.GONE);
             holder.recommentCount.setText(String.valueOf(item.getReply().getCount()));
-        }else {
+        } else {
             holder.tv_recoment_view.setVisibility(View.VISIBLE);
             holder.recommentCount.setText(String.valueOf(item.getReply().getCount()));
         }
@@ -123,13 +123,13 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
                 MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
                     @Override
                     public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
-                        if(response.code() == 200 && response.body().getResponseHeader().getResCode() == 200){
+                        if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
 
-                            if(item.getIsFavorite()){
+                            if (item.getIsFavorite()) {
                                 item.setIsFavorite(false);
                                 item.getFavorites().setCount(item.getFavorites().getCount() - 1);
                                 onChange();
-                            }else {
+                            } else {
                                 item.setIsFavorite(true);
                                 item.getFavorites().setCount(item.getFavorites().getCount() + 1);
                                 onChange();
@@ -157,7 +157,14 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
                 mViewmodel.onCallBackAdapter(commentDetailRequest);
             }
         });
+        holder.tv_amount_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
+                mViewmodel.onCallBackAdapter(commentDetailRequest);
+            }
+        });
 
     }
 
@@ -166,7 +173,7 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         return listItem.size();
     }
 
-    private void onChange(){
+    private void onChange() {
         notifyDataSetChanged();
     }
 
@@ -199,9 +206,8 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView avatar;
-        TextView customerName, time, favoris, reply, sartCount, content, recommentCount;
+        TextView customerName, time, favoris, reply, sartCount, content, recommentCount, tv_amount_reply;
         LinearLayout tv_recoment_view;
-
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -215,6 +221,7 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
             sartCount = itemView.findViewById(R.id.tv_count_favorite);
             recommentCount = itemView.findViewById(R.id.tv_recomment_count);
             tv_recoment_view = itemView.findViewById(R.id.tv_recoment_view);
+            tv_amount_reply = itemView.findViewById(R.id.tv_amount_reply);
         }
     }
 }

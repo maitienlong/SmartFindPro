@@ -72,6 +72,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         View inflate = LayoutInflater.from(context).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         inflate.setLayoutParams(lp);
+
         return new ProfileAdapter.ViewHolder(inflate);
     }
 
@@ -96,7 +97,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             }
 
-            holder.tv_username_post.setText(item.getUser().getUserName());
+            holder.tv_username_post.setText(item.getUser().getFullname());
             holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
             holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()) + " " + item.getProduct().getInformation().getUnit());
             holder.tv_title_post.setText(item.getContent());

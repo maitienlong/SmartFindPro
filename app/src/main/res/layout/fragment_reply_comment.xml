@@ -163,6 +163,7 @@
             android:layout_marginLeft="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@color/white"
             android:gravity="center_vertical">
 
