@@ -206,7 +206,9 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             }
         });
     }
-
+    public void getUpdateProduct(String idPost,String jsonData) {
+        mViewModel.onUpdate(new Gson().toJson(jsonData));
+    }
     private void getProduct() {
         ProductRequest request = new ProductRequest();
         request.setId(Config.TOKEN_USER);

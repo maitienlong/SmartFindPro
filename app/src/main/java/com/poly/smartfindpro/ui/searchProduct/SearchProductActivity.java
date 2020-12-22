@@ -26,6 +26,7 @@ import com.poly.smartfindpro.data.model.product.res.Location;
 import com.poly.smartfindpro.data.model.product.res.Product;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.ActivitySearchProductBinding;
+import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.searchProduct.adapter.ProductDetailBottomAdapter;
 import com.poly.smartfindpro.ui.searchProduct.filterProduct.FilterProductActivity;
 import com.poly.smartfindpro.ui.searchProduct.map.MapsFragment;
@@ -63,7 +64,7 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
         mPresenter = new SearchProductPresenter(getBaseContext(), this, mBinding);
         mBinding.setPresenter(mPresenter);
-
+        mBinding.cmtb.setTitle("Tìm kiếm");
         bottomSheet = findViewById(R.id.bottomSheet);
         rvProduct = findViewById(R.id.rvProduct);
         title = findViewById(R.id.tv_title_bts);
@@ -179,6 +180,13 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
         openActivity(FilterProductActivity.class, bundle);
+    }
+
+    @Override
+    public void onBackClick() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override

@@ -61,7 +61,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         Button btn_menu = inflate.findViewById(R.id.btn_menu_profile_post);
+        Button btn_status = inflate.findViewById(R.id.btn_status);
         btn_menu.setVisibility(View.GONE);
+        btn_status.setVisibility(View.GONE);
         inflate.setLayoutParams(lp);
         return new HomeAdapter.ViewHolder(inflate);
     }
@@ -88,7 +90,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
             holder.tv_username_post.setText(item.getUser().getUserName());
             holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
-            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
+            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()) + " " + item.getProduct().getInformation().getUnit());
             holder.tv_title_post.setText(item.getContent());
             if (item.getProduct().getInformation().getImage().size() < 4) {
                 for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {

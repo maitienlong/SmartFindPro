@@ -19,7 +19,9 @@ public interface ProfileContact {
 
         void onClickApproved();
 
-        void onCallback(int type, String idPost);
+        void onCallback(int type, String idPost, String jsonData);
+
+        void onUpdate(String jsonData);
     }
 
     interface Presenter extends BasePresenter {

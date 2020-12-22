@@ -76,7 +76,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
         showLoadingDialog();
         PhoneAuthOptions phoneAuthOptions =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+84"+phone)       // Phone number to verify
+                        .setPhoneNumber("+84" + phone)       // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(mActivity)                 // Activity (for callback binding)
                         .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -113,7 +113,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 hideLoading();
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Bundle bundle = new Bundle();
                     bundle.putString(Config.POST_BUNDEL_RES, getArguments().getString(Config.POST_BUNDEL_RES));
                     getBaseActivity().goToFragmentReplace(R.id.fl_Login, new CreatePasswordFragment(), bundle);

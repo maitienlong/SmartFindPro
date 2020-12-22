@@ -1,12 +1,16 @@
 package com.poly.smartfindpro.ui.user.profile;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
+import com.poly.smartfindpro.ui.login.otp.ConfirmOTPFragment;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.user.adapter.ProfileAdapter;
 import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
@@ -74,10 +78,20 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     }
 
     @Override
-    public void onCallback(int type, String idPost) {
+    public void onCallback(int type, String idPost, String jsonData) {
 
         if (type == 0) {
             mPresenter.getDeleteProduct(idPost);
+
+        }else {
+            Bundle bundle = new Bundle();
+            bundle.putString(Config.POST_BUNDlE_RES_ID, idPost);
+            getBaseActivity().openActivity(PostActivity.class,bundle);
         }
+    }
+
+    @Override
+    public void onUpdate(String jsonData) {
+
     }
 }

@@ -30,6 +30,7 @@ public class CreatePasswordFragment extends BaseDataBindFragment<FragmentCreateP
         }.getType();
 
         registerRequest = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
+
     }
 
     @Override

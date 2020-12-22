@@ -7,9 +7,13 @@ public interface HelpContact {
 
     interface ViewModel extends BaseView {
         void onBackClick();
+
+        void onCallClick();
     }
 
     interface Presenter extends BasePresenter {
         void onBackClick();
+
+        void onCallClick();
     }
 }

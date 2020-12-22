@@ -25,10 +25,15 @@
             <LinearLayout
                 android:id="@+id/cardView3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="@dimen/_130sdp"
                 android:background="@color/background"
                 android:orientation="vertical">
 
+                <com.poly.smartfindpro.widget.CommonToolbar
+                    android:id="@+id/cmtb"
+                    onBackClick="@{()->presenter.onBackClick()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
@@ -68,20 +73,20 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        app:endIconMode="clear_text"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edtSearch"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColorHint="#fff"
-                            android:hint="@{presenter.hint}"
-                            android:singleLine="true"
                             android:background="@drawable/bg_circle_editext_while"
+                            android:hint="@{presenter.hint}"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_8sdp"
-                            android:textColor="@color/white" />
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="#fff" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -97,12 +102,12 @@
                         android:tintMode="@color/white" />
 
                     <ImageView
-                        android:onClick="@{()-> presenter.onSelectTypeFilter()}"
                         android:id="@+id/type_filter"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="3"
+                        android:onClick="@{()-> presenter.onSelectTypeFilter()}"
                         android:padding="@dimen/_2sdp"
                         android:src="@drawable/ic_baseline_filter_alt_24"
                         app:tint="@color/white" />

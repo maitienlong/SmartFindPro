@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.user.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
+import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.user.profile.ProfileContact;
 
 import java.text.DateFormat;
@@ -48,11 +50,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     private Context context;
 
     private FragmentManager mFragmentManager;
-    private DeleteProductResponse mDelete;
     private List<Products> productList;
 
     private ProfileContact.ViewModel mViewmodel;
-
+    private boolean statusProduct = false;
 
     public ProfileAdapter(Context context, FragmentManager fragmentManager, ProfileContact.ViewModel viewModel) {
         this.context = context;
@@ -64,9 +65,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         this.productList = productList;
     }
 
-    public void setmDelete(DeleteProductResponse mDelete) {
-        this.mDelete = mDelete;
-    }
 
     @NonNull
     @Override
@@ -100,7 +98,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             holder.tv_username_post.setText(item.getUser().getUserName());
             holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
-            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
+            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()) + " " + item.getProduct().getInformation().getUnit());
             holder.tv_title_post.setText(item.getContent());
 
             if (item.getProduct().getInformation().getImage() != null) {
@@ -165,7 +163,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     .error(R.mipmap.imgplaceholder)
                     .into(holder.img_avatar);
 
+            holder.btn_status.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                    holder.btn_status.setBackgroundResource(R.drawable.background_hori);
+//                    Drawable buttonBackground = holder.btn_status.getBackground();
+
+
+                }
+            });
             holder.btn_menu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -176,10 +183,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             switch (menuItem.getItemId()) {
                                 case R.id.btn_delete_menu:
-                                    mViewmodel.onCallback(0, item.getId());
+//                                    mViewmodel.onCallback(0, item.getId(),item.toString());
+                                    mViewmodel.onCallback(0, item.getId(), item.toString());
                                     break;
                                 case R.id.btn_edit_menu:
-//                                    mViewmodel.onCallback(1, item.getId());
+                                    mViewmodel.onCallback(1, item.getId(), item.toString());
 
                                     break;
                             }
@@ -232,7 +240,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private Button btn_menu;
+        private Button btn_menu, btn_status;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
         private ImageView img1, img2, img3, img_avatar;
 
@@ -248,6 +256,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             img2 = itemView.findViewById(R.id.img_product_post2);
             img3 = itemView.findViewById(R.id.img_product_post3);
             img_avatar = itemView.findViewById(R.id.img_avatar);
+            btn_status = itemView.findViewById(R.id.btn_status);
         }
     }
 
