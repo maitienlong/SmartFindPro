@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.searchProduct.filterProduct.FilterProductPresenter" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:background="@color/background_app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_app_gray"
+        android:orientation="vertical">
+
+        <com.poly.smartfindpro.widget.CommonToolbar
+            title="@{presenter.title}"
+            onBackClick="@{()-> presenter.onBackClick()}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
+
+        <ImageView
+            android:id="@+id/btn_filter_option"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_baseline_filter_alt"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+        <include layout="@layout/fragment_tool_filter" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

@@ -35,7 +35,7 @@ public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_image_infor_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_imageview, parent, false);
         return new ViewHolder(view);
     }
 
@@ -44,10 +44,17 @@ public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdap
 
         ImageInforPost item = mList.get(position);
 
-        holder.img_infor_post.setImageBitmap(item.getBitmap());
+        holder.imageView.setImageBitmap(item.getBitmap());
 
-
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mList.remove(item);
+                setItemView(mList);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -57,27 +64,15 @@ public class ShowImagePostAdapter extends RecyclerView.Adapter<ShowImagePostAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView img_infor_post;
-        TextView tvTitle;
+        ImageView imageView, btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_infor_post = itemView.findViewById(R.id.img_infor_post);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
+            imageView = itemView.findViewById(R.id.imageview_show);
+            btnDelete = itemView.findViewById(R.id.btn_delete_image);
         }
     }
 
-
-//    public Bitmap convertStringToBitmap(String encodedString) {
-//        try {
-//            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-//            return bitmap;
-//        } catch (Exception e) {
-//            e.getMessage();
-//            return null;
-//        }
-//    }
 }
 
 

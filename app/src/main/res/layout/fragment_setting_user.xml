@@ -45,10 +45,10 @@
                     android:id="@+id/tvInfor"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/border_item_post"
+                    android:background="@drawable/border_button_gray"
                     android:onClick="@{()->presenter.onClickInformation()}"
                     android:text="@string/setting_infor_user"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
 
 
@@ -59,10 +59,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/border_item_post"
+                    android:background="@drawable/border_button_gray"
                     android:onClick="@{()->presenter.onClickChangePassword()}"
                     android:text="@string/setting_change_pass"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView
@@ -72,10 +72,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/border_item_post"
+                    android:background="@drawable/border_button_gray"
                     android:onClick="@{()->presenter.onClickConfirmAccount()}"
                     android:text="@string/setting_confirm_account"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
                 <TextView
                     android:gravity="center"
@@ -84,10 +84,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/border_item_post"
+                    android:background="@drawable/border_button_gray"
                     android:onClick="@{()->presenter.onClickPerMission()}"
                     android:text="@string/setting_permission"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
 
             </LinearLayout>

@@ -3,7 +3,6 @@ package com.poly.smartfindpro.ui.user.help;
 import android.content.Context;
 
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
-import com.poly.smartfindpro.ui.user.setting.information.InforContact;
 
 public class HelpPresenter implements HelpContact.Presenter {
     private Context context;
@@ -29,5 +28,10 @@ public class HelpPresenter implements HelpContact.Presenter {
     @Override
     public void onBackClick() {
         mViewModel.onBackClick();
+    }
+
+    @Override
+    public void onCallClick() {
+        mViewModel.onCallClick();
     }
 }

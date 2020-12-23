@@ -200,6 +200,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
         mFrgManager.executePendingTransactions();
     }
 
+
     public void goToFragmentReplace(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
         if (mFragStack == null && mFrgManager == null) {
             mFragStack = new ArrayDeque<>();
@@ -217,6 +218,28 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
             mFragStack.push(mBaseFragment);
 
        trans.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
+        trans.commitAllowingStateLoss();
+        mFrgManager.executePendingTransactions();
+    }
+
+    public void goToFragmentReplaceMaps(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle) {
+        if (mFragStack == null && mFrgManager == null) {
+            mFragStack = new ArrayDeque<>();
+            mFrgManager = getSupportFragmentManager();
+        }
+        FragmentTransaction trans = mFrgManager.beginTransaction();
+        if (mBundle != null) {
+            mBaseFragment.setArguments(mBundle);
+        }
+        if (mFragStack != null && mFragStack.size() >= 1) {
+            trans.hide(mFragStack.getLast());
+        }
+
+        if (mFragStack != null)
+            mFragStack.push(mBaseFragment);
+
+        trans.setCustomAnimations(R.anim.new_fade_in, R.anim.new_fade_out);
         trans.replace(fragmentContainerId, mBaseFragment, mBaseFragment.getClass().getSimpleName());
         trans.commitAllowingStateLoss();
         mFrgManager.executePendingTransactions();
@@ -276,6 +299,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
                                          OnFragmentDataCallBack callback) {
         mBaseFragment.setOnFragmentDataCallback(callback);
         goToFragment(fragmentContainerId, mBaseFragment, mBundle);
+    }
+
+    public void goToFragmentMapsCallBackData(@IdRes int fragmentContainerId, BaseFragment mBaseFragment, Bundle mBundle,
+                                         OnFragmentDataCallBack callback) {
+        mBaseFragment.setOnFragmentDataCallback(callback);
+        goToFragmentReplaceMaps(fragmentContainerId, mBaseFragment, mBundle);
     }
 
     public boolean onBackFragment() {

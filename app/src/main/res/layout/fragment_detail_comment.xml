@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.detailcomment.DetailcommentPresenter" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:id="@+id/ctb_reply_comment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            app:onBackClick="@{() -> presenter.onClose()}" />
+        <LinearLayout
+            android:id="@+id/ln_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ctb_reply_comment"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/img_avt_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="5"
+                android:src="@mipmap/logo_app" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_8sdp"
+
+                    android:backgroundTint="#dfe6e9"
+                    android:paddingLeft="@dimen/_8sdp"
+                    app:cardCornerRadius="@dimen/_10sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_6sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:text="@={presenter.name}"
+                            android:id="@+id/tv_per_name"
+                            style="@style/textStyleBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="@={presenter.content}"
+                            android:id="@+id/tv_content"
+                            style="@style/textStyleRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        style="@style/textStyleRegular_10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@={presenter.time}" />
+
+                    <TextView
+                        android:onClick="@{() -> presenter.onFavorite()}"
+                        android:id="@+id/btn_favorite"
+                        style="@style/textStyleBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Thích" />
+
+                    <TextView
+                        android:id="@+id/btn_recomment"
+                        style="@style/textStyleBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/_8sdp">
+
+                        <TextView
+                            android:id="@+id/tv_count_favorite"
+                            style="@style/textStyleBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@={presenter.startCount}" />
+
+                        <ImageView
+                            android:id="@+id/img_count_star"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_star" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/ln_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:layout_weight="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_weight="1"
+                android:id="@+id/rc_reply_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_10sdp" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/edt_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edt_change_pass"
+                android:hint="Viết bình luận ..." />
+
+            <ImageView
+                android:id="@+id/btnSendComment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:onClick="@{() -> presenter.onComment()}"
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/ic_baseline_send_24" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

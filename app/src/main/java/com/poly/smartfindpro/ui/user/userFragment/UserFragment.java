@@ -1,9 +1,16 @@
 package com.poly.smartfindpro.ui.user.userFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.callback.AlertDialogListener;
+import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.ConfigSharedPreferences;
 import com.poly.smartfindpro.databinding.FragmentSettingUserBinding;
 import com.poly.smartfindpro.databinding.FragmentUserBinding;
+import com.poly.smartfindpro.ui.login.LoginActivity;
 import com.poly.smartfindpro.ui.user.help.HelpFragment;
 import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
 import com.poly.smartfindpro.ui.user.rules.RulesFragment;
@@ -48,6 +55,33 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     public void onClickLogOut() {
+        showAlertDialog("Thông báo", "Bạn muốn đăng xuất", "Đăng xuất", "Hủy", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                Config.TOKEN_USER = "";
+                onSaveLogin("","","",0,false);
+                mActivity.finish();
+                getBaseActivity().openActivity(LoginActivity.class);
+            }
 
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
+    }
+
+    private boolean onSaveLogin(String username, String password, String token,int level, boolean isSave) {
+        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(ConfigSharedPreferences.USERNAME, username);
+        editor.putString(ConfigSharedPreferences.PASSWORD, password);
+        editor.putString(ConfigSharedPreferences.TOKEN, token);
+        editor.putInt(ConfigSharedPreferences.LEVEL, level);
+        editor.putBoolean(ConfigSharedPreferences.IS_SAVE, isSave);
+
+        return editor.commit();
     }
 }

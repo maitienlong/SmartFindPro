@@ -6,7 +6,7 @@
     <string name="common_cancel">Hủy</string>
     <string name="common_accept">Đồng ý</string>
     <string name="common_error_no_internet">Không có Internet</string>
-    <string name="tv_category">Thể loại:</string>
+    <string name="tv_category">Thể loại</string>
     <string name="btn_pairing">Ở ghép</string>
     <string name="btn_rental_hous">Nhà trọ</string>
     <string name="btn_apartment">Chung cư</string>
@@ -17,17 +17,17 @@
     <string name="tv_amount_room">Số lượng phòng:</string>
     <string name="tv_amount_person">Số người</string>
     <string name="tv_price">Giá / Tháng: </string>
-    <string name="tv_deposit">Đặt cọc:</string>
+    <string name="tv_deposit">Đặt cọc</string>
     <string name="tv_gender">Giới tính:</string>
     <string name="tv_electricity_bill">Tiền điện / Tháng:</string>
     <string name="tv_water_bill">Tiền nước / Tháng:</string>
     <string name="btn_continue">Tiếp tục</string>
-    <string name="tv_address">Địa chỉ:</string>
+    <string name="tv_address">Địa chỉ</string>
     <string name="tv_province">Tỉnh/Thành phố </string>
     <string name="tv_district">Huyện/Thị xã </string>
     <string name="tv_commune">Xã/Phường/Thị trấn </string>
     <string name="tv_detail_address">Địa chỉ chi tiết </string>
-    <string name="tv_utilities">Tiện ích:</string>
+    <string name="tv_utilities">Tiện ích</string>
     <string name="tv_wc">Vệ sinh</string>
     <string name="tv_bathroom">Nhà tắm</string>
     <string name="tv_parking">Chỗ để xe </string>
@@ -45,6 +45,7 @@
     <string name="tv_male">Nam</string>
     <string name="tv_female">Nữ</string>
     <string name="tv_all">Tất cả</string>
+    <string name="tv_both">Cả 2</string>
     <string name="tv_confirm">Xác nhận</string>
     <string name="tv_dang_nhap">Đăng nhập</string>
     <string name="tv_dang_ky">Đăng ký</string>
@@ -55,8 +56,8 @@
     <string name="text_infor_location">Vị trí:</string>
     <string name="text_infor_gender">Giới tính:</string>
     <string name="text_infor_quantity">Số lượng:</string>
-    <string name="text_infor_price_electric">Tiền điện:</string>
-    <string name="text_infor_price_water">Tiền nước:</string>
+    <string name="text_infor_price_electric">Tiền điện</string>
+    <string name="text_infor_price_water">Tiền nước</string>
     <string name="text_infor_utilities">Tiện ích:</string>
     <string name="text_infor_chat">Nhắn tin</string>
     <string name="text_infor_call">Gọi điện</string>
@@ -110,13 +111,13 @@
     <string name="str_price_to_rent">50.000.000</string>
     <string name="cancel2">Hủy</string>
     <string name="edit2">Sửa</string>
-<!--User-->
+    <!--User-->
     <string name="tv_username">Họ và tên</string>
     <string name="tv_telephone_number">Số điện thoại</string>
     <string name="tv_id_card">Số CMND</string>
     <string name="btn_change">Thay đổi</string>
     <string name="btn_not_hire">Chưa thuê</string>
-    <string name="btn_pending">Chờ duyệt</string>
+    <string name="btn_pending">Chưa duyệt</string>
     <string name="btn_approved">Đã duyệt</string>
     <string name="btn_delete">Xóa</string>
     <string name="btn_edit">Sửa</string>
@@ -125,7 +126,7 @@
     <string name="tv_home_town">Nguyên Quán</string>\
     <string name="tv_address_now">Địa chỉ thường trú</string>
     <string name="btn_confirm">Xác thực</string>
-
+    <string name="tv_status">Không có bài viết nào</string>
     <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
@@ -155,4 +156,27 @@
 
     </string-array>
     <string name="title_activity_maps">Map</string>
+
+    <string name="msg_đinhanh">Tài khoản của Bạn chưa được định danh để sử dụng chức năng này. Vui lòng vào mục "Cá nhân" -> "Cài đặt" -> "Định danh tài khoản", định danh tài khoản của mình để có trải nghiệp tốt nhất</string>
+
+    <string name="facebook_app_id">176696500819373</string>
+    <string name="fb_login_protocol_scheme">fb176696500819373</string>
+
+    <string name="face_not_found">Không tìm thấy mặt</string>
+    <string name="face_multiple">Nhiều khuôn mặt được phát hiện.</string>
+    <string name="face_too_small">Mặt quá nhỏ.</string>
+    <string name="face_too_large">Mặt quá to.</string>
+    <string name="face_out_of_rect">Mặt đã ra khỏi hộp.</string>
+    <string name="liveness_detection_neutral">Vui lòng nhìn thẳng</string>
+    <string name="liveness_detection_face_left">Vui lòng quay mặt sang trái</string>
+    <string name="liveness_detection_face_right">Vui lòng quay mặt sang phải</string>
+    <string name="liveness_detection_face_smile">Vui lòng cười</string>
+    <string name="liveness_detection_face_up">Vui lòng ngẩng mặt lên</string>
+    <string name="liveness_detection_face_down">Vui lòng cúi mặt xuống</string>
+    <string name="liveness_detection_blink_left">Vui lòng nháy mắt trái</string>
+    <string name="liveness_detection_blink_right">Vui lòng nháy mắt phải</string>
+    <string name="liveness_detection_face_incline_left">Vui lòng nghiêng đầu sang trái</string>
+    <string name="liveness_detection_face_incline_right">Vui lòng nghiêng đầu sang phải</string>
+    <string name="linveness_detection_close_eye">Vui lòng nhắm mắt</string>
+
 </resources>

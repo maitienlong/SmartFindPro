@@ -18,8 +18,9 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/TextViewStyle.Bold"
+            style="@style/textStyleBold"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="center"
@@ -39,7 +40,7 @@
 
         <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/tv_message"
-            style="@style/TextViewStyle"
+            style="@style/textStyleAlert_12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
@@ -54,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -67,13 +69,13 @@
                 android:text="@string/common_cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_16sdp" />
 
             <View
                 android:id="@+id/view_line"
-                android:layout_width="1dp"
+                android:layout_width="@dimen/_1sdp"
                 android:layout_height="match_parent"
-                android:background="@color/grey_three_trans" />
+                android:background="@color/white" />
 
             <Button
                 android:id="@+id/btn_ok"
@@ -85,7 +87,7 @@
                 android:text="@string/common_accept"
                 android:textAllCaps="false"
                 android:textColor="@color/blue_dark4"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_16sdp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

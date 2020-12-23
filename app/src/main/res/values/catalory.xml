@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item></item>
+        <item>Nhà trọ</item>
+        <item>Nguyên căn</item>
+        <item>Chung cư</item>
+        <item>Ở ghép</item>
+    </string-array>
+
+</resources>

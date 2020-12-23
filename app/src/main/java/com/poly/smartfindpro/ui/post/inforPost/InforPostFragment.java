@@ -17,19 +17,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
+import com.poly.smartfindpro.ui.post.adapter.ShowImagePostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.data.model.post.req.Information;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.utils.BindingUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +55,12 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     String mElectricityBill = "";
     String mWaterBill = "";
     String mDescription = "";
+    String idPost;
 
     private PostRequest postRequest;
+
+    private ShowImagePostAdapter showImagePostAdapter;
+
     private Information information;
 
     private List<ImageInforPost> imageListPath;
@@ -76,16 +87,26 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         mBinding.btnChungCu.setOnTouchListener(this);
         mBinding.btnContinue.setOnClickListener(this);
         mBinding.imgAddImages.setOnClickListener(this);
-    }
+        getData();
 
+    }
+    private void getData() {
+        if(getArguments() != null && getArguments().getString(Config.POST_BUNDEL_RES) != null){
+
+        }
+    }
 
     @Override
     protected void initData() {
 
         mPresenter = new InforPostPresenter(getContext(), this);
+
+        showImagePostAdapter = new ShowImagePostAdapter(mActivity);
+
         mBinding.setPresenter(mPresenter);
 
         mBinding.rvImages.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
         mBinding.rvImages.setHasFixedSize(true);
 
     }
@@ -107,7 +128,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                     //  Lay duong dan thuc te
                     String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
 
-                    mPresenter.onDemoUri(realPath);
+                  //  mPresenter.onDemoUri(realPath);
                     // them du lieu vao object Image
                     try {
                         ImageInforPost item = new ImageInforPost(imageName, realPath, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
@@ -132,7 +153,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
                 //  Lay duong dan thuc te
                 String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
 
-                mPresenter.onDemoUri(realPath);
+              //  mPresenter.onDemoUri(realPath);
                 // them du lieu vao object Image
 
                 try {
@@ -199,8 +220,12 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
         postRequest.setCategory(category);
         postRequest.setInformation(information);
-        Log.d("checkListImage", String.valueOf(imageListPath));
-        onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath));
+        if (imageListPath != null && imageListPath.size() > 0) {
+            onNext(new Gson().toJson(postRequest), new Gson().toJson(imageListPath),new Gson().toJson(idPost));
+        } else {
+            showMessage("Bạn phải có ít nhất 1 ảnh");
+        }
+
 
     }
 
@@ -286,19 +311,36 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     }
 
     private void onShowImage(List<ImageInforPost> imageList) {
-        imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
-        mBinding.rvImages.setAdapter(imagePostAdapter);
+
+        showImagePostAdapter.setItemView(imageList);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL,false);
+
+        mBinding.rvImages.setLayoutManager(linearLayoutManager);
+
+        mBinding.rvImages.setAdapter(showImagePostAdapter);
+//
+//        BindingUtils.setAdapter(mBinding.rvImages, showImagePostAdapter, true);
+////        imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
+////
+////        mBinding.rvImages.setAdapter(imagePostAdapter);
     }
 
-    public void onNext(String jsonData, String jsonPhoto) {
+    public void onNext(String jsonData, String jsonPhoto,String idPost) {
         Log.d("CheckLog", jsonData);
-        Log.d("CheckLog", jsonPhoto);
 
         Bundle bundle = new Bundle();
 
         bundle.putString(Config.POST_BUNDEL_RES, jsonData);
 
         bundle.putString(Config.POST_BUNDEL_RES_PHOTO, jsonPhoto);
+
+        if(getArguments() != null){
+            bundle.putString(Config.POST_BUNDlE_RES_ID, getArguments().getString(Config.POST_BUNDlE_RES_ID));
+            Log.d("CheckBundle",idPost );
+        }else {
+            Toast.makeText(mActivity, "loi", Toast.LENGTH_SHORT).show();
+        }
 
         Intent intent = new Intent();
 
@@ -327,7 +369,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-               mActivity.requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
+                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
             } else {
                 showImageGallery();
             }

@@ -21,13 +21,12 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="@string/slArea_welcomeTv"
-            android:textColor="@color/white"
+            style="@style/textStyleWhite_12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/textView5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,7 +34,7 @@
             android:layout_marginBottom="32dp"
             android:gravity="center"
             android:text="@string/slArea_titleTv"
-            android:textColor="@color/white"
+            style="@style/textStyleWhiteBold_14dp"
             app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.user.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,9 +22,16 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
+import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
+import com.poly.smartfindpro.ui.post.PostActivity;
+import com.poly.smartfindpro.ui.user.profile.ProfileContact;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -33,23 +41,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
     private Context context;
 
     private FragmentManager mFragmentManager;
-
     private List<Products> productList;
 
+    private ProfileContact.ViewModel mViewmodel;
+    private boolean statusProduct = false;
 
-    public ProfileAdapter(Context context, FragmentManager fragmentManager) {
+    public ProfileAdapter(Context context, FragmentManager fragmentManager, ProfileContact.ViewModel viewModel) {
         this.context = context;
         this.mFragmentManager = fragmentManager;
+        this.mViewmodel = viewModel;
     }
 
     public void setItemList(List<Products> productList) {
         this.productList = productList;
     }
+
 
     @NonNull
     @Override
@@ -57,6 +72,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         View inflate = LayoutInflater.from(context).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         inflate.setLayoutParams(lp);
+
         return new ProfileAdapter.ViewHolder(inflate);
     }
 
@@ -64,8 +80,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
 
         Products item = productList.get(position);
+        if (!item.getStatus().equals("1")) {
+            holder.btn_status.setVisibility(View.GONE);
+        }
+        if (item != null) {
 
-        List<String> image = new ArrayList<>();
+
+            List<String> image = new ArrayList<>();
 
             DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -78,103 +99,118 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             }
 
-        holder.tv_username_post.setText(item.getUser().getUserName());
-        holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
-        holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
-        holder.tv_title_post.setText(item.getContent());
+            holder.tv_username_post.setText(item.getUser().getFullname());
+            holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
+            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()) + " " + item.getProduct().getInformation().getUnit());
+            holder.tv_title_post.setText(item.getContent());
 
+            if (item.getProduct().getInformation().getImage() != null) {
 
-        if (item.getProduct().getInformation().getImage().size() < 4) {
-            for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
-            }
-        } else {
-            for (int i = 0; i < 3; i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
-            }
-        }
-
-        if (image.size() == 3) {
-            Glide.
-                    with(context)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
-                    .into(holder.img1);
-            Glide.
-                    with(context)
-                    .load(image.get(1))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
-                    .into(holder.img2);
-            Glide.
-                    with(context)
-                    .load(image.get(2))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
-                    .into(holder.img3);
-        } else if (image.size() == 2) {
-            Glide.
-                    with(context)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
-                    .into(holder.img1);
-            Glide.
-                    with(context)
-                    .load(image.get(1))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
-                    .into(holder.img2);
-
-        } else {
-            Glide.
-                    with(context)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgerror)
-                    .into(holder.img1);
-        }
-        Glide.
-                with(context)
-                .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
-                .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgerror)
-                .into(holder.img_avatar);
-
-
-        holder.btn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(context, holder.btn_menu);
-                popupMenu.inflate(R.menu.menu_item_profile);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.btn_delete_menu:
-                                Toast.makeText(context, "Xóa", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_edit_menu:
-                                Toast.makeText(context, "Sửa", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return false;
+                if (item.getProduct().getInformation().getImage().size() < 4) {
+                    for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
+                        image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
                     }
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+                    }
+                }
 
-                });
-                popupMenu.show();
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               Intent intent = new Intent(context, DetailPostActivity.class);
-               intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(item));
-               context.startActivity(intent);
 
+                if (image.size() == 3) {
+                    Glide.
+                            with(context)
+                            .load(image.get(0))
+                            .placeholder(R.mipmap.imgplaceholder)
+                            .error(R.mipmap.imgplaceholder)
+                            .into(holder.img1);
+                    Glide.
+                            with(context)
+                            .load(image.get(1))
+                            .placeholder(R.mipmap.imgplaceholder)
+                            .error(R.mipmap.imgplaceholder)
+                            .into(holder.img2);
+                    Glide.
+                            with(context)
+                            .load(image.get(2))
+                            .placeholder(R.mipmap.imgplaceholder)
+                            .error(R.mipmap.imgplaceholder)
+                            .into(holder.img3);
+                } else if (image.size() == 2) {
+                    Glide.
+                            with(context)
+                            .load(image.get(0))
+                            .placeholder(R.mipmap.imgplaceholder)
+                            .error(R.mipmap.imgplaceholder)
+                            .into(holder.img1);
+                    Glide.
+                            with(context)
+                            .load(image.get(1))
+                            .placeholder(R.mipmap.imgplaceholder)
+                            .error(R.mipmap.imgplaceholder)
+                            .into(holder.img2);
+
+                } else {
+                    Glide.
+                            with(context)
+                            .load(image.get(0))
+                            .placeholder(R.mipmap.imgplaceholder)
+                            .error(R.mipmap.imgplaceholder)
+                            .into(holder.img1);
+                }
             }
-        });
+            Glide.
+                    with(context)
+                    .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
+                    .placeholder(R.mipmap.imgplaceholder)
+                    .error(R.mipmap.imgplaceholder)
+                    .into(holder.img_avatar);
+
+            holder.btn_status.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    holder.btn_status.setBackgroundResource(R.drawable.background_hori);
+//                    Drawable buttonBackground = holder.btn_status.getBackground();
+
+
+                }
+            });
+            holder.btn_menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(context, holder.btn_menu);
+                    popupMenu.inflate(R.menu.menu_item_profile);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.btn_delete_menu:
+//                                    mViewmodel.onCallback(0, item.getId(),item.toString());
+                                    mViewmodel.onCallback(0, item.getId(), item.toString());
+                                    break;
+                                case R.id.btn_edit_menu:
+                                    mViewmodel.onCallback(1, item.getId(), item.toString());
+
+                                    break;
+                            }
+                            return false;
+                        }
+
+                    });
+                    popupMenu.show();
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailPostActivity.class);
+                    intent.putExtra(Config.POST_BUNDEL_RES, new Gson().toJson(item));
+                    context.startActivity(intent);
+
+                }
+            });
+        }
     }
 
     @Override
@@ -207,7 +243,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private Button btn_menu;
+        private Button btn_menu, btn_status;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
         private ImageView img1, img2, img3, img_avatar;
 
@@ -223,6 +259,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             img2 = itemView.findViewById(R.id.img_product_post2);
             img3 = itemView.findViewById(R.id.img_product_post3);
             img_avatar = itemView.findViewById(R.id.img_avatar);
+            btn_status = itemView.findViewById(R.id.btn_status);
         }
     }
+
 }

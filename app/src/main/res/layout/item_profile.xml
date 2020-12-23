@@ -7,11 +7,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_3sdp"
         android:background="@drawable/border_item_post"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_10sdp">
+        android:paddingHorizontal="@dimen/_6sdp"
+        android:paddingVertical="@dimen/_6sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,13 +19,13 @@
 
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/img_avatar"
-                android:scaleType="centerCrop"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
- />
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop" />
 
             <LinearLayout
-                android:layout_width="@dimen/_200sdp"
+                android:layout_width="@dimen/_160sdp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_5sdp"
@@ -33,18 +33,17 @@
 
                 <TextView
                     android:id="@+id/tv_username_post"
+                    style="@style/textStyleWhite_13dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                   android:textSize="@dimen/_15sdp"
-                    android:text="@string/tv_username"
-                    android:textColor="@color/white" />
+                    android:text="@string/tv_username" />
 
                 <TextView
                     android:id="@+id/tv_time_post"
+                    style="@style/textStyleWhite_10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1 giờ trước"
-                    android:textColor="@color/white" />
+                    android:text="1 giờ trước" />
 
             </LinearLayout>
 
@@ -53,11 +52,21 @@
                 android:layout_height="match_parent"
                 android:gravity="right|center">
 
+                <Button
+
+                    android:id="@+id/btn_status"
+                    android:background="@drawable/bg_dialog_button_normal"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_gravity="top"
+                    android:layout_height="@dimen/_30sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:text="Đã thuê" />
 
                 <Button
                     android:id="@+id/btn_menu_profile_post"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="top"
                     android:background="@drawable/ic_baseline_more_vert_24" />
             </LinearLayout>
 
@@ -71,41 +80,41 @@
 
             <TextView
                 android:id="@+id/tv_title_post"
+                style="@style/textStyleWhite_13dp"
                 android:layout_width="wrap_content"
-                android:lines="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white" />
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:lines="1"
+                android:text="gfdgf" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp">
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post1"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                     />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post2"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                    />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/img_product_post3"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:layout_weight="1"
-                     />
+                    android:scaleType="centerCrop" />
             </LinearLayout>
 
             <LinearLayout
@@ -119,51 +128,55 @@
 
                 <TextView
                     android:id="@+id/tv_price_product"
+                    style="@style/textStyleWhite_11dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_location_on_24" />
-
-                <TextView
-                    android:id="@+id/tv_adress_profile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:textColor="@color/white" />
+                    android:text="ffbfb" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_baseline_location_chung_cu" />
+
+                <TextView
+                    android:id="@+id/tv_adress_profile"
+                    style="@style/textStyleWhite_11dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dgfgf" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:paddingHorizontal="@dimen/_10sdp">
 
-<LinearLayout
-    android:gravity="right|center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Button
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center">
 
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_30sdp"
-        android:background="@drawable/ic_baseline_message_24" />
+                    <Button
 
-    <Button
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:background="@drawable/ic_baseline_share_24" />
-</LinearLayout>
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:background="@drawable/ic_baseline_message_24" />
+
+                    <Button
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/ic_baseline_share_24" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

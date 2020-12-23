@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.lpb.lienviet.lpbtradesell.ui.sellproduct.payments.facepay.internal.PreviewView
+    <com.poly.smartfindpro.ui.identification.veriface.internal.PreviewView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/surfaceView"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.identification.activity.IdentificationPresenter" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <FrameLayout
+          android:id="@+id/fl_identification"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+
+
+    </RelativeLayout>
+</layout>
