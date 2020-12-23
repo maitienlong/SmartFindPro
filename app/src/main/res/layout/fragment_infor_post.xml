@@ -131,11 +131,11 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_amount_person"
-                                android:text=""
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/custom_edt_change_pass"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -381,24 +381,24 @@
                     android:text="@string/add_images" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/_10sdp"
-                    android:weightSum="10">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"                    >
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvImages"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="8" />
+                        android:layout_weight="2" />
 
                     <ImageView
-                        android:layout_gravity="center_vertical"
                         android:id="@+id/imgAddImages"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:onClick="@{()->presenter.openChoosePhoto()}"
                         android:src="@mipmap/icon_add" />
                 </LinearLayout>
