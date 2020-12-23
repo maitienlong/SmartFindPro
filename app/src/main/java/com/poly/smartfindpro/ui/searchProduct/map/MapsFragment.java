@@ -86,7 +86,8 @@ public class MapsFragment extends BaseDataBindFragment<FragmentMapsSearchBinding
 
             ArrayList<Marker> mListMarker = new ArrayList<>();
             for (int i = 0; i < mListProductFilter.size(); i++) {
-                LatLng sydney = new LatLng(Double.parseDouble(mListProduct.get(i).getAddress().getLocation().getLatitude().trim()), Double.parseDouble(mListProduct.get(i).getAddress().getLocation().getLongitude().trim()));
+                Log.d("CheckLatLng", mListProductFilter.size()+ " - "+ mListProductFilter.get(i).getAddress().getLocation().getLatitude().trim() + " - "+ mListProductFilter.get(i).getAddress().getLocation().getLongitude().trim());
+                LatLng sydney = new LatLng(Double.parseDouble(mListProductFilter.get(i).getAddress().getLocation().getLatitude().trim()), Double.parseDouble(mListProductFilter.get(i).getAddress().getLocation().getLongitude().trim()));
                 Marker marker = gMap.addMarker(new MarkerOptions().position(sydney));
                 marker.setTag(mListProduct.get(i).getId());
                 mListMarker.add(marker);

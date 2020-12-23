@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.login.loginFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -46,6 +47,8 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     @Override
     public void saveLogin(String username, String password, String token, int level) {
+
+        Log.d("CheckSave", token);
 
         getBaseActivity().showAlertDialog("Thông báo", "Bạn muốn ghi nhớ đăng nhập", "Có", "Không", true, new AlertDialogListener() {
             @Override

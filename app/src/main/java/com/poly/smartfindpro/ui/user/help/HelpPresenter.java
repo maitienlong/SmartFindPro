@@ -29,4 +29,9 @@ public class HelpPresenter implements HelpContact.Presenter {
     public void onBackClick() {
         mViewModel.onBackClick();
     }
+
+    @Override
+    public void onCallClick() {
+        mViewModel.onCallClick();
+    }
 }

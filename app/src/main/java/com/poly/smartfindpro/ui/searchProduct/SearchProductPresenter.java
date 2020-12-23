@@ -177,4 +177,9 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     public void filterAdvance() {
         mViewModel.filterAdvance(new Gson().toJson(mListProduct));
     }
+
+    @Override
+    public void onBackClick() {
+        mViewModel.onBackClick();
+    }
 }

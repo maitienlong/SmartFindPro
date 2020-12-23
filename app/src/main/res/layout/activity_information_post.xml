@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  >
 
     <data>
 
@@ -12,456 +11,473 @@
         <import type="android.view.View" />
     </data>
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.poly.smartfindpro.widget.CommonToolbar
-            android:id="@+id/cmtb"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:onClick="@{()->presenter.onBackClick()}" />
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical">
 
+            <com.poly.smartfindpro.widget.CommonToolbar
+                android:id="@+id/cmtb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:onClick="@{()->presenter.onBackClick()}" />
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:background="@color/white">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/_10sdp">
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <com.github.siyamed.shapeimageview.CircularImageView
-                            android:id="@+id/img_avatar"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="match_parent"
-                            android:src="@mipmap/user" />
-
-
-                        <LinearLayout
-                            android:layout_width="@dimen/_1sdp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_weight="4"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tvName"
-                                style="@style/textStyleBlackEffec_15dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@={presenter.userNameDetail}" />
-
-                            <TextView
-                                android:id="@+id/tvTime"
-                                style="@style/textStyleBlackEffect_12dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@={presenter.timePostDetail}" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvListImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_100sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:orientation="horizontal" />
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/textStyleRegular_10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@={presenter.categoryDetail}" />
-
-                        <TextView
-                            style="@style/textStyleRegular_10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@={presenter.amountDetail}" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvTitle"
-                        style="@style/textStyleBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:text="@={presenter.contentDetail}" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/_15sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_attach_money_24" />
-
-                        <TextView
-                            style="@style/textStyleBold"
-                            android:layout_width="122dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_infor_price" />
-
-                        <TextView
-                            style="@style/textStyleBoldRed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@={presenter.priceDetail}" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@color/gray2" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@mipmap/light" />
-
-                            <TextView
-                                style="@style/textStyleRegular_10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="@string/text_infor_price_electric" />
-
-                            <TextView
-                                style="@style/textStyleRegular_10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="@={presenter.priceElectricDetail}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@mipmap/water" />
-
-                            <TextView
-                                style="@style/textStyleRegular_10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/text_infor_price_water" />
-
-                            <TextView
-                                style="@style/textStyleRegular_10dp"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="@={presenter.priceWaterDetail}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@mipmap/deposit" />
-
-                            <TextView
-                                style="@style/textStyleRegular_10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/tv_deposit"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                style="@style/textStyleRegular_10dp"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:text="@={presenter.priceDepositDetail}" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:paddingHorizontal="@dimen/_10sdp">
 
-
-                        <TextView
-                            style="@style/textStyleBoldBlack_14dp"
-                            android:layout_width="@dimen/_70sdp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tv_address" />
-
                         <LinearLayout
+                            android:id="@+id/linearLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_baseline_location_24" />
-
-                            <TextView
-                                style="@style/textStyleBlack_14dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:text="@={presenter.addressDetail}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_baseline_local_phone_24" />
-
-                            <TextView
-                                android:id="@+id/tv_phoneNumber"
-                                style="@style/textStyleBlack_14dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:text="@={presenter.phoneNumberDetail}" />
-                        </LinearLayout>
-
-                        <TextView
-                            style="@style/textStyleBoldBlack_14dp"
-                            android:layout_width="@dimen/_70sdp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="@string/text_infor_gender" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.github.siyamed.shapeimageview.CircularImageView
+                                android:id="@+id/img_avatar"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="match_parent"
+                                android:src="@mipmap/user" />
+
+
+                            <LinearLayout
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_weight="4"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvName"
+                                    style="@style/textStyleBlackEffec_15dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@={presenter.userNameDetail}" />
+
+                                <TextView
+                                    android:id="@+id/tvTime"
+                                    style="@style/textStyleBlackEffect_12dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@={presenter.timePostDetail}" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvListImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="horizontal" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:src="@mipmap/gender" />
-
                             <TextView
-                                style="@style/textStyleBlack_14dp"
+                                style="@style/textStyleRegular_10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:text="@={presenter.genderDetail}" />
-                        </LinearLayout>
+                                android:text="@={presenter.categoryDetail}" />
 
+                            <TextView
+                                style="@style/textStyleRegular_10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@={presenter.amountDetail}" />
+
+                        </LinearLayout>
 
                         <TextView
-                            style="@style/textStyleBoldBlack_14dp"
-                            android:layout_width="@dimen/_70sdp"
+                            android:id="@+id/tvTitle"
+                            style="@style/textStyleBold"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:text="@string/text_infor_utilities" />
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:text="@={presenter.contentDetail}" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/_15sdp">
 
                             <ImageView
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/utilities" />
+                                android:src="@drawable/ic_baseline_attach_money_24" />
 
                             <TextView
-                                style="@style/textStyleBlack_14dp"
+                                style="@style/textStyleBold"
+                                android:layout_width="122dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_infor_price" />
+
+                            <TextView
+                                style="@style/textStyleBoldRed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@={presenter.priceDetail}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/gray2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/light" />
+
+                                <TextView
+                                    style="@style/textStyleRegular_10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="@string/text_infor_price_electric" />
+
+                                <TextView
+                                    style="@style/textStyleRegular_10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="@={presenter.priceElectricDetail}" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
-                                android:text="@={presenter.utilitiesDetail}" />
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/water" />
+
+                                <TextView
+                                    style="@style/textStyleRegular_10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/text_infor_price_water" />
+
+                                <TextView
+                                    style="@style/textStyleRegular_10dp"
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="@={presenter.priceWaterDetail}" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/deposit" />
+
+                                <TextView
+                                    style="@style/textStyleRegular_10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/tv_deposit"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    style="@style/textStyleRegular_10dp"
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="@={presenter.priceDepositDetail}" />
+                            </LinearLayout>
                         </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/_10sdp">
+
+
+                            <TextView
+                                style="@style/textStyleBoldBlack_14dp"
+                                android:layout_width="@dimen/_70sdp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_address" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_baseline_location_24" />
+
+                                <TextView
+                                    style="@style/textStyleBlack_14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:text="@={presenter.addressDetail}" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_baseline_local_phone_24" />
+
+                                <TextView
+                                    android:id="@+id/tv_phoneNumber"
+                                    style="@style/textStyleBlack_14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:text="@={presenter.phoneNumberDetail}" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/textStyleBoldBlack_14dp"
+                                android:layout_width="@dimen/_70sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="@string/text_infor_gender" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/gender" />
+
+                                <TextView
+                                    style="@style/textStyleBlack_14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:text="@={presenter.genderDetail}" />
+                            </LinearLayout>
+
+
+                            <TextView
+                                style="@style/textStyleBoldBlack_14dp"
+                                android:layout_width="@dimen/_70sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="@string/text_infor_utilities" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/utilities" />
+
+                                <TextView
+                                    style="@style/textStyleBlack_14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:text="@={presenter.utilitiesDetail}" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnCall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:background="@drawable/background_button"
+                                android:onClick="@{()->presenter.onClickCall()}"
+                                android:paddingHorizontal="@dimen/_30sdp"
+                                android:text="@string/text_infor_call"
+                                android:textColor="@color/white" />
+
+                            <Button
+                                android:id="@+id/btnChat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:background="@drawable/background_button"
+                                android:onClick="@{()->presenter.onClickInbox()}"
+                                android:paddingHorizontal="@dimen/_30sdp"
+                                android:text="@string/text_infor_chat"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_30sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:background="@color/gray2">
 
-                        <Button
-                            android:id="@+id/btnCall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:background="@drawable/background_button"
-                            android:onClick="@{()->presenter.onClickCall()}"
-                            android:paddingHorizontal="@dimen/_30sdp"
-                            android:text="@string/text_infor_call"
-                            android:textColor="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:onClick="@{() -> presenter.onClickLike()}">
 
-                        <Button
-                            android:id="@+id/btnChat"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:background="@drawable/background_button"
-                            android:onClick="@{()->presenter.onClickInbox()}"
-                            android:paddingHorizontal="@dimen/_30sdp"
-                            android:text="@string/text_infor_chat"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
+                            <ImageView
+                                android:id="@+id/img_favorite"
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:padding="@dimen/_6sdp"
+                                android:src="@drawable/ic_love_border" />
 
-                </LinearLayout>
+                            <TextView
+                                style="@style/textStyleRegular"
+                                android:id="@+id/tv_count_favorite"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_8sdp"
+                                android:text="@={presenter.favoriteCount}" />
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:background="@color/gray2">
+                        <LinearLayout
+                            android:id="@+id/btnShare"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:onClick="@{() -> presenter.onClickShare()}"
+                            android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal">
+                            <ImageView
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:padding="@dimen/_6sdp"
+                                android:src="@drawable/ic_share" />
 
-                        <ImageView
-                            android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp"
-                            android:padding="@dimen/_6sdp"
-                            android:src="@drawable/ic_love_border" />
+                            <TextView
+                                style="@style/textStyleRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_8sdp"
+                                android:text="Chia sẻ" />
+                        </LinearLayout>
 
-                        <TextView
-                            style="@style/textStyleRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/_8sdp"
-                            android:text="Thích" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_6sdp"
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/edt_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_edt_change_pass"
+                            android:hint="Viết bình luận ..." />
 
                         <ImageView
-                            android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp"
+                            android:id="@+id/btnSendComment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:onClick="@{() -> presenter.onComment()}"
                             android:padding="@dimen/_6sdp"
-                            android:src="@drawable/ic_share" />
-
-                        <TextView
-                            style="@style/textStyleRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/_8sdp"
-                            android:text="Chia sẻ" />
+                            android:src="@drawable/ic_baseline_send_24" />
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginLeft="@dimen/_6sdp"
-                    android:layout_marginRight="@dimen/_6sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:gravity="center_vertical">
-
-                    <EditText
-                        android:hint="Viết bình luận ..."
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_comment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_edt_change_pass" />
+                        android:layout_marginTop="@dimen/_8sdp" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_baseline_send_24" />
+
                 </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
-
+        <FrameLayout
+            android:id="@+id/fl_post_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
 </layout>

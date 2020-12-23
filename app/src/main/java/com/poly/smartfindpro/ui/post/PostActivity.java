@@ -8,8 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +20,7 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.anim.ProgressBarAnimation;
@@ -40,37 +43,37 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     private Type typeData;
 
     private Type typePhoto;
-
+    private String idPost;
     private int position = 0;
 
     private static final int MY_PERMISSIONS_REQUEST = 1001;
-
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_post;
     }
 
+
     @SuppressLint("ResourceAsColor")
+
     @Override
     protected void initView() {
         mBinding.ctbPost.setTitle("Đăng bài");
 
         mBinding.pbTientrinh.setMax(100);
-
         mBinding.pbTientrinh.getIndeterminateDrawable().setTint(R.color.color_progress_loading);
-
+        Bundle bundle = new Bundle();
+        bundle.putString(Config.POST_BUNDlE_RES_ID, getIntent().getStringExtra(Config.POST_BUNDlE_RES_ID));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
                 requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
             } else {
-                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
+                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
             }
         } else {
-            goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
+            goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
         }
-
 
 
         statusProress("1");

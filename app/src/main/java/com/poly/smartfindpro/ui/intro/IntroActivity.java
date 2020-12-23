@@ -48,7 +48,7 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         mBinding.setPresenter(mPresenter);
     }
 
-    private void onNextLogin() {
+    public void onNextLogin() {
         Animation animation = new AnimationUtils().loadAnimation(this, R.anim.slide_up);
         animation.setFillAfter(true);
         mBinding.imgLogo.startAnimation(animation);

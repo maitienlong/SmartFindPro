@@ -1,27 +1,20 @@
 package com.poly.smartfindpro.ui.detailpost.adapter;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
-import com.poly.smartfindpro.ui.detailpost.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.ViewHolder> {
@@ -59,13 +52,12 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = LayoutInflater.from(context);
-                View alertLayout = inflater.inflate(R.layout.custom_dia_log, null);
+                View alertLayout = inflater.inflate(R.layout.dia_log_custom_image_detail, null);
                 final ImageView img_detail = (ImageView) alertLayout.findViewById(R.id.img_detail);
                 final Button btn_close = (Button) alertLayout.findViewById(R.id.btn_close);
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
-//                alert.setTitle("Login");
                 alert.setView(alertLayout);
-
+                alert.setCancelable(true);
                 AlertDialog dialog = alert.create();
                 dialog.show();
                 Glide.
@@ -74,8 +66,6 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
                         .placeholder(R.mipmap.imgplaceholder)
                         .error(R.mipmap.imgplaceholder)
                         .into(img_detail);
-//                Dialog.bui dialog = new Dialog(context);
-//                dialog.show();
                 btn_close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

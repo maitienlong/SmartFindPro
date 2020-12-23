@@ -8,6 +8,8 @@ public interface IntroContract {
         void onNextSceen();
 
         void onShowDialogMsg(String msg);
+
+        void onNextLogin();
     }
 
     interface Presenter extends BasePresenter {
