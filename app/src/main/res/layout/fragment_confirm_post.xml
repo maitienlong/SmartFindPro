@@ -94,7 +94,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rc_photo"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_80sdp" />
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 

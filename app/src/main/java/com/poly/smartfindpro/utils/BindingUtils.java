@@ -22,6 +22,7 @@ public class BindingUtils {
                                   boolean divider) {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext());
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 

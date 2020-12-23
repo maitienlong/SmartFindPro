@@ -85,16 +85,7 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
 
     }
     private void getData() {
-        if(getArguments() != null){
-            Type type = new TypeToken<PostRequest>() {
-            }.getType();
-
-            idPost = new Gson().fromJson(getArguments().getString(Config.POST_BUNDEL_RES), type);
-
-//            Intent intent = getBaseActivity().getIntent();
-
-//            idPost = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDlE_RES_ID),type);
-
+        if(getArguments() != null && getArguments().getString(Config.POST_BUNDEL_RES) != null){
 
         }
     }

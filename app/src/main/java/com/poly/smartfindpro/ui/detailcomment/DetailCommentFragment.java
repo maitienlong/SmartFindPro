@@ -50,7 +50,7 @@ public class DetailCommentFragment extends BaseDataBindFragment<FragmentDetailCo
 
     @Override
     protected void initData() {
-        commentPostAdapter = new ReplyCommentPostAdapter(mActivity);
+        commentPostAdapter = new ReplyCommentPostAdapter(mActivity, this);
     }
 
     @Override
