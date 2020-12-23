@@ -41,7 +41,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     @Override
     public void onClickRegister() {
         if (mBinding.edtAccountNumberRegister.getText().toString().equals("")) {
-            mViewmodel.showMessage("vui long nhap du thong tin");
+            mViewmodel.showMessage("Vui lòng nhập đủ thông tin");
         } else {
             getCheckNum();
         }

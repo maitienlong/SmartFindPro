@@ -11,6 +11,7 @@ import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
 import com.poly.smartfindpro.data.model.favorite.ResponseFavoritePost;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
+import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
@@ -23,11 +24,13 @@ import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
+import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 
 import okhttp3.MultipartBody;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -78,6 +81,9 @@ public interface ListServices {
     @POST("/init-user")
     Call<CheckPhoneResponse> getRegister(@Body RegisterRequest request);
 
+    @POST("/delete-product")
+    Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request );
+
     @POST("/product-comment")
     Call<CommentResponse> getComment(@Body CommentRequest request);
 
@@ -93,6 +99,10 @@ public interface ListServices {
     @POST("/product-favorite")
     Call<ResponseFavoritePost> getFavorite(@Body InitFavorite request);
 
-    @POST("/delete-product")
-    Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request );
+    @POST("/upgrade-user")
+    Call<DeleteProductResponse> getUpgrade(@Body RequestIndentifi request );
+
+    @POST("/update-product")
+    Call<CheckPhoneResponse> getUpdateProduct(@Body PostRequest request);
+
 }

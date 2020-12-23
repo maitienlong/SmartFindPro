@@ -35,7 +35,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
     private DeleteProductResponse mDelete;
-
+    private Products mProduct;
     private FragmentProfileBinding mBinding;
     private List<Products> productsList;
 
@@ -239,13 +239,13 @@ public class ProfilePresenter implements ProfileContact.Presenter {
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgplaceholder)
+                .error(R.mipmap.darkgray)
                 .into(mBinding.imgAvatarProfile);
         Glide.
                 with(context)
                 .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getCoverImage())
                 .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgplaceholder)
+                .error(R.drawable.bg_gradient_gray)
                 .into(mBinding.imgCoverImage);
 
     }

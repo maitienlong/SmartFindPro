@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             app:onBackClick="@{() -> presenter.onClose()}" />
-
         <LinearLayout
             android:id="@+id/ln_content"
             android:layout_width="match_parent"
@@ -97,6 +96,7 @@
                         android:text="@={presenter.time}" />
 
                     <TextView
+                        android:onClick="@{() -> presenter.onFavorite()}"
                         android:id="@+id/btn_favorite"
                         style="@style/textStyleBold"
                         android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Trả lời" />
+                        android:text="" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -127,6 +127,7 @@
                             android:text="@={presenter.startCount}" />
 
                         <ImageView
+                            android:id="@+id/img_count_star"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:src="@drawable/ic_star" />
@@ -150,8 +151,8 @@
                 android:id="@+id/rc_reply_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:layout_marginLeft="@dimen/_16sdp" />
+                android:paddingBottom="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_10sdp" />
         </LinearLayout>
 
 
@@ -163,6 +164,7 @@
             android:layout_marginLeft="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_10sdp"
             android:background="@color/white"
             android:gravity="center_vertical">
 

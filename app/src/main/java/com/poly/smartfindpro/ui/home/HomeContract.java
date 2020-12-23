@@ -13,6 +13,8 @@ public interface HomeContract {
         void onShow(List<Product> productList);
         void openPost();
         void onCheckStatus(int status);
+
+        void showMessagePost(String msg);
     }
 
     interface Presenter extends BasePresenter {

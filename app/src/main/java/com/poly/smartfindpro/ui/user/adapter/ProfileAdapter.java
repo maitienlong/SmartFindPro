@@ -72,6 +72,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         View inflate = LayoutInflater.from(context).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         inflate.setLayoutParams(lp);
+
         return new ProfileAdapter.ViewHolder(inflate);
     }
 
@@ -79,7 +80,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
 
         Products item = productList.get(position);
-
+        if (!item.getStatus().equals("1")) {
+            holder.btn_status.setVisibility(View.GONE);
+        }
         if (item != null) {
 
 

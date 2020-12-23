@@ -387,14 +387,19 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
     @Override
     protected void initData() {
-        adapter = new FilterProductAdapter(getBaseContext());
         mPresenter.setProducts(mListProduct);
+        mPresenter = new FilterProductPresenter(this, this, mBinding);
+        mBinding.setPresenter(mPresenter);
+        adapter = new FilterProductAdapter(this);
+
+        onShow(mListProduct);
     }
 
     @Override
     public void onShow(List<Products> products) {
         adapter.setListItem(products);
         BindingUtils.setAdapter(mBinding.rvResult, adapter, true);
+        Log.d("checkCount", String.valueOf(products.size()));
     }
 
     @Override

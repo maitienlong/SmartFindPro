@@ -56,7 +56,7 @@ public class ProductBottomAdapter extends RecyclerView.Adapter<ProductBottomAdap
                 + ", " + product.getAddress().getDistrictsTowns() + ", " + product.getAddress().getProvinceCity());
         holder.tvPrice.setText("Giá tiền: " + product.getProduct().getInformation().getPrice());
         holder.tvAmount.setText("Số người: " + product.getProduct().getInformation().getAmountPeople());
-        holder.imgMarker.setImageResource(R.drawable.ic_marker);
+//        holder.imgMarker.setImageResource(R.drawable.ic_marker);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

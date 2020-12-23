@@ -1,22 +1,23 @@
 package com.poly.smartfindpro.ui.detailcomment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.Comments;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
+import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
-import com.poly.smartfindpro.databinding.FragmentReplyCommentBinding;
+import com.poly.smartfindpro.databinding.FragmentDetailCommentBinding;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,9 +45,11 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
 
     public ObservableField<String> startCount;
 
-    private FragmentReplyCommentBinding mBinding;
+    private FragmentDetailCommentBinding mBinding;
 
-    public DetailcommentPresenter(Context context, DetailCommentContact.ViewModel mViewModel, FragmentReplyCommentBinding binding) {
+    private Comments mProduct;
+
+    public DetailcommentPresenter(Context context, DetailCommentContact.ViewModel mViewModel, FragmentDetailCommentBinding binding) {
         this.context = context;
         this.mViewModel = mViewModel;
         this.mBinding = binding;
@@ -54,6 +57,7 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
     }
 
     private void initData() {
+        mProduct = new Comments();
         name = new ObservableField();
         content = new ObservableField();
         time = new ObservableField();
@@ -64,16 +68,25 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
 
 
     public void initComment(CommentDetailRequest mCommentDetailRequest) {
-        mViewModel.showLoading();
         this.mCommentDetailRequest = mCommentDetailRequest;
         MyRetrofitSmartFind.getInstanceSmartFind().getReplyComment(mCommentDetailRequest).enqueue(new Callback<ReplycommentResponse>() {
             @Override
             public void onResponse(Call<ReplycommentResponse> call, Response<ReplycommentResponse> response) {
                 if (response.code() == 200) {
-                    mViewModel.hideLoading();
+
+                    Log.d("CheckFavorite", response.body().getResponseBody().getComments().getFavorites().getCount()+"");
+
+                    Log.d("CheckFavorite", response.body().getResponseBody().getComments().getComment().getId());
+
+                    Log.d("CheckFavoritePrd", response.body().getResponseBody().getComments().getComment().getProduct());
+
                     Comments item = response.body().getResponseBody().getComments();
 
                     idProduct = item.getComment().getProduct();
+
+                    mProduct = response.body().getResponseBody().getComments();
+
+                    onUpdatePost(mProduct);
 
                     initView(item.getComment().getUser().getFullname(), item.getComment().getTitle()
                             , item.getComment().getUser().getAvatar()
@@ -82,14 +95,13 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
 
                     mViewModel.onShowComment(item.getReply().getList());
 
-                }else {
+                } else {
                     mViewModel.showMessage("Hệ thống bận: Code - " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<ReplycommentResponse> call, Throwable t) {
-                mViewModel.hideLoading();
             }
         });
     }
@@ -139,14 +151,53 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
         mViewModel.onClose();
     }
 
+    @Override
+    public void onFavorite() {
+        InitFavorite request = new InitFavorite();
+        request.setUser(Config.TOKEN_USER);
+        request.setProduct(mProduct.getComment().getProduct());
+        request.setComment(mProduct.getComment().getId());
+
+        MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
+            @Override
+            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+
+                    if (mProduct.getIsFavorite()) {
+                        mProduct.setIsFavorite(false);
+                        initComment(mCommentDetailRequest);
+                    } else {
+                        mProduct.setIsFavorite(true);
+                        initComment(mCommentDetailRequest);
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void onUpdatePost(Comments product){
+        startCount.set(String.valueOf(product.getFavorites().getCount()));
+        if(product.getIsFavorite()){
+            mBinding.btnFavorite.setTextColor(Color.BLUE);
+        }else {
+            mBinding.btnFavorite.setTextColor(Color.BLACK);
+        }
+    }
+
     private void initView(String name, String content, String imageAddress, String time, int startCount) {
         this.name.set(name);
         this.content.set(content);
         this.startCount.set(String.valueOf(startCount));
-
         Glide.
                 with(context)
-                .load(imageAddress)
+                .load(MyRetrofitSmartFind.smartFind + imageAddress)
                 .placeholder(R.mipmap.imgplaceholder)
                 .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgAvtComment);

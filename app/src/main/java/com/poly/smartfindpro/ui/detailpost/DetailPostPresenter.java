@@ -5,12 +5,14 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
@@ -107,7 +109,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                     mViewModel.onShowComment(response.body().getResponseBody().getComments());
 
                 } else {
-                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
+//                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
                 }
             }
 
@@ -130,6 +132,13 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         categoryDetail.set(product.getProduct().getCategory() + "  ");
         if (Config.LEVEL_ACCOUNT > 0) {
             phoneNumberDetail.set(product.getUser().getPhoneNumber());
+        }
+        if (!product.getStatus().equals("1")) {
+            mBinding.llComment.setVisibility(View.GONE);
+            mBinding.rvComment.setVisibility(View.GONE);
+            mBinding.llService.setVisibility(View.GONE);
+            mBinding.llReact.setVisibility(View.GONE);
+
         }
         mBinding.cmtb.setTitle("Bài viết");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -195,7 +204,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         return dateFormat.format(date);
     }
 
-    private void onGetFavorite(String productID){
+    private void onGetFavorite(String productID) {
         InitFavorite request = new InitFavorite();
         request.setUser(Config.TOKEN_USER);
         request.setProduct(productID);
@@ -203,15 +212,17 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         MyRetrofitSmartFind.getInstanceSmartFind().getFavorite(request).enqueue(new Callback<ResponseFavoritePost>() {
             @Override
             public void onResponse(Call<ResponseFavoritePost> call, Response<ResponseFavoritePost> response) {
-                if(response.code() == 200 && response.body().getResponseHeader().getResCode() == 200){
+
+                Log.d("CheckLogDetail", new Gson().toJson(response.body()));
+                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
 
                     favoriteCount.set(String.valueOf(response.body().getResponseBody().getCount()));
 
 
                     Log.d("CheckLogDetail", String.valueOf(response.body().getResponseBody().getIsFavorite()));
-                    if(response.body().getResponseBody().getIsFavorite()){
+                    if (response.body().getResponseBody().getIsFavorite()) {
                         mBinding.imgFavorite.setImageResource(R.drawable.ic_favorite_full);
-                    }else {
+                    } else {
                         mBinding.imgFavorite.setImageResource(R.drawable.ic_love_border);
 
                     }
@@ -221,7 +232,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
             @Override
             public void onFailure(Call<ResponseFavoritePost> call, Throwable t) {
-
+                Log.d("CheckLogDetail",t.toString());
             }
         });
 

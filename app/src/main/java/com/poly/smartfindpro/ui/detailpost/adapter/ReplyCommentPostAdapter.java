@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailR
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
+import com.poly.smartfindpro.ui.detailcomment.DetailCommentContact;
 import com.poly.smartfindpro.ui.detailpost.DetailPostContact;
 
 import java.text.DateFormat;
@@ -38,9 +40,9 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
 
     List<Comments> listItem;
 
-    private DetailPostContact.ViewModel mViewmodel;
+    private DetailCommentContact.ViewModel mViewmodel;
 
-    public ReplyCommentPostAdapter(Context context) {
+    public ReplyCommentPostAdapter(Context context, DetailCommentContact.ViewModel mViewmodel) {
         this.context = context;
         this.mViewmodel = mViewmodel;
     }
@@ -83,16 +85,16 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
         try {
             Date date = dateFormatter.parse(item.getComment().getCreateAt());
             holder.time.setText(getTime(date));
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         // star count
-//        holder.sartCount.setText(String.valueOf(item.getFavorites().getCount()));
+        holder.sartCount.setText(String.valueOf(item.getFavorites().getCount()));
 
         // favoris
-        if(item.getFavoriteReply()){
+        if (item.getFavoriteReply()) {
             holder.favoris.setTextColor(Color.BLUE);
-        }else {
+        } else {
             holder.favoris.setTextColor(Color.BLACK);
         }
 
@@ -105,28 +107,29 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
                 request.setProduct(item.getComment().getProduct());
                 request.setComment(item.getComment().getId());
 
+                if (item.getFavoriteReply()) {
+                    item.setFavoriteReply(false);
+                    item.getFavorites().setCount(item.getFavorites().getCount() - 1);
+                    onChange();
+                } else {
+                    item.setFavoriteReply(true);
+                    item.getFavorites().setCount(item.getFavorites().getCount() + 1);
+                    onChange();
+                }
+
                 MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
                     @Override
                     public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
-                        if(response.code() == 200 && response.body().getResponseHeader().getResCode() == 200){
+                        if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
 
-                            if(item.getFavoriteReply()){
-                                item.setIsFavorite(false);
-                             //   item.getFavorites().setCount(item.getFavorites().getCount() - 1);
-                                onChange();
-                            }else {
-                                item.setFavoriteReply(true);
-                            //    item.getFavorites().setCount(item.getFavorites().getCount() + 1);
-                                onChange();
-                            }
-
-
+                        } else {
+                            Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
-
+                        Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -141,8 +144,9 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
         return listItem.size();
     }
 
-    private void onChange(){
+    private void onChange() {
         notifyDataSetChanged();
+
     }
 
     private String getTime(Date datePost) {
@@ -176,7 +180,6 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
         ImageView avatar;
         TextView customerName, time, favoris, sartCount, content, recommentCount;
         LinearLayout tv_recoment_view;
-
 
 
         public ViewHolder(@NonNull View itemView) {

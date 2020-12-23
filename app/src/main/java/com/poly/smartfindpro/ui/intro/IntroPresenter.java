@@ -49,45 +49,7 @@ public class IntroPresenter implements IntroContract.Presenter {
 
         if (isNetworkConnected()) {
 
-            ProfileRequest request = new ProfileRequest();
-
-            request.setId(prefs.getString(ConfigSharedPreferences.TOKEN, "token"));
-
-            if (!request.getId().equalsIgnoreCase("token")) {
-
-                MyRetrofitSmartFind.getInstanceSmartFind().getProfile(request).enqueue(new Callback<ProfileResponse>() {
-                    @Override
-                    public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-
-                        if (response.code() == 200) {
-
-                            if (response.body().getResponseHeader().getResCode() == 200) {
-
-                                Config.LEVEL_ACCOUNT = response.body().getResponseBody().getUser().getLevel();
-
-                                Config.PROFILE = response.body().getResponseBody().getUser();
-
-                                mViewModel.onNextSceen();
-                            } else if (response.body().getResponseHeader().getResCode() == 404) {
-
-                                mViewModel.onNextLogin();
-
-                            } else {
-                                mViewModel.onShowDialogMsg(mContex.getString(R.string.services_not_avail));
-                            }
-
-                        } else {
-
-                            mViewModel.onShowDialogMsg("Vui lòng kiểm tra lại kết nối mạng rescode: "+response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ProfileResponse> call, Throwable t) {
-                        mViewModel.onShowDialogMsg("Vui lòng kiểm tra lại kết nối mạng");
-                    }
-                });
-            }
+            mViewModel.onNextSceen();
 
         } else {
             mViewModel.onShowDialogMsg("Vui lòng kiểm tra lại kết nối mạng");

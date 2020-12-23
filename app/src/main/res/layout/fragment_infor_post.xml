@@ -131,6 +131,7 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edt_amount_person"
+                                android:text=""
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/custom_edt_change_pass"
@@ -387,11 +388,12 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvImages"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="8" />
 
                     <ImageView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/imgAddImages"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"

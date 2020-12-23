@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilitiesPresenter implements UtilitiesContract.Presenter {
-    private  List<UtilitiesModel> mListUtilities;
+    private List<UtilitiesModel> mListUtilities;
 
-   private List<String> utilitiesModelList;
+    private List<String> utilitiesModelList;
     private List<UtilitiesModel> mListUpdate;
 
     private Context context;
@@ -23,10 +23,14 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
     private PostRequest postRequest;
 
 
-
     public UtilitiesPresenter(Context context, UtilitiesContract.ViewModel mViewModel) {
         this.context = context;
         this.mViewModel = mViewModel;
+        initData();
+    }
+
+    private void initData() {
+        mListUpdate = new ArrayList<>();
     }
 
     public void setmListUpdate(List<UtilitiesModel> mListUpdate) {
@@ -75,19 +79,50 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
     }
 
     public void onSubmit() {
-        utilitiesModelList = new ArrayList<>();
-        if(mListUpdate == null && mListUpdate.size() == 0){
-           mViewModel.showMessage("Phải có ít nhất 1 tiện ích");
-        }else {
+
+        List<String> utilitieList = new ArrayList<>();
+
+        if (postRequest.getInformation().getAmountPeople() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getInformation().getDeposit() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getInformation().getElectricBill() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getInformation().getGender() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getInformation().getPrice() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getInformation().getWaterBill() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getCategory() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getAddress().getLocation() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getAddress().getProvinceCity() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getAddress().getDistrictsTowns() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getAddress().getCommuneWardTown() == null) {
+            mViewModel.showMessage("");
+        } else if (postRequest.getAddress().getDetailAddress() == null) {
+            mViewModel.showMessage("");
+        } else {
             for (UtilitiesModel item : mListUpdate) {
                 if (item.isStatus()) {
-                    utilitiesModelList.add(item.getTitle());
+                    utilitieList.add(item.getTitle());
                 }
             }
-            postRequest.setUtilities(utilitiesModelList);
 
-            mViewModel.onNext(new Gson().toJson(postRequest));
+            if (utilitieList.isEmpty()) {
+
+            } else {
+                postRequest.setUtilities(utilitieList);
+
+                mViewModel.onNext(new Gson().toJson(postRequest));
+            }
+
         }
+
 
     }
 }

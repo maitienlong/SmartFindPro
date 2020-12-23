@@ -59,7 +59,6 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
         mPresenter = new SearchProductPresenter(getBaseContext(), this, mBinding);
         mBinding.setPresenter(mPresenter);
-        mBinding.cmtb.setTitle("Tìm kiếm");
         bottomSheet = findViewById(R.id.bottomSheet);
         rvProduct = findViewById(R.id.rvProduct);
         title = findViewById(R.id.tv_title_bts);
