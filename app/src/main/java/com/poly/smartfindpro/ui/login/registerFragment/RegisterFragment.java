@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.login.registerFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -61,6 +62,7 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
                                 hideLoading();
                                 FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
                                 showMessage("Xác thực bằng mã OTP không thành công, vui lòng thử lại - Lỗi: "+e.toString());
+                                Log.d("CheckError", e.toString());
                             }
 
                             @Override
