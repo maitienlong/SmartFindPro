@@ -4,6 +4,7 @@ package com.poly.smartfindpro.ui;
 import android.content.res.ColorStateList;
 import android.graphics.ColorFilter;
 import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -75,6 +76,26 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         }
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Nhấn một lần nữa để thoát ứng dụng", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
 
     @Override
     public void onSelectHome() {
