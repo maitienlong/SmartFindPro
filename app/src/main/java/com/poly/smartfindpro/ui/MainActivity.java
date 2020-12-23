@@ -71,6 +71,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
                 mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
                 mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_full);
+                goToFragmentReplaceLeft(R.id.fl_native,new UserFragment(),null);
                 break;
         }
     }

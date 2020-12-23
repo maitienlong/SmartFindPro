@@ -55,7 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_marginBottom="@dimen/_5sdp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -64,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_dialog_button"
+                android:background="@color/gray2"
                 android:gravity="center"
                 android:text="@string/common_cancel"
                 android:textAllCaps="false"
@@ -82,7 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_dialog_button"
+                android:background="@color/gray2"
                 android:gravity="center"
                 android:text="@string/common_accept"
                 android:textAllCaps="false"

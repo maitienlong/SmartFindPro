@@ -191,6 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
                         android:background="@drawable/btn_category_pressed"
                         android:onClick="@{()->presenter.onClickApproved()}"
                         android:text="@string/btn_approved"
@@ -199,7 +200,9 @@
 
                     </Button>
 
+
                     <Button
+                        android:textSize="@dimen/_8sdp"
                         android:id="@+id/btn_pending"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
