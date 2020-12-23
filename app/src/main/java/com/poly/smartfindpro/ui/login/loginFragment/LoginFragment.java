@@ -32,7 +32,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
     }
 
     private void getData() {
-        if(getArguments() != null){
+        if (getArguments() != null) {
             mBinding.edtAccountNumber.setText(getArguments().getString(Config.POST_BUNDEL_RES));
 
         }
@@ -55,7 +55,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
             @Override
             public void onAccept() {
                 showLoadingDialog();
-                if (onSaveLogin(username, password, token , level, true)) {
+                if (onSaveLogin(username, password, token, level, true)) {
                     Intent intent = new Intent(mActivity, MainActivity.class);
                     startActivity(intent);
                     mActivity.finish();
@@ -101,7 +101,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     }
 
-    private boolean onSaveLogin(String username, String password, String token,int level, boolean isSave) {
+    private boolean onSaveLogin(String username, String password, String token, int level, boolean isSave) {
         SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

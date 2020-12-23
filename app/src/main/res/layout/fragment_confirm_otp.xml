@@ -14,9 +14,9 @@
 
 
     <LinearLayout
-        android:background="#80ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#80ffffff"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
@@ -31,7 +31,8 @@
                 android:id="@+id/edt_otp"
                 style="@style/EditText"
                 android:gravity="center"
-                android:inputType="number" />
+                android:inputType="number"
+                app:addTextChangedListener="@{presenter.changeColorButton()}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
