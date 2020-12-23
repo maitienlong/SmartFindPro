@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.poly.smartfindpro.ui.identification.veriface.FaceDetectorPresenter" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+    </data>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:id="@+id/ctb_face_detector"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_43sdp"
+            app:onBackClick="@{()-> presenter.onBackClick()}"
+            app:title="@{presenter.title}"/>
+
+        <TextView
+            android:id="@+id/tv_show_the_face"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_56sdp"
+            android:gravity="center"
+            android:text="Vui lòng hướng khuôn mặt vào khung hình camera"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ln_odernumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_show_the_face"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center">
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/camera_container_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ln_odernumber"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:clipChildren="false">
+
+            <com.poly.smartfindpro.ui.identification.veriface.internal.CameraView
+                android:id="@+id/camera_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignStart="@+id/camera_mask_bg"
+                android:layout_alignTop="@+id/camera_mask_bg"
+                android:layout_alignEnd="@+id/camera_mask_bg"
+                android:layout_alignBottom="@+id/camera_mask_bg"
+                tools:ignore="MissingClass" />
+
+            <ImageView
+                android:id="@+id/camera_mask_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/bg_camera_mask"
+                tools:ignore="ContentDescription" />
+
+            <com.poly.smartfindpro.ui.identification.veriface.internal.CircleProgressBar
+                android:id="@+id/liveness_progress"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignStart="@+id/camera_mask_bg"
+                android:layout_alignTop="@+id/camera_mask_bg"
+                android:layout_alignEnd="@+id/camera_mask_bg"
+                android:layout_alignBottom="@+id/camera_mask_bg"
+                android:layout_margin="@dimen/_1sdp"
+                android:clipChildren="false"
+                app:bar_line_width="@dimen/_10sdp"
+                app:progress_background_color="@color/grey_1"
+                app:progress_end_color="#0081da"
+                app:progress_start_color="#21b1b4"
+                app:progress_stroke_width="@dimen/_1sdp"
+                app:style="line" />
+
+            <ImageView
+                android:id="@+id/camera_mask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/bg_face_border_blue"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_cooldown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="#50c0c0c0"
+                android:textSize="@dimen/_100sdp" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/liveness_layout_bottom_tips_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/camera_container_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/liveness_layout_promptText"
+                style="@style/textStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Giữ khuôn mặt trong mặt nả"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/camera_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:src="@mipmap/ic_ocr_capture"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/liveness_layout_gesture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/camera_container_view"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_step_instruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                android:id="@+id/liveness_content_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_step_instruction"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/tv_liveness_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/liveness_content_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:textColor="#ff0000"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/iv_selected"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_below="@+id/tv_step_instruction"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="16dp"
+                android:adjustViewBounds="false"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_focus" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</layout>
+

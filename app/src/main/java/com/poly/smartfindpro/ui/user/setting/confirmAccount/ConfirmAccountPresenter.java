@@ -20,7 +20,13 @@ public class ConfirmAccountPresenter implements ConfirmAccountContact.Presenter 
     public void onBackClick() {
         mViewModel.onBackClick();
     }
-    public void setType(){
+
+    @Override
+    public void onConfirm() {
+        mViewModel.onConfirm();
+    }
+
+    public void setType() {
 
     }
 }

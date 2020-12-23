@@ -84,6 +84,7 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
     @Override
     public void onShow(List<Product> productList) {
         homeAdapter.setListItem(productList);
+//        mBinding.rvList.setNestedScrollingEnabled(false);
         BindingUtils.setAdapter(mBinding.rvList, homeAdapter, true);
     }
 

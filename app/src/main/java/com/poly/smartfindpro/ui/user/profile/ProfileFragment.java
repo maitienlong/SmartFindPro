@@ -51,6 +51,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     @Override
     public void onShow(List<Products> productList) {
         profileAdapter.setItemList(productList);
+        mBinding.rcProfile.setNestedScrollingEnabled(false);
         BindingUtils.setAdapter(mBinding.rcProfile, profileAdapter, true);
     }
 
