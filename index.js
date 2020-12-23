@@ -450,7 +450,11 @@ app.post('/update-user', async function (request, response) {
                     // update data vao bang chinh
                     let updateAt = moment(Date.now()).format(formatDate);
                     let lvUp = 0;
-                    if (user.level === 0) {
+                    if (user.level === 0 &&
+                        checkData(address) &&
+                        checkData(birth) &&
+                        checkData(fullName) &&
+                        checkData(gender)) {
                         lvUp = 1;
                     } else {
                         lvUp = user.level
@@ -480,7 +484,12 @@ app.post('/update-user', async function (request, response) {
                         });
                         console.log(JSON.stringify(confirm));
                         let confirPrd = await confirm.save();
-                        res_body = {status: sttOK};
+                        if (lvUp == 1){
+                            res_body = {status: 'Successfully upgraded account level 1'};
+                        }else {
+                            res_body = {status: sttOK};
+                        }
+
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
                         res_body = {status: "Fail"};
