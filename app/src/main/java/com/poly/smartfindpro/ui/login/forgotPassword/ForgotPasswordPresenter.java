@@ -29,7 +29,7 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
 
     @Override
     public void OnBackClick() {
-
+        mViewModel.OnBackClick();
     }
 
 
