@@ -1,16 +1,20 @@
 package com.poly.smartfindpro.ui.user.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
+import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 import com.poly.smartfindpro.ui.login.otp.ConfirmOTPFragment;
 import com.poly.smartfindpro.ui.post.PostActivity;
+import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.ui.user.adapter.ProfileAdapter;
 import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
@@ -51,8 +55,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     @Override
     public void onShow(List<Products> productList) {
         profileAdapter.setItemList(productList);
-        mBinding.rcProfile.setNestedScrollingEnabled(false);
-        BindingUtils.setAdapter(mBinding.rcProfile, profileAdapter, true);
+        BindingUtils.setAdapter(mBinding.rcProfile, profileAdapter, false);
     }
 
 
@@ -85,9 +88,12 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
             mPresenter.getDeleteProduct(idPost);
 
         }else {
-            Bundle bundle = new Bundle();
-            bundle.putString(Config.POST_BUNDlE_RES_ID, idPost);
-            getBaseActivity().openActivity(PostActivity.class,bundle);
+//            Bundle bundle = new Bundle();
+//            bundle.putString(Config.POST_BUNDlE_RES_ID, jsonData);
+//            getBaseActivity().openActivity(PostActivity.class,bundle);
+            Intent intent = new Intent(mActivity, PostActivity.class);
+            intent.putExtra(Config.POST_BUNDlE_RES_ID, new Gson().toJson(jsonData));
+            mActivity.startActivity(intent);
         }
     }
 

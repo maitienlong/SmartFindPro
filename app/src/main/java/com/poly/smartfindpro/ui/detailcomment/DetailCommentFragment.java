@@ -10,15 +10,15 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.Comments;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
-import com.poly.smartfindpro.databinding.FragmentReplyCommentBinding;
-import com.poly.smartfindpro.ui.detailpost.adapter.CommentPostAdapter;
+import com.poly.smartfindpro.databinding.FragmentDetailCommentBinding;
+
 import com.poly.smartfindpro.ui.detailpost.adapter.ReplyCommentPostAdapter;
 import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class DetailCommentFragment extends BaseDataBindFragment<FragmentReplyCommentBinding, DetailcommentPresenter> implements DetailCommentContact.ViewModel {
+public class DetailCommentFragment extends BaseDataBindFragment<FragmentDetailCommentBinding, DetailcommentPresenter> implements DetailCommentContact.ViewModel {
 
     private CommentDetailRequest mCommentDetailRequest;
 
@@ -26,7 +26,7 @@ public class DetailCommentFragment extends BaseDataBindFragment<FragmentReplyCom
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_reply_comment;
+        return R.layout.fragment_detail_comment;
     }
 
     private void getData() {

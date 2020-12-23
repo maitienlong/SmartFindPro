@@ -53,10 +53,13 @@
                 android:gravity="right|center">
 
                 <Button
+
                     android:id="@+id/btn_status"
                     android:background="@drawable/bg_dialog_button_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_gravity="top"
+                    android:layout_height="@dimen/_30sdp"
+                    android:textSize="@dimen/_10sdp"
                     android:text="Đã thuê" />
 
                 <Button

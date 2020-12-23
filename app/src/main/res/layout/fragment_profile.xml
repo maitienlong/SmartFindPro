@@ -17,20 +17,22 @@
         android:clickable="true"
         android:focusable="true">
 
+        <com.poly.smartfindpro.widget.CommonToolbar
+            android:id="@+id/cmtb"
+            onBackClick="@{()->presenter.onBackClick()}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cmtb">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.poly.smartfindpro.widget.CommonToolbar
-                    android:id="@+id/cmtb"
-                    onBackClick="@{()->presenter.onBackClick()}"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -45,35 +47,99 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:id="@+id/img_cover_image"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:scaleType="centerCrop"
-                            android:src="@mipmap/imgplaceholder"
+                            android:layout_weight="1">
 
-                            />
+                            <ImageView
+                                android:id="@+id/img_cover_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/bg_gradient_gray"
+
+                                />
+
+                            <LinearLayout
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginEnd="@dimen/_8sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
+                                android:background="@drawable/bg_dialog_button"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="@dimen/_8sdp"
+                                android:paddingVertical="@dimen/_5sdp">
+
+                                <Button
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/ic_baseline_camera_alt_24"
+
+                                    />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:visibility="gone"
+                                    android:text="Thêm ảnh bìa"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
 
                         <LinearLayout
+
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_50sdp"
-
                             android:background="@color/background_app_gray">
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <com.github.siyamed.shapeimageview.CircularImageView
-                        android:id="@+id/img_avatar_profile"
-                        android:layout_width="@dimen/_80sdp"
+                    <RelativeLayout
+                        android:id="@+id/rl_avatar"
+                        android:layout_width="@dimen/_90sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:background="@drawable/border_image_avata"
-                        android:src="@mipmap/imgplaceholder"
                         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <com.github.siyamed.shapeimageview.CircularImageView
+                            android:id="@+id/img_avatar_profile"
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_80sdp"
+                            android:background="@drawable/border_image_avata"
+                            android:src="@mipmap/imgplaceholder" />
+
+                        <LinearLayout
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginEnd="-0dp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:background="@drawable/border_image_avata">
+
+                            <Button
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:background="@drawable/ic_baseline_camera_alt_24" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -83,7 +149,7 @@
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/img_avatar_profile">
+                        app:layout_constraintTop_toBottomOf="@+id/rl_avatar">
 
                         <TextView
                             android:id="@+id/textView10"
@@ -108,16 +174,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
-                    android:background="@color/french_grey">
-
-                </LinearLayout>
+                    android:background="@color/french_grey" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp">
 
@@ -163,6 +227,7 @@
                     android:layout_height="match_parent">
 
                 </androidx.recyclerview.widget.RecyclerView>
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

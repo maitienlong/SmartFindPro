@@ -95,8 +95,8 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
                 mViewModel.hideLoading();
                 mViewModel.showMessage(context.getString(R.string.services_not_avail));
             }
+
         });
     }
-
 
 }

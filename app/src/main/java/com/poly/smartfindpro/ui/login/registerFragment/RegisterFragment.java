@@ -60,7 +60,7 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 hideLoading();
                                 FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
-                                showMessage("Xác thực bằng mã OTP không thành công, vui lòng thử lại - Lỗi: "+e.toString());
+                                showMessage("Xác thực bằng mã OTP không thành công, vui lòng thử lại ");
                             }
 
                             @Override
@@ -78,7 +78,7 @@ public class RegisterFragment extends BaseDataBindFragment<FragmentRegisterBindi
                             public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
                                 super.onCodeAutoRetrievalTimeOut(s);
                                 hideLoading();
-                                showMessage("Hệ thống OTP đang mất kết nối - Lỗi: " +s);
+                                showMessage("Hệ thống OTP đang mất kết nối" );
                             }
                         })
                         .build();

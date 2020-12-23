@@ -68,7 +68,8 @@
         <activity android:name=".ui.identification.camera.CameraActivity"/>
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.identification.veriface.FaceDetectorActivity" />
-        <activity android:name=".ui.intro.IntroActivity">
+        <activity android:name=".ui.intro.IntroActivity"
+            android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
 

@@ -117,7 +117,7 @@
     <string name="tv_id_card">Số CMND</string>
     <string name="btn_change">Thay đổi</string>
     <string name="btn_not_hire">Chưa thuê</string>
-    <string name="btn_pending">Chờ duyệt</string>
+    <string name="btn_pending">Chưa duyệt</string>
     <string name="btn_approved">Đã duyệt</string>
     <string name="btn_delete">Xóa</string>
     <string name="btn_edit">Sửa</string>

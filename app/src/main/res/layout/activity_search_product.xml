@@ -25,15 +25,9 @@
             <LinearLayout
                 android:id="@+id/cardView3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_130sdp"
-                android:background="@color/background"
+                android:layout_height="@dimen/_100sdp"
+                android:background="@drawable/background_app"
                 android:orientation="vertical">
-
-                <com.poly.smartfindpro.widget.CommonToolbar
-                    android:id="@+id/cmtb"
-                    onBackClick="@{()->presenter.onBackClick()}"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
@@ -47,7 +41,7 @@
                         android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="16dp"
-                        android:src="@mipmap/marker" />
+                        android:src="@drawable/ic_baseline_location_chung_cu" />
 
                     <TextView
                         android:id="@+id/tv_address"
@@ -84,9 +78,10 @@
                             android:hint="@{presenter.hint}"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_8sdp"
+                            android:text="@{presenter.textSearch}"
                             android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textColorHint="#fff" />
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray2" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -104,7 +99,7 @@
                     <ImageView
                         android:id="@+id/type_filter"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="3"
                         android:onClick="@{()-> presenter.onSelectTypeFilter()}"

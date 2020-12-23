@@ -48,7 +48,7 @@
 
 
         <TextView
-            android:textColor="@color/red"
+            android:textColor="@color/red3"
             android:id="@+id/tvPrice"
             style="@style/textStyleBold"
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_baseline_location_24"
-                    app:tint="@color/background" />
+                     />
 
                 <TextView
                     android:id="@+id/tvAddress"

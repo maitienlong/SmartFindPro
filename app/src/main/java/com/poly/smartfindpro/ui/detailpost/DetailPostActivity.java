@@ -83,7 +83,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     public void onClickCall() {
         String PhoneNum = mBinding.tvPhoneNumber.getText().toString();
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:" + Uri.encode(PhoneNum.trim())));
+        callIntent.setData(Uri.parse("tel:"+Uri.encode(PhoneNum.trim())));
 //        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(callIntent);
     }

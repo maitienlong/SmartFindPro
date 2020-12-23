@@ -34,6 +34,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
     private void getData() {
         if(getArguments() != null){
             mBinding.edtAccountNumber.setText(getArguments().getString(Config.POST_BUNDEL_RES));
+
         }
 
         mBinding.edtAccountNumber.setText("0399551466");

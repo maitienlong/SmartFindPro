@@ -331,6 +331,7 @@
                                 android:text="@string/text_infor_utilities" />
 
                             <LinearLayout
+                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
@@ -351,6 +352,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ll_service"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_30sdp"
@@ -383,6 +385,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_react"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_14sdp"
@@ -439,6 +442,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_comment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_6sdp"

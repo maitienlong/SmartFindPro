@@ -118,7 +118,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
                         if (task.isSuccessful()) {
                             Toast.makeText(mActivity, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = task.getResult().getUser();
-              
+
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                               showMessage("Lỗi đăng nhập firebase: " + task.getException());
