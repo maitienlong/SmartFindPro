@@ -2682,7 +2682,7 @@ app.post('/find-comment', async function (request, response) {
                 }
                 try {
                     let allFavoriteOfComment = await Favorite.find({
-                        deleteAt: '', status: 'COMMENT', product: product, comment: getComment._id
+                        deleteAt: '', status: 'COMMENT', comment: getComment._id
                     }).lean();
                     if (allFavoriteOfComment.length > 0) {
                         favorite = allFavoriteOfComment.reverse();
