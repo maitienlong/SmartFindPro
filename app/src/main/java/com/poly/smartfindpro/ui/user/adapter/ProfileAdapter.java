@@ -80,7 +80,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
 
         Products item = productList.get(position);
-
+        if (!item.getStatus().equals("1")) {
+            holder.btn_status.setVisibility(View.GONE);
+        }
         if (item != null) {
 
 

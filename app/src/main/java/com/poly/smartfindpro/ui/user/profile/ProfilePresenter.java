@@ -34,7 +34,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
     private DeleteProductResponse mDelete;
-
+    private Products mProduct;
     private FragmentProfileBinding mBinding;
     private List<Products> productsList;
 

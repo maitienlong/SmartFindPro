@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.searchProduct.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,130 +55,135 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
     public FilterProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(mContext).inflate(R.layout.item_profile, null);
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button btn_menu = inflate.findViewById(R.id.btn_menu_profile_post);
+        Button btn_status = inflate.findViewById(R.id.btn_status);
+        btn_menu.setVisibility(View.GONE);
+        btn_status.setVisibility(View.GONE);
         inflate.setLayoutParams(lp);
+        Log.d("checkCount", String.valueOf(productList.size()));
         return new FilterProductAdapter.ViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FilterProductAdapter.ViewHolder holder, int position) {
         Products item = productList.get(position);
+        if (item != null && item.getUser() != null) {
 
-        List<String> image = new ArrayList<>();
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            List<String> image = new ArrayList<>();
 
-        try {
-            Date date = dateFormatter.parse(item.getCreateAt());
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            holder.tv_time_post.setText(getTime(date));
+            try {
+                Date date = dateFormatter.parse(item.getCreateAt());
 
-        } catch (Exception e) {
+                holder.tv_time_post.setText(getTime(date));
 
-        }
+            } catch (Exception e) {
 
-        holder.tv_username_post.setText(item.getUser().getFullname());
-        holder.tv_adress_profile.setText(item.getAddress().getDetailAddress()
-                + "," + item.getAddress().getCommuneWardTown() +
-                "," + item.getAddress().getDistrictsTowns() +
-                "," + item.getAddress().getProvinceCity());
-        holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()));
-        holder.tv_title_post.setText(item.getContent());
-        if (item.getProduct().getInformation().getImage().size() < 4) {
-            for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
             }
-        } else {
-            for (int i = 0; i < 3; i++) {
-                image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+
+            holder.tv_username_post.setText(item.getUser().getFullname());
+            holder.tv_adress_profile.setText(item.getAddress().getDetailAddress() + "," + item.getAddress().getCommuneWardTown() + "," + item.getAddress().getDistrictsTowns() + "," + item.getAddress().getProvinceCity());
+            holder.tv_price_product.setText(NumberFormat.getNumberInstance().format(item.getProduct().getInformation().getPrice()) + " " + item.getProduct().getInformation().getUnit());
+            holder.tv_title_post.setText(item.getContent());
+            if (item.getProduct().getInformation().getImage().size() < 4) {
+                for (int i = 0; i < item.getProduct().getInformation().getImage().size(); i++) {
+                    image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+                }
+            } else {
+                for (int i = 0; i < 3; i++) {
+                    image.add(MyRetrofitSmartFind.smartFind + item.getProduct().getInformation().getImage().get(i));
+                }
             }
-        }
 
-        if (image.size() == 3) {
-            Glide.
-                    with(mContext)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img1);
-            Glide.
-                    with(mContext)
-                    .load(image.get(1))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img2);
-            Glide.
-                    with(mContext)
-                    .load(image.get(2))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img3);
-        } else if (image.size() == 2) {
-            Glide.
-                    with(mContext)
-                    .load(image.get(0))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img1);
-            Glide.
-                    with(mContext)
-                    .load(image.get(1))
-                    .placeholder(R.mipmap.imgplaceholder)
-                    .error(R.mipmap.imgplaceholder)
-                    .into(holder.img2);
+            if (image.size() == 3) {
+                Glide.
+                        with(mContext)
+                        .load(image.get(0))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img1);
+                Glide.
+                        with(mContext)
+                        .load(image.get(1))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img2);
+                Glide.
+                        with(mContext)
+                        .load(image.get(2))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img3);
+            } else if (image.size() == 2) {
+                Glide.
+                        with(mContext)
+                        .load(image.get(0))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img1);
+                Glide.
+                        with(mContext)
+                        .load(image.get(1))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img2);
 
-        } else {
+            } else {
+                Glide.
+                        with(mContext)
+                        .load(image.get(0))
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(holder.img1);
+            }
             Glide.
                     with(mContext)
-                    .load(image.get(0))
+                    .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
                     .placeholder(R.mipmap.imgplaceholder)
                     .error(R.mipmap.imgplaceholder)
-                    .into(holder.img1);
-        }
-        Glide.
-                with(mContext)
-                .load(MyRetrofitSmartFind.smartFind + item.getUser().getAvatar())
-                .placeholder(R.mipmap.imgplaceholder)
-                .error(R.mipmap.imgplaceholder)
-                .into(holder.img_avatar);
-        holder.btn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(mContext, holder.btn_menu);
-                popupMenu.inflate(R.menu.menu_item_profile);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.btn_delete_menu:
-                                Toast.makeText(mContext, "Xóa", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_edit_menu:
-                                Toast.makeText(mContext, "Sửa", Toast.LENGTH_SHORT).show();
-                                break;
+                    .into(holder.img_avatar);
+            holder.btn_menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(mContext, holder.btn_menu);
+                    popupMenu.inflate(R.menu.menu_item_profile);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.btn_delete_menu:
+                                    Toast.makeText(mContext, "Xóa", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_edit_menu:
+                                    Toast.makeText(mContext, "Sửa", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
 
-                });
-                popupMenu.show();
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailPostActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(Config.POST_BUNDEL_RES,new Gson().toJson(item));
-                mContext.startActivity(intent);
+                    });
+                    popupMenu.show();
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, DetailPostActivity.class);
+                    intent.putExtra(Config.POST_BUNDEL_RES, new Gson().toJson(item));
+                    mContext.startActivity(intent);
 
-                Toast.makeText(mContext, "Chi tiết nè", Toast.LENGTH_SHORT).show();
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
+
         return productList.size();
+
     }
     private String getTime(Date datePost) {
         String dateOK = "";

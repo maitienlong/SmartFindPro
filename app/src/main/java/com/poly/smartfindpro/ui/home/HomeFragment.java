@@ -57,6 +57,8 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
         mPresenter = new HomePresenter(mActivity, this,mBinding);
         mBinding.setPresenter(mPresenter);
         homeAdapter = new HomeAdapter(mActivity, mActivity.getSupportFragmentManager());
+
+
     }
 
     @Override

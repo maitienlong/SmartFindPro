@@ -16,8 +16,7 @@ import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailR
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
-import com.poly.smartfindpro.databinding.FragmentReplyCommentBinding;
-
+import com.poly.smartfindpro.databinding.FragmentDetailCommentBinding;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,9 +43,9 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
 
     public ObservableField<String> startCount;
 
-    private FragmentReplyCommentBinding mBinding;
+    private FragmentDetailCommentBinding mBinding;
 
-    public DetailcommentPresenter(Context context, DetailCommentContact.ViewModel mViewModel, FragmentReplyCommentBinding binding) {
+    public DetailcommentPresenter(Context context, DetailCommentContact.ViewModel mViewModel, FragmentDetailCommentBinding binding) {
         this.context = context;
         this.mViewModel = mViewModel;
         this.mBinding = binding;
@@ -143,10 +142,9 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
         this.name.set(name);
         this.content.set(content);
         this.startCount.set(String.valueOf(startCount));
-
         Glide.
                 with(context)
-                .load(imageAddress)
+                .load(MyRetrofitSmartFind.smartFind +imageAddress)
                 .placeholder(R.mipmap.imgplaceholder)
                 .error(R.mipmap.imgplaceholder)
                 .into(mBinding.imgAvtComment);

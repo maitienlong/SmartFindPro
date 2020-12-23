@@ -49,6 +49,7 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
 
     public void setProducts(List<Products> products) {
         this.mListProduct = products;
+
     }
 
     @Override

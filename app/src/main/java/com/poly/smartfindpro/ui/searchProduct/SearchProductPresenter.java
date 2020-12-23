@@ -30,6 +30,8 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     public ObservableField<String> hint;
 
+    public ObservableField<String> textSearch;
+
     public ObservableField<String> key;
 
     private List<Products> mListProduct;
@@ -169,8 +171,10 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     @Override
     public void filterPrice() {
+
         type = 2;
         hint.set("Nhập số tiền lớn nhất");
+
     }
 
     @Override

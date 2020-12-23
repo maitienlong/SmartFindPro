@@ -25,15 +25,9 @@
             <LinearLayout
                 android:id="@+id/cardView3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:background="@drawable/background_app"
                 android:orientation="vertical">
-
-                <com.poly.smartfindpro.widget.CommonToolbar
-                    android:id="@+id/cmtb"
-                    onBackClick="@{()->presenter.onBackClick()}"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
@@ -80,13 +74,14 @@
                             android:id="@+id/edtSearch"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColorHint="@color/gray2"
-                            android:hint="@{presenter.hint}"
-                            android:singleLine="true"
                             android:background="@drawable/bg_circle_editext_while"
+                            android:hint="@{presenter.hint}"
                             android:paddingLeft="@dimen/_8sdp"
                             android:paddingRight="@dimen/_8sdp"
-                            android:textColor="@color/black" />
+                            android:text="@{presenter.textSearch}"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray2" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
