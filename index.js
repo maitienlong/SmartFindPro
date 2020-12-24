@@ -1405,7 +1405,7 @@ app.post('/product-comment', async function (request, response) {
         let user = request.body.user;
         let product = request.body.product;
         if (checkData(product)) {
-            if(checkData(user)) {
+            if(!checkData(user)) {
                 user = "5fe4c04feb44312fe83f3418"
             }
             let findUser = await User.find({_id: user}).lean();
@@ -1540,7 +1540,7 @@ app.post('/product-favorite', async function (request, response) {
         let user = request.body.user;
         let product = request.body.product;
         if (checkData(product)) {
-            if(checkData(user)) {
+            if(!checkData(user)) {
                 user = "5fe4c04feb44312fe83f3418"
             }
             let findUser = await User.find({_id: user}).lean();
