@@ -444,6 +444,12 @@
 
                         </LinearLayout>
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_8sdp" />
+
                         <LinearLayout
                             android:id="@+id/ll_comment"
                             android:layout_width="match_parent"
@@ -451,6 +457,7 @@
                             android:layout_marginLeft="@dimen/_6sdp"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginRight="@dimen/_6sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:gravity="center_vertical">
 
                             <EditText
@@ -458,7 +465,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:background="@drawable/custom_edt_change_pass"
+                               android:background="@drawable/custom_edt_change_pass"
                                 android:hint="Viết bình luận ..." />
 
                             <ImageView
@@ -470,12 +477,6 @@
                                 android:padding="@dimen/_6sdp"
                                 android:src="@drawable/ic_baseline_send_24" />
                         </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_comment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/_8sdp" />
 
 
                     </LinearLayout>
