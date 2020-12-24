@@ -4,8 +4,15 @@ package com.poly.smartfindpro.ui.intro;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +29,9 @@ import com.poly.smartfindpro.data.ConfigSharedPreferences;
 import com.poly.smartfindpro.databinding.ActivityIntroBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.login.LoginActivity;
+
+import java.security.MessageDigest;
+
 
 
 public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
@@ -42,6 +52,7 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        onHask();
     }
 
 
@@ -77,6 +88,19 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
             }
         });
 
+    }
+
+    private void onHask(){
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo("android.androidpractice", PackageManager.GET_SIGNATURES);
+            for(Signature signature: packageInfo.signatures){
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+                messageDigest.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(messageDigest.digest(),Base64.DEFAULT));
+            }
+        }catch (Exception e){
+            Log.d("KeyHash", e.toString());
+        }
     }
 
     @Override

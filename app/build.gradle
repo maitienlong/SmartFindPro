@@ -113,6 +113,7 @@ dependencies {
 
     //facebook
     implementation 'com.facebook.android:facebook-android-sdk:8.1.0'
+    implementation 'com.facebook.android:facebook-share:8.1.0'
 
     // socket
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
