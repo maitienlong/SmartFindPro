@@ -1031,8 +1031,9 @@ app.post('/total-people-lease-product', async function (request, response) {
                 if (oldProduct.user._id == userId) {
                     if (oldProduct.user.status == true) {
                         if (oldProduct.product.information.amountPeople < total_people_lease) {
-                            let res_body = {status: 'The number of tenants is full'};
+                            let res_body = {status: 'Số lượng khách thuê đã đầy'};
                             response.json(getResponse(name, 200, 'Fail', res_body))
+                            return;
                         } else {
                             // update data vao bang chinh
                             let updateAt = moment(Date.now()).format(formatDate);
@@ -1250,6 +1251,562 @@ app.post('/list-product', async function (request, response) {
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null));
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+//comment
+app.post('/init-comment', async function (request, response) {
+    let name = 'INIT-COMMENT'
+    try {
+        let user = request.body.user;
+        let product = request.body.product;
+        let title = request.body.title;
+        let oldComment = request.body.oldComment;
+        if (checkData(user) &&
+            checkData(product) &&
+            checkData(title)) {
+            let res_body = {status: null};
+            let savedComment = null, status = null, findOldComment = null;
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length <= 0) {
+                res_body = {status: "User not found"};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length <= 0) {
+                res_body = {status: "Product not found"};
+                response.json(getResponse(name, 404, 'Product not found', res_body))
+                return
+            }
+
+            let createAt = moment(Date.now()).format(formatDate);
+            if (checkData(oldComment)) {
+                findOldComment = await Comment.find({_id: oldComment}).lean();
+                if (findOldComment.length <= 0) {
+                    res_body = {status: "Comment not found"};
+                    response.json(getResponse(name, 404, 'Comment not found', res_body))
+                    return
+                }
+                findOldComment = findOldComment[0];
+                status = "REPLY";
+                savedComment = oldComment;
+            } else {
+                status = "COMMENT";
+            }
+            let newComment = new Comment({
+                user: user,
+                product: product,
+                title: title,
+                oldComment: savedComment,
+                updateAt: "",
+                deleteAt: "",
+                status: status,
+                createAt: createAt
+            });
+
+            let initComment = await newComment.save();
+            if (initComment) {
+                res_body = {status: sttOK}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } else {
+                res_body = {status: 'Fail'}
+                response.json(getResponse(name, 200, 'Fail', res_body))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+//favorite
+app.post('/init-favorite', async function (request, response) {
+    let name = 'INIT-FAVORITE'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let product = request.body.product;
+        let comment = request.body.comment;
+        if (checkData(user) &&
+            checkData(product)) {
+            let status = null, findComment = null;
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length <= 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length <= 0) {
+                let res_body = {status: 'Product not found'};
+                response.json(getResponse(name, 404, 'Product not found', res_body))
+                return
+            }
+            if (checkData(comment)) {
+                findComment = await Comment.find({_id: comment}).lean();
+                if (findComment.length <= 0) {
+                    let res_body = {status: 'Comment not found'};
+                    response.json(getResponse(name, 404, 'Comment not found', res_body))
+                    return
+                } else {
+                    findComment = findComment[0];
+                    status = "COMMENT";
+                }
+            } else {
+                status = "POST";
+            }
+            try {
+                let findFavorite = await Favorite.find({user: user, product: product, comment: comment}).lean();
+                if (findFavorite.length > 0) {
+                    name = 'DELETE-FAVORITE'
+                    findFavorite = findFavorite[0];
+                    let deleteFavorite = await Favorite.findByIdAndDelete(findFavorite._id);
+                    if (deleteFavorite) {
+                        res_body = {status: sttOK}
+                        response.json(getResponse(name, 200, sttOK, res_body))
+                    } else {
+                        res_body = {status: 'Fail'}
+                        response.json(getResponse(name, 200, 'Fail', res_body))
+                    }
+                    return
+                }
+            } catch (e) {
+                console.log("del favorite: " + e)
+            }
+            let createAt = moment(Date.now()).format(formatDate);
+            let newFavorite = new Favorite({
+                product: product,
+                user: user,
+                comment: findComment,
+                status: status,
+                updateAt: "",
+                deleteAt: "",
+                createAt: createAt
+            });
+            let initFavorite = await newFavorite.save();
+            if (initFavorite) {
+                res_body = {status: sttOK}
+                response.json(getResponse(name, 200, sttOK, res_body))
+            } else {
+                res_body = {status: 'Fail'}
+                response.json(getResponse(name, 200, 'Fail', res_body))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+//trả ve danh sách comment cua bai dang
+app.post('/product-comment', async function (request, response) {
+    let name = 'PRODUCT-COMMENT'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let product = request.body.product;
+        if (checkData(user) &&
+            checkData(product)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length <= 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length <= 0) {
+                let res_body = {status: 'Product not found'};
+                response.json(getResponse(name, 404, 'Product not found', res_body))
+                return
+            }
+            let allComments = await Comment.find({
+                deleteAt: '', status: 'COMMENT', product: product
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            if (allComments.length > 0) {
+                allComments = allComments.reverse();
+                let listResponse = [];
+                for (let i = 0; i < allComments.length; i++) {
+                    let stt = false;
+                    let replyCount = 0;
+                    let favoriteCount = 0;
+                    let reply = [];
+                    let favorite = [];
+                    try {
+                        let findFavorite = await Favorite
+                            .find({
+                                user: user,
+                                comment: allComments[i]._id,
+                                status: 'COMMENT'
+                            }).lean();
+                        if (findFavorite.length > 0) {
+                            stt = true;
+                        } else {
+                            stt = false;
+                        }
+                    } catch (e) {
+                        console.log('findFavorite comment: ' + e)
+                    }
+                    try {
+                        let is_favorite_reply = false;
+                        let allReplyOfComment = await Comment.find({
+                            deleteAt: '', status: 'REPLY', product: product, oldComment: allComments[i]._id
+                        }).populate({
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
+                        }).lean();
+                        if (allReplyOfComment.length > 0) {
+                            allReplyOfComment = allReplyOfComment;
+                            for (let j = 0; j < allReplyOfComment.length; j++) {
+                                if (user === allReplyOfComment[j].user._id) {
+                                    is_favorite_reply = true;
+                                } else {
+                                    is_favorite_reply = false;
+                                }
+                                let favoriteReplyComment = [];
+                                let favoriteCountReplyComment = 0;
+                                try {
+                                    let allFavoriteOfReplyComment = await Favorite.find({
+                                        deleteAt: '', status: 'COMMENT', comment: allReplyOfComment[j]._id
+                                    }).lean();
+                                    if (allFavoriteOfReplyComment.length > 0) {
+                                        favoriteReplyComment = allFavoriteOfReplyComment.reverse();
+                                        favoriteCountReplyComment = allFavoriteOfReplyComment.length;
+                                    }
+                                } catch (e) {
+                                    console.log('allFavoriteOfComment: ' + e)
+                                }
+                                reply.push({
+                                    is_favorite_reply: is_favorite_reply,
+                                    favorites: {count: favoriteCountReplyComment, list: favoriteReplyComment},
+                                    comment: allReplyOfComment[j],
+                                })
+                            }
+                            replyCount = allReplyOfComment.length;
+                        }
+                    } catch (e) {
+                        console.log('allReplyOfComment: ' + e)
+                    }
+                    try {
+                        let allFavoriteOfComment = await Favorite.find({
+                            deleteAt: '', status: 'COMMENT', product: product, comment: allComments[i]._id
+                        }).lean();
+                        if (allFavoriteOfComment.length > 0) {
+                            favorite = allFavoriteOfComment.reverse();
+                            favoriteCount = allFavoriteOfComment.length;
+                        }
+                    } catch (e) {
+                        console.log('allFavoriteOfComment: ' + e)
+                    }
+                    let item = {
+                        is_favorite: stt,
+                        comment: allComments[i],
+                        reply: {count: replyCount, list: reply},
+                        favorites: {count: favoriteCount, list: favorite}
+                    }
+                    listResponse.push(item);
+                }
+                res_body = {count: listResponse.length, comments: listResponse};
+                response.json(getResponse(name, 200, sttOK, res_body));
+            } else {
+                res_body = {count: listResponse.length, comments: null};
+                response.json(getResponse(name, 200, 'Fail', res_body));
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+//trả ve yêu thích của bài đăng
+app.post('/product-favorite', async function (request, response) {
+    let name = 'PRODUCT-FAVORITE'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let product = request.body.product;
+        if (checkData(user) &&
+            checkData(product)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length <= 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
+            let findProduct = await Product.find({_id: product}).lean();
+            if (findProduct.length <= 0) {
+                let res_body = {status: 'Product not found'};
+                response.json(getResponse(name, 404, 'Product not found', res_body))
+                return
+            }
+            let productFavorite = await Favorite.find({
+                deleteAt: '', status: 'POST', product: product
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            listUserNew = [];
+            if (productFavorite.length > 0) {
+                productFavorite = productFavorite.reverse();
+                let listUser = [];
+                let stt = false;
+                for (let i = 0; i < productFavorite.length; i++) {
+                    try {
+                        if (productFavorite[i].user._id == user) {
+                            stt = true;
+                        }
+                        let count = 0;
+                        try {
+                            let findUser = await User.find({_id: productFavorite[i].user._id}).populate('address').lean();
+                            if (findUser.length > 0) {
+                                listUserNew.push(findUser[0])
+                                count++;
+                            }
+                        } catch (e) {
+                            console.log('findUser: ' + e)
+                        }
+                    } catch (e) {
+                        console.log('productFavorite post: ' + e)
+                    }
+                }
+                res_body = {count: productFavorite.length, is_favorite: stt, list_user: listUserNew};
+                response.json(getResponse(name, 200, sttOK, res_body));
+            } else {
+                res_body = {count: productFavorite.length, is_favorite: false, list_user: listUserNew};
+                response.json(getResponse(name, 200, 'Fail', res_body));
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+
+//tim kiem comment
+app.post('/find-comment', async function (request, response) {
+    let name = 'FIND-COMMENT'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let comment = request.body.comment;
+        if (checkData(user) &&
+            checkData(comment)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length <= 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
+            let findComment = await Comment.find({_id: comment}).lean();
+            if (findComment.length <= 0) {
+                let res_body = {status: 'Product not found'};
+                response.json(getResponse(name, 404, 'Comment not found', res_body))
+                return
+            }
+            let getComment = await Comment.find({
+                deleteAt: '', status: 'COMMENT', _id: comment
+            }).populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            }).lean();
+            if (getComment.length > 0) {
+                getComment = getComment[0];
+                let listResponse = [];
+                let stt = false;
+                let replyCount = 0;
+                let favoriteCount = 0;
+                let reply = [];
+                let favorite = [];
+                try {
+                    let findFavorite = await Favorite
+                        .find({
+                            user: user,
+                            comment: getComment._id,
+                            status: 'COMMENT'
+                        }).lean();
+                    if (findFavorite.length > 0) {
+                        stt = true;
+                    } else {
+                        stt = false;
+                    }
+                } catch (e) {
+                    console.log('findFavorite comment: ' + e)
+                }
+                try {
+                    let is_favorite_reply = false;
+                    let allReplyOfComment = await Comment.find({
+                        deleteAt: '', status: 'REPLY', oldComment: getComment._id
+                    }).populate({
+                        path: 'user',
+                        populate: {
+                            path: 'address'
+                        }
+                    }).lean();
+                    if (allReplyOfComment.length > 0) {
+                        allReplyOfComment = allReplyOfComment;
+                        for (let j = 0; j < allReplyOfComment.length; j++) {
+                            if (user === allReplyOfComment[j].user._id) {
+                                is_favorite_reply = true;
+                            } else {
+                                is_favorite_reply = false;
+                            }
+                            let favoriteReplyComment = [];
+                            let favoriteCountReplyComment = 0;
+                            try {
+                                let allFavoriteOfReplyComment = await Favorite.find({
+                                    deleteAt: '', status: 'COMMENT', comment: allReplyOfComment[j]._id
+                                }).lean();
+                                if (allFavoriteOfReplyComment.length > 0) {
+                                    favoriteReplyComment = allFavoriteOfReplyComment.reverse();
+                                    favoriteCountReplyComment = allFavoriteOfReplyComment.length;
+                                }
+                            } catch (e) {
+                                console.log('allFavoriteOfComment: ' + e)
+                            }
+                            reply.push({
+                                is_favorite_reply: is_favorite_reply,
+                                favorites: {count: favoriteCountReplyComment, list: favoriteReplyComment},
+                                comment: allReplyOfComment[j],
+                            })
+                        }
+                        replyCount = allReplyOfComment.length;
+                    }
+                } catch (e) {
+                    console.log('allReplyOfComment: ' + e)
+                }
+                try {
+                    let allFavoriteOfComment = await Favorite.find({
+                        deleteAt: '', status: 'COMMENT', comment: getComment._id
+                    }).lean();
+                    if (allFavoriteOfComment.length > 0) {
+                        favorite = allFavoriteOfComment.reverse();
+                        favoriteCount = allFavoriteOfComment.length;
+                    }
+                } catch (e) {
+                    console.log('allFavoriteOfComment: ' + e)
+                }
+                let item = {
+                    is_favorite: stt,
+                    comment: getComment,
+                    reply: {count: replyCount, list: reply},
+                    favorites: {count: favoriteCount, list: favorite}
+                }
+                res_body = {comment: item};
+                response.json(getResponse(name, 200, sttOK, res_body));
+            } else {
+                res_body = {comments: null};
+                response.json(getResponse(name, 200, 'Fail', res_body));
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
+//Xóa comment
+app.post('/delete-comment', async function (request, response) {
+    let name = 'DELETE-COMMENT'
+    try {
+        let res_body = {status: null};
+        let user = request.body.user;
+        let comment = request.body.comment;
+        if (checkData(user) &&
+            checkData(comment)) {
+            let findUser = await User.find({_id: user}).lean();
+            if (findUser.length <= 0) {
+                let res_body = {status: 'User not found'};
+                response.json(getResponse(name, 404, 'User not found', res_body))
+                return
+            }
+            if (findUser[0].status == false) {
+                res_body = {status: "The account has been locked"};
+                response.json(getResponse(name, 200, 'Fail', res_body))
+                return
+            }
+            let findComment = await Comment.find({_id: comment})
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                }).lean();
+            if (findComment.length <= 0) {
+                let res_body = {status: 'Comment not found'};
+                response.json(getResponse(name, 404, 'Comment not found', res_body))
+                return
+            } else {
+                findComment = findComment[0];
+                if (findComment.user._id != user) {
+                    let res_body = {status: 'User not permission'};
+                    response.json(getResponse(name, 403, 'User not permission', res_body))
+                    return
+                } else {
+                    let delComment = await Comment.findByIdAndDelete({
+                        _id: comment
+                    }).lean();
+                    if (delComment) {
+                        let findFavorite = await Favorite.find({comment: comment})
+                            .lean();
+                        if (findFavorite.length > 0) {
+                            let delFavoriteOfComment = await Favorite.findByIdAndDelete({
+                                _id: findFavorite[0]._id
+                            }).lean();
+                        }
+                        res_body = {comment: sttOK};
+                        response.json(getResponse(name, 200, sttOK, res_body));
+                    } else {
+                        res_body = {comments: 'Fail'};
+                        response.json(getResponse(name, 200, 'Fail', res_body));
+                    }
+                }
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
     } catch (e) {
         console.log('loi ne: \n' + e)
@@ -2271,494 +2828,3 @@ app.post('/cancel-upgrade', async function (request, response) {
         }
     }
 );
-
-//comment
-app.post('/init-comment', async function (request, response) {
-    let name = 'INIT-COMMENT'
-    try {
-        let user = request.body.user;
-        let product = request.body.product;
-        let title = request.body.title;
-        let oldComment = request.body.oldComment;
-        if (checkData(user) &&
-            checkData(product) &&
-            checkData(title)) {
-            let res_body = {status: null};
-            let savedComment = null, status = null, findOldComment = null;
-            let findUser = await User.find({_id: user}).lean();
-            if (findUser.length < 0) {
-                res_body = {status: "User not found"};
-                response.json(getResponse(name, 404, 'User not found', res_body))
-                return
-            }
-            if (findUser[0].status == false) {
-                res_body = {status: "The account has been locked"};
-                response.json(getResponse(name, 200, 'Fail', res_body))
-                return
-            }
-            let findProduct = await Product.find({_id: product}).lean();
-            if (findProduct.length < 0) {
-                res_body = {status: "Product not found"};
-                response.json(getResponse(name, 404, 'Product not found', res_body))
-                return
-            }
-
-            let createAt = moment(Date.now()).format(formatDate);
-            if (checkData(oldComment)) {
-                findOldComment = await Comment.find({_id: oldComment}).lean();
-                if (findOldComment.length < 0) {
-                    res_body = {status: "Comment not found"};
-                    response.json(getResponse(name, 404, 'Comment not found', res_body))
-                    return
-                }
-                findOldComment = findOldComment[0];
-                status = "REPLY";
-                savedComment = oldComment;
-            } else {
-                status = "COMMENT";
-            }
-            let newComment = new Comment({
-                user: user,
-                product: product,
-                title: title,
-                oldComment: savedComment,
-                updateAt: "",
-                deleteAt: "",
-                status: status,
-                createAt: createAt
-            });
-
-            let initComment = await newComment.save();
-            if (initComment) {
-                res_body = {status: sttOK}
-                response.json(getResponse(name, 200, sttOK, res_body))
-            } else {
-                res_body = {status: 'Fail'}
-                response.json(getResponse(name, 200, 'Fail', res_body))
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
-
-//favorite
-app.post('/init-favorite', async function (request, response) {
-    let name = 'INIT-FAVORITE'
-    try {
-        let res_body = {status: null};
-        let user = request.body.user;
-        let product = request.body.product;
-        let comment = request.body.comment;
-        if (checkData(user) &&
-            checkData(product)) {
-            let status = null, findComment = null;
-            let findUser = await User.find({_id: user}).lean();
-            if (findUser.length < 0) {
-                let res_body = {status: 'User not found'};
-                response.json(getResponse(name, 404, 'User not found', res_body))
-                return
-            }
-            let findProduct = await Product.find({_id: product}).lean();
-            if (findProduct.length < 0) {
-                let res_body = {status: 'Product not found'};
-                response.json(getResponse(name, 404, 'Product not found', res_body))
-                return
-            }
-            if (checkData(comment)) {
-                findComment = await Comment.find({_id: comment}).lean();
-                if (findComment.length < 0) {
-                    let res_body = {status: 'Comment not found'};
-                    response.json(getResponse(name, 404, 'Comment not found', res_body))
-                    return
-                } else {
-                    findComment = findComment[0];
-                    status = "COMMENT";
-                }
-            } else {
-                status = "POST";
-            }
-            try {
-                let findFavorite = await Favorite.find({user: user, product: product, comment: comment}).lean();
-                if (findFavorite.length > 0) {
-                    name = 'DELETE-FAVORITE'
-                    findFavorite = findFavorite[0];
-                    let deleteFavorite = await Favorite.findByIdAndDelete(findFavorite._id);
-                    if (deleteFavorite) {
-                        res_body = {status: sttOK}
-                        response.json(getResponse(name, 200, sttOK, res_body))
-                    } else {
-                        res_body = {status: 'Fail'}
-                        response.json(getResponse(name, 200, 'Fail', res_body))
-                    }
-                    return
-                }
-            } catch (e) {
-                console.log("del favorite: " + e)
-            }
-            let createAt = moment(Date.now()).format(formatDate);
-            let newFavorite = new Favorite({
-                product: product,
-                user: user,
-                comment: findComment,
-                status: status,
-                updateAt: "",
-                deleteAt: "",
-                createAt: createAt
-            });
-            let initFavorite = await newFavorite.save();
-            if (initFavorite) {
-                res_body = {status: sttOK}
-                response.json(getResponse(name, 200, sttOK, res_body))
-            } else {
-                res_body = {status: 'Fail'}
-                response.json(getResponse(name, 200, 'Fail', res_body))
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
-
-//trả ve danh sách comment cua bai dang
-app.post('/product-comment', async function (request, response) {
-    let name = 'PRODUCT-COMMENT'
-    try {
-        let res_body = {status: null};
-        let user = request.body.user;
-        let product = request.body.product;
-        if (checkData(user) &&
-            checkData(product)) {
-            let findUser = await User.find({_id: user}).lean();
-            if (findUser.length < 0) {
-                let res_body = {status: 'User not found'};
-                response.json(getResponse(name, 404, 'User not found', res_body))
-                return
-            }
-            if (findUser[0].status == false) {
-                res_body = {status: "The account has been locked"};
-                response.json(getResponse(name, 200, 'Fail', res_body))
-                return
-            }
-            let findProduct = await Product.find({_id: product}).lean();
-            if (findProduct.length < 0) {
-                let res_body = {status: 'Product not found'};
-                response.json(getResponse(name, 404, 'Product not found', res_body))
-                return
-            }
-            let allComments = await Comment.find({
-                deleteAt: '', status: 'COMMENT', product: product
-            }).populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            }).lean();
-            if (allComments.length > 0) {
-                allComments = allComments.reverse();
-                let listResponse = [];
-                for (let i = 0; i < allComments.length; i++) {
-                    let stt = false;
-                    let replyCount = 0;
-                    let favoriteCount = 0;
-                    let reply = [];
-                    let favorite = [];
-                    try {
-                        let findFavorite = await Favorite
-                            .find({
-                                user: user,
-                                comment: allComments[i]._id,
-                                status: 'COMMENT'
-                            }).lean();
-                        if (findFavorite.length > 0) {
-                            stt = true;
-                        } else {
-                            stt = false;
-                        }
-                    } catch (e) {
-                        console.log('findFavorite comment: ' + e)
-                    }
-                    try {
-                        let is_favorite_reply = false;
-                        let allReplyOfComment = await Comment.find({
-                            deleteAt: '', status: 'REPLY', product: product, oldComment: allComments[i]._id
-                        }).populate({
-                            path: 'user',
-                            populate: {
-                                path: 'address'
-                            }
-                        }).lean();
-                        if (allReplyOfComment.length > 0) {
-                            allReplyOfComment = allReplyOfComment;
-                            for (let j = 0; j < allReplyOfComment.length; j++) {
-                                if (user === allReplyOfComment[j].user._id) {
-                                    is_favorite_reply = true;
-                                } else {
-                                    is_favorite_reply = false;
-                                }
-                                let favoriteReplyComment = [];
-                                let favoriteCountReplyComment = 0;
-                                try {
-                                    let allFavoriteOfReplyComment = await Favorite.find({
-                                        deleteAt: '', status: 'COMMENT', comment: allReplyOfComment[j]._id
-                                    }).lean();
-                                    if (allFavoriteOfReplyComment.length > 0) {
-                                        favoriteReplyComment = allFavoriteOfReplyComment.reverse();
-                                        favoriteCountReplyComment = allFavoriteOfReplyComment.length;
-                                    }
-                                } catch (e) {
-                                    console.log('allFavoriteOfComment: ' + e)
-                                }
-                                reply.push({
-                                    is_favorite_reply: is_favorite_reply,
-                                    favorites: {count: favoriteCountReplyComment, list: favoriteReplyComment},
-                                    comment: allReplyOfComment[j],
-                                })
-                            }
-                            replyCount = allReplyOfComment.length;
-                        }
-                    } catch (e) {
-                        console.log('allReplyOfComment: ' + e)
-                    }
-                    try {
-                        let allFavoriteOfComment = await Favorite.find({
-                            deleteAt: '', status: 'COMMENT', product: product, comment: allComments[i]._id
-                        }).lean();
-                        if (allFavoriteOfComment.length > 0) {
-                            favorite = allFavoriteOfComment.reverse();
-                            favoriteCount = allFavoriteOfComment.length;
-                        }
-                    } catch (e) {
-                        console.log('allFavoriteOfComment: ' + e)
-                    }
-                    let item = {
-                        is_favorite: stt,
-                        comment: allComments[i],
-                        reply: {count: replyCount, list: reply},
-                        favorites: {count: favoriteCount, list: favorite}
-                    }
-                    listResponse.push(item);
-                }
-                res_body = {count: listResponse.length, comments: listResponse};
-                response.json(getResponse(name, 200, sttOK, res_body));
-            } else {
-                res_body = {count: listResponse.length, comments: null};
-                response.json(getResponse(name, 200, 'Fail', res_body));
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
-//trả ve yêu thích của bài đăng
-app.post('/product-favorite', async function (request, response) {
-    let name = 'PRODUCT-FAVORITE'
-    try {
-        let res_body = {status: null};
-        let user = request.body.user;
-        let product = request.body.product;
-        if (checkData(user) &&
-            checkData(product)) {
-            let findUser = await User.find({_id: user}).lean();
-            if (findUser.length < 0) {
-                let res_body = {status: 'User not found'};
-                response.json(getResponse(name, 404, 'User not found', res_body))
-                return
-            }
-            if (findUser[0].status == false) {
-                res_body = {status: "The account has been locked"};
-                response.json(getResponse(name, 200, 'Fail', res_body))
-                return
-            }
-            let findProduct = await Product.find({_id: product}).lean();
-            if (findProduct.length < 0) {
-                let res_body = {status: 'Product not found'};
-                response.json(getResponse(name, 404, 'Product not found', res_body))
-                return
-            }
-            let productFavorite = await Favorite.find({
-                deleteAt: '', status: 'POST', product: product
-            }).populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            }).lean();
-            listUserNew = [];
-            if (productFavorite.length > 0) {
-                productFavorite = productFavorite.reverse();
-                let listUser = [];
-                let stt = false;
-                for (let i = 0; i < productFavorite.length; i++) {
-                    try {
-                        if (productFavorite[i].user._id == user) {
-                            stt = true;
-                        }
-                        let count = 0;
-                        try {
-                            let findUser = await User.find({_id: productFavorite[i].user._id}).populate('address').lean();
-                            if (findUser.length > 0) {
-                                listUserNew.push(findUser[0])
-                                count++;
-                            }
-                        } catch (e) {
-                            console.log('findUser: ' + e)
-                        }
-                    } catch (e) {
-                        console.log('productFavorite post: ' + e)
-                    }
-                }
-                res_body = {count: productFavorite.length, is_favorite: stt, list_user: listUserNew};
-                response.json(getResponse(name, 200, sttOK, res_body));
-            } else {
-                res_body = {count: productFavorite.length, is_favorite: false, list_user: listUserNew};
-                response.json(getResponse(name, 200, 'Fail', res_body));
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
-
-//tim kiem comment
-app.post('/find-comment', async function (request, response) {
-    let name = 'FIND-COMMENT'
-    try {
-        let res_body = {status: null};
-        let user = request.body.user;
-        let comment = request.body.comment;
-        if (checkData(user) &&
-            checkData(comment)) {
-            let findUser = await User.find({_id: user}).lean();
-            if (findUser.length < 0) {
-                let res_body = {status: 'User not found'};
-                response.json(getResponse(name, 404, 'User not found', res_body))
-                return
-            }
-            if (findUser[0].status == false) {
-                res_body = {status: "The account has been locked"};
-                response.json(getResponse(name, 200, 'Fail', res_body))
-                return
-            }
-            let findComment = await Comment.find({_id: comment}).lean();
-            if (findComment.length < 0) {
-                let res_body = {status: 'Product not found'};
-                response.json(getResponse(name, 404, 'Comment not found', res_body))
-                return
-            }
-            let getComment = await Comment.find({
-                deleteAt: '', status: 'COMMENT', _id: comment
-            }).populate({
-                path: 'user',
-                populate: {
-                    path: 'address'
-                }
-            }).lean();
-            if (getComment.length > 0) {
-                getComment = getComment[0];
-                let listResponse = [];
-                let stt = false;
-                let replyCount = 0;
-                let favoriteCount = 0;
-                let reply = [];
-                let favorite = [];
-                try {
-                    let findFavorite = await Favorite
-                        .find({
-                            user: user,
-                            comment: getComment._id,
-                            status: 'COMMENT'
-                        }).lean();
-                    if (findFavorite.length > 0) {
-                        stt = true;
-                    } else {
-                        stt = false;
-                    }
-                } catch (e) {
-                    console.log('findFavorite comment: ' + e)
-                }
-                try {
-                    let is_favorite_reply = false;
-                    let allReplyOfComment = await Comment.find({
-                        deleteAt: '', status: 'REPLY', oldComment: getComment._id
-                    }).populate({
-                        path: 'user',
-                        populate: {
-                            path: 'address'
-                        }
-                    }).lean();
-                    if (allReplyOfComment.length > 0) {
-                        allReplyOfComment = allReplyOfComment;
-                        for (let j = 0; j < allReplyOfComment.length; j++) {
-                            if (user === allReplyOfComment[j].user._id) {
-                                is_favorite_reply = true;
-                            } else {
-                                is_favorite_reply = false;
-                            }
-                            let favoriteReplyComment = [];
-                            let favoriteCountReplyComment = 0;
-                            try {
-                                let allFavoriteOfReplyComment = await Favorite.find({
-                                    deleteAt: '', status: 'COMMENT', comment: allReplyOfComment[j]._id
-                                }).lean();
-                                if (allFavoriteOfReplyComment.length > 0) {
-                                    favoriteReplyComment = allFavoriteOfReplyComment.reverse();
-                                    favoriteCountReplyComment = allFavoriteOfReplyComment.length;
-                                }
-                            } catch (e) {
-                                console.log('allFavoriteOfComment: ' + e)
-                            }
-                            reply.push({
-                                is_favorite_reply: is_favorite_reply,
-                                favorites: {count: favoriteCountReplyComment, list: favoriteReplyComment},
-                                comment: allReplyOfComment[j],
-                            })
-                        }
-                        replyCount = allReplyOfComment.length;
-                    }
-                } catch (e) {
-                    console.log('allReplyOfComment: ' + e)
-                }
-                try {
-                    let allFavoriteOfComment = await Favorite.find({
-                        deleteAt: '', status: 'COMMENT', comment: getComment._id
-                    }).lean();
-                    if (allFavoriteOfComment.length > 0) {
-                        favorite = allFavoriteOfComment.reverse();
-                        favoriteCount = allFavoriteOfComment.length;
-                    }
-                } catch (e) {
-                    console.log('allFavoriteOfComment: ' + e)
-                }
-                let item = {
-                    is_favorite: stt,
-                    comment: getComment,
-                    reply: {count: replyCount, list: reply},
-                    favorites: {count: favoriteCount, list: favorite}
-                }
-                res_body = {comment: item};
-                response.json(getResponse(name, 200, sttOK, res_body));
-            } else {
-                res_body = {comments: null};
-                response.json(getResponse(name, 200, 'Fail', res_body));
-            }
-        } else {
-            response.json(getResponse(name, 400, 'Bad request', null))
-        }
-    } catch (e) {
-        console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
-    }
-});
