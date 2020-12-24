@@ -484,9 +484,9 @@ app.post('/update-user', async function (request, response) {
                         });
                         console.log(JSON.stringify(confirm));
                         let confirPrd = await confirm.save();
-                        if (lvUp == 1){
+                        if (lvUp == 1) {
                             res_body = {status: 'Successfully upgraded account level 1'};
-                        }else {
+                        } else {
                             res_body = {status: sttOK};
                         }
 
@@ -550,6 +550,7 @@ app.post('/upgrade-user', async function (request, response) {
                             checkData(previous) &&
                             checkData(behind) &&
                             checkData(hasFace)) {
+
                             name = name + '-LEVEL-2'
                             let image = {
                                 previous: previous,
@@ -570,27 +571,68 @@ app.post('/upgrade-user', async function (request, response) {
                                 nationality: nationality,
                                 createAt: createAt
                             });
-                            let initIdentityCard = await identityCard.save();
-                            if (initIdentityCard) {
-                                let updateUser = new UpgradeUser({
-                                    user: userId,
-                                    identityCard: initIdentityCard._id,
-                                    createAt: createAt,
-                                    updateAt: '',
-                                    deleteAt: ''
+
+                            let findUpgradeUser = await UpgradeUser.find({code: code}).lean();
+                            if (findUpgradeUser.length > 0) {
+                                findUpgradeUser = findUpgradeUser[0];
+                                let initIdentityCard = await identityCard.save();
+                                let updateIdentityCard = await UpgradeUser.findByIdAndUpdate(findUpgradeUser._id, {
+                                    type: type,
+                                    code: code,
+                                    name: full_name,
+                                    date: date,
+                                    gender: gender,
+                                    issuedBy: issuedBy,
+                                    expiryDate: expiryDate,
+                                    image: image,
+                                    homeTown: homeTown,
+                                    resident: resident,
+                                    nationality: nationality,
+                                    createAt: findUpgradeUser.createAt,
+                                    updateAt: createAt
                                 });
-                                let initUpdateUser = await updateUser.save();
-                                if (initUpdateUser) {
+                                if (initIdentityCard) {
                                     let confirm = await ConfirmPost({
                                         product: null,
                                         admin: null,
                                         user: userId,
-                                        status: name,
+                                        status: 'UPDATE-' + name,
                                         createAt: createAt
                                     });
                                     let confirPrd = await confirm.save();
                                     res_body = {status: sttOK};
                                     response.json(getResponse(name, 200, sttOK, res_body));
+                                } else {
+                                    res_body = {status: "Fail"};
+                                    response.json(getResponse(name, 200, 'Fail', res_body))
+                                }
+                                return
+                            } else {
+                                let initIdentityCard = await identityCard.save();
+                                if (initIdentityCard) {
+                                    let updateUser = new UpgradeUser({
+                                        user: userId,
+                                        identityCard: initIdentityCard._id,
+                                        createAt: createAt,
+                                        updateAt: '',
+                                        deleteAt: ''
+                                    });
+                                    let initUpdateUser = await updateUser.save();
+                                    if (initUpdateUser) {
+                                        let confirm = await ConfirmPost({
+                                            product: null,
+                                            admin: null,
+                                            user: userId,
+                                            status: name,
+                                            createAt: createAt
+                                        });
+                                        let confirPrd = await confirm.save();
+                                        res_body = {status: sttOK};
+                                        response.json(getResponse(name, 200, sttOK, res_body));
+                                    } else {
+                                        res_body = {status: "Fail"};
+                                        response.json(getResponse(name, 200, 'Fail', res_body))
+                                    }
                                 } else {
                                     res_body = {status: "Fail"};
                                     response.json(getResponse(name, 200, 'Fail', res_body))
