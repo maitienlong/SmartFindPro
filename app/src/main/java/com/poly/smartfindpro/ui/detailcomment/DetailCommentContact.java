@@ -20,5 +20,7 @@ public interface DetailCommentContact {
         void onComment();
 
         void onClose();
+
+        void onFavorite();
     }
 }

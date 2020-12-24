@@ -4,6 +4,7 @@ package com.poly.smartfindpro.data.model.favorite;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.poly.smartfindpro.data.model.base.User;
 
 public class ResponseBody {
 
@@ -15,7 +16,7 @@ public class ResponseBody {
     private Boolean isFavorite;
     @SerializedName("list_user")
     @Expose
-    private List<List<ListUser>> listUser = null;
+    private List<User> listUser = null;
 
     public Integer getCount() {
         return count;
@@ -33,12 +34,19 @@ public class ResponseBody {
         this.isFavorite = isFavorite;
     }
 
-    public List<List<ListUser>> getListUser() {
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public List<User> getListUser() {
         return listUser;
     }
 
-    public void setListUser(List<List<ListUser>> listUser) {
+    public void setListUser(List<User> listUser) {
         this.listUser = listUser;
     }
-
 }

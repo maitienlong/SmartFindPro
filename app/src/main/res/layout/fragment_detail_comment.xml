@@ -96,6 +96,7 @@
                         android:text="@={presenter.time}" />
 
                     <TextView
+                        android:onClick="@{() -> presenter.onFavorite()}"
                         android:id="@+id/btn_favorite"
                         style="@style/textStyleBold"
                         android:layout_width="match_parent"

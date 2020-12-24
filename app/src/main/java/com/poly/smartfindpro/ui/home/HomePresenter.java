@@ -51,8 +51,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
                 break;
             case 2:
-                mViewmodel.showMessage("Tài khoản của bạn bị giới hạn lượt đăng là 3 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
-                mViewmodel.openPost();
+                mViewmodel.showMessagePost("Tài khoản của bạn bị giới hạn lượt đăng là 3 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
                 break;
             case 3:
                 mViewmodel.openPost();

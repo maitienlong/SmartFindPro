@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -120,28 +121,29 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
                 request.setProduct(item.getComment().getProduct());
                 request.setComment(item.getComment().getId());
 
+                if (item.getIsFavorite()) {
+                    item.setIsFavorite(false);
+                    item.getFavorites().setCount(item.getFavorites().getCount() - 1);
+                    onChange();
+                } else {
+                    item.setIsFavorite(true);
+                    item.getFavorites().setCount(item.getFavorites().getCount() + 1);
+                    onChange();
+                }
+
                 MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
                     @Override
                     public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
                         if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
 
-                            if (item.getIsFavorite()) {
-                                item.setIsFavorite(false);
-                                item.getFavorites().setCount(item.getFavorites().getCount() - 1);
-                                onChange();
-                            } else {
-                                item.setIsFavorite(true);
-                                item.getFavorites().setCount(item.getFavorites().getCount() + 1);
-                                onChange();
-                            }
-
-
+                        } else {
+                            Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
-
+                        Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

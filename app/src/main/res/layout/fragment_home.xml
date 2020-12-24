@@ -10,16 +10,16 @@
             type="com.poly.smartfindpro.ui.home.HomePresenter" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:background="@color/background_app_gray"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.MainActivity">
+        android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -82,8 +82,8 @@
                             android:background="@drawable/background_hori" />
 
                         <TextView
-                            android:layout_width="match_parent"
                             style="@style/textStyleHomePost_11dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_40sdp"
                             android:text="@string/home_postBtn" />
@@ -102,14 +102,14 @@
 
                     <TextView
                         android:id="@+id/tv_rentalRoom"
-                        android:onClick="@{()->presenter.onClickRentalRoom()}"
                         style="@style/textStyleWhite_10dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="@color/white"
                         android:layout_margin="@dimen/_2sdp"
                         android:gravity="center"
-                        android:text="@string/home_rentalRoomBtn" />
+                        android:onClick="@{()->presenter.onClickRentalRoom()}"
+                        android:text="@string/home_rentalRoomBtn"
+                        android:textColor="@color/white" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -136,19 +136,16 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnRentalRoom" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

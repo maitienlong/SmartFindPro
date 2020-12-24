@@ -2,10 +2,13 @@ package com.poly.smartfindpro.ui.user.setting.confirmAccount;
 
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentConfirmAccountBinding;
+import com.poly.smartfindpro.ui.identification.activity.IdentificationActivity;
+import com.poly.smartfindpro.ui.identification.step.StepFragment;
 
 public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirmAccountBinding, ConfirmAccountPresenter>
         implements ConfirmAccountContact.ViewModel {
@@ -18,13 +21,8 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
     protected void initView() {
         mPresenter = new ConfirmAccountPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
-        mBinding.cmtb.setTitle("Xác thực tài khoản");
-        Spinner spinner = mBinding.spnType;
+        mBinding.ctb.setTitle("Xác thực tài khoản");
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mActivity,
-                R.array.type_id_card_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
     }
 
@@ -36,5 +34,10 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
     @Override
     public void onBackClick() {
         getBaseActivity().onBackFragment();
+    }
+
+    @Override
+    public void onConfirm() {
+        getBaseActivity().openActivity(IdentificationActivity.class);
     }
 }

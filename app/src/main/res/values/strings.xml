@@ -162,5 +162,21 @@
     <string name="facebook_app_id">176696500819373</string>
     <string name="fb_login_protocol_scheme">fb176696500819373</string>
 
+    <string name="face_not_found">Không tìm thấy mặt</string>
+    <string name="face_multiple">Nhiều khuôn mặt được phát hiện.</string>
+    <string name="face_too_small">Mặt quá nhỏ.</string>
+    <string name="face_too_large">Mặt quá to.</string>
+    <string name="face_out_of_rect">Mặt đã ra khỏi hộp.</string>
+    <string name="liveness_detection_neutral">Vui lòng nhìn thẳng</string>
+    <string name="liveness_detection_face_left">Vui lòng quay mặt sang trái</string>
+    <string name="liveness_detection_face_right">Vui lòng quay mặt sang phải</string>
+    <string name="liveness_detection_face_smile">Vui lòng cười</string>
+    <string name="liveness_detection_face_up">Vui lòng ngẩng mặt lên</string>
+    <string name="liveness_detection_face_down">Vui lòng cúi mặt xuống</string>
+    <string name="liveness_detection_blink_left">Vui lòng nháy mắt trái</string>
+    <string name="liveness_detection_blink_right">Vui lòng nháy mắt phải</string>
+    <string name="liveness_detection_face_incline_left">Vui lòng nghiêng đầu sang trái</string>
+    <string name="liveness_detection_face_incline_right">Vui lòng nghiêng đầu sang phải</string>
+    <string name="linveness_detection_close_eye">Vui lòng nhắm mắt</string>
 
 </resources>

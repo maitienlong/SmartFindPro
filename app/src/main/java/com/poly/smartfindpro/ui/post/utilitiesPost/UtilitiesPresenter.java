@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.post.utilitiesPost;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilitiesPresenter implements UtilitiesContract.Presenter {
-    private  List<UtilitiesModel> mListUtilities;
+    private List<UtilitiesModel> mListUtilities;
 
-   private List<String> utilitiesModelList;
+    private List<String> utilitiesModelList;
     private List<UtilitiesModel> mListUpdate;
 
     private Context context;
@@ -23,10 +24,14 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
     private PostRequest postRequest;
 
 
-
     public UtilitiesPresenter(Context context, UtilitiesContract.ViewModel mViewModel) {
         this.context = context;
         this.mViewModel = mViewModel;
+        initData();
+    }
+
+    private void initData() {
+        mListUpdate = new ArrayList<>();
     }
 
     public void setmListUpdate(List<UtilitiesModel> mListUpdate) {
@@ -75,19 +80,65 @@ public class UtilitiesPresenter implements UtilitiesContract.Presenter {
     }
 
     public void onSubmit() {
-        utilitiesModelList = new ArrayList<>();
-        if(mListUpdate == null && mListUpdate.size() == 0){
-           mViewModel.showMessage("Phải có ít nhất 1 tiện ích");
-        }else {
-            for (UtilitiesModel item : mListUpdate) {
-                if (item.isStatus()) {
-                    utilitiesModelList.add(item.getTitle());
-                }
-            }
-            postRequest.setUtilities(utilitiesModelList);
 
-            mViewModel.onNext(new Gson().toJson(postRequest));
+        List<String> utilitieList = new ArrayList<>();
+
+        if (postRequest != null) {
+            if (postRequest.getInformation() == null) {
+                mViewModel.showMessage("Thông tin bài viết đang trống");
+            } else if (postRequest.getAddress() == null) {
+                mViewModel.showMessage("Địa chỉ bài viết đang trống");
+            } else if (postRequest.getCategory() == null) {
+                mViewModel.showMessage("Thể loại đang trống");
+            } else {
+
+                if (postRequest.getInformation().getAmountPeople() == null) {
+                    Toast.makeText(context, "Số lượng người đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getInformation().getDeposit() == null) {
+                    Toast.makeText(context, "Số tiền đặt cọc đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getInformation().getElectricBill() == null) {
+                    Toast.makeText(context, "Giá tiền điện đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getInformation().getGender() == null) {
+                    Toast.makeText(context, "Giới tính đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getInformation().getPrice() == null) {
+                    Toast.makeText(context, "Giá tiền đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getInformation().getWaterBill() == null) {
+                    Toast.makeText(context, "Giá tiền nước đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getCategory() == null) {
+                    Toast.makeText(context, "Thể loại bài đăng đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getAddress().getLocation() == null) {
+                    Toast.makeText(context, "Vị trí địa chỉ đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getAddress().getProvinceCity() == null) {
+                    Toast.makeText(context, "Địa chỉ đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getAddress().getDistrictsTowns() == null) {
+                    Toast.makeText(context, "Địa chỉ đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getAddress().getCommuneWardTown() == null) {
+                    Toast.makeText(context, "Địa chỉ đang trống", Toast.LENGTH_SHORT).show();
+                } else if (postRequest.getAddress().getDetailAddress() == null) {
+                    Toast.makeText(context, "Địa chỉ đang trống", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (UtilitiesModel item : mListUpdate) {
+                        if (item.isStatus()) {
+                            utilitieList.add(item.getTitle());
+                        }
+                    }
+
+                    if (utilitieList.isEmpty()) {
+                        Toast.makeText(context, "Tiện ích đang trống", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        postRequest.setUtilities(utilitieList);
+
+                        mViewModel.onNext(new Gson().toJson(postRequest));
+                    }
+
+                }
+
+            }
+
+
         }
+
 
     }
 }

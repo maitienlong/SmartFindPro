@@ -58,7 +58,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView9">
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/img_cmnd_truoc"
                     android:layout_width="81dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="36dp"
