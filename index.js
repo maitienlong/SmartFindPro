@@ -1207,50 +1207,34 @@ app.post('/user-product', async function (request, response) {
 app.post('/list-product', async function (request, response) {
     let name = 'LIST-PRODUCT'
     try {
-        let id = request.body.id;
-        if (checkData(id)) {
-            let user = await User.find({_id: id}).lean();
-            if (user.length > 0) {
-                user = user[0];
-                if (user.status == true) {
-                    let allProduct = await Product.find({
-                        status: '1',
-                        deleteAt: ''
-                    }).populate(['address', 'product'])
-                        .populate({
-                            path: 'user',
-                            populate: {
-                                path: 'address'
-                            }
-                        })
-                        .lean();
-                    let res_body = {products: null};
-                    let products = [];
-                    if (allProduct) {
-                        if (allProduct.length > 0) {
-                            allProduct = allProduct.reverse();
-                            console.log(allProduct.length)
-                            for (let i = 0; i < allProduct.length; i++) {
-                                if (allProduct[i].total_people_lease < allProduct[i].product.information.amountPeople) {
-                                    products.push(allProduct[i]);
-                                }
-                            }
-                        }
-                        res_body = {products: products};
-                        response.json(getResponse(name, 200, sttOK, res_body));
-                    } else {
-                        res_body = {products: null};
-                        response.json(getResponse(name, 200, 'Fail', res_body));
-                    }
-                } else {
-                    res_body = {status: "The account has been locked"};
-                    response.json(getResponse(name, 200, 'Fail', res_body))
+        let allProduct = await Product.find({
+            status: '1',
+            deleteAt: ''
+        }).populate(['address', 'product'])
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
                 }
-            } else {
-                response.json(getResponse(name, 404, 'User not found', null));
+            })
+            .lean();
+        let res_body = {products: null};
+        let products = [];
+        if (allProduct) {
+            if (allProduct.length > 0) {
+                allProduct = allProduct.reverse();
+                console.log(allProduct.length)
+                for (let i = 0; i < allProduct.length; i++) {
+                    if (allProduct[i].total_people_lease < allProduct[i].product.information.amountPeople) {
+                        products.push(allProduct[i]);
+                    }
+                }
             }
+            res_body = {products: products};
+            response.json(getResponse(name, 200, sttOK, res_body));
         } else {
-            response.json(getResponse(name, 400, 'Bad request', null));
+            res_body = {products: null};
+            response.json(getResponse(name, 200, 'Fail', res_body));
         }
     } catch (e) {
         console.log('loi ne: \n' + e)
@@ -1820,7 +1804,7 @@ app.post('/delete-comment', async function (request, response) {
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
                         res_body = {status: 'Fail'};
-                        response.json(getResponse(name, 200, 'Fail', res_body));
+                        response.json(getResponse(name, 200, 'Failil', res_body));
                     }
                 }
             }
