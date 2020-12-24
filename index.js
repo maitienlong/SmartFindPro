@@ -1786,35 +1786,36 @@ app.post('/delete-comment', async function (request, response) {
                     response.json(getResponse(name, 403, 'User not permission', res_body))
                     return
                 } else {
+                    let findReply = await Comment.find({
+                        oldComment: comment
+                    }).lean();
+
+                    if (findReply.length > 0) {
+                        for (let i = 0; i < findReply.length; i++) {
+                            let delReplyComment = await Comment.findByIdAndDelete({
+                                _id: findReply[i]._id
+                            }).lean();
+                            let findFavoriteOfReply = await Favorite.find({comment: findReply[i]._id})
+                                .lean();
+                            if (findFavoriteOfReply.length > 0) {
+                                let delFavoriteOfComment = await Favorite.findByIdAndDelete({
+                                    _id: findFavoriteOfReply[0]._id
+                                }).lean();
+                            }
+                        }
+                    }
+
+                    let findFavorite = await Favorite.find({comment: comment})
+                        .lean();
+                    if (findFavorite.length > 0) {
+                        let delFavoriteOfComment = await Favorite.findByIdAndDelete({
+                            _id: findFavorite[0]._id
+                        }).lean();
+                    }
                     let delComment = await Comment.findByIdAndDelete({
                         _id: comment
                     }).lean();
                     if (delComment) {
-                        let findReply = await Comment.findByIdAndDelete({
-                            oldComment: comment
-                        }).lean();
-                        if (findReply.length > 0) {
-                            for (let i = 0; i < findReply.length; i++) {
-                                let delReplyComment = await Comment.findByIdAndDelete({
-                                    _id: findReply[i]._id
-                                }).lean();
-                                let findFavoriteOfReply = await Favorite.find({comment: findReply[i]._id})
-                                    .lean();
-                                if (findFavoriteOfReply.length > 0) {
-                                    let delFavoriteOfComment = await Favorite.findByIdAndDelete({
-                                        _id: findFavoriteOfReply[0]._id
-                                    }).lean();
-                                }
-                            }
-                        }
-
-                        let findFavorite = await Favorite.find({comment: comment})
-                            .lean();
-                        if (findFavorite.length > 0) {
-                            let delFavoriteOfComment = await Favorite.findByIdAndDelete({
-                                _id: findFavorite[0]._id
-                            }).lean();
-                        }
                         res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
