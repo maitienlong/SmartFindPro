@@ -18,5 +18,8 @@ public interface StepContract {
         void onTakeCMNDSau();
 
         void onSubmit();
+
+
+        void setMaxLength(int number);
     }
 }

@@ -30,6 +30,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -58,7 +62,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // google pay
-    implementation 'com.google.android.gms:play-services-vision:11.8.0'
+    implementation 'com.google.android.gms:play-services-vision:20.1.3'
 
     //noinspection GradleDeprecatedConfiguration
     compile 'org.sufficientlysecure:html-textview:4.0'
@@ -79,12 +83,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     //slider
-    compile 'com.ss.bannerslider:bannerslider:2.0.0'
+    implementation 'com.ss.bannerslider:bannerslider:2.0.0'
 
     implementation "com.github.bumptech.glide:glide:4.9.0"
 
     //border image
-    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
@@ -93,7 +97,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-auth'
 
-    implementation 'androidx.browser:browser:1.2.0'
+    implementation 'androidx.browser:browser:1.3.0'
 
     implementation('com.google.firebase:firebase-common:19.5.0')
 
@@ -101,8 +105,7 @@ dependencies {
 
     implementation('com.google.android.gms:play-services-vision-common:19.1.3')
 
-    implementation 'com.google.firebase:firebase-ml-vision:20.0.2'
-
+    implementation 'com.google.firebase:firebase-ml-vision:24.1.0'
 
 
     // dynamicLink
@@ -114,7 +117,6 @@ dependencies {
     // socket
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 
-
-
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
 
 }

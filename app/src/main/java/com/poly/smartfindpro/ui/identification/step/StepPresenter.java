@@ -2,7 +2,10 @@ package com.poly.smartfindpro.ui.identification.step;
 
 import android.content.Context;
 
+import androidx.databinding.ObservableField;
+
 import com.google.gson.Gson;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.databinding.FragmentIdentificationStepBinding;
 import com.poly.smartfindpro.ui.identification.tutorial.TutorialContract;
@@ -25,6 +28,8 @@ public class StepPresenter implements StepContract.Presenter {
 
     private String imageCardSau = "";
 
+    public ObservableField<Integer> maxLength;
+
     public StepPresenter(Context mContext, StepContract.ViewModel mViewmodel, FragmentIdentificationStepBinding binding) {
         this.mContext = mContext;
         this.mViewmodel = mViewmodel;
@@ -34,6 +39,7 @@ public class StepPresenter implements StepContract.Presenter {
 
     private void initData() {
         mProduct = new RequestIndentifi();
+        maxLength = new ObservableField<>();
     }
 
     @Override
@@ -116,6 +122,12 @@ public class StepPresenter implements StepContract.Presenter {
             mViewmodel.showMessage("Ảnh mặt sau không được để trống");
         } else {
 
+            mProduct.setUserId(Config.TOKEN_USER );
+
+            mProduct.setType(typeCard);
+
+            mProduct.setGender(gender);
+
             mProduct.setName(mBinding.edtFullname.getText().toString().trim());
 
             mProduct.setCode(mBinding.edtNumberIdentifi.getText().toString().trim());
@@ -134,12 +146,17 @@ public class StepPresenter implements StepContract.Presenter {
 
             mProduct.setPrevious(imageCardTruoc);
 
-            mProduct.setPrevious(imageCardSau);
+            mProduct.setBehind(imageCardSau);
 
             mViewmodel.onNextVeriFace(new Gson().toJson(mProduct));
 
         }
 
+    }
+
+    @Override
+    public void setMaxLength(int number) {
+        maxLength.set(number);
     }
 
 

@@ -386,7 +386,7 @@
 
                     <LinearLayout
                         android:id="@+id/ll_react"
-                        android:layout_width="match_parent"
+                        android:layout_width="match_parent" android:baselineAligned="false" 
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_14sdp"
                         android:background="@color/gray2">

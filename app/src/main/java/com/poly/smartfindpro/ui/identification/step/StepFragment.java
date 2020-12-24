@@ -2,15 +2,19 @@ package com.poly.smartfindpro.ui.identification.step;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.MediaStore;
 
+import com.google.gson.Gson;
 import com.poly.smartfindpro.BuildConfig;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.databinding.FragmentIdentificationStepBinding;
 import com.poly.smartfindpro.ui.identification.veriface.FaceDetectorActivity;
+import com.poly.smartfindpro.ui.identification.veriface.internal.TVSelfieImage;
 import com.poly.smartfindpro.ui.searchProduct.adapter.SpinnerCatalory;
 
 import androidx.annotation.Nullable;
@@ -46,6 +50,10 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
     private List<ImageInforPost> mImage;
 
     private String[] imagePath = {"", "", ""};
+
+    private Bitmap[] imagePaths = new Bitmap[2];
+
+    private List<TVSelfieImage> mListBitmap;
 
     @Override
     protected int getLayoutId() {
@@ -86,20 +94,26 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
 
         mImage = new ArrayList<>();
 
+        mListBitmap = new ArrayList<>();
+
         mBinding.spnTypeIdentification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     mPresenter.setTypeCard("");
+                    mPresenter.setMaxLength(0);
                 } else if (position == 1) {
                     String item = (String) parent.getItemAtPosition(position);
                     mPresenter.setTypeCard(item);
+                    mPresenter.setMaxLength(9);
                 } else if (position == 2) {
                     String item = (String) parent.getItemAtPosition(position);
                     mPresenter.setTypeCard(item);
+                    mPresenter.setMaxLength(12);
                 } else if (position == 3) {
                     String item = (String) parent.getItemAtPosition(position);
                     mPresenter.setTypeCard(item);
+                    mPresenter.setMaxLength(12);
                 }
             }
 
@@ -227,6 +241,9 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
 
             imageView.setImageBitmap(bitmap);
+
+            imagePaths[0] = bitmap;
+
         } else if (TRUOC == 1) {
             ImageView imageView = mBinding.imgCmndSau;
             // Get the dimensions of the View
@@ -257,13 +274,21 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
 
             imageView.setImageBitmap(bitmap);
+
+            imagePaths[1] = bitmap;
         }
 
     }
 
     @Override
     public void onNextVeriFace(String jsonData) {
+        List<Bitmap> mListImage = new ArrayList<>();
+        for (int i = 0; i < imagePaths.length; i++) {
+            mListImage.add(imagePaths[i]);
+        }
         Intent intent = new Intent(mActivity, FaceDetectorActivity.class);
+        intent.putExtra(Config.POST_BUNDEL_RES, jsonData);
+        intent.putExtra(Config.POST_BUNDEL_RES_PHOTO, new Gson().toJson(mListImage));
         startActivity(intent);
     }
 
