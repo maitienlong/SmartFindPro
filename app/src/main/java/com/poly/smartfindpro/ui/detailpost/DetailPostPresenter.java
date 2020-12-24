@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.detailpost;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.text.Editable;
@@ -15,11 +16,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.comment.deleteComment.req.DeleteCommentRequest;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.getcomment.req.CommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
 import com.poly.smartfindpro.data.model.favorite.ResponseFavoritePost;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
@@ -232,11 +235,36 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
             @Override
             public void onFailure(Call<ResponseFavoritePost> call, Throwable t) {
-                Log.d("CheckLogDetail",t.toString());
+                Log.d("CheckLogDetail", t.toString());
             }
         });
+    }
 
+    public Boolean onDeleteComment(String commentID) {
+        DeleteCommentRequest request = new DeleteCommentRequest();
+        request.setUser(Config.TOKEN_USER);
+        request.setComment(commentID);
+        MyRetrofitSmartFind.getInstanceSmartFind().getDeleteComment(request).enqueue(new Callback<DeleteProductResponse>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
+                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+                    if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        onRequestComment(mProduct.getId());
+                    } else {
+                        mViewModel.showMessage("Xóa bình luận hiện không thể thực hiện");
+                    }
+                } else {
+                    mViewModel.showMessage("Xóa bình luận hiện không thể thực hiện");
+                }
+            }
 
+            @Override
+            public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
+
+            }
+        });
+        return true;
     }
 
 

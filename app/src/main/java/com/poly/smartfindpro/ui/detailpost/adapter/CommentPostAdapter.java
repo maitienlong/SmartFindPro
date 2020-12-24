@@ -154,6 +154,7 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
                 mViewmodel.onCallBackAdapter(commentDetailRequest);
@@ -165,6 +166,13 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
                 CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
                 mViewmodel.onCallBackAdapter(commentDetailRequest);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mViewmodel.onCallBackDeleteItem(item);
+                return false;
             }
         });
 

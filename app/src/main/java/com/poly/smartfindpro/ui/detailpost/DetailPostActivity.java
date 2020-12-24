@@ -1,17 +1,24 @@
 package com.poly.smartfindpro.ui.detailpost;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
@@ -21,6 +28,7 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.Comments;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
 import com.poly.smartfindpro.ui.detailcomment.DetailCommentFragment;
 import com.poly.smartfindpro.ui.detailpost.adapter.CommentPostAdapter;
@@ -38,10 +46,6 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     private DetailImageAdapter adapter;
 
     private CommentPostAdapter commentPostAdapter;
-    private LinearLayout bottomSheet;
-    private ImageView imgBottomAvatar;
-    private TextView tvBottomName;
-    private LinearLayout lnBottomDelete;
 
 
     @Override
@@ -55,12 +59,6 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
         mPresenter = new DetailPostPresenter(this, this, mBinding);
         mBinding.setPresenter(mPresenter);
-
-//bottomsheet
-        bottomSheet = (LinearLayout) findViewById(R.id.ln_detail_comment);
-        imgBottomAvatar = (ImageView) findViewById(R.id.img_bottom_avatar);
-        tvBottomName = (TextView) findViewById(R.id.tv_bottom_name);
-        lnBottomDelete = (LinearLayout) findViewById(R.id.ln_bottom_delete);
     }
 
     @Override
@@ -143,6 +141,50 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         bundle.putString(Config.POST_BUNDEL_RES, new Gson().toJson(commentDetailRequest));
 
         goToFragment(R.id.fl_post_detail, new DetailCommentFragment(), bundle, this::onClose);
+    }
+
+    @Override
+    public void onCallBackDeleteItem(Comments comments) {
+        View view = getLayoutInflater().inflate(R.layout.fragment_bottom_information, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+
+        ImageView imgBottomAvatar;
+        TextView tvBottomName;
+        LinearLayout lnBottomDelete;
+//bottomsheet
+        imgBottomAvatar = (ImageView) view.findViewById(R.id.img_bottom_avatar);
+        tvBottomName = (TextView) view.findViewById(R.id.tv_bottom_name);
+        lnBottomDelete = (LinearLayout) view.findViewById(R.id.ln_bottom_delete);
+
+        // ten
+        tvBottomName.setText(comments.getComment().getUser().getFullname());
+
+        // avatar
+        Glide.
+                with(this)
+                .load(MyRetrofitSmartFind.smartFind + comments.getComment().getUser().getAvatar())
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgplaceholder)
+                .into(imgBottomAvatar);
+
+        if (!comments.getComment().getUser().getId().equalsIgnoreCase(Config.TOKEN_USER)) {
+            lnBottomDelete.setVisibility(View.GONE);
+        }
+
+        lnBottomDelete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onClick(View v) {
+                boolean result = mPresenter.onDeleteComment(comments.getComment().getId());
+                Log.d("onClick-lnBottomDelete: ", String.valueOf(result));
+                if (result) {
+                    Toast.makeText(DetailPostActivity.this, "Xóa bình luận thành công", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.setContentView(view);
+        dialog.show();
     }
 
 

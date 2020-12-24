@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.retrofit;
 import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.comment.deleteComment.req.DeleteCommentRequest;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
@@ -82,7 +83,10 @@ public interface ListServices {
     Call<CheckPhoneResponse> getRegister(@Body RegisterRequest request);
 
     @POST("/delete-product")
-    Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request );
+    Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request);
+
+    @POST("/delete-comment")
+    Call<DeleteProductResponse> getDeleteComment(@Body DeleteCommentRequest request);
 
     @POST("/product-comment")
     Call<CommentResponse> getComment(@Body CommentRequest request);
@@ -100,7 +104,7 @@ public interface ListServices {
     Call<ResponseFavoritePost> getFavorite(@Body InitFavorite request);
 
     @POST("/upgrade-user")
-    Call<DeleteProductResponse> getUpgrade(@Body RequestIndentifi request );
+    Call<DeleteProductResponse> getUpgrade(@Body RequestIndentifi request);
 
     @POST("/update-product")
     Call<CheckPhoneResponse> getUpdateProduct(@Body PostRequest request);
