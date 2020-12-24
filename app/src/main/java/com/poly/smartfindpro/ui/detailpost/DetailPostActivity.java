@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +38,10 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     private DetailImageAdapter adapter;
 
     private CommentPostAdapter commentPostAdapter;
+    private LinearLayout bottomSheet;
+    private ImageView imgBottomAvatar;
+    private TextView tvBottomName;
+    private LinearLayout lnBottomDelete;
 
 
     @Override
@@ -48,6 +55,12 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
         mPresenter = new DetailPostPresenter(this, this, mBinding);
         mBinding.setPresenter(mPresenter);
+
+//bottomsheet
+        bottomSheet = (LinearLayout) findViewById(R.id.ln_detail_comment);
+        imgBottomAvatar = (ImageView) findViewById(R.id.img_bottom_avatar);
+        tvBottomName = (TextView) findViewById(R.id.tv_bottom_name);
+        lnBottomDelete = (LinearLayout) findViewById(R.id.ln_bottom_delete);
     }
 
     @Override
@@ -83,7 +96,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     public void onClickCall() {
         String PhoneNum = mBinding.tvPhoneNumber.getText().toString();
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:"+Uri.encode(PhoneNum.trim())));
+        callIntent.setData(Uri.parse("tel:" + Uri.encode(PhoneNum.trim())));
 //        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(callIntent);
     }

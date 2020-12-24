@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-  >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -11,7 +10,7 @@
         <import type="android.view.View" />
     </data>
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -336,9 +335,9 @@
                                 android:text="@string/text_infor_utilities" />
 
                             <LinearLayout
-                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:orientation="horizontal">
 
                                 <ImageView
@@ -411,8 +410,8 @@
                                 android:src="@drawable/ic_love_border" />
 
                             <TextView
-                                style="@style/textStyleRegular"
                                 android:id="@+id/tv_count_favorite"
+                                style="@style/textStyleRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -446,6 +445,12 @@
 
                     </LinearLayout>
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_8sdp" />
+
                     <LinearLayout
                         android:id="@+id/ll_comment"
                         android:layout_width="match_parent"
@@ -472,17 +477,10 @@
                             android:padding="@dimen/_6sdp"
                             android:src="@drawable/ic_baseline_send_24" />
                     </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/_8sdp" />
-
-
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
 
-    </RelativeLayout>
+        <include layout="@layout/fragment_bottom_information" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
