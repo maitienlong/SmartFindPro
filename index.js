@@ -451,10 +451,10 @@ app.post('/update-user', async function (request, response) {
                     let updateAt = moment(Date.now()).format(formatDate);
                     let lvUp = 0;
                     if (user.level === 0 &&
-                        checkData(address) &&
-                        checkData(birth) &&
-                        checkData(fullName) &&
-                        checkData(gender)) {
+                        checkData(user.address._id) &&
+                        checkData(user.birth) &&
+                        checkData(user.full_name) &&
+                        checkData(user.gender)) {
                         lvUp = 1;
                     } else {
                         lvUp = user.level
