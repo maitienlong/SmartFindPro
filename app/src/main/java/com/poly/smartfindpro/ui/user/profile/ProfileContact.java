@@ -22,6 +22,12 @@ public interface ProfileContact {
         void onCallback(int type, String idPost, String jsonData);
 
         void onUpdate(String jsonData);
+
+        void onGetTotalPeople(String idPost, String amount);
+
+        void setAmountPeople(String amount);
+
+
     }
 
     interface Presenter extends BasePresenter {
@@ -32,6 +38,10 @@ public interface ProfileContact {
         void onClickPending();
 
         void onClickApproved();
+
+        void onGetTotalPeople();
+
+        void setAmountPeople(String amount);
 
     }
 }

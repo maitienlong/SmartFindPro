@@ -57,7 +57,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     public ObservableField<String> priceDepositDetail;
     public ObservableField<String> categoryDetail;
     public ObservableField<String> phoneNumberDetail;
-
+    public ObservableField<String> total_people_lease;
     public ObservableField<String> favoriteCount;
 
 
@@ -83,6 +83,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         categoryDetail = new ObservableField<>();
         phoneNumberDetail = new ObservableField<>();
         favoriteCount = new ObservableField<>();
+        total_people_lease = new ObservableField<>();
         getProduct();
     }
 
@@ -109,7 +110,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                     mViewModel.onShowComment(response.body().getResponseBody().getComments());
 
                 } else {
-//                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
+    //                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
                 }
             }
 
@@ -130,6 +131,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         priceWaterDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getWaterBill()) + "đ/" + product.getProduct().getInformation().getWaterUnit());
         priceDepositDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getDeposit()) + " " + product.getProduct().getInformation().getUnit());
         categoryDetail.set(product.getProduct().getCategory() + "  ");
+        total_people_lease.set("Đã thuê "+product.getTotal_people_lease()+"/"+product.getProduct().getInformation().getAmountPeople());
         if (Config.LEVEL_ACCOUNT > 0) {
             phoneNumberDetail.set(product.getUser().getPhoneNumber());
         }
@@ -232,7 +234,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
             @Override
             public void onFailure(Call<ResponseFavoritePost> call, Throwable t) {
-                Log.d("CheckLogDetail",t.toString());
+                Log.d("CheckLogDetail", t.toString());
             }
         });
 

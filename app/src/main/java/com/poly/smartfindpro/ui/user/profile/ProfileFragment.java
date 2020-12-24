@@ -101,4 +101,14 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     public void onUpdate(String jsonData) {
 
     }
+
+    @Override
+    public void onGetTotalPeople(String idPost, String amount) {
+        mPresenter.getTotalPeopleLease(idPost,amount);
+    }
+
+    @Override
+    public void setAmountPeople(String amount) {
+
+    }
 }

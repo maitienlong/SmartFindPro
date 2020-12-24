@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_85sdp">
+    <EditText
+        android:id="@+id/edt_total_people_lease"
+        android:background="@color/bg_gray"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:hint="@string/tv_total_people" />
+    <Button
+        android:id="@+id/btn_confirm_total"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/tv_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"/>
+</LinearLayout>
+
+</LinearLayout>
