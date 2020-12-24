@@ -486,11 +486,12 @@ app.post('/update-user', async function (request, response) {
                         let confirPrd = await confirm.save();
                         if (lvUp == 1) {
                             res_body = {status: 'Successfully upgraded account level 1'};
+                            response.json(getResponse(name, 200, sttOK, res_body));
                         } else {
                             res_body = {status: sttOK};
+                            response.json(getResponse(name, 200, sttOK, res_body));
                         }
 
-                        response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
                         res_body = {status: "Fail"};
                         response.json(getResponse(name, 200, 'Fail', res_body))
