@@ -1,16 +1,14 @@
-package com.poly.smartfindpro.ui.identification.tutorial;
+package com.poly.smartfindpro.ui.checklevel.levelbac;
 
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 
-public interface TutorialContract {
+public interface RankBacContract {
     interface ViewModel extends BaseView {
-        void onClickConfirm();
-        void onBackClick();
+
     }
 
     interface Presenter extends BasePresenter {
-       void onClickConfirm();
-        void onBackClick();
+
     }
 }

@@ -56,6 +56,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
             public void onAccept() {
                 showLoadingDialog();
                 if (onSaveLogin(username, password, token , level, true)) {
+                    Log.d("LoginCheck", username+" - "+password);
                     Intent intent = new Intent(mActivity, MainActivity.class);
                     startActivity(intent);
                     mActivity.finish();

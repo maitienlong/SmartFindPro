@@ -1,12 +1,13 @@
-package com.poly.smartfindpro.ui.identification.tutorial;
+package com.poly.smartfindpro.ui.checklevel.leveldong;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentTutorialIdentifitionBinding;
+import com.poly.smartfindpro.databinding.FragmentViewLevel1Binding;
 import com.poly.smartfindpro.ui.identification.step.StepFragment;
 
 
-public class TutorialFragment extends BaseDataBindFragment<FragmentTutorialIdentifitionBinding, TutorialPresenter> implements TutorialContract.ViewModel {
+public class RankDongFragment extends BaseDataBindFragment<FragmentViewLevel1Binding, RankDongPresenter> implements RankDongContract.ViewModel {
 
 
     @Override
@@ -26,13 +27,13 @@ public class TutorialFragment extends BaseDataBindFragment<FragmentTutorialIdent
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_tutorial_identifition;
+        return R.layout.fragment_view_level_1;
     }
 
     @Override
     protected void initView() {
 
-        mPresenter = new TutorialPresenter(mActivity, this);
+        mPresenter = new RankDongPresenter(mActivity, this);
 
         mBinding.setPresenter(mPresenter);
 
@@ -43,13 +44,4 @@ public class TutorialFragment extends BaseDataBindFragment<FragmentTutorialIdent
 
     }
 
-    @Override
-    public void onBackClick() {
-        mActivity.finish();
-    }
-
-    @Override
-    public void onClickConfirm() {
-        getBaseActivity().goToFragment(R.id.fl_identification, new StepFragment(), null);
-    }
 }

@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.identification.veriface;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -29,6 +30,7 @@ import com.google.gson.reflect.TypeToken;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 
+import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
@@ -70,7 +72,7 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
 
     private RequestIndentifi mProduct;
 
-    private List<Bitmap> mImageIdentifi;
+    private List<File> mImageIdentifi;
 
     private TextView mPromptText;
 
@@ -248,7 +250,7 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
             Type type = new TypeToken<RequestIndentifi>() {
             }.getType();
 
-            Type typePhoto = new TypeToken<List<Bitmap>>() {
+            Type typePhoto = new TypeToken<List<File>>() {
             }.getType();
 
             mProduct = new Gson().fromJson(getIntent().getStringExtra(Config.POST_BUNDEL_RES), type);
@@ -508,7 +510,7 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
 
     @Override
     public void onBackClick() {
-
+        finish();
     }
 
     private void storeImage(Bitmap image) {
@@ -531,7 +533,6 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
         List<File> fileList = new ArrayList<>();
         fileList.add(pictureFile);
         mPresenter.requestUploadSurvey(fileList);
-
 
     }
 
@@ -561,6 +562,39 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
         return mediaFile;
     }
 
+    @Override
+    public void onSuccess(String msg) {
+        showAlertSuccessDialog(msg, "Đồng ý", new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                Intent intent = new Intent();
+                intent.putExtra(Config.DATA_CALL_BACK, 2);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
 
+            @Override
+            public void onCancel() {
+                Intent intent = new Intent();
+                intent.putExtra(Config.DATA_CALL_BACK, 2);
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+    }
 
+    @Override
+    public void onFail(String msg) {
+        showAlertDialog(msg, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                finish();
+            }
+        });
+    }
 }

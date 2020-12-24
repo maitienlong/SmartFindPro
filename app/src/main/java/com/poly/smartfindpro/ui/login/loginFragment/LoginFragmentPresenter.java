@@ -63,22 +63,22 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
         mViewmodel.showLoading();
         LoginRequest request = new LoginRequest();
         request.setAccount(mBinding.edtAccountNumber.getText().toString().trim());
-
         request.setPassword(mBinding.edtPassword.getText().toString());
+
         MyRetrofitSmartFind.getInstanceSmartFind().getLogin(request).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
                     mViewmodel.hideLoading();
-                    Log.d("getUser", new Gson().toJson(response.body()));
+
                     String token = response.body().getResponseBody().getUser().getId();
                     int level = response.body().getResponseBody().getUser().getLevel();
                     Config.PROFILE = response.body().getResponseBody().getUser();
                     Config.TOKEN_USER = token;
                     Config.LEVEL_ACCOUNT = level;
-
-                    mViewmodel.saveLogin(username, password, token, level);
+                    Log.d("getUser", String.valueOf(level));
+                    mViewmodel.saveLogin(mBinding.edtAccountNumber.getText().toString().trim(), mBinding.edtPassword.getText().toString().trim(), token, level);
                 } else {
                     mViewmodel.hideLoading();
                     mViewmodel.showMessage("Tài khoản hoặc mật khẩu không chính xác");

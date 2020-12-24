@@ -43,7 +43,7 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
     private FaceDetectorContract.ViewModel mViewModel;
     private Context mContext;
 
-    private List<Bitmap> mSelfieImages = new ArrayList<>();
+    private List<File> mSelfieImages = new ArrayList<>();
 
     public ObservableField<String> accountName;
 
@@ -76,7 +76,7 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
     }
 
 
-    public void setmSelfieImages(List<Bitmap> mSelfieImages) {
+    public void setmSelfieImages(List<File> mSelfieImages) {
         this.mSelfieImages = mSelfieImages;
     }
 
@@ -105,7 +105,7 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
                 if (response.code() == 200) {
                     mProduct.setHasFace(response.body().getResponseBody().getAddressImage().get(0));
-                    initPhotoIdentifi();
+                    onUploadPhotoIdentifi(mSelfieImages);
                 } else {
                     mViewModel.hideLoading();
                     mViewModel.showMessage(mContext.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
@@ -115,23 +115,13 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             @Override
             public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
                 mViewModel.hideLoading();
-                Log.d("CheckUpLoadImage", t.toString());
+                Log.d("checkUploadIamge", t.toString());
                 mViewModel.showMessage(mContext.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
             }
         });
 
     }
 
-    private void initPhotoIdentifi() {
-
-        List<File> listPhotoIdentifi = new ArrayList<>();
-
-        for (int i = 0; i < mSelfieImages.size(); i++) {
-            listPhotoIdentifi.add(storeImage(mSelfieImages.get(i)));
-        }
-
-        onUploadPhotoIdentifi(listPhotoIdentifi);
-    }
 
     private void onUploadPhotoIdentifi(List<File> filePhoto) {
 
@@ -152,9 +142,10 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             @Override
             public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
                 if (response.code() == 200) {
-                    Log.d("CheckResponseFace", new Gson().toJson(response.body()));
                     mProduct.setPrevious(response.body().getResponseBody().getAddressImage().get(0));
+
                     mProduct.setBehind(response.body().getResponseBody().getAddressImage().get(1));
+
                     onSubmit(mProduct);
                 } else {
                     mViewModel.hideLoading();
@@ -165,7 +156,7 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             @Override
             public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
                 mViewModel.hideLoading();
-                Log.d("CheckUpLoadImage", t.toString());
+                Log.d("checkUploadIamgePI", t.toString());
                 mViewModel.showMessage(mContext.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
             }
         });
@@ -179,14 +170,13 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 Log.d("CheckResponseFace", new Gson().toJson(response.body()));
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
-
-
                     mViewModel.hideLoading();
-                    mViewModel.showMessage(response.body().getResponseBody().getStatus());
+
+                    mViewModel.onSuccess("Chúc mừng, tài khoản của bạn đã được nâng cấp lên level 2. Để nâng cấp tài khoản lên level 3 vui lòng đến đại lý ủy quyền để nâng cấp");
 
                 } else {
                     mViewModel.hideLoading();
-                    mViewModel.showMessage(response.body().getResponseHeader().getResMessage());
+                    mViewModel.onFail(response.body().getResponseHeader().getResMessage());
                 }
             }
 
@@ -197,54 +187,6 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             }
         });
     }
-
-
-    private File storeImage(Bitmap image) {
-        File pictureFile = getOutputMediaFile();
-        if (pictureFile == null) {
-            Log.d("CheckFace",
-                    "Error creating media file, check storage permissions: ");// e.getMessage());
-            return null;
-        }
-        try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
-            fos.close();
-        } catch (FileNotFoundException e) {
-            Log.d("CheckFace", "File not found: " + e.getMessage());
-        } catch (IOException e) {
-            Log.d("CheckFace", "Error accessing file: " + e.getMessage());
-        }
-
-        return pictureFile;
-    }
-
-    private File getOutputMediaFile() {
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + getApplicationContext().getPackageName()
-                + "/Files");
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                return null;
-            }
-        }
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-        File mediaFile;
-        String mImageName = "MI_" + timeStamp + ".jpg";
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
-
-        return mediaFile;
-    }
-
 
     public void onBackClick() {
         mViewModel.onBackClick();

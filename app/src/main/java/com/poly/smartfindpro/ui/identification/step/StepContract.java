@@ -10,6 +10,8 @@ public interface StepContract {
         void onTakeCMNDSau();
 
         void onNextVeriFace(String jsonData);
+
+        void onBackClick();
     }
 
     interface Presenter extends BasePresenter {
@@ -19,7 +21,8 @@ public interface StepContract {
 
         void onSubmit();
 
-
         void setMaxLength(int number);
+
+        void onBackClick();
     }
 }

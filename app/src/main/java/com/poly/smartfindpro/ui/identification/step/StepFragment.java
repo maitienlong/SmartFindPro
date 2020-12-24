@@ -30,11 +30,16 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class StepFragment extends BaseDataBindFragment<FragmentIdentificationStepBinding, StepPresenter> implements StepContract.ViewModel {
@@ -51,7 +56,7 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
 
     private String[] imagePath = {"", "", ""};
 
-    private Bitmap[] imagePaths = new Bitmap[2];
+    private File[] imagePaths = new File[2];
 
     private List<TVSelfieImage> mListBitmap;
 
@@ -242,7 +247,8 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
 
             imageView.setImageBitmap(bitmap);
 
-            imagePaths[0] = bitmap;
+            storeImage(bitmap, 0);
+
 
         } else if (TRUOC == 1) {
             ImageView imageView = mBinding.imgCmndSau;
@@ -275,21 +281,81 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
 
             imageView.setImageBitmap(bitmap);
 
-            imagePaths[1] = bitmap;
+            storeImage(bitmap, 1);
         }
+
+    }
+
+    private void storeImage(Bitmap image, int position) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.d("CheckFace",
+                    "Error creating media file, check storage permissions: ");// e.getMessage());
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("CheckFace", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("CheckFace", "Error accessing file: " + e.getMessage());
+        }
+        if (position == 0) {
+            imagePaths[0] = pictureFile;
+        } else if (position == 1) {
+            imagePaths[1] = pictureFile;
+        }
+
+    }
+
+    private File getOutputMediaFile() {
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getApplicationContext().getPackageName()
+                + "/Files");
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName = "SMARTFIND_" + timeStamp + System.currentTimeMillis() + ".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+
+        return mediaFile;
+    }
+
+    private void persistImage(Bitmap bitmap, String name) {
+        File filesDir = mActivity.getFilesDir();
+        File imageFile = new File(filesDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e("Convert", "Error writing bitmap", e);
+        }
+
 
     }
 
     @Override
     public void onNextVeriFace(String jsonData) {
-        List<Bitmap> mListImage = new ArrayList<>();
+        List<File> mListImage = new ArrayList<>();
         for (int i = 0; i < imagePaths.length; i++) {
             mListImage.add(imagePaths[i]);
         }
         Intent intent = new Intent(mActivity, FaceDetectorActivity.class);
         intent.putExtra(Config.POST_BUNDEL_RES, jsonData);
         intent.putExtra(Config.POST_BUNDEL_RES_PHOTO, new Gson().toJson(mListImage));
-        startActivity(intent);
+        startActivityForResult(intent, Config.RESULT_REQUEST);
     }
 
     //----------------------------------------
@@ -300,6 +366,16 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             setPic();
             galleryAddPic();
+        } else if (requestCode == Config.RESULT_REQUEST && resultCode == Activity.RESULT_OK) {
+            Intent intent = new Intent();
+            intent.putExtra(Config.DATA_CALL_BACK, data.getIntExtra(Config.DATA_CALL_BACK, Config.LEVEL_ACCOUNT));
+            mActivity.setResult(Activity.RESULT_OK, intent);
+            mActivity.finish();
         }
+    }
+
+    @Override
+    public void onBackClick() {
+        mActivity.finish();
     }
 }

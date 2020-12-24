@@ -16,16 +16,19 @@
         android:focusable="true">
 
         <com.poly.smartfindpro.widget.CommonToolbar
+            onBackClick="@{()->presenter.onBackClick()}"
             android:id="@+id/ctb"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
 
         <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerRank"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/ctb" />
 
         <LinearLayout
+            android:paddingBottom="@dimen/_20sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -34,12 +37,13 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/btn_action"
                 android:layout_width="@dimen/_200sdp"
                 android:onClick="@{()-> presenter.onConfirm()}"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/background_button"
-                android:text="Định danh"
+                android:text="@={presenter.titleButton}"
                 android:textColor="@color/white" />
         </LinearLayout>
 

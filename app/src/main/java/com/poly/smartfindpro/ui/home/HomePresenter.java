@@ -114,6 +114,7 @@ public class HomePresenter implements HomeContract.Presenter {
         });
     }
 
+
     private void getProductShare() {
         mViewmodel.showLoading();
         HomeRequest request = new HomeRequest();
@@ -150,5 +151,6 @@ public class HomePresenter implements HomeContract.Presenter {
             }
         });
     }
+
 
 }

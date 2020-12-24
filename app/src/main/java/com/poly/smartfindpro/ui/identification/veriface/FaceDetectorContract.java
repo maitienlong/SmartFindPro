@@ -9,6 +9,10 @@ public interface FaceDetectorContract {
 
         void onBackClick();
 
+        void onSuccess(String msg);
+
+        void onFail(String msg);
+
     }
 
     interface Presenter extends BasePresenter {

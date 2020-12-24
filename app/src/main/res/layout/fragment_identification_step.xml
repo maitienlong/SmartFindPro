@@ -17,6 +17,8 @@
 
         <com.poly.smartfindpro.widget.CommonToolbar
             android:id="@+id/ctb"
+            title="@{presenter.title}"
+            onBackClick="@{() -> presenter.onBackClick()}"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
 
@@ -46,6 +48,7 @@
                         android:text="Ảnh CMND/CCCD Mặt trước" />
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -102,6 +105,7 @@
                         android:text="Ảnh CMND/CCCD Mặt trước" />
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -240,13 +244,13 @@
                             android:text="Ngày cấp" />
 
                         <EditText
-                            android:inputType="date"
                             android:id="@+id/edt_date_supply"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_marginTop="@dimen/_6sdp"
                             android:background="@drawable/custom_edt_change_pass"
-                            android:hint="dd/MM/yyyy" />
+                            android:hint="dd/MM/yyyy"
+                            android:inputType="date" />
 
 
                     </LinearLayout>

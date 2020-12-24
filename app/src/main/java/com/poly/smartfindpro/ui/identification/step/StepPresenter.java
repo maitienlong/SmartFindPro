@@ -30,6 +30,8 @@ public class StepPresenter implements StepContract.Presenter {
 
     public ObservableField<Integer> maxLength;
 
+    public ObservableField<String> title;
+
     public StepPresenter(Context mContext, StepContract.ViewModel mViewmodel, FragmentIdentificationStepBinding binding) {
         this.mContext = mContext;
         this.mViewmodel = mViewmodel;
@@ -40,6 +42,7 @@ public class StepPresenter implements StepContract.Presenter {
     private void initData() {
         mProduct = new RequestIndentifi();
         maxLength = new ObservableField<>();
+        title = new ObservableField<>("Thông tin định danh");
     }
 
     @Override
@@ -102,7 +105,9 @@ public class StepPresenter implements StepContract.Presenter {
             mViewmodel.showMessage("Vui lòng nhập họ và tên");
         } else if (mBinding.edtNumberIdentifi.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập số CMND/CCCD");
-        } else if (mBinding.edtDateSupply.getText().toString().isEmpty()) {
+        } else if (mBinding.edtNumberIdentifi.getText().toString().length() != maxLength.get()) {
+            mViewmodel.showMessage("Số CMND/CCCD phải là "+maxLength.get()+" số");
+        }  else if (mBinding.edtDateSupply.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập ngày cấp");
         } else if (mBinding.edtAddressSupply.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập nơi cấp");
@@ -159,5 +164,8 @@ public class StepPresenter implements StepContract.Presenter {
         maxLength.set(number);
     }
 
-
+    @Override
+    public void onBackClick() {
+        mViewmodel.onBackClick();
+    }
 }

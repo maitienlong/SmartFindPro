@@ -40,8 +40,6 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
@@ -51,8 +49,10 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
     protected void initData() {
         mPresenter = new IntroPresenter(this, this);
         mBinding.setPresenter(mPresenter);
+        checkSaveLogin();
     }
 
+    @Override
     public void onNextLogin() {
         Animation animation = new AnimationUtils().loadAnimation(this, R.anim.slide_up);
         animation.setFillAfter(true);
@@ -79,7 +79,8 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
 
     }
 
-    private void onNextHome() {
+    @Override
+    public void onNextHome() {
         Animation animation = new AnimationUtils().loadAnimation(this, R.anim.slide_up);
         animation.setFillAfter(true);
         mBinding.imgLogo.startAnimation(animation);
@@ -105,33 +106,39 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
 
     }
 
-    private boolean checkSaveLogin() {
+    private void checkSaveLogin() {
         SharedPreferences prefs = getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
-        Config.TOKEN_USER = prefs.getString(ConfigSharedPreferences.TOKEN, "token");
-        Config.LEVEL_ACCOUNT = prefs.getInt(ConfigSharedPreferences.LEVEL, 0);
-        return prefs.getBoolean(ConfigSharedPreferences.IS_SAVE, false);
+        mPresenter.getUpdateUser(prefs.getString(ConfigSharedPreferences.USERNAME, "root")
+                , prefs.getString(ConfigSharedPreferences.PASSWORD, "root")
+                , prefs.getBoolean(ConfigSharedPreferences.IS_SAVE, true));
     }
 
     public void onShowDialogMsg(String msg) {
         showAlertDialog(msg, "Thử lại", new AlertDialogListener() {
             @Override
             public void onAccept() {
-                mPresenter.getUpdateUser();
+                checkSaveLogin();
             }
 
             @Override
             public void onCancel() {
-                mPresenter.getUpdateUser();
+                checkSaveLogin();
             }
         });
     }
 
     @Override
-    public void onNextSceen() {
-        if (!checkSaveLogin()) {
-            onNextLogin();
-        } else {
-            onNextHome();
-        }
+    public void onAccountNotAvail(String msg) {
+        showAlertDialog("Thông báo", msg, "Đăng nhập", "Trang chủ", false, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                onNextLogin();
+            }
+
+            @Override
+            public void onCancel() {
+                onNextHome();
+            }
+        });
     }
 }
