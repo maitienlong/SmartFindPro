@@ -1790,6 +1790,24 @@ app.post('/delete-comment', async function (request, response) {
                         _id: comment
                     }).lean();
                     if (delComment) {
+                        let findReply = await Comment.findByIdAndDelete({
+                            oldComment: comment
+                        }).lean();
+                        if (findReply.length > 0) {
+                            for (let i = 0; i < findReply.length; i++) {
+                                let delReplyComment = await Comment.findByIdAndDelete({
+                                    _id: findReply[i]._id
+                                }).lean();
+                                let findFavoriteOfReply = await Favorite.find({comment: findReply[i]._id})
+                                    .lean();
+                                if (findFavoriteOfReply.length > 0) {
+                                    let delFavoriteOfComment = await Favorite.findByIdAndDelete({
+                                        _id: findFavoriteOfReply[0]._id
+                                    }).lean();
+                                }
+                            }
+                        }
+
                         let findFavorite = await Favorite.find({comment: comment})
                             .lean();
                         if (findFavorite.length > 0) {
@@ -1797,10 +1815,10 @@ app.post('/delete-comment', async function (request, response) {
                                 _id: findFavorite[0]._id
                             }).lean();
                         }
-                        res_body = {comment: sttOK};
+                        res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
-                        res_body = {comments: 'Fail'};
+                        res_body = {status: 'Fail'};
                         response.json(getResponse(name, 200, 'Fail', res_body));
                     }
                 }
