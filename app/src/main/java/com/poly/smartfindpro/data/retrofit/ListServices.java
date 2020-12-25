@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.retrofit;
 import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.base.User;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
@@ -22,6 +23,7 @@ import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.data.model.profile.req.UserRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
@@ -98,6 +100,9 @@ public interface ListServices {
 
     @POST("/product-favorite")
     Call<ResponseFavoritePost> getFavorite(@Body InitFavorite request);
+
+    @POST("/update-user")
+    Call<DeleteProductResponse> getUpdateUser(@Body UserRequest request);
 
     @POST("/upgrade-user")
     Call<DeleteProductResponse> getUpgrade(@Body RequestIndentifi request );

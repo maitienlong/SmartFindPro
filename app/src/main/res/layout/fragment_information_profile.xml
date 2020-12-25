@@ -9,6 +9,7 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/content_infor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -50,7 +51,7 @@
                     android:layout_height="@dimen/_40sdp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_telephone_number_profile"
+                        android:id="@+id/edt_fullname_profile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_edt_change_pass"
@@ -63,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/tv_telephone_number"
+                    android:text="@string/tv_gender"
                     android:textSize="@dimen/_15sdp">
 
                 </TextView>
@@ -74,12 +75,34 @@
                     android:layout_height="@dimen/_40sdp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_username_profile"
+                        android:id="@+id/edt_gender_profile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_edt_change_pass"
-                        android:inputType="number"
-                        android:text="@={presenter.phone}" />
+                        android:text="@={presenter.gender}" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/tv_date"
+                    android:textSize="@dimen/_15sdp">
+
+                </TextView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_birthday_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:text="@={presenter.birthday}" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +122,9 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_address_profile"
+                        android:editable="false"
+                        android:onClick="@{()->presenter.onClickAddress()}"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_edt_change_pass"
@@ -133,6 +159,8 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:id="@+id/btn_change_info_user"
+                    android:onClick="@{()->presenter.onCLickUpdate()}"
                     android:layout_width="@dimen/_200sdp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
