@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.data.Config;
@@ -23,6 +25,8 @@ import com.poly.smartfindpro.ui.message.MessageFragment;
 import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
 import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
 import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
@@ -44,6 +48,9 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         mBinding.setPresenter(mPresenter);
 
         setFragmentDef();
+//
+
+//        AppEventsLogger.activateApp(this);
 
 
     }

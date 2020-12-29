@@ -13,6 +13,8 @@ public interface IntroContract {
         void onNextLogin();
 
         void onNextHome();
+
+        void onNextDetail(String data);
     }
 
     interface Presenter extends BasePresenter {

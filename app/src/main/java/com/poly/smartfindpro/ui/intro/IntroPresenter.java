@@ -9,11 +9,17 @@ import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.ConfigSharedPreferences;
+import com.poly.smartfindpro.data.model.home.req.HomeRequest;
+import com.poly.smartfindpro.data.model.home.res.HomeResponse;
+import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +49,42 @@ public class IntroPresenter implements IntroContract.Presenter {
     @Override
     public void unSubscribe() {
 
+    }
+
+    public void requestData(String idPost) {
+        HomeRequest request = new HomeRequest();
+        request.setId(Config.TOKEN_USER);
+        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
+            @Override
+            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body().getResponseBody() != null) {
+                        Product product = new Product();
+
+                        for (Product item : response.body().getResponseBody().getProducts()) {
+                            if (item.getId().equals(idPost)) {
+                                product = item;
+                            }
+                        }
+
+                        if(product != null){
+                            mViewModel.onNextDetail(new Gson().toJson(product));
+                        }
+                    } else {
+
+                        mViewModel.onShowDialogMsg("Không thể kết nối tới Server");
+                    }
+
+                } else {
+                    mViewModel.onShowDialogMsg("Không thể kết nối tới Server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeResponse> call, Throwable t) {
+                mViewModel.onShowDialogMsg("Không thể kết nối tới Server");
+            }
+        });
     }
 
 
