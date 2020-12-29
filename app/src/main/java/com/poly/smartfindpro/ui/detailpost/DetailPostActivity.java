@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -33,6 +41,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.Share;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,10 +60,15 @@ import com.poly.smartfindpro.ui.detailpost.adapter.DetailImageAdapter;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -74,6 +89,10 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     private ShareButton shareButton;
 
+    private ShareButton btnShareButton;
+
+    private Bitmap takeShot;
+
 
     @Override
     protected int getLayoutId() {
@@ -85,6 +104,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         getData();
 
         mPresenter = new DetailPostPresenter(this, this, mBinding);
+
         mBinding.setPresenter(mPresenter);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -143,32 +163,90 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     @Override
     public void onClickShare() {
-       AlertDialog.Builder  builder= new AlertDialog.Builder(this);
 
-       View alert = LayoutInflater.from(this).inflate(R.layout.dialog_share_post, null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-       builder.setView(alert);
+        View alert = LayoutInflater.from(this).inflate(R.layout.dialog_share_post, null, false);
 
-       LinearLayout btnShareFacebook = alert.findViewById(R.id.btn_share_on_facebook);
+        builder.setView(alert);
 
-       btnShareFacebook.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                   if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                       String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                       requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
-                   } else {
-                       checkLoginFacebook();
-                   }
-               } else {
-                   checkLoginFacebook();
-               }
-           }
-       });
+        btnShareButton = alert.findViewById(R.id.btn_share_on_facebook);
 
-       builder.show();
+        String urlShare = "https://smartfindpro.page.link/?link=http://www.smartfind.me/applinks/?id=" + mProduct.getId() + "&apn=com.poly.smartfindpro";
 
+        final Bitmap[] imageBitmap = new Bitmap[1];
+
+        Glide.with(this).load(mProduct.getProduct().getInformation().getImage().get(0)).into(new Target<Drawable>() {
+            @Override
+            public void onLoadStarted(@Nullable Drawable placeholder) {
+
+            }
+
+            @Override
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+
+            @Override
+            public void getSize(@NonNull SizeReadyCallback cb) {
+
+            }
+
+            @Override
+            public void removeCallback(@NonNull SizeReadyCallback cb) {
+
+            }
+
+            @Override
+            public void setRequest(@Nullable Request request) {
+
+            }
+
+            @Nullable
+            @Override
+            public Request getRequest() {
+                return null;
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onDestroy() {
+
+            }
+        });
+
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(imageBitmap[0])
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .setContentUrl(Uri.parse(urlShare))
+                .addPhoto(photo)
+                .build();
+
+        btnShareButton.setShareContent(content);
+
+        callbackManager = CallbackManager.Factory.create();
+
+        builder.show();
 
 
     }
@@ -203,12 +281,13 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     }
 
     private void openScreenshot(File imageFile) {
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_VIEW);
-//        Uri ur`i = Uri.fromFile(imageFile);
-//        intent.setDataAndType(uri, "image/*");
-//        startActivity(intent);
-
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(imageFile);
+        intent.setDataAndType(uri, "image/*");
+        startActivity(intent);
+//        String filePath = imageFile.getPath();
+//        return BitmapFactory.decodeFile(filePath);
     }
 
 
@@ -287,10 +366,27 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     }
 
+    private Bitmap loadImageFromNet(String link) {
+
+        URL url;
+        Bitmap bitmap = null;
+        try {
+            url = new URL(link);
+            bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+        } catch (IOException e) {
+            Log.e("LoadImage", e + "");
+        }
+
+        return bitmap;
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
 
     }
 }
