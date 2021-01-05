@@ -1,5 +1,7 @@
 package com.poly.smartfindpro.ui.user.rules;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentUserRulesBinding;
@@ -16,6 +18,13 @@ public class RulesFragment extends BaseDataBindFragment<FragmentUserRulesBinding
         mPresenter = new RulesPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Điều Khoản");
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override

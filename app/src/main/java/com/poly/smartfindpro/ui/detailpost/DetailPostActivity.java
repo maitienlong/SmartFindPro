@@ -13,11 +13,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -85,6 +88,8 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     private int MY_PERMISSIONS_REQUEST = 2020;
 
+    private int MY_PERMISSIONS_REQUEST_SMS = 2021;
+
     private CallbackManager callbackManager;
 
     private ShareButton shareButton;
@@ -146,13 +151,12 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         String PhoneNum = mBinding.tvPhoneNumber.getText().toString();
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
         callIntent.setData(Uri.parse("tel:" + Uri.encode(PhoneNum.trim())));
-//        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(callIntent);
     }
 
     @Override
     public void onClickInbox() {
-        Toast.makeText(this, "Chưa thực hiện được nhắn tin ", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", mProduct.getUser().getPhoneNumber(), null)));
     }
 
     @Override
@@ -358,6 +362,12 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         if (requestCode == MY_PERMISSIONS_REQUEST) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 checkLoginFacebook();
+            } else {
+                showMessage("Quyền truy cập đã được từ chối");
+            }
+        } else if (requestCode == MY_PERMISSIONS_REQUEST_SMS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
             } else {
                 showMessage("Quyền truy cập đã được từ chối");
             }

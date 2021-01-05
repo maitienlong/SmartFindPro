@@ -5,11 +5,13 @@ import android.content.res.ColorStateList;
 import android.graphics.ColorFilter;
 import android.os.Build;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,8 +34,6 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         MainPresenter> implements MainContract.ViewModel {
 
-    private ColorFilter oldColors;
-
     private int position = 0;
 
     @Override
@@ -48,6 +48,14 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         mBinding.setPresenter(mPresenter);
 
         setFragmentDef();
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+
 //
 
 //        AppEventsLogger.activateApp(this);
@@ -66,17 +74,17 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         switch (positon) {
             case 0:
                 mBinding.btnHome.setImageResource(R.drawable.ic__home_page_full);
-                mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_notifications);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_outline);
                 break;
             case 1:
                 mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
-                mBinding.btnMessage.setImageResource(R.drawable.ic_message_full);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_baseline_notifications_24);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_outline);
                 break;
             case 2:
                 mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
-                mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_notifications);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_full);
                 break;
         }
@@ -177,4 +185,5 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
                 break;
         }
     }
+
 }

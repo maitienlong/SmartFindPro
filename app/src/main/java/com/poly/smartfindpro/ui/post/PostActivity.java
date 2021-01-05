@@ -64,18 +64,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         mBinding.pbTientrinh.getIndeterminateDrawable().setTint(R.color.color_progress_loading);
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDlE_RES_ID, getIntent().getStringExtra(Config.POST_BUNDlE_RES_ID));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
-            } else {
-                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
-            }
-        } else {
-            goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
-        }
-
-
+        goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
         statusProress("1");
     }
 
@@ -224,5 +213,21 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                     showMessage("Quyền truy cập đã được từ chối");
                 }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAlertDialog("Thông báo", "Bạn muốn hủy bài đăng", "Đồng ý", "Hủy", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 }

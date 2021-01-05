@@ -63,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#dfe6e9"
+                android:background="#dff9fb"
                 android:gravity="center"
                 android:text="@string/common_cancel"
                 android:textAllCaps="false"
@@ -77,11 +77,11 @@
                 android:background="@color/white" />
 
             <Button
-                android:background="#dfe6e9"
                 android:id="@+id/btn_ok"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="#dff9fb"
                 android:gravity="center"
                 android:text="@string/common_accept"
                 android:textAllCaps="false"

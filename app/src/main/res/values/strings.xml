@@ -181,4 +181,9 @@
 
     <string name="pl_login">Vui lòng đăng nhập để có thể sử dụng chức năng này</string>
 
+    <string name="warning">Cảnh báo</string>
+    <string name="camera_open_setting">Để sử dụng máy ảnh, vui lòng vào Cài đặt của điện thoại và cấp quyền truy cập máy ảnh cho ứng dụng</string>
+    <string name="contact_open_setting_text">Mở cài đặt</string>
+    <string name="close">Đóng</string>
+
 </resources>
