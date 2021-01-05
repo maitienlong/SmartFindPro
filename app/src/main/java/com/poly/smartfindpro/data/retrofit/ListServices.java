@@ -20,6 +20,7 @@ import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductR
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
+import com.poly.smartfindpro.data.model.product.totalPeopleLease.TotalPeopleLeaseRequest;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
@@ -104,5 +105,8 @@ public interface ListServices {
 
     @POST("/update-product")
     Call<CheckPhoneResponse> getUpdateProduct(@Body PostRequest request);
+
+    @POST("/total-people-lease-product")
+    Call<CheckPhoneResponse> getTotalPeopleLease(@Body TotalPeopleLeaseRequest request);
 
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-  >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -61,10 +60,9 @@
 
 
                             <LinearLayout
-                                android:layout_width="@dimen/_1sdp"
+                                android:layout_width="@dimen/_200sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
-                                android:layout_weight="4"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -81,6 +79,15 @@
                                     android:layout_height="wrap_content"
                                     android:text="@={presenter.timePostDetail}" />
                             </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tv_total_People_lease"
+                                style="@style/textStyleBold"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="@={presenter.total_people_lease}" />
 
                         </LinearLayout>
 
@@ -102,13 +109,20 @@
                                 android:layout_height="wrap_content"
                                 android:text="@={presenter.categoryDetail}" />
 
+                            <ImageView
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:src="@drawable/ic_baseline_emoji_people_24"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp" />
+
                             <TextView
-                                style="@style/textStyleRegular_10dp"
+                                android:textSize="@dimen/_13sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@={presenter.amountDetail}" />
 
                         </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/tvTitle"
@@ -158,10 +172,10 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
-
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center"
                                 android:orientation="vertical">
 
                                 <ImageView
@@ -190,6 +204,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="center"
                                 android:orientation="vertical">
 
                                 <ImageView
@@ -217,9 +232,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_10sdp"
+                                android:gravity="center"
                                 android:orientation="vertical">
 
                                 <ImageView
+
                                     android:layout_width="@dimen/_20sdp"
                                     android:layout_height="@dimen/_20sdp"
                                     android:layout_gravity="center"
@@ -229,6 +246,7 @@
                                     style="@style/textStyleRegular_10dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
                                     android:text="@string/tv_deposit"
                                     android:textColor="@color/black" />
 
@@ -273,7 +291,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_10sdp"
-                                    android:text="@={presenter.addressDetail}" />
+                                    android:text="@={presenter.addressDetail}"
+                                    android:textIsSelectable="true" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -293,7 +312,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_10sdp"
-                                    android:text="@={presenter.phoneNumberDetail}" />
+                                    android:text="@={presenter.phoneNumberDetail}"
+                                    android:textIsSelectable="true" />
                             </LinearLayout>
 
                             <TextView
@@ -331,9 +351,9 @@
                                 android:text="@string/text_infor_utilities" />
 
                             <LinearLayout
-                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:orientation="horizontal">
 
                                 <ImageView
@@ -406,8 +426,8 @@
                                 android:src="@drawable/ic_love_border" />
 
                             <TextView
-                                style="@style/textStyleRegular"
                                 android:id="@+id/tv_count_favorite"
+                                style="@style/textStyleRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -482,6 +502,6 @@
         <FrameLayout
             android:id="@+id/fl_post_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </RelativeLayout>
 </layout>
