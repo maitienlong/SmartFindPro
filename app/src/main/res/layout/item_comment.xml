@@ -116,7 +116,6 @@
 
             <LinearLayout
                 android:id="@+id/tv_recoment_view"
-
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

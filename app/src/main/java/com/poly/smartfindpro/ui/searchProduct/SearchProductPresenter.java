@@ -1,10 +1,15 @@
 package com.poly.smartfindpro.ui.searchProduct;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Editable;
+import android.text.TextWatcher;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.ObservableField;
 
 import com.google.gson.Gson;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
@@ -134,6 +139,28 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
         }else {
             onSearchProduct(type, mBinding.edtSearch.getText().toString());
         }
+    }
+
+    public TextWatcher changeColorButton() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    getProduct();
+                }
+            }
+        };
     }
 
     @Override

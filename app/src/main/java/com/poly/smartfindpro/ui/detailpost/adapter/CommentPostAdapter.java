@@ -154,26 +154,25 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Config.isClick()) {
-                    CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
-                    mViewmodel.onCallBackAdapter(commentDetailRequest);
-                } else {
-                    mViewmodel.showMessage(context.getString(R.string.pl_login));
-                }
+                CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
+                mViewmodel.onCallBackAdapter(commentDetailRequest);
             }
         });
         holder.tv_amount_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Config.isClick()) {
-                    CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
+                CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
-                    mViewmodel.onCallBackAdapter(commentDetailRequest);
-                } else {
-                    mViewmodel.showMessage(context.getString(R.string.pl_login));
-                }
+                mViewmodel.onCallBackAdapter(commentDetailRequest);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mViewmodel.onCallBackDeleteItem(item);
+                return false;
             }
         });
 

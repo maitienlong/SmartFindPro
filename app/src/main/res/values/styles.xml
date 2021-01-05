@@ -14,6 +14,17 @@
 
     </style>
 
+    <style name="CoffeeDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <style name="TransparentDialog" parent="@android:style/Theme.Holo.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
@@ -228,9 +239,8 @@
     </style>
 
 
-
-
     // 10sdp
+
     <style name="textStyleRegular_10dp">
         <item name="android:fontFamily">@font/segoeuisl</item>
         <item name="android:textColorHint">@color/text_color_77</item>

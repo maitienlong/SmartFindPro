@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.detailpost.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -15,14 +16,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.comment.deleteComment.req.DeleteCommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.Comments;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailcomment.DetailCommentContact;
+import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 import com.poly.smartfindpro.ui.detailpost.DetailPostContact;
 
 import java.text.DateFormat;
@@ -136,7 +142,52 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
         });
 
         // reply comment
+        // xoa comment
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view = li.inflate(R.layout.fragment_bottom_information, null);
+                BottomSheetDialog dialog = new BottomSheetDialog(context);
 
+                ImageView imgBottomAvatar;
+                TextView tvBottomName;
+                LinearLayout lnBottomDelete;
+//bottomsheet
+                imgBottomAvatar = (ImageView) view.findViewById(R.id.img_bottom_avatar);
+                tvBottomName = (TextView) view.findViewById(R.id.tv_bottom_name);
+                lnBottomDelete = (LinearLayout) view.findViewById(R.id.ln_bottom_delete);
+
+                // ten
+                tvBottomName.setText(item.getComment().getUser().getFullname());
+
+                // avatar
+                Glide.
+                        with(context)
+                        .load(MyRetrofitSmartFind.smartFind + item.getComment().getUser().getAvatar())
+                        .placeholder(R.mipmap.imgplaceholder)
+                        .error(R.mipmap.imgplaceholder)
+                        .into(imgBottomAvatar);
+
+                if (!item.getComment().getUser().getId().equalsIgnoreCase(Config.TOKEN_USER)) {
+                    lnBottomDelete.setVisibility(View.GONE);
+                }
+
+                lnBottomDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onDeleteComment(item.getComment().getId());
+                        listItem.remove(position);
+                        notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setContentView(view);
+                dialog.show();
+                return false;
+
+            }
+        });
     }
 
     @Override
@@ -146,7 +197,6 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
 
     private void onChange() {
         notifyDataSetChanged();
-
     }
 
     private String getTime(Date datePost) {
@@ -193,5 +243,33 @@ public class ReplyCommentPostAdapter extends RecyclerView.Adapter<ReplyCommentPo
             recommentCount = itemView.findViewById(R.id.tv_recomment_count);
             tv_recoment_view = itemView.findViewById(R.id.tv_recoment_view);
         }
+    }
+
+
+    public void onDeleteComment(String commentID) {
+        DeleteCommentRequest request = new DeleteCommentRequest();
+        request.setUser(Config.TOKEN_USER);
+        request.setComment(commentID);
+        MyRetrofitSmartFind.getInstanceSmartFind().getDeleteComment(request).enqueue(new Callback<DeleteProductResponse>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
+                Log.d("onResponse-delete-comment:", new Gson().toJson(response.body()) + "");
+                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+                    if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        Toast.makeText(context, "Xóa bình luận thành công", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mViewmodel.showMessage("Xóa bình luận hiện không thể thực hiện");
+                    }
+                } else {
+                    mViewmodel.showMessage("Xóa bình luận hiện không thể thực hiện");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

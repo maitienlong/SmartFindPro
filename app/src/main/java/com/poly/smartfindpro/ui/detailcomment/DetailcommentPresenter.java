@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.detailcomment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -8,13 +9,16 @@ import android.widget.Toast;
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.comment.deleteComment.req.DeleteCommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.Comments;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentDetailCommentBinding;
@@ -35,8 +39,10 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
 
     private CommentDetailRequest mCommentDetailRequest;
 
-    private String idProduct;
-
+    public String idProduct;
+    public String imgUserProduct;
+    public String idUserOfProduct;
+    public String idOfProduct;
     public ObservableField<String> name;
 
     public ObservableField<String> content;
@@ -74,7 +80,7 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
             public void onResponse(Call<ReplycommentResponse> call, Response<ReplycommentResponse> response) {
                 if (response.code() == 200) {
 
-                    Log.d("CheckFavorite", response.body().getResponseBody().getComments().getFavorites().getCount()+"");
+                    Log.d("CheckFavorite", response.body().getResponseBody().getComments().getFavorites().getCount() + "");
 
                     Log.d("CheckFavorite", response.body().getResponseBody().getComments().getComment().getId());
 
@@ -87,7 +93,9 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
                     mProduct = response.body().getResponseBody().getComments();
 
                     onUpdatePost(mProduct);
-
+                    idOfProduct = item.getComment().getId();
+                    idUserOfProduct = item.getComment().getUser().getId();
+                    imgUserProduct = item.getComment().getUser().getAvatar();
                     initView(item.getComment().getUser().getFullname(), item.getComment().getTitle()
                             , item.getComment().getUser().getAvatar()
                             , item.getComment().getCreateAt()
@@ -182,11 +190,11 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
         });
     }
 
-    private void onUpdatePost(Comments product){
+    private void onUpdatePost(Comments product) {
         startCount.set(String.valueOf(product.getFavorites().getCount()));
-        if(product.getIsFavorite()){
+        if (product.getIsFavorite()) {
             mBinding.btnFavorite.setTextColor(Color.BLUE);
-        }else {
+        } else {
             mBinding.btnFavorite.setTextColor(Color.BLACK);
         }
     }
@@ -239,4 +247,6 @@ public class DetailcommentPresenter implements DetailCommentContact.Presenter {
         Log.d("CheckTime", dateFormat.format(date));
         return dateFormat.format(date);
     }
+
+
 }

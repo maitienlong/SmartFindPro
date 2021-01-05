@@ -124,7 +124,6 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         snb_price.setMax(100);
 
         bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
-
         mBinding.btnFilterOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

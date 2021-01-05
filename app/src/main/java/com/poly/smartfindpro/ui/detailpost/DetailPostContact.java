@@ -26,6 +26,8 @@ public interface DetailPostContact {
         void onComment();
 
         void onCallBackAdapter(CommentDetailRequest commentDetailRequest);
+
+        void onCallBackDeleteItem(Comments comments);
     }
 
     interface Presenter extends BasePresenter {
