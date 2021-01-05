@@ -81,8 +81,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
-        holder.np_total_people.setMaxValue(20);
-        holder.np_total_people.setMinValue(0);
+//        holder.np_total_people.setMaxValue(20);
+//        holder.np_total_people.setMinValue(0);
         Products item = productList.get(position);
         if (!item.getStatus().equals("1")) {
             holder.btn_status.setVisibility(View.GONE);
