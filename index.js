@@ -475,20 +475,28 @@ app.post('/update-user', async function (request, response) {
                         status: user.status
                     })
                     if (updateUser) {
-                        let confirm = await ConfirmPost({
-                            product: null,
-                            admin: null,
-                            user: userId,
-                            status: 'UPDATE_USER',
-                            createAt: updateAt
-                        });
-                        console.log(JSON.stringify(confirm));
-                        let confirPrd = await confirm.save();
                         if (lvUp == 1) {
                             res_body = {status: 'Successfully upgraded account level 1'};
+
+                            let confirm = await ConfirmPost({
+                                product: null,
+                                admin: null,
+                                user: userId,
+                                status: name + "-LEVEL-1",
+                                createAt: updateAt
+                            });
+                            let confirPrd = await confirm.save();
                             response.json(getResponse(name, 200, sttOK, res_body));
                         } else {
                             res_body = {status: sttOK};
+                            let confirm = await ConfirmPost({
+                                product: null,
+                                admin: null,
+                                user: userId,
+                                status: name,
+                                createAt: updateAt
+                            });
+                            let confirPrd = await confirm.save();
                             response.json(getResponse(name, 200, sttOK, res_body));
                         }
 
@@ -597,7 +605,7 @@ app.post('/upgrade-user', async function (request, response) {
                                         product: null,
                                         admin: null,
                                         user: userId,
-                                        status: 'UPDATE-' + name,
+                                        status: name,
                                         createAt: createAt
                                     });
                                     let confirPrd = await confirm.save();
@@ -609,6 +617,7 @@ app.post('/upgrade-user', async function (request, response) {
                                 }
                                 return
                             } else {
+                                name = "INIT-UPGRADE-USER";
                                 let initIdentityCard = await identityCard.save();
                                 if (initIdentityCard) {
                                     let updateUser = new UpgradeUser({
@@ -787,6 +796,51 @@ app.post('/disable-user', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
+//tim kiem lich su
+app.post('/find-history', async function (request, response) {
+    let name = 'FIND-HISTORY'
+    try {
+        let id = request.body.id;
+        if (checkData(id)) {
+            var confirmPost = await ConfirmPost.find({user: id})
+                .populate(['admin'])
+                .populate({
+                    path: 'product',
+                    populate: {
+                        path: 'address',
+                        path: 'product',
+                        populate: {
+                            path: 'user',
+                            populate: {
+                                path: 'address'
+                            }
+                        }
+                    }
+                })
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                })
+                .lean();
+
+            let res_body = {history: null};
+            if (confirmPost.length <= 0) {
+                response.json(getResponse(name, 404, 'Not found', res_body))
+            } else {
+                let product = confirmPost[0];
+                res_body = {history: product};
+                response.json(getResponse(name, 200, sttOK, res_body))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
 
 
 //tim kiem bai dang
@@ -796,7 +850,7 @@ app.post('/find-product', async function (request, response) {
         let id = request.body.id;
         if (checkData(id)) {
             let prd = await Product.find({
-                deleteAt: ''
+                deleteAt: '', _id: id
             }).populate(['address', 'product'])
                 .populate({
                     path: 'user',
@@ -811,16 +865,6 @@ app.post('/find-product', async function (request, response) {
                 response.json(getResponse(name, 404, 'Product not found', res_body))
             } else {
                 let product = prd[0];
-                let createAt = moment(Date.now()).format(formatDate);
-                let confirm = await ConfirmPost({
-                    product: id,
-                    admin: null,
-                    user: product.user._id,
-                    status: 'FIND_PRODUCT',
-                    createAt: createAt
-                });
-                console.log(JSON.stringify(confirm));
-                let confirPrd = await confirm.save();
                 res_body = {products: product};
                 response.json(getResponse(name, 200, sttOK, res_body))
             }
@@ -895,7 +939,7 @@ app.post('/init-product', async function (request, response) {
                             product: initProduct._id,
                             admin: null,
                             user: id,
-                            status: 'INIT_PRODUCT',
+                            status: name,
                             createAt: createAt
                         });
                         console.log(JSON.stringify(confirm));
@@ -980,7 +1024,7 @@ app.post('/update-product', async function (request, response) {
                                 product: id,
                                 admin: null,
                                 user: userId,
-                                status: 'UPDATE_PRODUCT',
+                                status: name,
                                 createAt: updateAt
                             });
                             console.log(JSON.stringify(confirm));
@@ -1099,7 +1143,7 @@ app.post('/delete-product', async function (request, response) {
                                 product: id,
                                 admin: null,
                                 user: userId,
-                                status: 'DELETE_PRODUCT',
+                                status: name + "-USER",
                                 createAt: createAt
                             });
                             console.log(JSON.stringify(confirm));
@@ -1123,7 +1167,7 @@ app.post('/delete-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: 'DELETE_PRODUCT',
+                            status: name + "-ADMIN",
                             createAt: createAt
                         });
                         console.log(JSON.stringify(confirm));
@@ -1150,7 +1194,6 @@ app.post('/delete-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 //trả ve danh sách bài đăng cua nguoi dung
 app.post('/user-product', async function (request, response) {
     let name = 'USER-PRODUCT'
@@ -1242,7 +1285,6 @@ app.post('/list-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 //comment
 app.post('/init-comment', async function (request, response) {
     let name = 'INIT-COMMENT'
@@ -1301,6 +1343,14 @@ app.post('/init-comment', async function (request, response) {
 
             let initComment = await newComment.save();
             if (initComment) {
+                let confirm = await ConfirmPost({
+                    product: product,
+                    admin: null,
+                    user: user,
+                    status: name + "-" + status,
+                    createAt: createAt
+                });
+                let confirPrd = await confirm.save();
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -1315,7 +1365,6 @@ app.post('/init-comment', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 //favorite
 app.post('/init-favorite', async function (request, response) {
     let name = 'INIT-FAVORITE'
@@ -1382,6 +1431,14 @@ app.post('/init-favorite', async function (request, response) {
             });
             let initFavorite = await newFavorite.save();
             if (initFavorite) {
+                let confirm = await ConfirmPost({
+                    product: product,
+                    admin: null,
+                    user: user,
+                    status: name,
+                    createAt: createAt
+                });
+                let confirPrd = await confirm.save();
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -1396,7 +1453,6 @@ app.post('/init-favorite', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 //trả ve danh sách comment cua bai dang
 app.post('/product-comment', async function (request, response) {
     let name = 'PRODUCT-COMMENT'
@@ -1405,7 +1461,7 @@ app.post('/product-comment', async function (request, response) {
         let user = request.body.user;
         let product = request.body.product;
         if (checkData(product)) {
-            if(!checkData(user)) {
+            if (!checkData(user)) {
                 user = "5fe4c04feb44312fe83f3418"
             }
             let findUser = await User.find({_id: user}).lean();
@@ -1540,7 +1596,7 @@ app.post('/product-favorite', async function (request, response) {
         let user = request.body.user;
         let product = request.body.product;
         if (checkData(product)) {
-            if(!checkData(user)) {
+            if (!checkData(user)) {
                 user = "5fe4c04feb44312fe83f3418"
             }
             let findUser = await User.find({_id: user}).lean();
@@ -1606,7 +1662,6 @@ app.post('/product-favorite', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 //tim kiem comment
 app.post('/find-comment', async function (request, response) {
     let name = 'FIND-COMMENT'
@@ -2435,7 +2490,6 @@ app.get('/confirmPost', async function (request, response) {
     }
 
 });
-
 //quản lý người dùng
 app.get('/userManage', async function (request, response) {
     try {
@@ -2519,7 +2573,6 @@ app.get('/userManage', async function (request, response) {
         });
     }
 });
-
 //duyệt bài viết
 app.get('/confirmUser', async function (request, response) {
     try {
@@ -2596,7 +2649,6 @@ app.get('/history', async function (request, response) {
             }
         })
         .lean();
-    console.log(JSON.stringify(confirmPost))
     response.render('history', {data: confirmPost.reverse()});
 });
 //API-WEB
@@ -2636,7 +2688,7 @@ app.post('/confirm-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: 'CONFIRM',
+                            status: name,
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
@@ -2687,7 +2739,7 @@ app.post('/cancel-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: 'CANCEL',
+                            status: name,
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
@@ -2712,127 +2764,124 @@ app.post('/cancel-product', async function (request, response) {
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 });
-
 // duyet nang quyen
 app.post('/confirm-upgrade', async function (request, response) {
-        let name = 'CONFIRM-UPGRADE'
-        try {
-            let adminId = request.body.adminId;
-            let id = request.body.id;
-            if (checkData(adminId) && checkData(id)) {
-                let admin = await Admin.find({_id: adminId}).lean();
-                if (admin.length > 0) {
-                    let updatedAt = moment(Date.now()).format(formatDate);
-                    let user = await User.find({_id: id}).lean();
-                    let res_body = {status: null};
-                    let upgradeUser = await UpgradeUser.findByIdAndUpdate(id, {
-                        updatedAt: updatedAt
-                    });
-                    if (upgradeUser) {
-                        let user = await User.find({_id: upgradeUser.user}).lean();
-                        let identityCard = await IdentityCard.find({_id: upgradeUser.identityCard}).lean();
-                        if (user.length > 0 && identityCard.length > 0) {
-                            user = user[0];
-                            identityCard = identityCard[0];
-                            if (user.level == 1 || user.level == 2) {
-                                let number = 0;
-                                if (user.level == 1) {
-                                    number = 2;
-                                    name = name + '-LEVEL-2';
-                                    let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
-                                        updateAt: updatedAt
-                                    });
-                                } else {
-                                    number = 3;
-                                    name = name + '-LEVEL-3';
-                                    let deleteUpgradeUser = await UpgradeUser.findByIdAndDelete(id);
-                                }
-                                let updateUser = await User.findByIdAndUpdate(user._id, {
-                                    level: number,
+    let name = 'CONFIRM-UPGRADE-USER'
+    try {
+        let adminId = request.body.adminId;
+        let id = request.body.id;
+        if (checkData(adminId) && checkData(id)) {
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let updatedAt = moment(Date.now()).format(formatDate);
+                let user = await User.find({_id: id}).lean();
+                let res_body = {status: null};
+                let upgradeUser = await UpgradeUser.findByIdAndUpdate(id, {
+                    updatedAt: updatedAt
+                });
+                if (upgradeUser) {
+                    let user = await User.find({_id: upgradeUser.user}).lean();
+                    let identityCard = await IdentityCard.find({_id: upgradeUser.identityCard}).lean();
+                    if (user.length > 0 && identityCard.length > 0) {
+                        user = user[0];
+                        identityCard = identityCard[0];
+                        if (user.level == 1 || user.level == 2) {
+                            let number = 0;
+                            if (user.level == 1) {
+                                number = 2;
+                                name = name + '-LEVEL-2';
+                                let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
                                     updateAt: updatedAt
                                 });
-                                let updateIdentityCard = await IdentityCard.findByIdAndUpdate(identityCard._id, {
-                                    user: user._id,
-                                    updateAt: updatedAt
-                                });
-                                if (updateUser && updateIdentityCard) {
-                                    let confirm = await ConfirmPost({
-                                        product: null,
-                                        admin: adminId,
-                                        user: id,
-                                        status: name,
-                                        createAt: updatedAt
-                                    });
-                                    let confirPrd = await confirm.save();
-                                    res_body = {status: sttOK};
-                                    response.json(getResponse(name, 200, sttOK, res_body));
-                                } else {
-                                    res_body = {status: "Fail"};
-                                    response.json(getResponse(name, 200, 'Fail', res_body))
-                                }
                             } else {
-                                response.json(getResponse(name, 403, 'User not permissions', null))
+                                number = 3;
+                                name = name + '-LEVEL-3';
+                                let deleteUpgradeUser = await UpgradeUser.findByIdAndDelete(id);
+                            }
+                            let updateUser = await User.findByIdAndUpdate(user._id, {
+                                level: number,
+                                updateAt: updatedAt
+                            });
+                            let updateIdentityCard = await IdentityCard.findByIdAndUpdate(identityCard._id, {
+                                user: user._id,
+                                updateAt: updatedAt
+                            });
+                            if (updateUser && updateIdentityCard) {
+                                let confirm = await ConfirmPost({
+                                    product: null,
+                                    admin: adminId,
+                                    user: id,
+                                    status: name,
+                                    createAt: updatedAt
+                                });
+                                let confirPrd = await confirm.save();
+                                res_body = {status: sttOK};
+                                response.json(getResponse(name, 200, sttOK, res_body));
+                            } else {
+                                res_body = {status: "Fail"};
+                                response.json(getResponse(name, 200, 'Fail', res_body))
                             }
                         } else {
-                            response.json(getResponse(name, 404, 'Data not found', null))
+                            response.json(getResponse(name, 403, 'User not permissions', null))
                         }
                     } else {
-                        response.json(getResponse(name, 404, 'Upgrade user not found', null))
+                        response.json(getResponse(name, 404, 'Data not found', null))
                     }
-
                 } else {
-                    response.json(getResponse(name, 404, 'Admin not found', null))
+                    response.json(getResponse(name, 404, 'Upgrade user not found', null))
                 }
+
             } else {
-                response.json(getResponse(name, 400, 'Bad request', null))
+                response.json(getResponse(name, 404, 'Admin not found', null))
             }
-        } catch
-            (e) {
-            console.log('loi ne: \n' + e)
-            response.status(500).json(getResponse(name, 500, 'Server error', null))
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
+    } catch
+        (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-);
+});
 // huy duyet nang quyen
 app.post('/cancel-upgrade', async function (request, response) {
-        let name = 'CANCEL-UPGRADE'
-        try {
-            let adminId = request.body.adminId;
-            let id = request.body.id;
-            if (checkData(adminId) &&
-                checkData(id)) {
-                let admin = await Admin.find({_id: adminId}).lean();
-                if (admin.length > 0) {
-                    let res_body = {status: null};
-                    let deleteAt = moment(Date.now()).format(formatDate);
-                    let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
-                        deleteAt: deleteAt
+    let name = 'CANCEL-UPGRADE-USER'
+    try {
+        let adminId = request.body.adminId;
+        let id = request.body.id;
+        if (checkData(adminId) &&
+            checkData(id)) {
+            let admin = await Admin.find({_id: adminId}).lean();
+            if (admin.length > 0) {
+                let res_body = {status: null};
+                let deleteAt = moment(Date.now()).format(formatDate);
+                let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
+                    deleteAt: deleteAt
+                });
+                if (updateUser) {
+                    let confirm = await ConfirmPost({
+                        product: null,
+                        admin: adminId,
+                        user: null,
+                        status: name,
+                        createAt: deleteAt
                     });
-                    if (updateUser) {
-                        let confirm = await ConfirmPost({
-                            product: null,
-                            admin: adminId,
-                            user: null,
-                            status: name,
-                            createAt: deleteAt
-                        });
-                        let confirPrd = await confirm.save();
-                        res_body = {status: sttOK};
-                        response.json(getResponse(name, 200, sttOK, res_body));
-                    } else {
-                        res_body = {status: "Fail"};
-                        response.json(getResponse(name, 200, 'Fail', res_body))
-                    }
+                    let confirPrd = await confirm.save();
+                    res_body = {status: sttOK};
+                    response.json(getResponse(name, 200, sttOK, res_body));
                 } else {
-                    response.json(getResponse(name, 404, 'Admin not found', null))
+                    res_body = {status: "Fail"};
+                    response.json(getResponse(name, 200, 'Fail', res_body))
                 }
             } else {
-                response.json(getResponse(name, 400, 'Bad request', null))
+                response.json(getResponse(name, 404, 'Admin not found', null))
             }
-        } catch
-            (e) {
-            console.log('loi ne: \n' + e)
-            response.status(500).json(getResponse(name, 500, 'Server error', null))
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
         }
+    } catch
+        (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
-);
+});
