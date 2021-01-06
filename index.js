@@ -800,7 +800,7 @@ app.post('/disable-user', async function (request, response) {
 app.post('/find-history', async function (request, response) {
     let name = 'FIND-HISTORY'
     try {
-        let id = request.body.id;
+        let id = request.body.user;
         if (checkData(id)) {
             var confirmPost = await ConfirmPost.find({user: id})
                 .populate(['admin'])
