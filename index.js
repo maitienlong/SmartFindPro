@@ -127,6 +127,11 @@ function phonenumber(inputtxt) {
     }
 }
 
+//săp xep tang dan
+function compareNumbers(a, b) {
+    return a.count - b.count;
+}
+
 function checkData(data) {
     console.log(JSON.stringify(data))
     if (data == undefined) {
@@ -1913,7 +1918,7 @@ app.get('/index', async function (request, response) {
     } else {
         let listAmoutPost = []
         listAmoutPost.length = 10;
-        let listAmoutFavorite = []
+        let listAmoutFavorite = [];
         listAmoutFavorite.length = 10;
         let listUserPost = [];
         let dataLease = 0;
@@ -1998,6 +2003,7 @@ app.get('/index', async function (request, response) {
             }
             console.log(listAmoutPost)
 // lay danh sach bai dang duoc yeu thich nhat
+            let lisAF = [];
             for (let i = 0; i < successPost.length; i++) {
                 let count = 0;
                 let findFavorite = await Favorite
@@ -2014,8 +2020,13 @@ app.get('/index', async function (request, response) {
                         product: successPost[i],
                         count: count
                     }
-                    listAmoutFavorite.push(item);
+                    lisAF.push(item);
                 }
+                lisAF.sort(compareNumbers).reverse();
+                for (let j = 0; j < lisAF.length; j++) {
+                    lisAF[j].id = j+1;
+                }
+                listAmoutFavorite = lisAF
             }
             try {
                 for (let i = 0; i < successPost.length; i++) {
