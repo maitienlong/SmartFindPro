@@ -66,6 +66,7 @@
                     android:src="@drawable/ic_baseline_local_phone_24" />
 
                 <TextView
+                    android:textIsSelectable="true"
                     android:id="@+id/tv_phone_app"
                     style="@style/textStyleBold"
                     android:layout_width="wrap_content"
@@ -90,6 +91,7 @@
                     android:src="@drawable/ic_baseline_mail_24" />
 
                 <TextView
+                    android:textIsSelectable="true"
                     android:id="@+id/tv_email_app"
                     style="@style/textStyleBold"
                     android:layout_width="wrap_content"

@@ -124,7 +124,6 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
         snb_price.setMax(100);
 
         bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
-
         mBinding.btnFilterOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +166,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 mPriority.remove("theloai");
                                 viTri[0] = mPriority.size() - 1;
                                 trangThai[0] = false;
-                                btnTheLoai.setBackgroundTintList(getColorStateList(R.color.white));
+                                btnTheLoai.setBackgroundTintList(getColorStateList(R.color.gray2));
                                 btnTheLoai.setText("Thể loại");
                             } else {
                                 Toast.makeText(FilterProductActivity.this, "Bạn phải bỏ chọn theo lần lượt", Toast.LENGTH_SHORT).show();
@@ -190,7 +189,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 mPriority.remove("giatien");
                                 viTri[1] = mPriority.size() - 1;
                                 trangThai[1] = false;
-                                btnGia.setBackgroundTintList(getColorStateList(R.color.white));
+                                btnGia.setBackgroundTintList(getColorStateList(R.color.gray2));
                                 btnGia.setText("Giá tiền");
                             } else {
                                 Toast.makeText(FilterProductActivity.this, "Bạn phải bỏ chọn theo lần lượt", Toast.LENGTH_SHORT).show();
@@ -213,7 +212,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 mPriority.remove("soluong");
                                 viTri[2] = mPriority.size() - 1;
                                 trangThai[2] = false;
-                                btnSoLuong.setBackgroundTintList(getColorStateList(R.color.white));
+                                btnSoLuong.setBackgroundTintList(getColorStateList(R.color.gray2));
                                 btnSoLuong.setText("Số lượng");
                             } else {
                                 Toast.makeText(FilterProductActivity.this, "Bạn phải bỏ chọn theo lần lượt", Toast.LENGTH_SHORT).show();
@@ -236,7 +235,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 mPriority.remove("gioitinh");
                                 viTri[3] = mPriority.size() - 1;
                                 trangThai[3] = false;
-                                btnGioiTinh.setBackgroundTintList(getColorStateList(R.color.white));
+                                btnGioiTinh.setBackgroundTintList(getColorStateList(R.color.gray2));
                                 btnGioiTinh.setText("Giới tính");
                             } else {
                                 Toast.makeText(FilterProductActivity.this, "Bạn phải bỏ chọn theo lần lượt", Toast.LENGTH_SHORT).show();
@@ -259,7 +258,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 mPriority.remove("tiendien");
                                 viTri[4] = mPriority.size() - 1;
                                 trangThai[4] = false;
-                                btnTienDien.setBackgroundTintList(getColorStateList(R.color.white));
+                                btnTienDien.setBackgroundTintList(getColorStateList(R.color.gray2));
                                 btnTienDien.setText("Tiền điện");
                             } else {
                                 Toast.makeText(FilterProductActivity.this, "Bạn phải bỏ chọn theo lần lượt", Toast.LENGTH_SHORT).show();
@@ -282,7 +281,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 mPriority.remove("tiennuoc");
                                 viTri[5] = mPriority.size() - 1;
                                 trangThai[5] = false;
-                                btnTienNuoc.setBackgroundTintList(getColorStateList(R.color.white));
+                                btnTienNuoc.setBackgroundTintList(getColorStateList(R.color.gray2));
                                 btnTienNuoc.setText("Tiền nước");
                             } else {
                                 Toast.makeText(FilterProductActivity.this, "Bạn phải bỏ chọn theo lần lượt", Toast.LENGTH_SHORT).show();

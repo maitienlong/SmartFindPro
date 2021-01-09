@@ -1,9 +1,16 @@
 package com.poly.smartfindpro.ui.home;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.poly.smartfindpro.R;
@@ -17,6 +24,7 @@ import com.poly.smartfindpro.ui.home.adapter.HomeAdapter;
 import com.poly.smartfindpro.ui.post.PostActivity;
 import com.poly.smartfindpro.ui.post.adapter.MainSliderAdapter;
 import com.poly.smartfindpro.ui.post.adapter.PicassoImageLoadingService;
+import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.util.ArrayList;
@@ -26,7 +34,8 @@ import ss.com.bannerslider.Slider;
 
 public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, HomePresenter> implements HomeContract.ViewModel {
     private HomeAdapter homeAdapter;
-//    private ArrayList<Product> product = new ArrayList<>();
+
+    private static final int MY_PERMISSIONS_REQUEST = 1001;
 
     private List<String> mListImage;
 
@@ -102,15 +111,54 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
     @Override
     public void onShow(List<Product> productList) {
         homeAdapter.setListItem(productList);
-//        mBinding.rvList.setNestedScrollingEnabled(false);
         BindingUtils.setAdapter(mBinding.rvList, homeAdapter, true);
     }
 
 
     @Override
     public void openPost() {
-        getBaseActivity().openActivity(PostActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
+            } else {
+                getBaseActivity().openActivity(PostActivity.class);
+            }
+        } else {
+            getBaseActivity().openActivity(PostActivity.class);
+        }
+
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getBaseActivity().openActivity(PostActivity.class);
+                } else {
+                    showSettingInfo();
+                }
+            }
+        }
+    }
 
+    private void showSettingInfo() {
+        showAlertDialog("Cảnh báo", getString(R.string.camera_open_setting),
+                getString(R.string.contact_open_setting_text), getString(R.string.close), false, new AlertDialogListener() {
+                    @Override
+                    public void onAccept() {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getBaseActivity().getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, MY_PERMISSIONS_REQUEST);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
+    }
 }

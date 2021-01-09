@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
@@ -36,6 +38,13 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
 //        mBinding.btnApproved.setBackgroundColor(R.drawable.btn_category_pressed);
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override
@@ -87,7 +96,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         if (type == 0) {
             mPresenter.getDeleteProduct(idPost);
 
-        }else {
+        } else {
 //            Bundle bundle = new Bundle();
 //            bundle.putString(Config.POST_BUNDlE_RES_ID, jsonData);
 //            getBaseActivity().openActivity(PostActivity.class,bundle);
@@ -99,6 +108,16 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onUpdate(String jsonData) {
+
+    }
+
+    @Override
+    public void onGetTotalPeople(String idPost, String amount) {
+        mPresenter.getTotalPeopleLease(idPost,amount);
+    }
+
+    @Override
+    public void setAmountPeople(String amount) {
 
     }
 }

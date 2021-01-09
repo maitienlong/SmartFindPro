@@ -17,6 +17,8 @@
 
         <com.poly.smartfindpro.widget.CommonToolbar
             android:id="@+id/ctb"
+            title="@{presenter.title}"
+            onBackClick="@{() -> presenter.onBackClick()}"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
 
@@ -46,6 +48,7 @@
                         android:text="Ảnh CMND/CCCD Mặt trước" />
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -102,6 +105,7 @@
                         android:text="Ảnh CMND/CCCD Mặt trước" />
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -211,7 +215,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:background="@drawable/custom_edt_change_pass" />
+                        android:background="@drawable/custom_edt_change_pass"
+                        android:inputType="number"
+                        android:maxLength="@{presenter.maxLength}" />
 
 
                 </LinearLayout>
@@ -219,6 +225,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -236,19 +243,14 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:text="Ngày cấp" />
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <EditText
+                            android:id="@+id/edt_date_supply"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edt_date_supply"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/custom_edt_change_pass"
-                                android:inputType="date" />
-
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:background="@drawable/custom_edt_change_pass"
+                            android:hint="dd/MM/yyyy"
+                            android:inputType="date" />
 
 
                     </LinearLayout>
@@ -282,6 +284,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -305,6 +308,7 @@
                             android:layout_height="@dimen/_40sdp"
                             android:layout_marginTop="@dimen/_6sdp"
                             android:background="@drawable/custom_edt_change_pass"
+                            android:hint="dd/MM/yyyy"
                             android:inputType="date" />
 
 
@@ -420,10 +424,10 @@
                     android:gravity="center">
 
                     <Button
-                        android:onClick="@{()-> presenter.onSubmit()}"
                         android:layout_width="@dimen/_200sdp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/background_button"
+                        android:onClick="@{()-> presenter.onSubmit()}"
                         android:text="Tiếp tục"
                         android:textColor="@color/white" />
                 </LinearLayout>

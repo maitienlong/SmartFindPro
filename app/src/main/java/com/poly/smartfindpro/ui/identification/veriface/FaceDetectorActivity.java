@@ -1,14 +1,17 @@
 package com.poly.smartfindpro.ui.identification.veriface;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,9 +25,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.FirebaseApp;
-import  com.poly.smartfindpro.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 
+import com.poly.smartfindpro.callback.AlertDialogListener;
+import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
+import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.databinding.ActivityFaceDetectorBinding;
 import com.poly.smartfindpro.ui.identification.veriface.internal.ActionFace;
 import com.poly.smartfindpro.ui.identification.veriface.internal.CameraView;
@@ -39,7 +48,20 @@ import com.poly.smartfindpro.ui.identification.veriface.internal.SelfieConfigura
 import com.poly.smartfindpro.ui.identification.veriface.internal.SoundPlayer;
 import com.poly.smartfindpro.ui.identification.veriface.internal.TVSelfieImage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetectorBinding, FaceDetectorPresenter> implements FaceDetectorContract.ViewModel {
 
@@ -48,8 +70,9 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
     private final int REQ_CODE_CAMERA_PERMISSION = 100;
     private final int REQ_CODE_FACE_PAY = 200;
 
-    private String jsonData;
+    private RequestIndentifi mProduct;
 
+    private List<File> mImageIdentifi;
 
     private TextView mPromptText;
 
@@ -217,10 +240,22 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
         mPresenter = new FaceDetectorPresenter(this, this);
         mBinding.setPresenter(mPresenter);
 
+        mPresenter.setmProduct(mProduct);
+
+        mPresenter.setmSelfieImages(mImageIdentifi);
     }
 
     private void ReceiveData() {
+        if (getIntent() != null) {
+            Type type = new TypeToken<RequestIndentifi>() {
+            }.getType();
 
+            Type typePhoto = new TypeToken<List<File>>() {
+            }.getType();
+
+            mProduct = new Gson().fromJson(getIntent().getStringExtra(Config.POST_BUNDEL_RES), type);
+            mImageIdentifi = new Gson().fromJson(getIntent().getStringExtra(Config.POST_BUNDEL_RES_PHOTO), typePhoto);
+        }
 
     }
 
@@ -447,6 +482,8 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
 
             }
         }
+        storeImage(selfieImages.get(0).getImage());
+
         // XU LY SU KIEN CÂT ANH
     }
 
@@ -456,7 +493,7 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
         if (requestCode == REQ_CODE_CAMERA_PERMISSION) {
             requestCameraPermission();
         } else if (requestCode == REQ_CODE_FACE_PAY) {
-            if (resultCode!=RESULT_OK){
+            if (resultCode != RESULT_OK) {
                 finish();
             }
         }
@@ -471,12 +508,93 @@ public class FaceDetectorActivity extends BaseDataBindActivity<ActivityFaceDetec
     }
 
 
-
-
     @Override
     public void onBackClick() {
+        finish();
+    }
+
+    private void storeImage(Bitmap image) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.d("CheckFace",
+                    "Error creating media file, check storage permissions: ");// e.getMessage());
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("CheckFace", "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d("CheckFace", "Error accessing file: " + e.getMessage());
+        }
+
+        List<File> fileList = new ArrayList<>();
+        fileList.add(pictureFile);
+        mPresenter.requestUploadSurvey(fileList);
 
     }
 
+    private File getOutputMediaFile() {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getApplicationContext().getPackageName()
+                + "/Files");
 
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName = "MI_" + timeStamp + ".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+
+        return mediaFile;
+    }
+
+    @Override
+    public void onSuccess(String msg) {
+        showAlertSuccessDialog(msg, "Đồng ý", new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                Intent intent = new Intent();
+                intent.putExtra(Config.DATA_CALL_BACK, 2);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                Intent intent = new Intent();
+                intent.putExtra(Config.DATA_CALL_BACK, 2);
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onFail(String msg) {
+        showAlertDialog(msg, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                finish();
+            }
+        });
+    }
 }

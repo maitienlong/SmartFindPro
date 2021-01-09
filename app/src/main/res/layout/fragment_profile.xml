@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/cmtb">
@@ -191,6 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
                         android:background="@drawable/btn_category_pressed"
                         android:onClick="@{()->presenter.onClickApproved()}"
                         android:text="@string/btn_approved"
@@ -199,7 +200,9 @@
 
                     </Button>
 
+
                     <Button
+                        android:textSize="@dimen/_8sdp"
                         android:id="@+id/btn_pending"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
@@ -229,6 +232,6 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 </layout>

@@ -62,7 +62,7 @@
                     android:layout_weight="1"
                     android:onClick="@{()-> presenter.onSelectMessager()}"
                     android:padding="@dimen/_5sdp"
-                    android:src="@drawable/ic_outline_message"
+                    android:src="@drawable/ic_notifications"
                     app:tint="@color/white" />
 
                 <ImageView

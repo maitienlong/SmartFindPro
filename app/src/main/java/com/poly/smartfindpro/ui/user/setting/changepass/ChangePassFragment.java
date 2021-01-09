@@ -1,5 +1,7 @@
 package com.poly.smartfindpro.ui.user.setting.changepass;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentChangePassBinding;
@@ -19,6 +21,14 @@ public class ChangePassFragment extends BaseDataBindFragment<FragmentChangePassB
         mPresenter = new ChangePassPresenter(mActivity,this);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Đổi mật khẩu");
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override

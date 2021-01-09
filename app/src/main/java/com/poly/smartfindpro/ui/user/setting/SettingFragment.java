@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.user.setting;
 
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentManager;
 
 import com.poly.smartfindpro.R;
@@ -24,6 +25,14 @@ public class SettingFragment extends BaseDataBindFragment<FragmentSettingUserBin
         mPresenter = new SettingPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Cài đặt");
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override

@@ -2,7 +2,10 @@ package com.poly.smartfindpro.ui.identification.step;
 
 import android.content.Context;
 
+import androidx.databinding.ObservableField;
+
 import com.google.gson.Gson;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.databinding.FragmentIdentificationStepBinding;
 import com.poly.smartfindpro.ui.identification.tutorial.TutorialContract;
@@ -25,6 +28,10 @@ public class StepPresenter implements StepContract.Presenter {
 
     private String imageCardSau = "";
 
+    public ObservableField<Integer> maxLength;
+
+    public ObservableField<String> title;
+
     public StepPresenter(Context mContext, StepContract.ViewModel mViewmodel, FragmentIdentificationStepBinding binding) {
         this.mContext = mContext;
         this.mViewmodel = mViewmodel;
@@ -34,6 +41,8 @@ public class StepPresenter implements StepContract.Presenter {
 
     private void initData() {
         mProduct = new RequestIndentifi();
+        maxLength = new ObservableField<>();
+        title = new ObservableField<>("Thông tin định danh");
     }
 
     @Override
@@ -96,7 +105,9 @@ public class StepPresenter implements StepContract.Presenter {
             mViewmodel.showMessage("Vui lòng nhập họ và tên");
         } else if (mBinding.edtNumberIdentifi.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập số CMND/CCCD");
-        } else if (mBinding.edtDateSupply.getText().toString().isEmpty()) {
+        } else if (mBinding.edtNumberIdentifi.getText().toString().length() != maxLength.get()) {
+            mViewmodel.showMessage("Số CMND/CCCD phải là "+maxLength.get()+" số");
+        }  else if (mBinding.edtDateSupply.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập ngày cấp");
         } else if (mBinding.edtAddressSupply.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập nơi cấp");
@@ -116,6 +127,12 @@ public class StepPresenter implements StepContract.Presenter {
             mViewmodel.showMessage("Ảnh mặt sau không được để trống");
         } else {
 
+            mProduct.setUserId(Config.TOKEN_USER );
+
+            mProduct.setType(typeCard);
+
+            mProduct.setGender(gender);
+
             mProduct.setName(mBinding.edtFullname.getText().toString().trim());
 
             mProduct.setCode(mBinding.edtNumberIdentifi.getText().toString().trim());
@@ -134,7 +151,7 @@ public class StepPresenter implements StepContract.Presenter {
 
             mProduct.setPrevious(imageCardTruoc);
 
-            mProduct.setPrevious(imageCardSau);
+            mProduct.setBehind(imageCardSau);
 
             mViewmodel.onNextVeriFace(new Gson().toJson(mProduct));
 
@@ -142,5 +159,13 @@ public class StepPresenter implements StepContract.Presenter {
 
     }
 
+    @Override
+    public void setMaxLength(int number) {
+        maxLength.set(number);
+    }
 
+    @Override
+    public void onBackClick() {
+        mViewmodel.onBackClick();
+    }
 }

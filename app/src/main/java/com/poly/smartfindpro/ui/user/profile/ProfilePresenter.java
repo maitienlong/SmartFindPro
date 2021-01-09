@@ -17,8 +17,10 @@ import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProd
 import com.poly.smartfindpro.data.model.product.req.ProductRequest;
 import com.poly.smartfindpro.data.model.product.res.ProductResponse;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.model.product.totalPeopleLease.TotalPeopleLeaseRequest;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 
@@ -35,6 +37,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private ProfileContact.ViewModel mViewModel;
     private ProfileResponse mProfile;
     private DeleteProductResponse mDelete;
+    private CheckPhoneResponse mGetTotal;
     private Products mProduct;
     private FragmentProfileBinding mBinding;
     private List<Products> productsList;
@@ -88,6 +91,11 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     public void onClickApproved() {
         mViewModel.onClickApproved();
         getProductApproved();
+    }
+
+    @Override
+    public void onGetTotalPeople() {
+
     }
 
     public void getInfor() {
@@ -181,6 +189,41 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     }
 
+    @Override
+    public void setAmountPeople(String amount) {
+
+    }
+
+    public void getTotalPeopleLease(String idPost, String amount) {
+        TotalPeopleLeaseRequest request = new TotalPeopleLeaseRequest();
+        request.setTotal_people_lease(amount);
+        request.setUserId(Config.TOKEN_USER);
+        request.setId(idPost);
+        MyRetrofitSmartFind.getInstanceSmartFind().getTotalPeopleLease(request).enqueue(new Callback<CheckPhoneResponse>() {
+            @Override
+            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+
+//                    mGetTotal = response.body();
+                    if (response.body().getResponseBody().getStatus().equalsIgnoreCase("success")) {
+                        mViewModel.showMessage("Thêm thành công");
+                        Log.d("checkStatus", response.body().getResponseBody().getStatus());
+                    } else {
+                        mViewModel.showMessage("thêm thất bại do: " + response.body().getResponseBody().getStatus());
+                        Log.d("checkStatus", response.body().getResponseBody().getStatus());
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void getDeleteProduct(String idPost) {
         DeleteProductRequest request = new DeleteProductRequest();
         request.setUserId(Config.TOKEN_USER);
@@ -188,7 +231,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         MyRetrofitSmartFind.getInstanceSmartFind().getDeleteProduct(request).enqueue(new Callback<DeleteProductResponse>() {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
-                if (response.code() == 200) {
+                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
 
                     mDelete = response.body();
                     Log.d("checkDelete", mDelete.getResponseHeader().getResCode().toString());
@@ -206,9 +249,11 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             }
         });
     }
-    public void getUpdateProduct(String idPost,String jsonData) {
+
+    public void getUpdateProduct(String idPost, String jsonData) {
         mViewModel.onUpdate(new Gson().toJson(jsonData));
     }
+
     private void getProduct() {
         ProductRequest request = new ProductRequest();
         request.setId(Config.TOKEN_USER);

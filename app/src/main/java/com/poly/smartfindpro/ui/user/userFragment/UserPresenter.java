@@ -23,6 +23,8 @@ public class UserPresenter implements UserContact.Presenter {
     private FragmentUserBinding mBinding;
 
     public ObservableField<String> nameInfor;
+
+    public ObservableField<String> dangXuat;
     public UserPresenter(Context context, UserContact.ViewModel mViewModel,FragmentUserBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
@@ -32,7 +34,15 @@ public class UserPresenter implements UserContact.Presenter {
     }
     private void initData() {
         nameInfor = new ObservableField<>();
-        getInfor();
+        dangXuat = new ObservableField<>();
+        if(Config.isClick()){
+            getInfor();
+        }
+
+    }
+
+    public void setTextLogOut(String msg){
+        dangXuat.set(msg);
     }
 
     @Override
@@ -47,22 +57,31 @@ public class UserPresenter implements UserContact.Presenter {
 
     @Override
     public void onClickProfile() {
-        mViewModel.onClickProfile();
+        if(Config.isClick()){
+            mViewModel.onClickProfile();
+        }else {
+           mViewModel.showMessage(context.getString(R.string.pl_login));
+        }
+
     }
 
     @Override
     public void onClickSetting() {
         mViewModel.onClickSetting();
+
     }
 
     @Override
     public void onClickRules() {
         mViewModel.onClickRules();
+
     }
 
     @Override
     public void onClickHelp() {
+
         mViewModel.onClickHelp();
+
     }
 
     @Override

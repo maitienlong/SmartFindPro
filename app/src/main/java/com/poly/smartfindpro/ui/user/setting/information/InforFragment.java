@@ -1,5 +1,7 @@
 package com.poly.smartfindpro.ui.user.setting.information;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.databinding.FragmentInformationProfileBinding;
@@ -21,6 +23,13 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Thông tin cá nhân");
 
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override

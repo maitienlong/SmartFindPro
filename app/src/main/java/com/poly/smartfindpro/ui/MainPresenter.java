@@ -2,6 +2,9 @@ package com.poly.smartfindpro.ui;
 
 import android.content.Context;
 
+import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
+
 
 public class MainPresenter implements MainContract.Presenter {
     private Context mContex;
@@ -19,17 +22,29 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onSelecFind() {
-        mViewModel.onSelecFind();
+
+        if (Config.isClick()) {
+            mViewModel.onSelecFind();
+        } else {
+            mViewModel.showMessage(mContex.getString(R.string.pl_login));
+        }
     }
 
     @Override
     public void onSelectMessager() {
-        mViewModel.onSelectMessager();
+
+
+        if (Config.isClick()) {
+            mViewModel.onSelectMessager();
+        } else {
+            mViewModel.showMessage(mContex.getString(R.string.pl_login));
+        }
     }
 
     @Override
     public void onSelectUser() {
         mViewModel.onSelectUser();
+
     }
 
     @Override

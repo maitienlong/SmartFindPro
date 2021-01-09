@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
        
         app:behavior_hideable="true"
-        app:behavior_peekHeight="@dimen/_60sdp"
+        app:behavior_peekHeight="@dimen/_65sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <androidx.cardview.widget.CardView
@@ -26,6 +26,7 @@
             app:cardElevation="@dimen/_20sdp">
 
             <LinearLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
