@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<LinearLayout
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_85sdp">
-    <EditText
-        android:id="@+id/edt_total_people_lease"
-        android:background="@color/bg_gray"
-        android:inputType="number"
+    android:layout_width="@dimen/_200sdp"
+    android:layout_height="wrap_content"
+    android:background="@color/background">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:hint="@string/tv_total_people" />
-    <Button
-        android:id="@+id/btn_confirm_total"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:text="@string/tv_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"/>
-</LinearLayout>
+        android:layout_height="@dimen/_85sdp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edt_total_people_lease"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/custom_edt_change_pass"
+            android:hint="@string/tv_total_people"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btn_confirm_total"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/background_hori"
+            android:text="@string/tv_confirm" />
+    </LinearLayout>
 
 </LinearLayout>
