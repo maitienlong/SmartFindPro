@@ -2462,15 +2462,19 @@ app.get('/confirmPost', async function (request, response) {
             })
         }
         var now = new Date();
+        if (product[0].updateAt != '') {
+            now = new Date(product[0].updateAt);
+        }
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
 
         var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
         let info = {
             admin: nameDN,
             date: today
         }
-        console.log(JSON.stringify(product[0].address));
+        console.log(JSON.stringify(info));
         response.render('confirmPost', {
             info: info,
             product: product[0],
@@ -2478,6 +2482,10 @@ app.get('/confirmPost', async function (request, response) {
             images: listObjectImages, adminId: adminID
         });
     } catch (e) {
+        console.log('///// exception')
+        console.log('confirmPost')
+        console.log(e)
+        console.log('---------')
         response.render('error');
     }
 
