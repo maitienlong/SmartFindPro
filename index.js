@@ -76,7 +76,7 @@ app.engine('.hbs', hbs({
 app.set('view engine', '.hbs');
 
 //chạy lên local host với port là localNumber
-const localNumber = 9090;
+const localNumber = 80;
 app.listen(localNumber);
 console.log('Localhost: ' + localNumber);
 
@@ -2881,4 +2881,8 @@ app.post('/cancel-upgrade', async function (request, response) {
         console.log('loi ne: \n' + e)
         response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
+});
+app.get('/applinks', async function (request, response) {
+    let id = request.query.id;
+    return response.redirect('https://smartfindpro.page.link/?link=http://www.smartfind.me/applinks/?id=' + id + '&apn=com.poly.smartfindpro');
 });
