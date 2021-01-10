@@ -831,11 +831,8 @@ app.post('/find-history', async function (request, response) {
                 .lean();
 
             let res_body = {history: null};
-            if (confirmPost.length <= 0) {
-                response.json(getResponse(name, 404, 'Not found', res_body))
-            } else {
-                let product = confirmPost[0];
-                res_body = {history: product};
+            if (confirmPost) {
+                res_body = {history: confirmPost};
                 response.json(getResponse(name, 200, sttOK, res_body))
             }
         } else {
