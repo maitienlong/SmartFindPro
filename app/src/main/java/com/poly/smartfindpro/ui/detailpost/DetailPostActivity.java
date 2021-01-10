@@ -73,7 +73,6 @@ import com.poly.smartfindpro.ui.detailpost.adapter.DetailImageAdapter;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;

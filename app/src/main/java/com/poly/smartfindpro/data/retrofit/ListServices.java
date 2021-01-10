@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.retrofit;
 import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.base.ResponseHeader;
 import com.poly.smartfindpro.data.model.comment.deleteComment.req.DeleteCommentRequest;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
@@ -16,6 +17,9 @@ import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
+import com.poly.smartfindpro.data.model.notification.req.NotificationRequest;
+import com.poly.smartfindpro.data.model.notification.res.NotificationBody;
+import com.poly.smartfindpro.data.model.notification.res.NotificationResponse;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
@@ -112,5 +116,8 @@ public interface ListServices {
 
     @POST("/total-people-lease-product")
     Call<CheckPhoneResponse> getTotalPeopleLease(@Body TotalPeopleLeaseRequest request);
+
+    @POST("/find-history")
+    Call<NotificationResponse> getNotification(@Body NotificationRequest request);
 
 }
