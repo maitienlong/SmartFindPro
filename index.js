@@ -1886,220 +1886,206 @@ app.post('/delete-comment', async function (request, response) {
 //Khai bao bien web
 const sttOK = 'Success'
 let nameDN = '', allAdmin = '', adminID = '';
+//404
+app.get('/404', function (request, response) {
+    response.render('error');
+});
 //start
 app.get('/', function (request, response) {
     response.render('login', {status: 'none', user: '', pass: ''});
 });
 // kiểm tra đăng nhập nếu đúng hiện trang trủ index
 app.get('/index', async function (request, response) {
+    try {
+        let listAdmin = await Admin.find({}).lean();   //dk
 
-    let listAdmin = await Admin.find({}).lean();   //dk
+        allAdmin = listAdmin.length;
 
-    allAdmin = listAdmin.length;
+        let user = request.query.user;
+        let pass = request.query.pass;
+        let sm = request.query.sm;
 
-    let user = request.query.user;
-    let pass = request.query.pass;
-    let sm = request.query.sm;
-
-    if (sm == 1) {
-        nameDN = user;
-        console.log(user + " " + sm);
-    }
-
-    let admins = await Admin.find({username: user, password: pass}).lean();   //dk
-    console.log(admins);
-    if (admins.length <= 0 && sm == 1) {
-        response.render('login', {
-            status: 'block',
-            data: 'Không thể đăng nhập, kiểm tra lại tài khoản và mật khẩu của bạn.',
-            user: '',
-            pass: ''
-        });
-    } else {
-        adminID = admins[0]._id;
-        console.log('adminID: ' + adminID);
-        let listAmoutPost = []
-        listAmoutPost.length = 10;
-        let listAmoutFavorite = [];
-        listAmoutFavorite.length = 10;
-        let listUserPost = [];
-        let dataLease = 0;
-        let dataNotLease = 0;
-        let dataFindSuccess = 0;
-        try {
-            var allProduct = await Product.find({
-                deleteAt: ''
-            }).lean();
-            var unapprovedPost = await Product.find({
-                status: '-1',
-                deleteAt: ''
-            }).lean();
-            var processingPost = await Product.find({
-                status: '0',
-                deleteAt: ''
-            }).lean();
-            var successPost = await Product.find({
-                status: '1',
-                deleteAt: ''
-            }).populate(['address', 'product'])
-                .populate({
-                    path: 'user',
-                    populate: {
-                        path: 'address'
-                    }
-                }).lean();
-            let allUser = await User.find({
-                deleteAt: ''
-            }).lean();
-            let uLv0 = await User.find({
-                deleteAt: '',
-                level: 0
-            }).lean();
-            let uLv1 = await User.find({
-                deleteAt: '',
-                level: 1
-            }).lean();
-            let uLv2 = await User.find({
-                deleteAt: '',
-                level: 2
-            }).lean();
-            let ulv3 = await User.find({
-                deleteAt: '',
-                level: 3
-            }).lean();
-// lay danh sach nguoi dung dang nhieu bai nhat
-            for (let i = 0; i < allUser.length; i++) {
-                let count = 0;
-                for (let j = 0; j < successPost.length; j++) {
-                    console.log(allUser[i]._id + ', ' + successPost[j].user._id)
-                    if (allUser[i]._id.toString() == successPost[j].user._id.toString()) {
-                        count++;
-                    }
-                }
-                if (count > 0) {
-                    let item = {
-                        user: allUser[i]._id,
-                        count: count
-                    }
-                    listAmoutPost.push(item);
-                }
-            }
-            listAmoutPost = (listAmoutPost.sort(function (a, b) {
-                return b.count - a.count;
-
-            }));
-            for (let i = 0; i < listAmoutPost.length; i++) {
-                if (checkData(listAmoutPost[i])) {
-                    let uItem = await User.find({
-                        deleteAt: '',
-                        _id: listAmoutPost[i].user
-                    }).populate('address').lean();
-                    if (uItem.length > 0) {
-                        listUserPost.push({
-                            id: (i + 1),
-                            user: uItem[0],
-                            count: listAmoutPost[i].count
-                        });
-                    }
-                }
-            }
-            console.log(listAmoutPost)
-// lay danh sach bai dang duoc yeu thich nhat
-            let lisAF = [];
-            for (let i = 0; i < successPost.length; i++) {
-                let count = 0;
-                let findFavorite = await Favorite
-                    .find({
-                        product: successPost[i]._id,
-                        status: 'POST'
-                    }).populate('user').lean();
-                if (findFavorite.length > 0) {
-                    count = findFavorite.length;
-                }
-                if (count > 0) {
-                    let item = {
-                        id: (i + 1),
-                        product: successPost[i],
-                        count: count
-                    }
-                    lisAF.push(item);
-                }
-                lisAF.sort(compareNumbers).reverse();
-                for (let j = 0; j < lisAF.length; j++) {
-                    lisAF[j].id = j + 1;
-                }
-                listAmoutFavorite = lisAF
-            }
-            try {
-                for (let i = 0; i < successPost.length; i++) {
-                    dataFindSuccess += successPost[i].total_people_lease
-                    if (successPost[i].total_people_lease > 0) {
-                        dataLease++;
-                    } else if (successPost[i].total_people_lease == 0) {
-                        dataNotLease++;
-                    }
-                }
-
-            } catch (e) {
-                console.log('loi ne: ' + e)
-            }
-            let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
-            let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
-            let dataAdmin = await Admin.find({}).lean();
-            let dataComment = await Comment.find({deleteAt: ''}).lean();
-            let dataShare = 0;
-            let dataDownload = 0;
-            dataAdmin = dataAdmin.length;
-            let createAt = moment(Date.now()).format(formatDate);
-            if (admins.length > 0) {
-                let confirm = await ConfirmPost({
-                    product: null,
-                    admin: admins[0]._id,
-                    user: null,
-                    status: 'LOGIN-WEB-SERVER',
-                    createAt: createAt
-                });
-                let confirPrd = await confirm.save();
-            }
-            response.render('index', {
-                status: 'none',
-                user: nameDN,
-                dataProduct: dataProduct,
-                dataUser: dataUser,
-                dataAdmin: dataAdmin,
-                listUserPost: listUserPost,
-                listAmoutFavorite: listAmoutFavorite,
-                dataComment: dataComment.length > 0 ? dataComment.length : 0,
-                dataShare: dataShare,
-                dataLease: dataLease,
-                dataDownload: dataDownload,
-                dataNotLease: dataNotLease,
-                dataFindSuccess: dataFindSuccess
-            });
-        } catch (e) {
-            let dataComment = 0;
-            let dataShare = 0;
-            let dataDownload = 0;
-
-            let dataProduct = new PostManage([], [], [], [])
-            let dataUser = new UserManage(0, 0, 0, 0, 0)
-            let dataAdmin = await Admin.find({}).lean();
-            response.render('index', {
-                status: 'none',
-                user: nameDN,
-                dataProduct: dataProduct,
-                dataUser: dataUser,
-                dataAdmin: dataAdmin.length,
-                listUserPost: listUserPost,
-                listAmoutFavorite: listAmoutFavorite,
-                dataComment: dataComment,
-                dataShare: dataShare,
-                dataDownload: dataDownload,
-                dataLease: dataLease,
-                dataNotLease: dataNotLease,
-                dataFindSuccess: dataFindSuccess
-            });
+        if (sm == 1) {
+            nameDN = user;
+            console.log(user + " " + sm);
         }
+
+        let admins = await Admin.find({username: user, password: pass}).lean();   //dk
+        console.log(admins);
+        if (admins.length <= 0 && sm == 1) {
+            response.render('login', {
+                status: 'block',
+                data: 'Không thể đăng nhập, kiểm tra lại tài khoản và mật khẩu của bạn.',
+                user: '',
+                pass: ''
+            });
+        } else {
+            adminID = admins[0]._id;
+            console.log('adminID: ' + adminID);
+            let listAmoutPost = []
+            listAmoutPost.length = 10;
+            let listAmoutFavorite = [];
+            listAmoutFavorite.length = 10;
+            let listUserPost = [];
+            let dataLease = 0;
+            let dataNotLease = 0;
+            let dataFindSuccess = 0;
+            try {
+                var allProduct = await Product.find({
+                    deleteAt: ''
+                }).lean();
+                var unapprovedPost = await Product.find({
+                    status: '-1',
+                    deleteAt: ''
+                }).lean();
+                var processingPost = await Product.find({
+                    status: '0',
+                    deleteAt: ''
+                }).lean();
+                var successPost = await Product.find({
+                    status: '1',
+                    deleteAt: ''
+                }).populate(['address', 'product'])
+                    .populate({
+                        path: 'user',
+                        populate: {
+                            path: 'address'
+                        }
+                    }).lean();
+                let allUser = await User.find({
+                    deleteAt: ''
+                }).lean();
+                let uLv0 = await User.find({
+                    deleteAt: '',
+                    level: 0
+                }).lean();
+                let uLv1 = await User.find({
+                    deleteAt: '',
+                    level: 1
+                }).lean();
+                let uLv2 = await User.find({
+                    deleteAt: '',
+                    level: 2
+                }).lean();
+                let ulv3 = await User.find({
+                    deleteAt: '',
+                    level: 3
+                }).lean();
+// lay danh sach nguoi dung dang nhieu bai nhat
+                for (let i = 0; i < allUser.length; i++) {
+                    let count = 0;
+                    for (let j = 0; j < successPost.length; j++) {
+                        console.log(allUser[i]._id + ', ' + successPost[j].user._id)
+                        if (allUser[i]._id.toString() == successPost[j].user._id.toString()) {
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        let item = {
+                            user: allUser[i]._id,
+                            count: count
+                        }
+                        listAmoutPost.push(item);
+                    }
+                }
+                listAmoutPost = (listAmoutPost.sort(function (a, b) {
+                    return b.count - a.count;
+
+                }));
+                for (let i = 0; i < listAmoutPost.length; i++) {
+                    if (checkData(listAmoutPost[i])) {
+                        let uItem = await User.find({
+                            deleteAt: '',
+                            _id: listAmoutPost[i].user
+                        }).populate('address').lean();
+                        if (uItem.length > 0) {
+                            listUserPost.push({
+                                id: (i + 1),
+                                user: uItem[0],
+                                count: listAmoutPost[i].count
+                            });
+                        }
+                    }
+                }
+                console.log(listAmoutPost)
+// lay danh sach bai dang duoc yeu thich nhat
+                let lisAF = [];
+                for (let i = 0; i < successPost.length; i++) {
+                    let count = 0;
+                    let findFavorite = await Favorite
+                        .find({
+                            product: successPost[i]._id,
+                            status: 'POST'
+                        }).populate('user').lean();
+                    if (findFavorite.length > 0) {
+                        count = findFavorite.length;
+                    }
+                    if (count > 0) {
+                        let item = {
+                            id: (i + 1),
+                            product: successPost[i],
+                            count: count
+                        }
+                        lisAF.push(item);
+                    }
+                    lisAF.sort(compareNumbers).reverse();
+                    for (let j = 0; j < lisAF.length; j++) {
+                        lisAF[j].id = j + 1;
+                    }
+                    listAmoutFavorite = lisAF
+                }
+                try {
+                    for (let i = 0; i < successPost.length; i++) {
+                        dataFindSuccess += successPost[i].total_people_lease
+                        if (successPost[i].total_people_lease > 0) {
+                            dataLease++;
+                        } else if (successPost[i].total_people_lease == 0) {
+                            dataNotLease++;
+                        }
+                    }
+
+                } catch (e) {
+                    console.log('loi ne: ' + e)
+                }
+                let dataProduct = new PostManage(allProduct.reverse(), unapprovedPost.reverse(), processingPost.reverse(), successPost.reverse())
+                let dataUser = new UserManage(allUser.length, uLv0.length, uLv1.length, uLv2.length, ulv3.length)
+                let dataAdmin = await Admin.find({}).lean();
+                let dataComment = await Comment.find({deleteAt: ''}).lean();
+                let dataShare = 0;
+                let dataDownload = 0;
+                dataAdmin = dataAdmin.length;
+                let createAt = moment(Date.now()).format(formatDate);
+                if (admins.length > 0) {
+                    let confirm = await ConfirmPost({
+                        product: null,
+                        admin: admins[0]._id,
+                        user: null,
+                        status: 'LOGIN-WEB-SERVER',
+                        createAt: createAt
+                    });
+                    let confirPrd = await confirm.save();
+                }
+                response.render('index', {
+                    status: 'none',
+                    user: nameDN,
+                    dataProduct: dataProduct,
+                    dataUser: dataUser,
+                    dataAdmin: dataAdmin,
+                    listUserPost: listUserPost,
+                    listAmoutFavorite: listAmoutFavorite,
+                    dataComment: dataComment.length > 0 ? dataComment.length : 0,
+                    dataShare: dataShare,
+                    dataLease: dataLease,
+                    dataDownload: dataDownload,
+                    dataNotLease: dataNotLease,
+                    dataFindSuccess: dataFindSuccess
+                });
+            } catch (e) {
+                response.render('error');
+            }
+        }
+    } catch (e) {
+        response.render('error');
     }
 });
 
@@ -2345,10 +2331,7 @@ app.get('/reportProduct', async function (request, response) {
             data: data
         });
     } catch (e) {
-        let data = new PostManage([], [], [], []);
-        response.render('reportProduct', {
-            data: data, adminId: adminID
-        });
+        response.render('error');
     }
 });
 // quản lý bài viết
@@ -2434,10 +2417,7 @@ app.get('/postManage', async function (request, response) {
             data: data, adminId: adminID
         });
     } catch (e) {
-        let data = new PostManage([], [], [], []);
-        response.render('postManage', {
-            data: data
-        });
+        response.render('error');
     }
 });
 //duyệt bài viết
@@ -2498,8 +2478,7 @@ app.get('/confirmPost', async function (request, response) {
             images: listObjectImages, adminId: adminID
         });
     } catch (e) {
-        console.log('Lỗi: ' + e)
-        response.render('login', {status: 'none', user: '', pass: ''});
+        response.render('error');
     }
 
 });
@@ -2580,10 +2559,7 @@ app.get('/userManage', async function (request, response) {
         });
 
     } catch (e) {
-        let data = new UserManage([], [], [], [], []);
-        response.render('userManage', {
-            data: data
-        });
+        response.render('error');
     }
 });
 //duyệt bài viết
@@ -2632,37 +2608,40 @@ app.get('/confirmUser', async function (request, response) {
         }
 
     } catch (e) {
-        console.log('Lỗi: ' + e)
-        response.render('login', {status: 'none', user: '', pass: ''});
+        response.render('error');
     }
 
 });
 
 //lịch sử
 app.get('/history', async function (request, response) {
-    var confirmPost = await ConfirmPost.find({})
-        .populate(['admin'])
-        .populate({
-            path: 'product',
-            populate: {
-                path: 'address',
+    try {
+        var confirmPost = await ConfirmPost.find({})
+            .populate(['admin'])
+            .populate({
                 path: 'product',
                 populate: {
-                    path: 'user',
+                    path: 'address',
+                    path: 'product',
                     populate: {
-                        path: 'address'
+                        path: 'user',
+                        populate: {
+                            path: 'address'
+                        }
                     }
                 }
-            }
-        })
-        .populate({
-            path: 'user',
-            populate: {
-                path: 'address'
-            }
-        })
-        .lean();
-    response.render('history', {data: confirmPost.reverse(), adminId: adminID});
+            })
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'address'
+                }
+            })
+            .lean();
+        response.render('history', {data: confirmPost.reverse(), adminId: adminID});
+    } catch (e) {
+        response.render('error');
+    }
 });
 //API-WEB
 // duyet bai dang
