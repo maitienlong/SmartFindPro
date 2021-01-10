@@ -238,9 +238,6 @@
         <item name="android:textSize">@dimen/_12sdp</item>
     </style>
 
-
-    // 10sdp
-
     <style name="textStyleRegular_10dp">
         <item name="android:fontFamily">@font/segoeuisl</item>
         <item name="android:textColorHint">@color/text_color_77</item>

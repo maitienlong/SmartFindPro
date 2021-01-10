@@ -131,12 +131,33 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
 
     }
 
+    public TextWatcher onListener() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    mViewModel.onShow(mListProduct);
+                }
+            }
+        };
+    }
+
     @Override
     public void onSearch() {
 
-        if(mBinding.edtSearch.getText().toString().isEmpty()){
-            getProduct();
-        }else {
+        if (mBinding.edtSearch.getText().toString().isEmpty()) {
+            mViewModel.showMessage("Vui lòng nhập dữ liệu !");
+        } else {
             onSearchProduct(type, mBinding.edtSearch.getText().toString());
         }
     }

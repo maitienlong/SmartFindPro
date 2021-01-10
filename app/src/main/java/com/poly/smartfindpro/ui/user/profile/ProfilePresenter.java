@@ -42,8 +42,8 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private FragmentProfileBinding mBinding;
     private List<Products> productsList;
 
-
     public ObservableField<String> nameInfor;
+    public ObservableField<Integer> heightStatus;
 
     public ProfilePresenter(Context context, ProfileContact.ViewModel mViewModel, FragmentProfileBinding mBinding) {
         this.context = context;
@@ -55,6 +55,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     private void initData() {
         nameInfor = new ObservableField<>();
+        heightStatus = new ObservableField<>(Config.HEIGHT_STATUS_BAR);
         getInfor();
 //        getProduct();
         getProductApproved();

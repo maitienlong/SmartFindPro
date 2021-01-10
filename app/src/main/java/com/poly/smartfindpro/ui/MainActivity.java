@@ -1,13 +1,18 @@
 package com.poly.smartfindpro.ui;
 
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
@@ -39,6 +44,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_main;
     }
 
@@ -87,7 +93,7 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
                 mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
                 mBinding.btnMessage.setImageResource(R.drawable.ic_notifications);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_full);
-                goToFragmentReplaceLeft(R.id.fl_native,new UserFragment(),null);
+                goToFragmentReplaceLeft(R.id.fl_native, new UserFragment(), null);
                 break;
         }
     }

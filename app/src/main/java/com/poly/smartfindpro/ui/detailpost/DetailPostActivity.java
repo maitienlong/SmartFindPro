@@ -111,6 +111,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_information_post;
     }
 

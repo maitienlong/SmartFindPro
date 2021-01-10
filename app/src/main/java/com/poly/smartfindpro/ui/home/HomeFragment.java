@@ -39,8 +39,6 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
 
     private List<String> mListImage;
 
-    private MainSliderAdapter mainSliderAdapter;
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;

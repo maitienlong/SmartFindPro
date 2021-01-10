@@ -50,6 +50,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_post;
     }
 

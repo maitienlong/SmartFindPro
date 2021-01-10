@@ -1,89 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-    <TextView
-        style="@style/textStyleBold"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:gravity="center"
-        android:text="Chọn thứ tự ưu tiên" />
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_10sdp">
 
     <LinearLayout
+        android:background="@color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnTheLoai"
-            android:layout_margin="@dimen/_8sdp"
-            android:text="Thể loại"
-            android:background="@color/gray2"
+
+        <TextView
+            android:textColor="#fff"
+            android:background="@drawable/background_app"
+            style="@style/textStyleBold"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="@dimen/_30sdp"
+            android:gravity="center"
+            android:text="Chọn thứ tự ưu tiên" />
 
-        <Button
-            android:id="@+id/btnGia"
-            android:layout_margin="@dimen/_8sdp"
-            android:text="Giá"
-            android:background="@color/gray2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="@dimen/_60sdp"
+            android:orientation="horizontal">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnTheLoai"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@color/gray2"
+                android:text="Thể loại" />
 
-        <Button
-            android:id="@+id/btnSoLuong"
-            android:layout_margin="@dimen/_8sdp"
-            android:text="Số lượng"
-            android:background="@color/gray2"
+            <Button
+                android:id="@+id/btnGia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@color/gray2"
+                android:text="Giá" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="@dimen/_60sdp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnGioiTinh"
-            android:layout_margin="@dimen/_8sdp"
-            android:text="Giới tính"
-            android:background="@color/gray2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <Button
+                android:id="@+id/btnSoLuong"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@color/gray2"
+                android:text="Số lượng" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnGioiTinh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@color/gray2"
+                android:text="Giới tính" />
 
-        <Button
-            android:id="@+id/btnTienDien"
-            android:layout_margin="@dimen/_8sdp"
-            android:text="Tiền điện"
-            android:background="@color/gray2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btnTienNuoc"
-            android:layout_margin="@dimen/_8sdp"
-            android:text="Tiền nước"
-            android:background="@color/gray2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

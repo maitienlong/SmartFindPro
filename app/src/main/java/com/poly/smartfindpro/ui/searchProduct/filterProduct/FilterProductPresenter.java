@@ -63,53 +63,45 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
     }
 
     @Override
-    public void onClickFilter(FilterTool filterTool, List<String> priority) {
-
-        for (int i = 0; i < priority.size(); i++) {
+    public void onClickFilter(List<Priority> productList, List<Products> mListProduct) {
+        mListResult.clear();
+        for (int i = 0; i < productList.size(); i++) {
             if (i == 0) {
-                if (priority.get(i).equalsIgnoreCase("theloai")) {
-                    mListResult.addAll(onFilterTheLoai(mListProduct, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("giatien")) {
-                    mListResult.addAll(onFilterGiaTien(mListProduct, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("gioitinh")) {
-                    mListResult.addAll(onFilterGioiTinh(mListProduct, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("soluong")) {
-                    mListResult.addAll(onFilterSoLuong(mListProduct, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("tiendien")) {
-                    mListResult.addAll(onFilterGiaTienDien(mListProduct, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("tiennuoc")) {
-                    mListResult.addAll(onFilterGiaTienNuoc(mListProduct, filterTool));
+                if (productList.get(i).getId() == 0) {
+                    mListResult.addAll(onFilterTheLoai(mListProduct, productList.get(i).getValue()));
+                } else if (productList.get(i).getId() == 1) {
+                    mListResult.addAll(onFilterGiaTien(mListProduct, Integer.parseInt(productList.get(i).getValue())));
+                } else if (productList.get(i).getId() == 3) {
+                    mListResult.addAll(onFilterGioiTinh(mListProduct, productList.get(i).getValue()));
+                } else if (productList.get(i).getId() == 2) {
+                    mListResult.addAll(onFilterSoLuong(mListProduct, Integer.parseInt(productList.get(i).getValue())));
                 }
             } else {
-                if (priority.get(i).equalsIgnoreCase("theloai")) {
-                    mListResult = (onFilterTheLoai(mListResult, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("giatien")) {
-                    mListResult = (onFilterGiaTien(mListResult, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("gioitinh")) {
-                    mListResult = (onFilterGioiTinh(mListResult, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("soluong")) {
-                    mListResult = (onFilterSoLuong(mListResult, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("tiendien")) {
-                    mListResult = (onFilterGiaTienDien(mListResult, filterTool));
-                } else if (priority.get(i).equalsIgnoreCase("tiennuoc")) {
-                    mListResult = (onFilterGiaTienNuoc(mListResult, filterTool));
+                if (productList.get(i).getId() == 0) {
+                    mListResult = (onFilterTheLoai(mListResult, productList.get(i).getValue()));
+                } else if (productList.get(i).getId() == 1) {
+                    mListResult = (onFilterGiaTien(mListResult, Integer.parseInt(productList.get(i).getValue())));
+                } else if (productList.get(i).getId() == 3) {
+                    mListResult = (onFilterGioiTinh(mListResult, productList.get(i).getValue()));
+                } else if (productList.get(i).getId() == 2) {
+                    mListResult = (onFilterSoLuong(mListResult, Integer.parseInt(productList.get(i).getValue())));
                 }
             }
         }
 
-        if (mListResult.size() > 0){
+        if (mListResult.size() > 0) {
             mViewModel.onShow(mListResult);
-        }else {
+        } else {
             mViewModel.onShowMsg("Không tìm thấy kết quả nào");
         }
     }
 
 
-    private List<Products> onFilterTheLoai(List<Products> mListProduct, FilterTool value) {
+    private List<Products> onFilterTheLoai(List<Products> mListProduct, String value) {
         List<Products> listResult = new ArrayList<>();
 
         for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getCategory().equalsIgnoreCase(value.getTheLoai())) {
+            if (mListProduct.get(i).getProduct().getCategory().equalsIgnoreCase(value)) {
                 listResult.add(mListProduct.get(i));
             }
         }
@@ -117,11 +109,11 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
         return listResult;
     }
 
-    private List<Products> onFilterSoLuong(List<Products> mListProduct, FilterTool value) {
+    private List<Products> onFilterSoLuong(List<Products> mListProduct, int value) {
         List<Products> listResult = new ArrayList<>();
 
         for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getInformation().getAmountPeople() == value.getSoLuongNguoi()) {
+            if (mListProduct.get(i).getProduct().getInformation().getAmountPeople() == value) {
                 listResult.add(mListProduct.get(i));
             }
         }
@@ -129,11 +121,11 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
         return listResult;
     }
 
-    private List<Products> onFilterGiaTien(List<Products> mListProduct, FilterTool value) {
+    private List<Products> onFilterGiaTien(List<Products> mListProduct, int value) {
         List<Products> listResult = new ArrayList<>();
 
         for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getInformation().getPrice() > 500000 && mListProduct.get(i).getProduct().getInformation().getPrice() < value.getGia()) {
+            if (mListProduct.get(i).getProduct().getInformation().getPrice() > 500000 && mListProduct.get(i).getProduct().getInformation().getPrice() < value) {
                 listResult.add(mListProduct.get(i));
             }
         }
@@ -141,11 +133,11 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
         return listResult;
     }
 
-    private List<Products> onFilterGioiTinh(List<Products> mListProduct, FilterTool value) {
+    private List<Products> onFilterGioiTinh(List<Products> mListProduct, String value) {
         List<Products> listResult = new ArrayList<>();
 
         for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getInformation().getGender().equalsIgnoreCase(value.getGioiTinh())) {
+            if (mListProduct.get(i).getProduct().getInformation().getGender().equalsIgnoreCase(value)) {
                 listResult.add(mListProduct.get(i));
             }
         }
@@ -153,27 +145,4 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
         return listResult;
     }
 
-    private List<Products> onFilterGiaTienDien(List<Products> mListProduct, FilterTool value) {
-        List<Products> listResult = new ArrayList<>();
-
-        for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getInformation().getElectricBill() <= value.getTienDien()) {
-                listResult.add(mListProduct.get(i));
-            }
-        }
-
-        return listResult;
-    }
-
-    private List<Products> onFilterGiaTienNuoc(List<Products> mListProduct, FilterTool value) {
-        List<Products> listResult = new ArrayList<>();
-
-        for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getInformation().getWaterBill() <= value.getTienNuoc()) {
-                listResult.add(mListProduct.get(i));
-            }
-        }
-
-        return listResult;
-    }
 }

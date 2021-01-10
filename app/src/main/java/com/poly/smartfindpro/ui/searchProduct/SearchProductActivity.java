@@ -55,6 +55,7 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_search_product;
     }
 
@@ -108,10 +109,8 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     }
 
-
     @Override
     public void onShow(List<Products> products) {
-
         // send to map activity
 
         Bundle bundle = new Bundle();

@@ -21,6 +21,6 @@ public interface FilterProductContact {
 
         void onBackClick();
 
-        void onClickFilter(FilterTool filterTool, List<String> priority);
+        void onClickFilter(List<Priority> productList, List<Products> mListProduct);
     }
 }

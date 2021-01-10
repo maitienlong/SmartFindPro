@@ -78,8 +78,15 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         onHask();
-
+        getHeightStatusBar();
         dynamicLink();
+    }
+
+    private void getHeightStatusBar(){
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+          Config.HEIGHT_STATUS_BAR = getResources().getDimensionPixelSize(resourceId);
+        }
     }
 
     private void dynamicLink() {
