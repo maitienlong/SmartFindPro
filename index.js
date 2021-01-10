@@ -832,7 +832,7 @@ app.post('/find-history', async function (request, response) {
 
             let res_body = {history: null};
             if (confirmPost) {
-                res_body = {history: confirmPost};
+                res_body = {history: confirmPost.reverse()};
                 response.json(getResponse(name, 200, sttOK, res_body))
             }
         } else {
