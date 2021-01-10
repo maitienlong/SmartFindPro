@@ -1885,7 +1885,7 @@ app.post('/delete-comment', async function (request, response) {
 //Web
 //Khai bao bien web
 const sttOK = 'Success'
-let nameDN = '', allAdmin = '';
+let nameDN = '', allAdmin = '', adminID = '';
 //start
 app.get('/', function (request, response) {
     response.render('login', {status: 'none', user: '', pass: ''});
@@ -1916,6 +1916,8 @@ app.get('/index', async function (request, response) {
             pass: ''
         });
     } else {
+        adminID = admins[0]._id;
+        console.log('adminID: ' + adminID);
         let listAmoutPost = []
         listAmoutPost.length = 10;
         let listAmoutFavorite = [];
@@ -2024,7 +2026,7 @@ app.get('/index', async function (request, response) {
                 }
                 lisAF.sort(compareNumbers).reverse();
                 for (let j = 0; j < lisAF.length; j++) {
-                    lisAF[j].id = j+1;
+                    lisAF[j].id = j + 1;
                 }
                 listAmoutFavorite = lisAF
             }
@@ -2345,7 +2347,7 @@ app.get('/reportProduct', async function (request, response) {
     } catch (e) {
         let data = new PostManage([], [], [], []);
         response.render('reportProduct', {
-            data: data
+            data: data, adminId: adminID
         });
     }
 });
@@ -2429,7 +2431,7 @@ app.get('/postManage', async function (request, response) {
         }
         console.log(JSON.stringify(successPost))
         response.render('postManage', {
-            data: data
+            data: data, adminId: adminID
         });
     } catch (e) {
         let data = new PostManage([], [], [], []);
@@ -2493,7 +2495,7 @@ app.get('/confirmPost', async function (request, response) {
             info: info,
             product: product[0],
             utilities: dataUtilities,
-            images: listObjectImages
+            images: listObjectImages, adminId: adminID
         });
     } catch (e) {
         console.log('Lỗi: ' + e)
@@ -2574,7 +2576,7 @@ app.get('/userManage', async function (request, response) {
 
         let data = new UserManage(allUsers.reverse(), userLV0.reverse(), userLV1.reverse(), userLV2, userLV3);
         response.render('userManage', {
-            data: data
+            data: data, adminId: adminID
         });
 
     } catch (e) {
@@ -2625,7 +2627,7 @@ app.get('/confirmUser', async function (request, response) {
                     lengthOfLv1: 0,
                     lengthOfLv2: 0,
                     listLv2: []
-                }
+                }, adminId: adminID
             });
         }
 
@@ -2660,7 +2662,7 @@ app.get('/history', async function (request, response) {
             }
         })
         .lean();
-    response.render('history', {data: confirmPost.reverse()});
+    response.render('history', {data: confirmPost.reverse(), adminId: adminID});
 });
 //API-WEB
 // duyet bai dang

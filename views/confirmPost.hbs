@@ -926,7 +926,8 @@
     }
 
     function deleteProduct(id, userId) {
-        let adminId = '5fd4d983c89b6cc9ccfc86f2';
+
+        let adminId = '{{adminId}}';
         let data = {
             id: id,
             adminId: adminId
@@ -1030,7 +1031,8 @@
 
     function getDataUpdate() {
         //lay thong tin duyet
-        let adminId = '5fd4d983c89b6cc9ccfc86f2';
+
+        let adminId = '{{adminId}}';
         let timeConfirm = $('#date-success').val();
         //lay thong tin nguoi dang bai
         let userId = '{{product.user._id}}';

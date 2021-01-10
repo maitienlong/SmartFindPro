@@ -460,7 +460,7 @@
     let titleCancel = '';
 
     function confirmUpgrade(id) {
-        let adminId = '5fd4d983c89b6cc9ccfc86f2';
+        let adminId = '{{adminId}}';
         let data = {
             id: id,
             adminId: adminId
@@ -511,7 +511,7 @@
     }
 
     function cancelUpgrade(id) {
-        let adminId = '5fd4d983c89b6cc9ccfc86f2';
+        let adminId = '{{adminId}}';
         let data = {
             id: id,
             adminId: adminId
@@ -536,7 +536,7 @@
                         content = 'Từ chối duyệt thành công!';
                         titleOK = 'Trở lại';
                         $('#successDialog').click(function () {
-                            location.href = 'userManage';
+                            location.href = 'confirmUser';
                         });
                     } else {
                         content = 'Từ chối duyệt thất bại. Vui lòng thử lại sau!';
