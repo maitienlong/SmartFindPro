@@ -82,10 +82,10 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         dynamicLink();
     }
 
-    private void getHeightStatusBar(){
+    private void getHeightStatusBar() {
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-          Config.HEIGHT_STATUS_BAR = getResources().getDimensionPixelSize(resourceId);
+            Config.HEIGHT_STATUS_BAR = getResources().getDimensionPixelSize(resourceId);
         }
     }
 
@@ -93,13 +93,11 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
             @Override
             public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-                Toast.makeText(IntroActivity.this, "Oh, DynamicLinks", Toast.LENGTH_SHORT).show();
-
                 Uri deepLink = null;
 
                 if (pendingDynamicLinkData != null) {
                     deepLink = pendingDynamicLinkData.getLink();
-
+                    Log.d("DynamicLinksss", deepLink.toString());
                 }
 
                 if (deepLink != null) {

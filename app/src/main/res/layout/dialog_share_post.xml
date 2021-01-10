@@ -51,32 +51,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Chia sẻ lên facebook" />
+                    android:text="Chia sẻ lên trang cá nhân" />
             </LinearLayout>
 
 
         </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
+            android:clickable="true"
+            android:id="@+id/rl_share_on_facebook_story"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_share_on_facebook"
             android:layout_marginTop="@dimen/_8sdp"
             android:padding="@dimen/_6sdp">
 
-            <ImageView
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:src="@mipmap/twitter" />
-
-            <TextView
-                style="@style/textStyleBold"
+            <com.facebook.share.widget.ShareButton
+                android:id="@+id/btn_share_on_facebook_story"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Chia sẻ lên twitter" />
-        </LinearLayout>
+                android:layout_height="@dimen/_40sdp" />
+
+            <LinearLayout
+                android:clickable="false"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@mipmap/facebook" />
+
+                <TextView
+                    style="@style/textStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Chia sẻ lên tin của tôi" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
