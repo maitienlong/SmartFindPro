@@ -1,40 +1,23 @@
 package com.poly.smartfindpro.ui;
 
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.res.ColorStateList;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.RequiresApi;
-import androidx.viewpager.widget.ViewPager;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
 import com.poly.smartfindpro.ui.checklevel.CheckLevelAccount;
 import com.poly.smartfindpro.ui.home.HomeFragment;
-import com.poly.smartfindpro.ui.message.MessageFragment;
-import com.poly.smartfindpro.ui.post.adapter.ViewPagerPostAdapter;
+import com.poly.smartfindpro.ui.notification.NotificationFragment;
 import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
 import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
@@ -133,9 +116,9 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     public void onSelectMessager() {
         if (Config.LEVEL_ACCOUNT > 0) {
             if (position < 2) {
-                goToFragmentReplaceLeft(R.id.fl_native, new MessageFragment(), null);
+                goToFragmentReplaceLeft(R.id.fl_native, new NotificationFragment(), null);
             } else if (position > 2) {
-                goToFragmentReplaceRight(R.id.fl_native, new MessageFragment(), null);
+                goToFragmentReplaceRight(R.id.fl_native, new NotificationFragment(), null);
 
             }
             position = 2;

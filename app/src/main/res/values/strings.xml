@@ -75,6 +75,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="str_notification">Thông báo</string>
     <string name="str_user">Người dùng</string>
     <string name="setting">Cài đặt</string>
     <string name="rules">Điều khoản</string>
