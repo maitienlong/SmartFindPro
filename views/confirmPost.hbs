@@ -15,7 +15,7 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/"/>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png"
-          href="http://128.199.99.9:9090/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
+          href="http://128.199.99.9/public/uploads/3fa2359d05f69391d42cea22e54ef1e2.png"/>
     <!-- Custom CSS -->
     <link href="public/interface/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
     <link rel="stylesheet"
@@ -502,7 +502,7 @@
                                                      id="image-{{this.id}}"
                                                      width="300px"
                                                      height="300px"
-                                                     src="http://128.199.99.9:9090/{{this.path}}"
+                                                     src="http://128.199.99.9/{{this.path}}"
                                                      alt="{{this.path}}">
                                             </td>
                                             <td style="width: 20%">
@@ -1066,8 +1066,8 @@
         let image = [];
         $('img[name=image-product]').each(function () {
             let src = this.src;
-            if (src.match("http://128.199.99.9:9090/")) {
-                src = src.split("http://128.199.99.9:9090/");
+            if (src.match("http://128.199.99.9/")) {
+                src = src.split("http://128.199.99.9/");
             } else {
                 console.log('update later!')
                 // try {
