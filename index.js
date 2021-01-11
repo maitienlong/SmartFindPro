@@ -1136,9 +1136,16 @@ app.post('/delete-product', async function (request, response) {
                 if (checkData(userId)) {
                     if (product.user._id == userId) {
                         let createAt = moment(Date.now()).format(formatDate);
-                        let deleteProduct = await Product.findByIdAndDelete(product._id);
-                        let deleteInforProduct = await InforProduct.findByIdAndDelete(product.product._id);
-                        let deleteAddress = await Address.findByIdAndDelete(product.address._id);
+                        let nAdmins = await Admin.find({}).lean();
+                        let deleteProduct = await Product.findByIdAndUpdate(product._id, {
+                            deleteAt: createAt
+                        });
+                        let deleteInforProduct = await InforProduct.findByIdAndUpdate(product.product._id, {
+                            deleteAt: createAt
+                        });
+                        let deleteAddress = await Address.findByIdAndUpdate(product.address._id, {
+                            deleteAt: createAt
+                        });
 
                         if (deleteProduct && deleteInforProduct && deleteAddress) {
                             let confirm = await ConfirmPost({
@@ -1917,7 +1924,7 @@ app.get('/index', async function (request, response) {
                 pass: ''
             });
         } else {
-            console.log("JSON.stringify(admins.length): "+ admins.length);
+            console.log("JSON.stringify(admins.length): " + admins.length);
             if (adminID == '') {
                 adminID = admins[0]._id;
             }
