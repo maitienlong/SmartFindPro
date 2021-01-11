@@ -75,6 +75,7 @@
                                 android:paddingVertical="@dimen/_5sdp">
 
                                 <Button
+                                    android:onClick="@{()-> presenter.onClickChangeCover()}"
                                     android:layout_width="@dimen/_20sdp"
                                     android:layout_height="@dimen/_20sdp"
                                     android:layout_gravity="center"
@@ -109,6 +110,7 @@
                         android:id="@+id/rl_avatar"
                         android:layout_width="@dimen/_90sdp"
                         android:layout_height="@dimen/_80sdp"
+                        android:onClick="@{()-> presenter.onClickChangeAvatar()}"
                         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">

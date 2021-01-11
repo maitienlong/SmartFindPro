@@ -33,6 +33,8 @@ import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
+import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateAvatar;
+import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateCover;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 
 import okhttp3.MultipartBody;
@@ -120,4 +122,9 @@ public interface ListServices {
     @POST("/find-history")
     Call<NotificationResponse> getNotification(@Body NotificationRequest request);
 
+    @POST("/update-user")
+    Call<DeleteProductResponse> updateAvatar(@Body RequestUpdateAvatar request);
+
+    @POST("/update-user")
+    Call<DeleteProductResponse> updateCover(@Body RequestUpdateCover request);
 }

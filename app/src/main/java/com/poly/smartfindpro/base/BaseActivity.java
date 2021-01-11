@@ -325,6 +325,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseScre
         }
     }
 
+    public int stackCount(){
+        return mFragStack.size();
+    }
+
     public boolean onBackFragment(BaseFragment mBaseFragment) {
         if (mFrgManager == null)
             return false;

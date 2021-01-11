@@ -32,111 +32,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_20sdp">
-
-                <TextView
-                    android:id="@+id/tvCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:text="@string/user_permission_camera"
-                    android:textSize="@dimen/_15sdp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton1"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:background="@drawable/custom_toggle_selector"
-                    android:checked="false"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
-
-            </RelativeLayout>
-
-            <View
-                style="@style/ViewSettingLine"
-                android:layout_marginHorizontal="@dimen/_20sdp" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_20sdp">
-
-                <TextView
-                    android:id="@+id/tvMic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:text="@string/user_permission_mic"
-                    android:textSize="@dimen/_15sdp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton2"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:background="@drawable/custom_toggle_selector"
-                    android:checked="false"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
-            </RelativeLayout>
-
-            <View
-                style="@style/ViewSettingLine"
-                android:layout_marginHorizontal="@dimen/_20sdp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_20sdp">
-
-                <TextView
-                    android:id="@+id/tvInternet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:text="@string/user_permission_internet"
-                    android:textSize="@dimen/_15sdp" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButton3"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:background="@drawable/custom_toggle_selector"
-                    android:checked="false"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
-            </RelativeLayout>
-
-            <View
-                style="@style/ViewSettingLine"
-                android:layout_marginHorizontal="@dimen/_20sdp" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btn_login_facebook"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_16sdp" />
-
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_8sdp" />
 
         </LinearLayout>
     </RelativeLayout>

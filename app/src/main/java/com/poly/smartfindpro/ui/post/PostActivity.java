@@ -124,7 +124,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     public void statusProress(String isStatus) {
         switch (isStatus) {
             case "1":
-                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 10);
+                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 2);
                 anim.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim);
                 mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
@@ -135,7 +135,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case "2":
-                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 10, 50);
+                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 2, 35);
                 anim2.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim2);
                 mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
@@ -145,7 +145,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case "3":
-                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 50, 75);
+                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 35, 65);
                 anim3.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim3);
                 mBinding.pbTientrinh.setProgress(75);

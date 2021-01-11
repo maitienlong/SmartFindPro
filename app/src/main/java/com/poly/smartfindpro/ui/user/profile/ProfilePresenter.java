@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.user.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -21,12 +22,19 @@ import com.poly.smartfindpro.data.model.product.totalPeopleLease.TotalPeopleLeas
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
+import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateAvatar;
+import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateCover;
+import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -296,5 +304,107 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
     }
 
+    public void onClickChangeAvatar() {
+        mViewModel.onClickChangeAvatar();
+    }
 
+    public void onClickChangeCover() {
+        mViewModel.onClickChangeCover();
+    }
+
+    public void initPhoto(int id, String realParh) {
+        mViewModel.showLoading();
+        List<String> mListPhoto = new ArrayList<>();
+        mListPhoto.add(realParh);
+
+        MultipartBody.Part[] surveyImagesParts;
+
+        surveyImagesParts = new MultipartBody.Part[mListPhoto.size()];
+
+        for (int i = 0; i < mListPhoto.size(); i++) {
+
+            File file = new File(mListPhoto.get(i));
+
+            RequestBody resBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+            surveyImagesParts[i] = MultipartBody.Part.createFormData("photo", file.getAbsolutePath(), resBody);
+        }
+
+        MyRetrofitSmartFind.getInstanceSmartFind().postImageMulti(surveyImagesParts).enqueue(new Callback<ResponsePostPhoto>() {
+            @Override
+            public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
+                if (response.code() == 200) {
+                    mViewModel.hideLoading();
+                    if (id == 0) {
+                        onChangeAvatar(response.body().getResponseBody().getAddressImage().get(0));
+                    } else if (id == 1) {
+                        onChangeCover(response.body().getResponseBody().getAddressImage().get(0));
+                    }
+
+                } else {
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponsePostPhoto> call, Throwable t) {
+                mViewModel.hideLoading();
+                Log.d("CheckUpLoadImage", t.toString());
+                mViewModel.showMessage(context.getString(R.string.services_not_avail) + " - msg: Đăng ảnh không thành công");
+            }
+        });
+    }
+
+    private void onChangeAvatar(String urlImage) {
+        RequestUpdateAvatar requestUpdateAvatar = new RequestUpdateAvatar(Config.TOKEN_USER, urlImage);
+        MyRetrofitSmartFind.getInstanceSmartFind().updateAvatar(requestUpdateAvatar).enqueue(new Callback<DeleteProductResponse>() {
+            @Override
+            public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
+                if (response.code() == 200) {
+                    mViewModel.hideLoading();
+                    if (response.body().getResponseHeader().getResCode() == 200 && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        getInfor();
+                        getProductApproved();
+                        Toast.makeText(context, "Ảnh đại diện đã được thay đổi", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mViewModel.showMessage("Hiện tại không thể thay đổi ảnh đại diện");
+                    }
+                } else {
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void onChangeCover(String urlImage) {
+        RequestUpdateCover requestUpdateAvatar = new RequestUpdateCover(Config.TOKEN_USER, urlImage);
+        MyRetrofitSmartFind.getInstanceSmartFind().updateCover(requestUpdateAvatar).enqueue(new Callback<DeleteProductResponse>() {
+            @Override
+            public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
+                if (response.code() == 200) {
+                    mViewModel.hideLoading();
+                    if (response.body().getResponseHeader().getResCode() == 200 && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        getInfor();
+                        Toast.makeText(context, "Ảnh bìa đã được thay đổi", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mViewModel.showMessage("Hiện tại không thể thay đổi ảnh bìa");
+                    }
+                } else {
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
+
+            }
+        });
+    }
 }

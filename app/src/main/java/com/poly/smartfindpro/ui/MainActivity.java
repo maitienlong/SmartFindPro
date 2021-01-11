@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui;
 
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -85,21 +86,28 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
+        Log.d("CheckStack", stackCount()+"");
+        if(stackCount() > 3){
+            onBackFragment();
+        }else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Nhấn một lần nữa để thoát ứng dụng", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         }
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Nhấn một lần nữa để thoát ứng dụng", Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
     }
 
     @Override

@@ -27,7 +27,9 @@ public interface ProfileContact {
 
         void setAmountPeople(String amount);
 
+        void onClickChangeAvatar();
 
+        void onClickChangeCover();
     }
 
     interface Presenter extends BasePresenter {

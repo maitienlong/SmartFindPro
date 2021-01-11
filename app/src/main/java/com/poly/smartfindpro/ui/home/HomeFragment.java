@@ -52,6 +52,9 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
         mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/59df69e4e8bddc38a5af5f7337a481db.png");
         mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/0cfdaa31a2c408d038b2cea7c8ca86a6.png");
         mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/3242b6ad6e1e4966c9db0158161b2429.png");
+        mListImage.add("https://cf.shopee.vn/file/049bb54d60a160bdfc5803bde9449651");
+        mListImage.add("https://cf.shopee.vn/file/5fbfe216c22d42c11ada30c90d734c2b");
+        mListImage.add("https://cf.shopee.vn/file/b11156b9ac3994c99dcd87d69d601ce1");
 
         PicassoImageLoadingService picassoImageLoadingService = new PicassoImageLoadingService(mActivity);
         Slider.init(picassoImageLoadingService);
