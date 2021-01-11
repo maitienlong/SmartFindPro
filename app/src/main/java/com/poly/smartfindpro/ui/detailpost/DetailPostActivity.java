@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -157,7 +156,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         //  String urlShare = "https://smartfindpro.page.link/?link=http://www.smartfind.me/applinks/?id=" + mProduct.getId() + "&apn=com.poly.smartfindpro";
         String urlShare = "http://www.smartfind.me/applinks/?id=" + mProduct.getId();
 
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo_app);
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.banner_share);
 
         SharePhoto photo = new SharePhoto.Builder()
                 .setBitmap(bitmap)
