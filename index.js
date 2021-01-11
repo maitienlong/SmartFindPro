@@ -2053,16 +2053,6 @@ app.get('/index', async function (request, response) {
                 let dataDownload = 0;
                 dataAdmin = dataAdmin.length;
                 let createAt = moment(Date.now()).format(formatDate);
-                if (admins.length > 0) {
-                    let confirm = await ConfirmPost({
-                        product: null,
-                        admin: admins[0]._id,
-                        user: null,
-                        status: 'LOGIN-WEB-SERVER',
-                        createAt: createAt
-                    });
-                    let confirPrd = await confirm.save();
-                }
                 response.render('index', {
                     status: 'none',
                     user: nameDN,
