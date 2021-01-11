@@ -2512,7 +2512,7 @@ app.get('/userManage', async function (request, response) {
                 status: '0'
             }).lean();
             userLV2[i] = {
-                product: userLV3[i],
+                product: userLV2[i],
                 post: prdPost.length,
                 leased: newPrdLeased.length,
                 blocked: prdBlocked.length,
@@ -2774,7 +2774,6 @@ app.post('/confirm-upgrade', async function (request, response) {
                     if (user.length > 0 && identityCard.length > 0) {
                         user = user[0];
                         identityCard = identityCard[0];
-                        console.log(JSON.stringify(user))
                         if (user.level == 1 || user.level == 2) {
                             let number = 0;
                             if (user.level == 1) {
