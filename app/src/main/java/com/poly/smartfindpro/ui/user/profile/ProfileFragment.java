@@ -4,32 +4,27 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.data.model.product.res.Products;
-import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 import com.poly.smartfindpro.ui.login.otp.ConfirmOTPFragment;
 import com.poly.smartfindpro.ui.post.PostActivity;
-import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.RealPathUtil;
 import com.poly.smartfindpro.ui.user.adapter.ProfileAdapter;
@@ -38,14 +33,15 @@ import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.util.List;
 
+import static com.poly.smartfindpro.ui.post.inforPost.InforPostFragment.IMAGE_PICK_CODE;
+import static com.poly.smartfindpro.ui.post.inforPost.InforPostFragment.MY_PERMISSIONS_REQUEST;
+
 public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding, ProfilePresenter> implements ProfileContact.ViewModel {
 
     ProfileAdapter profileAdapter;
 
-    private static final int IMAGE_PICK_CODE = 1000;
-
-    private static final int MY_PERMISSIONS_REQUEST = 1001;
-
+    private int IMAGE_PICK_CODE_AVATAR = 123;
+    private int IMAGE_PICK_CODE_COVER = 124;
 
     @Override
     protected int getLayoutId() {
@@ -58,6 +54,13 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
 //        mBinding.btnApproved.setBackgroundColor(R.drawable.btn_category_pressed);
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onClickApproved() {
+//        mPresenter.onClickApproved();
         mBinding.btnPending.setBackground(getResources().getDrawable(R.drawable.btn_category));
         mBinding.btnPending.setTextColor(getResources().getColor(R.color.blue));
         mBinding.btnApproved.setBackground(getResources().getDrawable(R.drawable.btn_category_pressed));
@@ -108,7 +112,7 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         if (type == 0) {
             mPresenter.getDeleteProduct(idPost);
 
-        }else {
+        } else {
             Intent intent = new Intent(mActivity, PostActivity.class);
             intent.putExtra(Config.POST_BUNDlE_RES_ID, new Gson().toJson(jsonData));
             mActivity.startActivity(intent);
@@ -120,14 +124,18 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     }
 
-
-    private void showImageGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_CODE);
+    @Override
+    public void onGetTotalPeople(String idPost, String amount) {
+        mPresenter.getTotalPeopleLease(idPost, amount);
     }
 
-    public void onShowPhoto() {
+    @Override
+    public void setAmountPeople(String amount) {
+
+    }
+
+    @Override
+    public void onClickChangeAvatar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -141,60 +149,43 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     }
 
     @Override
+    public void onClickChangeCover() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (mActivity.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
+            } else {
+                showImageCover();
+            }
+        } else {
+            showImageCover();
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == IMAGE_PICK_CODE_AVATAR && resultCode == Activity.RESULT_OK && data != null) {
             if (data.getClipData() != null) {
-                int totalItem = data.getClipData().getItemCount();
-                for (int i = 0; i < totalItem; i++) {
-                    // URI
-                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
-
-                    // File name
-                    String imageName = getFileName(imageUri);
-
-                    //  Lay duong dan thuc te
-                    String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
-
-                    //  mPresenter.onDemoUri(realPath);
-                    // them du lieu vao object Image
-                    try {
-                        ImageInforPost item = new ImageInforPost(imageName, realPath, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
-
-
-                    } catch (Exception e) {
-
-                    }
-
-                    // show image
-//                    onShowImage(imageListPath);
-
-                }
+                showMessage("Bạn chỉ được lựa chọn 1 ảnh");
             } else if (data.getData() != null) {
 
                 Uri imageUri = data.getData();
-
-                // File name
-                String imageName = getFileName(imageUri);
-
                 //  Lay duong dan thuc te
                 String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
 
-                //  mPresenter.onDemoUri(realPath);
-                // them du lieu vao object Image
+                mPresenter.initPhoto(0, realPath);
+            }
+        } else if (requestCode == IMAGE_PICK_CODE_COVER && resultCode == Activity.RESULT_OK && data != null) {
+            if (data.getClipData() != null) {
+                showMessage("Bạn chỉ được lựa chọn 1 ảnh");
+            } else if (data.getData() != null) {
 
-                try {
-                    ImageInforPost item = new ImageInforPost(imageName, realPath, MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), imageUri));
+                Uri imageUri = data.getData();
+                //  Lay duong dan thuc te
+                String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
 
-//                    imageListPath.add(item);
-
-                } catch (Exception e) {
-                    Log.d("CheckLoge", e.toString());
-                }
-
-//                // show image
-//                onShowImage(imageListPath);
-
+                mPresenter.initPhoto(1, realPath);
             }
         } else {
             showMessage("Bạn chưa chọn ảnh nào");
@@ -202,8 +193,21 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     }
 
+    private void showImageGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_CODE_AVATAR);
+    }
+
+    private void showImageCover() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_CODE_COVER);
+    }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -213,27 +217,6 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
                 }
         }
     }
-    public String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = mActivity.getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-            if (result == null) {
-                result = uri.getPath();
-                int cut = result.lastIndexOf('/');
-                if (cut != -1) {
-                    result = result.substring(cut + 1);
-                }
-            }
-        }
-        return result;
 
-    }
 
 }

@@ -62,7 +62,7 @@
                     android:layout_weight="1"
                     android:onClick="@{()-> presenter.onSelectMessager()}"
                     android:padding="@dimen/_5sdp"
-                    android:src="@drawable/ic_outline_message"
+                    android:src="@drawable/ic_notifications"
                     app:tint="@color/white" />
 
                 <ImageView
@@ -86,7 +86,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:maxImageSize="@dimen/_40sdp"
-                app:srcCompat="@mipmap/search_real" />
+                app:srcCompat="@mipmap/btn_search_new" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>

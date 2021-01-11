@@ -5,14 +5,19 @@ import com.poly.smartfindpro.basedatabind.BaseView;
 
 public interface IntroContract {
     interface ViewModel extends BaseView {
-        void onNextSceen();
 
         void onShowDialogMsg(String msg);
 
+        void onAccountNotAvail(String msg);
+
         void onNextLogin();
+
+        void onNextHome();
+
+        void onNextDetail(String data);
     }
 
     interface Presenter extends BasePresenter {
-        void getUpdateUser();
+        void getUpdateUser(String username, String password, boolean isLogin);
     }
 }

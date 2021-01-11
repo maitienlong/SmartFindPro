@@ -3,6 +3,8 @@ package com.poly.smartfindpro.ui.user.setting;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.ui.user.userFragment.UserContact;
 
 public class SettingPresenter implements SettingContact.Presenter {
@@ -32,13 +34,22 @@ public class SettingPresenter implements SettingContact.Presenter {
     @Override
     public void onClickInformation() {
 
-        mViewModel.onClickInformation();
 
+        if (Config.isClick()) {
+            mViewModel.onClickInformation();
+        } else {
+            mViewModel.showMessage(context.getString(R.string.pl_login));
+        }
     }
 
     @Override
     public void onClickChangePassword() {
-        mViewModel.onClickChangePassword();
+        if (Config.isClick()) {
+            mViewModel.onClickChangePassword();
+        } else {
+            mViewModel.showMessage(context.getString(R.string.pl_login));
+        }
+
     }
 
     @Override
@@ -48,6 +59,10 @@ public class SettingPresenter implements SettingContact.Presenter {
 
     @Override
     public void onClickConfirmAccount() {
-        mViewModel.onClickConfirmAccount();
+        if (Config.isClick()) {
+            mViewModel.onClickConfirmAccount();
+        } else {
+            mViewModel.showMessage(context.getString(R.string.pl_login));
+        }
     }
 }

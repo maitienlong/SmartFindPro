@@ -16,10 +16,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#80ffffff"
         android:clickable="true"
         android:focusable="true"
-        android:background="#80ffffff"
         android:orientation="vertical">
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -36,17 +37,18 @@
                     android:id="@+id/edt_Account_Number_Register"
                     style="@style/EditText"
                     android:gravity="center"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    app:addTextChangedListener="@{presenter.changeColorButton()}" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_Action"
             android:layout_width="match_parent"
-            android:onClick="@{()->presenter.onClickRegister()}"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@color/background_button_login"
+            android:onClick="@{()->presenter.onClickRegister()}"
             android:text="Tiếp tục"
             android:textColor="#fff" />
 

@@ -44,6 +44,11 @@ public class TutorialFragment extends BaseDataBindFragment<FragmentTutorialIdent
     }
 
     @Override
+    public void onBackClick() {
+        mActivity.finish();
+    }
+
+    @Override
     public void onClickConfirm() {
         getBaseActivity().goToFragment(R.id.fl_identification, new StepFragment(), null);
     }

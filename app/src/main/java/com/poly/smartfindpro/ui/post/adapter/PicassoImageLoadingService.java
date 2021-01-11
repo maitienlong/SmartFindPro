@@ -27,5 +27,6 @@ public class PicassoImageLoadingService implements ImageLoadingService {
     @Override
     public void loadImage(String url, int placeHolder, int errorDrawable, ImageView imageView) {
         Glide.with(context).load(url).placeholder(placeHolder).error(errorDrawable).into(imageView);
+
     }
 }

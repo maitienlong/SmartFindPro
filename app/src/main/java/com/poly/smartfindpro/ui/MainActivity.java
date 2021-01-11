@@ -1,17 +1,14 @@
 package com.poly.smartfindpro.ui;
 
 
-import android.content.res.ColorStateList;
-import android.graphics.ColorFilter;
-import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.viewpager.widget.ViewPager;
+import androidx.activity.OnBackPressedCallback;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
@@ -19,7 +16,7 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityMainBinding;
 import com.poly.smartfindpro.ui.checklevel.CheckLevelAccount;
 import com.poly.smartfindpro.ui.home.HomeFragment;
-import com.poly.smartfindpro.ui.message.ListUserChatFragment;
+import com.poly.smartfindpro.ui.notification.NotificationFragment;
 import com.poly.smartfindpro.ui.searchProduct.SearchProductActivity;
 import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
 
@@ -27,12 +24,11 @@ import com.poly.smartfindpro.ui.user.userFragment.UserFragment;
 public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         MainPresenter> implements MainContract.ViewModel {
 
-    private ColorFilter oldColors;
-
     private int position = 0;
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_main;
     }
 
@@ -43,6 +39,17 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         mBinding.setPresenter(mPresenter);
 
         setFragmentDef();
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+
+//
+
+//        AppEventsLogger.activateApp(this);
 
 
     }
@@ -58,22 +65,50 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
         switch (positon) {
             case 0:
                 mBinding.btnHome.setImageResource(R.drawable.ic__home_page_full);
-                mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_notifications);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_outline);
                 break;
             case 1:
                 mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
-                mBinding.btnMessage.setImageResource(R.drawable.ic_message_full);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_baseline_notifications_24);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_outline);
                 break;
             case 2:
                 mBinding.btnHome.setImageResource(R.drawable.ic_outline_home);
-                mBinding.btnMessage.setImageResource(R.drawable.ic_outline_message);
+                mBinding.btnMessage.setImageResource(R.drawable.ic_notifications);
                 mBinding.btnUser.setImageResource(R.drawable.ic_person_full);
+                goToFragmentReplaceLeft(R.id.fl_native, new UserFragment(), null);
                 break;
         }
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CheckStack", stackCount()+"");
+        if(stackCount() > 3){
+            onBackFragment();
+        }else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Nhấn một lần nữa để thoát ứng dụng", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
+
+
+
+    }
 
     @Override
     public void onSelectHome() {
@@ -89,9 +124,9 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
     public void onSelectMessager() {
         if (Config.LEVEL_ACCOUNT > 0) {
             if (position < 2) {
-                goToFragmentReplaceLeft(R.id.fl_native, new ListUserChatFragment(), null);
+                goToFragmentReplaceLeft(R.id.fl_native, new NotificationFragment(), null);
             } else if (position > 2) {
-                goToFragmentReplaceRight(R.id.fl_native, new ListUserChatFragment()                      , null);
+                goToFragmentReplaceRight(R.id.fl_native, new NotificationFragment(), null);
 
             }
             position = 2;

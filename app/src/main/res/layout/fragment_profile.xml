@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/cmtb">
@@ -76,6 +75,7 @@
                                 android:paddingVertical="@dimen/_5sdp">
 
                                 <Button
+                                    android:onClick="@{()-> presenter.onClickChangeCover()}"
                                     android:layout_width="@dimen/_20sdp"
                                     android:layout_height="@dimen/_20sdp"
                                     android:layout_gravity="center"
@@ -88,9 +88,9 @@
                                     android:layout_height="@dimen/_20sdp"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:visibility="gone"
                                     android:text="Thêm ảnh bìa"
-                                    android:textSize="@dimen/_10sdp" />
+                                    android:textSize="@dimen/_10sdp"
+                                    android:visibility="gone" />
                             </LinearLayout>
 
                         </RelativeLayout>
@@ -110,6 +110,7 @@
                         android:id="@+id/rl_avatar"
                         android:layout_width="@dimen/_90sdp"
                         android:layout_height="@dimen/_80sdp"
+                        android:onClick="@{()-> presenter.onClickChangeAvatar()}"
                         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
@@ -196,10 +197,12 @@
                         android:background="@drawable/btn_category_pressed"
                         android:onClick="@{()->presenter.onClickApproved()}"
                         android:text="@string/btn_approved"
-                        android:textColor="@color/white">
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8sdp">
 
 
                     </Button>
+
 
                     <Button
                         android:id="@+id/btn_pending"
@@ -209,7 +212,8 @@
                         android:background="@drawable/btn_category"
                         android:onClick="@{()->presenter.onClickPending()}"
                         android:text="@string/btn_pending"
-                        android:textColor="@color/blue">
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/_8sdp">
 
                     </Button>
 
@@ -231,6 +235,6 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 </layout>

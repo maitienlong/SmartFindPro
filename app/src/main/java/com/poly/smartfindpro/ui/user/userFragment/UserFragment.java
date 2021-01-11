@@ -3,6 +3,8 @@ package com.poly.smartfindpro.ui.user.userFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.callback.AlertDialogListener;
@@ -24,13 +26,17 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     protected void initView() {
-        mPresenter = new UserPresenter(mActivity, this,mBinding);
+        mPresenter = new UserPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
     }
 
     @Override
     protected void initData() {
-
+        if (Config.isClick()) {
+            mPresenter.setTextLogOut("Đăng xuất");
+        }else {
+            mPresenter.setTextLogOut("Đăng nhập");
+        }
     }
 
     @Override
@@ -55,24 +61,33 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     public void onClickLogOut() {
-        showAlertDialog("Thông báo", "Bạn muốn đăng xuất", "Đăng xuất", "Hủy", true, new AlertDialogListener() {
-            @Override
-            public void onAccept() {
-                Config.TOKEN_USER = "";
-                onSaveLogin("","","",0,false);
-                mActivity.finish();
-                getBaseActivity().openActivity(LoginActivity.class);
-            }
+        if(Config.isClick()){
+            showAlertDialog("Thông báo", "Bạn muốn đăng xuất", "Đăng xuất", "Hủy", true, new AlertDialogListener() {
+                @Override
+                public void onAccept() {
+                    Config.TOKEN_USER = "";
+                    onSaveLogin("", "", "", 0, false);
+                    mActivity.finish();
+                    getBaseActivity().openActivity(LoginActivity.class);
+                }
 
-            @Override
-            public void onCancel() {
+                @Override
+                public void onCancel() {
 
-            }
-        });
+                }
+            });
+        }else {
+            Config.TOKEN_USER = "";
+            onSaveLogin("", "", "", 0, false);
+            mActivity.finish();
+            getBaseActivity().openActivity(LoginActivity.class);
+        }
+
+
 
     }
 
-    private boolean onSaveLogin(String username, String password, String token,int level, boolean isSave) {
+    private boolean onSaveLogin(String username, String password, String token, int level, boolean isSave) {
         SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

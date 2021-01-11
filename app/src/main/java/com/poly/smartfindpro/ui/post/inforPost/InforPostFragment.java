@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,10 +29,12 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.databinding.FragmentInforPostBinding;
 import com.poly.smartfindpro.ui.post.adapter.ImageInforPostAdapter;
+import com.poly.smartfindpro.ui.post.adapter.ShowImagePostAdapter;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.data.model.post.req.Information;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
+import com.poly.smartfindpro.utils.BindingUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -41,9 +44,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
         implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
-    private static final int IMAGE_PICK_CODE = 1000;
-
-    private static final int MY_PERMISSIONS_REQUEST = 1001;
+    public static final int IMAGE_PICK_CODE = 1000;
+    public static final int MY_PERMISSIONS_REQUEST = 1001;
     String category;
     String mAmountPeople = "";
     String mPrice = "";
@@ -55,6 +57,9 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     String idPost;
 
     private PostRequest postRequest;
+
+    private ShowImagePostAdapter showImagePostAdapter;
+
     private Information information;
 
     private List<ImageInforPost> imageListPath;
@@ -94,9 +99,13 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     protected void initData() {
 
         mPresenter = new InforPostPresenter(getContext(), this);
+
+        showImagePostAdapter = new ShowImagePostAdapter(mActivity);
+
         mBinding.setPresenter(mPresenter);
 
         mBinding.rvImages.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
         mBinding.rvImages.setHasFixedSize(true);
 
     }
@@ -301,8 +310,19 @@ public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBin
     }
 
     private void onShowImage(List<ImageInforPost> imageList) {
-        imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
-        mBinding.rvImages.setAdapter(imagePostAdapter);
+
+        showImagePostAdapter.setItemView(imageList);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL,false);
+
+        mBinding.rvImages.setLayoutManager(linearLayoutManager);
+
+        mBinding.rvImages.setAdapter(showImagePostAdapter);
+//
+//        BindingUtils.setAdapter(mBinding.rvImages, showImagePostAdapter, true);
+////        imagePostAdapter = new ImageInforPostAdapter(mActivity, imageList);
+////
+////        mBinding.rvImages.setAdapter(imagePostAdapter);
     }
 
     public void onNext(String jsonData, String jsonPhoto,String idPost) {

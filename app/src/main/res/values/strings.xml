@@ -75,6 +75,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="str_notification">Thông báo</string>
     <string name="str_user">Người dùng</string>
     <string name="setting">Cài đặt</string>
     <string name="rules">Điều khoản</string>
@@ -127,6 +128,8 @@
     <string name="tv_address_now">Địa chỉ thường trú</string>
     <string name="btn_confirm">Xác thực</string>
     <string name="tv_status">Không có bài viết nào</string>
+    <string name="tv_total_people">Nhập số người đã thuê</string>
+
     <!--User -->
     <!--HomeScreen-->
     <string name="home_postBtn">Đăng bài ngay ...</string>
@@ -178,5 +181,12 @@
     <string name="liveness_detection_face_incline_left">Vui lòng nghiêng đầu sang trái</string>
     <string name="liveness_detection_face_incline_right">Vui lòng nghiêng đầu sang phải</string>
     <string name="linveness_detection_close_eye">Vui lòng nhắm mắt</string>
+
+    <string name="pl_login">Vui lòng đăng nhập để có thể sử dụng chức năng này</string>
+
+    <string name="warning">Cảnh báo</string>
+    <string name="camera_open_setting">Để sử dụng máy ảnh, vui lòng vào Cài đặt của điện thoại và cấp quyền truy cập máy ảnh cho ứng dụng</string>
+    <string name="contact_open_setting_text">Mở cài đặt</string>
+    <string name="close">Đóng</string>
 
 </resources>

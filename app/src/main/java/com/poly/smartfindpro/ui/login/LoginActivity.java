@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
@@ -39,6 +40,7 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_login;
     }
 

@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             app:onBackClick="@{() -> presenter.onClose()}" />
+
         <LinearLayout
             android:id="@+id/ln_content"
             android:layout_width="match_parent"
@@ -47,10 +48,11 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/cv_info"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_8sdp"
-
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:backgroundTint="#dfe6e9"
                     android:paddingLeft="@dimen/_8sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
@@ -62,18 +64,18 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:text="@={presenter.name}"
                             android:id="@+id/tv_per_name"
                             style="@style/textStyleBold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@={presenter.name}" />
 
                         <TextView
-                            android:text="@={presenter.content}"
                             android:id="@+id/tv_content"
                             style="@style/textStyleRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="@={presenter.content}"
 
                             />
 
@@ -96,12 +98,12 @@
                         android:text="@={presenter.time}" />
 
                     <TextView
-                        android:onClick="@{() -> presenter.onFavorite()}"
                         android:id="@+id/btn_favorite"
                         style="@style/textStyleBold"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="@{() -> presenter.onFavorite()}"
                         android:text="Thích" />
 
                     <TextView
@@ -139,22 +141,23 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@+id/ln_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ln_content">
+
             <View
-                android:layout_weight="5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_weight="1"
                 android:id="@+id/rc_reply_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_10sdp" />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:paddingBottom="@dimen/_40sdp" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -164,9 +167,9 @@
             android:layout_marginLeft="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_10sdp"
             android:background="@color/white"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/_10sdp">
 
             <EditText
                 android:id="@+id/edt_comment"

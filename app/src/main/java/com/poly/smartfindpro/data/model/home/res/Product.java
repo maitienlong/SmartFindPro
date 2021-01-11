@@ -27,7 +27,20 @@ public class Product {
     private String status;
     @SerializedName("createAt")
     @Expose
+
     private String createAt;
+
+    public String getTotal_people_lease() {
+        return total_people_lease;
+    }
+
+    public void setTotal_people_lease(String total_people_lease) {
+        this.total_people_lease = total_people_lease;
+    }
+
+    @SerializedName("total_people_lease")
+    @Expose
+    private String total_people_lease;
     @SerializedName("updateAt")
     @Expose
     private String updateAt;

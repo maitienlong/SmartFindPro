@@ -50,6 +50,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_post;
     }
 
@@ -64,18 +65,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         mBinding.pbTientrinh.getIndeterminateDrawable().setTint(R.color.color_progress_loading);
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDlE_RES_ID, getIntent().getStringExtra(Config.POST_BUNDlE_RES_ID));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                requestPermissions(permissions, MY_PERMISSIONS_REQUEST);
-            } else {
-                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
-            }
-        } else {
-            goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
-        }
-
-
+        goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
         statusProress("1");
     }
 
@@ -134,7 +124,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     public void statusProress(String isStatus) {
         switch (isStatus) {
             case "1":
-                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 10);
+                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 2);
                 anim.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim);
                 mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
@@ -145,7 +135,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case "2":
-                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 10, 50);
+                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 2, 35);
                 anim2.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim2);
                 mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
@@ -155,7 +145,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case "3":
-                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 50, 75);
+                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 35, 65);
                 anim3.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim3);
                 mBinding.pbTientrinh.setProgress(75);
@@ -224,5 +214,21 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                     showMessage("Quyền truy cập đã được từ chối");
                 }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAlertDialog("Thông báo", "Bạn muốn hủy bài đăng", "Đồng ý", "Hủy", true, new AlertDialogListener() {
+            @Override
+            public void onAccept() {
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 }

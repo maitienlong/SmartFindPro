@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.user.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -9,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,7 +81,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, int position) {
-
+//        holder.np_total_people.setMaxValue(20);
+//        holder.np_total_people.setMinValue(0);
         Products item = productList.get(position);
         if (!item.getStatus().equals("1")) {
             holder.btn_status.setVisibility(View.GONE);
@@ -169,11 +173,27 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             holder.btn_status.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    holder.btn_status.setBackgroundResource(R.drawable.background_hori);
-//                    Drawable buttonBackground = holder.btn_status.getBackground();
-
-
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View alertLayout = inflater.inflate(R.layout.dialog_total_people_lease_product, null);
+                    final EditText edt_total_people_lease = (EditText) alertLayout.findViewById(R.id.edt_total_people_lease);
+                    final Button btn_confirm_total = (Button) alertLayout.findViewById(R.id.btn_confirm_total);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setView(alertLayout);
+                    alert.setCancelable(true);
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                    btn_confirm_total.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (edt_total_people_lease.getText().toString().isEmpty()) {
+                                mViewmodel.showMessage("Vui lòng nhập số người đã thuê");
+                                dialog.dismiss();
+                            } else {
+                                mViewmodel.onGetTotalPeople(item.getId(), edt_total_people_lease.getText().toString().trim());
+                                dialog.dismiss();
+                            }
+                        }
+                    });
                 }
             });
             holder.btn_menu.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +266,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private Button btn_menu, btn_status;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
         private ImageView img1, img2, img3, img_avatar;
-
+        private NumberPicker np_total_people;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             btn_menu = itemView.findViewById(R.id.btn_menu_profile_post);
@@ -260,6 +280,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             img3 = itemView.findViewById(R.id.img_product_post3);
             img_avatar = itemView.findViewById(R.id.img_avatar);
             btn_status = itemView.findViewById(R.id.btn_status);
+
         }
     }
 
