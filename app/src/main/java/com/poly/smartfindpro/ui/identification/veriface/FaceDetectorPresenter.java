@@ -172,7 +172,7 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
                     mViewModel.hideLoading();
 
-                    mViewModel.onSuccess("Chúc mừng, tài khoản của bạn đã được nâng cấp lên level 2. Để nâng cấp tài khoản lên level 3 vui lòng đến đại lý ủy quyền để nâng cấp");
+                    mViewModel.onSuccess("Bạn đã gửi thông tin định danh thành công. Hệ thống sẽ thông báo kết quả ở mục Thông báo");
 
                 } else {
                     mViewModel.hideLoading();

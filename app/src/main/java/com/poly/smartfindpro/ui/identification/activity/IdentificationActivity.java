@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.callback.AlertDialogListener;
+import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.ActivityIdentifycationBinding;
 import com.poly.smartfindpro.ui.identification.tutorial.TutorialFragment;
 
@@ -23,6 +24,7 @@ public class IdentificationActivity extends BaseDataBindActivity<ActivityIdentif
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_identifycation;
     }
 
