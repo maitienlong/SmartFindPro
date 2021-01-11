@@ -239,15 +239,6 @@ app.post('/login', async function (request, response) {
             if (userByPhone.length > 0) {
                 userByPhone = userByPhone[0];
                 if (userByPhone) {
-                    let createAt = moment(Date.now()).format(formatDate);
-                    let confirm = await ConfirmPost({
-                        product: id,
-                        admin: null,
-                        user: userByPhone,
-                        status: 'LOGIN-APP',
-                        createAt: createAt
-                    });
-                    let confirPrd = await confirm.save();
                     res_body = {type: 'PHONE_NUMBER', user: userByPhone}
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
