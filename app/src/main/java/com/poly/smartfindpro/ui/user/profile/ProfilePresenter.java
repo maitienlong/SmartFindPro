@@ -53,7 +53,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     private void initData() {
         nameInfor = new ObservableField<>();
         getInfor();
-//        getProduct();
         getProductApproved();
     }
 
@@ -76,6 +75,11 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     @Override
     public void onClickEditUser() {
         mViewModel.onClickEditUser();
+    }
+
+
+    public void onClickImage() {
+        mViewModel.onShowPhoto();
     }
 
     @Override

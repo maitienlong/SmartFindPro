@@ -11,9 +11,9 @@ public class UserRequest {
     @SerializedName("full_name")
     @Expose
     private String fullname;
-    @SerializedName("address")
+    @SerializedName("mAddress")
     @Expose
-    private Address address;
+    private Address mAddress;
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -45,12 +45,12 @@ public class UserRequest {
         this.fullname = fullname;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getmAddress() {
+        return mAddress;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setmAddress(Address mAddress) {
+        this.mAddress = mAddress;
     }
 
     public String getGender() {

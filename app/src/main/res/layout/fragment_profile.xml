@@ -116,6 +116,8 @@
 
                         <com.github.siyamed.shapeimageview.CircularImageView
                             android:id="@+id/img_avatar_profile"
+                            android:onClick="@{()->presenter.onClickImage()}"
+
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_80sdp"
                             android:background="@drawable/border_image_avata"

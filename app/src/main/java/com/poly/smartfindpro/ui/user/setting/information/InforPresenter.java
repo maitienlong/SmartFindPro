@@ -33,6 +33,7 @@ public class InforPresenter implements InforContact.Presenter {
 
     private ProfileResponse mProfile;
 
+
     public ObservableField<String> nameInfor;
     public ObservableField<String> phone;
     public ObservableField<String> gender;
@@ -91,7 +92,7 @@ public class InforPresenter implements InforContact.Presenter {
         request.setFullname(nameInfor.get());
         request.setBirth(birthday.get());
         request.setGender(gender.get());
-        request.setAddress(mProfile.getResponseBody().getUser().getAddress());
+//        request.setAddress(mProfile.getResponseBody().getUser().getAddress());
 
         MyRetrofitSmartFind.getInstanceSmartFind().getUpdateUser(request).enqueue(new Callback<DeleteProductResponse>() {
             @Override
@@ -101,11 +102,11 @@ public class InforPresenter implements InforContact.Presenter {
 
                     Log.d("check", new Gson().toJson(response.body()));
 
-                    Toast.makeText(context, "Successfully upgraded account level 1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("check", new Gson().toJson(response.body()));
 
-                    Toast.makeText(context, "Cập nhật thông tin thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -140,7 +141,9 @@ public class InforPresenter implements InforContact.Presenter {
         });
     }
 
+
     private void showData(ProfileResponse mProfile) {
+
         nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
         addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
         //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());

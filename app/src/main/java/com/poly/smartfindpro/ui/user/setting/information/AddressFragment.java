@@ -33,16 +33,11 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
     }
 
     private Address address;
-    private ProfileResponse mProfile;
 
-    private String mProvince, mDistrict, mComune, mDetail;
 
 
     @Override
     protected void initView() {
-
-        address = new Address();
-        mProfile = new ProfileResponse();
         mPresenter = new AddressPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
@@ -127,57 +122,19 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
 
     @Override
     public void onSubmitData(Address address, int status, List<Candidate> locationList) {
-//        if (status == 0) {
-//            address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
-//
-//            onNext(new Gson().toJson(address));
-//
-//        } else if (status == 1) {
-//            Bundle bundle = new Bundle();
-//
-//
-//            bundle.putString(Config.DATA_CALL_BACK, new Gson().toJson(locationList));
-//
-//
-//            bundle.putString(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
-//
-//            getBaseActivity().goToFragmentCallBackData(R.id.fl_post, new ChooseLoactionFragment(), bundle, getOnFragmentDataCallBack());
-//
-//        }
+
     }
 
     @Override
     public void onNext() {
 
-        Bundle bundle = new Bundle();
-        bundle.putString("Detail", mBinding.edtDetialAdress.getText().toString().trim());
-        bundle.putString("Commune", address.getCommuneWardTown());
-        bundle.putString("District", address.getDistrictsTowns());
-        bundle.putString("Province", address.getProvinceCity());
-        getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("Detail", mBinding.edtDetialAdress.getText().toString().trim());
+//        bundle.putString("Commune", address.getCommuneWardTown());
+//        bundle.putString("District", address.getDistrictsTowns());
+//        bundle.putString("Province", address.getProvinceCity());
+        getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
     }
 
-//    public void onNext(String jsonData) {
-//
-//        Intent intent = new Intent();
-//
-//        intent.putExtra(Config.DATA_CALL_BACK, "3");
-//
-//        intent.putExtra(Config.POST_BUNDEL_RES, jsonData);
-//
-//        intent.putExtra(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
-//
-//
-//        setResult(RESULT_OK, intent);
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Config.POST_BUNDEL_RES, jsonData);
-//        bundle.putString(Config.POST_BUNDEL_RES_PHOTO, getArguments().getString(Config.POST_BUNDEL_RES_PHOTO));
-//
-////        onBackData();
-//
-//        getBaseActivity().goToFragmentCallBackData(R.id.fl_post, new InforFragment(), bundle, getOnFragmentDataCallBack());
-//
-//    }
 }
 

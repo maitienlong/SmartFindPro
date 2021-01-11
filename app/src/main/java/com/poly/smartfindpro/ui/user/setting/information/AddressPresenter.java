@@ -46,9 +46,7 @@ public class AddressPresenter implements AddressContact.Presenter {
 
     private ProfileResponse mProfile;
 
-    private UserRequest userRequest;
-
-
+    private User user;
 
     public AddressPresenter(Context mContext, AddressContact.ViewModel mViewModel, FragmentAddressBinding mBinding) {
         this.mContext = mContext;
@@ -60,7 +58,7 @@ public class AddressPresenter implements AddressContact.Presenter {
     private void initData() {
         resultArea = new ResultArea();
         address = new Address();
-        getInfor();
+//        getInfor();
     }
 
     @Override
@@ -169,9 +167,10 @@ public class AddressPresenter implements AddressContact.Presenter {
         String input = address.getDetailAddress() + ", " + address.getCommuneWardTown() + ", " + address.getDistrictsTowns() + ", " + address.getProvinceCity();
         Log.d("CheckInput", input);
         Log.d("CheckAddress",new Gson().toJson(address));
+        getInfor();
 
     }
-
+//
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
         request.setId(Config.TOKEN_USER);
@@ -180,7 +179,8 @@ public class AddressPresenter implements AddressContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-
+                    user = mProfile.getResponseBody().getUser();
+                    user.setAddress(address);
                 } else {
 
                 }
@@ -203,7 +203,8 @@ public class AddressPresenter implements AddressContact.Presenter {
         MyRetrofitSmartFind.getInstanceSmartFind().getUpdateUser(request).enqueue(new Callback<DeleteProductResponse>() {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
-                Log.d("CheckUpdate" ,new Gson().toJson(request.getAddress().getCommuneWardTown()));
+                Log.d("CheckUpdate" ,new Gson().toJson(request));
+                Log.d("CheckUpdate" ,new Gson().toJson(response.body()));
             }
 
             @Override

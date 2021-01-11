@@ -25,6 +25,9 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
     private Address address;
     private ProfileResponse mProfile;
 
+
+    Intent intent;
+    String detail, commune, district, province;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_information_profile;
@@ -38,29 +41,31 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
 
         address = new Address();
         mProfile = new ProfileResponse();
+        intent = new Intent();
+
 
     }
 
     @Override
     protected void initData() {
-//        Intent intent = mActivity.getIntent();
-//        String detail;
+
 //        if (intent != null) {
-//            detail = intent.getStringExtra("Detail");
-//            String commune = intent.getStringExtra("Commune");
-//            String district = intent.getStringExtra("District");
-//            String province = intent.getStringExtra("Province");
-//
-//            address.setDetailAddress(detail);
-//            address.setCommuneWardTown(commune);
-//            address.setDistrictsTowns(district);
-//            address.setProvinceCity(province);
-//
-//            mPresenter.getInfor();
-//
-//
-//            mBinding.edtAddressProfile.setText(address.getDetailAddress() + ", " + address.getCommuneWardTown() + ", "
-//                    + address.getDistrictsTowns() + ", " + address.getProvinceCity());
+            detail = intent.getStringExtra("Detail");
+            commune = intent.getStringExtra("Commune");
+            district = intent.getStringExtra("District");
+            province = intent.getStringExtra("Province");
+
+            address.setDetailAddress(detail);
+            address.setCommuneWardTown(commune);
+            address.setDistrictsTowns(district);
+            address.setProvinceCity(province);
+
+            mPresenter.getInfor();
+
+
+            mBinding.edtAddressProfile.setText(address.getDetailAddress() + ", " + address.getCommuneWardTown() + ", "
+                    + address.getDistrictsTowns() + ", " + address.getProvinceCity());
+
 //        } else {
 //
 //        }
@@ -80,6 +85,7 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
 
     @Override
     public void onClickAddress() {
+
         getBaseActivity().goToFragment(R.id.fl_native, new AddressFragment(), null);
     }
 

@@ -22,12 +22,17 @@ public interface ProfileContact {
         void onCallback(int type, String idPost, String jsonData);
 
         void onUpdate(String jsonData);
+
+        void onShowPhoto();
+
     }
 
     interface Presenter extends BasePresenter {
         void onBackClick();
 
         void onClickEditUser();
+
+        void onClickImage();
 
         void onClickPending();
 
