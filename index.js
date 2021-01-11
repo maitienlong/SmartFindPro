@@ -1917,7 +1917,10 @@ app.get('/index', async function (request, response) {
                 pass: ''
             });
         } else {
-            adminID = admins[0]._id;
+            console.log("JSON.stringify(admins.length): "+ admins.length);
+            if (adminID == '') {
+                adminID = admins[0]._id;
+            }
             console.log('adminID: ' + adminID);
             let listAmoutPost = []
             listAmoutPost.length = 10;
@@ -2082,6 +2085,7 @@ app.get('/index', async function (request, response) {
             }
         }
     } catch (e) {
+        console.log(e);
         response.render('error');
     }
 });
