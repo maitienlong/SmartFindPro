@@ -1,18 +1,17 @@
+
 package com.poly.smartfindpro.data.model.notification.res;
-
-
+import com.poly.smartfindpro.data.model.base.ResponseHeader;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.poly.smartfindpro.data.model.base.ResponseHeader;
 
-public class NotificationResponse {
+public class NotifyResponse {
 
     @SerializedName("response_header")
     @Expose
     private ResponseHeader responseHeader;
     @SerializedName("response_body")
     @Expose
-    private NotificationBody responseBody;
+    private ResponseBody responseBody;
 
     public ResponseHeader getResponseHeader() {
         return responseHeader;
@@ -22,11 +21,11 @@ public class NotificationResponse {
         this.responseHeader = responseHeader;
     }
 
-    public NotificationBody getResponseBody() {
+    public ResponseBody getResponseBody() {
         return responseBody;
     }
 
-    public void setResponseBody(NotificationBody responseBody) {
+    public void setResponseBody(ResponseBody responseBody) {
         this.responseBody = responseBody;
     }
 

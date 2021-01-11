@@ -3,16 +3,17 @@ package com.poly.smartfindpro.data.model.notification.res;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.poly.smartfindpro.data.model.base.User;
+import com.poly.smartfindpro.data.model.product.res.Product;
+import com.poly.smartfindpro.data.model.product.res.Products;
 
-public class Notification {
+public class History {
 
     @SerializedName("_id")
     @Expose
     private String id;
     @SerializedName("product")
     @Expose
-    private Object product;
+    private Products product;
     @SerializedName("admin")
     @Expose
     private Object admin;
@@ -37,11 +38,11 @@ public class Notification {
         this.id = id;
     }
 
-    public Object getProduct() {
+    public Products getProduct() {
         return product;
     }
 
-    public void setProduct(Object product) {
+    public void setProduct(Products product) {
         this.product = product;
     }
 

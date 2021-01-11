@@ -88,16 +88,16 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
             }
         });
         //Check permission
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (!Settings.canDrawOverlays(SearchProductActivity.this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 1234);
-                Log.d("onClick: btnAddBubble", "1");
-                startService(new Intent(SearchProductActivity.this, ChatHeadService.class));
-                Log.d("onClick: btnAddBubble", "2");
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            if (!Settings.canDrawOverlays(SearchProductActivity.this)) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                        Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent, 1234);
+//                Log.d("onClick: btnAddBubble", "1");
+//                startService(new Intent(SearchProductActivity.this, ChatHeadService.class));
+//                Log.d("onClick: btnAddBubble", "2");
+//            }
+//        }
 
     }
 
