@@ -430,8 +430,9 @@ app.post('/update-user', async function (request, response) {
                 user = user[0];
                 if (user.status == true) {
                     console.log("USER_ADDRESS_ID: " + user.address._id);
+                    console.log(mAddress)
                     if (checkData(mAddress)) {
-                      let updateAddress  = await Address.findByIdAndUpdate(user.address._id, {
+                        let updateAddress = await Address.findByIdAndUpdate(user.address._id, {
                             provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
                             districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
                             communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
@@ -441,12 +442,12 @@ app.post('/update-user', async function (request, response) {
                                 longitude: checkData(mAddress.location.longitude) ? mAddress.location.longitude : user.address.location.longitude
                             }
                         });
-                      if (updateAddress){
-                          console.log("updateAddress:SUCCESS")
-                          console.log(updateAddress)
-                      }else {
-                          console.log("updateAddress:Fail")
-                      }
+                        if (updateAddress) {
+                            console.log("updateAddress:SUCCESS")
+                            console.log(updateAddress)
+                        } else {
+                            console.log("updateAddress:Fail")
+                        }
                     }
                     // update data vao bang chinh
                     let updateAt = moment(Date.now()).format(formatDate);
