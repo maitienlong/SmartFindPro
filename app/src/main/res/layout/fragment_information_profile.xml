@@ -139,6 +139,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:onClick="@{()-> presenter.onChangeInfor()}"
                     android:layout_width="@dimen/_200sdp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

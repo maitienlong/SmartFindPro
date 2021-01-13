@@ -23,6 +23,7 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
+import com.poly.smartfindpro.ui.login.forgotPassword.ForgotPasswordActivity;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;
 import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
 
@@ -80,7 +81,8 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
 
     @Override
     protected void initData() {
-
+        mPresenter = new LoginPresenter(this, this);
+        mBinding.setPresenter(mPresenter);
     }
 
     private void checkViewLogin() {
@@ -132,4 +134,8 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
     }
 
 
+    @Override
+    public void onForgotClick() {
+        openActivity(ForgotPasswordActivity.class);
+    }
 }

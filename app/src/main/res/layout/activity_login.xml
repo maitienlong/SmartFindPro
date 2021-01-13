@@ -17,10 +17,10 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="@drawable/background_app"
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/background_app"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +30,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,16 +87,16 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/tv_login"/>
+                            android:text="@string/tv_login" />
 
                         <TextView
                             android:id="@+id/btn_Change_Resign"
+                            style="@style/textStyleSemiBold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            style="@style/textStyleSemiBold"
                             android:gravity="center"
-                            android:text="@string/tv_registrer"/>
+                            android:text="@string/tv_registrer" />
 
                     </LinearLayout>
 
@@ -133,11 +132,12 @@
 
         <TextView
             android:id="@+id/btn_forgot_password"
-            android:layout_marginTop="@dimen/_16sdp"
             style="@style/textStyleForgotPass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:gravity="center"
+            android:onClick="@{()->presenter.onClickForgotPassword()}"
             android:text="Quên mật khẩu ?"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

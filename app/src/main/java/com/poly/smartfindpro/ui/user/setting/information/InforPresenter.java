@@ -85,4 +85,8 @@ public class InforPresenter implements InforContact.Presenter {
    //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
         phone.set(mProfile.getResponseBody().getUser().getPhoneNumber());
     }
+
+    public void onChangeInfor(){
+
+    }
 }

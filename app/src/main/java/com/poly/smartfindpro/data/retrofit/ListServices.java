@@ -11,6 +11,7 @@ import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentRe
 import com.poly.smartfindpro.data.model.comment.getcomment.req.CommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
 import com.poly.smartfindpro.data.model.favorite.ResponseFavoritePost;
+import com.poly.smartfindpro.data.model.forgotpasswrd.ForgotPasswordRequest;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
@@ -127,4 +128,10 @@ public interface ListServices {
 
     @POST("/update-user")
     Call<DeleteProductResponse> updateCover(@Body RequestUpdateCover request);
+
+    @POST("/update-user")
+    Call<DeleteProductResponse> updateInfor(@Body RequestUpdateCover request);
+
+    @POST("/update-user-password")
+    Call<DeleteProductResponse> forgotPassword(@Body ForgotPasswordRequest request);
 }
