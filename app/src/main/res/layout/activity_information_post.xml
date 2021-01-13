@@ -37,6 +37,7 @@
 
 
                     <LinearLayout
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
@@ -465,8 +466,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                               android:background="@drawable/custom_edt_change_pass"
-                                android:hint="Viết bình luận ..." />
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:hint="Viết bình luận ..."
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/grey_1" />
 
                             <ImageView
                                 android:id="@+id/btnSendComment"

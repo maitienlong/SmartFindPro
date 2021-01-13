@@ -11,6 +11,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/white</item>
+        <item name="android:windowBackground">@color/grey_five</item>
 
     </style>
 
@@ -400,6 +401,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/grey_1</item>
     </style>
 
 

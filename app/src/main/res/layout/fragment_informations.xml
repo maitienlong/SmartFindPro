@@ -40,7 +40,7 @@
         <EditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_circle_editext" />
 
@@ -54,7 +54,7 @@
         <EditText
             android:id="@+id/edtPhoneNumer"
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_circle_editext" />
 
@@ -68,7 +68,7 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_circle_editext" />
 
@@ -82,7 +82,7 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_circle_editext" />
 
@@ -97,7 +97,7 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_circle_editext" />
 

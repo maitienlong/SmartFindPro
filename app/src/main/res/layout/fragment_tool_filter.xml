@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -200,7 +201,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="20dp"
-                                            android:text="0" />
+                                            android:text="?" />
                                     </LinearLayout>
 
 
@@ -215,9 +216,10 @@
                                     <LinearLayout
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginLeft="@dimen/_10sdp"
+                                        android:layout_marginStart="@dimen/_10sdp"
                                         android:layout_weight="1.5"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        tools:ignore="UselessParent">
 
                                         <TextView
                                             android:id="@+id/tv_gioitinh"
@@ -240,8 +242,9 @@
                                                 android:id="@+id/rbMaleSearch"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginRight="@dimen/_16sdp"
-                                                android:text="@string/tv_male">
+                                                android:layout_marginEnd="@dimen/_16sdp"
+                                                android:text="@string/tv_male"
+                                                android:textColor="@color/black">
 
                                             </RadioButton>
 
@@ -249,8 +252,9 @@
                                                 android:id="@+id/rbFemaleSearch"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginRight="@dimen/_16sdp"
-                                                android:text="@string/tv_female">
+                                                android:layout_marginEnd="@dimen/_16sdp"
+                                                android:text="@string/tv_female"
+                                                android:textColor="@color/black">
 
                                             </RadioButton>
 
@@ -258,18 +262,14 @@
                                                 android:id="@+id/rbAllSearch"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginRight="@dimen/_16sdp"
-                                                android:text="@string/tv_all">
+                                                android:layout_marginEnd="@dimen/_16sdp"
+                                                android:text="@string/tv_all"
+                                                android:textColor="@color/black">
 
                                             </RadioButton>
                                         </RadioGroup>
                                     </LinearLayout>
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="20dp"></LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -290,7 +290,7 @@
                             android:layout_marginBottom="@dimen/_8sdp"
 
                             android:background="@drawable/background_button"
-                            android:text="Tìm kiếm"
+                            android:text="@string/search"
                             android:textColor="@color/white">
 
                         </Button>

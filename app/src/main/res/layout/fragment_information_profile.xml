@@ -53,6 +53,8 @@
                         android:id="@+id/edt_telephone_number_profile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_1"
                         android:background="@drawable/custom_edt_change_pass"
                         android:text="@={presenter.nameInfor}" />
 
@@ -77,6 +79,8 @@
                         android:id="@+id/edt_username_profile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_1"
                         android:background="@drawable/custom_edt_change_pass"
                         android:inputType="number"
                         android:text="@={presenter.phone}" />
@@ -95,12 +99,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/_40sdp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_address_profile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey_1"
                         android:background="@drawable/custom_edt_change_pass"
                         android:text="@={presenter.addressInfor}" />
 
