@@ -383,7 +383,7 @@ app.post('/update-user-password', async function (request, response) {
                         let confirm = await ConfirmPost({
                             product: null,
                             admin: null,
-                            user: userId,
+                            user: user._id,
                             status: name,
                             createAt: updateAt
                         });
