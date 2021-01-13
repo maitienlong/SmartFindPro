@@ -423,95 +423,106 @@ app.post('/update-user', async function (request, response) {
         let fullName = request.body.full_name;
         let phoneNumber = request.body.phone_number;
         if (checkData(userId)) {
-            let user = await User.find({_id: userId}).populate(['address']).lean();
-            console.log(JSON.stringify(user))
-            let res_body = {status: null};
-            if (user.length > 0) {
-                user = user[0];
-                if (user.status == true) {
-                    console.log("USER_ADDRESS_ID: " + user.address._id);
-                    console.log(mAddress)
-                    if (checkData(mAddress)) {
-                        let updateAddress = await Address.findByIdAndUpdate(user.address._id, {
-                            provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
-                            districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
-                            communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
-                            detailAddress: checkData(mAddress.detailAddress) ? mAddress.detailAddress : user.address.detailAddress,
-                            location: {
-                                latitude: checkData(mAddress.location.latitude) ? mAddress.location.latitude : user.address.location.latitude,
-                                longitude: checkData(mAddress.location.longitude) ? mAddress.location.longitude : user.address.location.longitude
+            if (
+                checkData(mAddress) ||
+                checkData(avatar) ||
+                checkData(converImage) ||
+                checkData(gender) ||
+                checkData(birth) ||
+                checkData(fullName) ||
+                checkData(phoneNumber)) {
+                let user = await User.find({_id: userId}).populate(['address']).lean();
+                console.log(JSON.stringify(user))
+                let res_body = {status: null};
+                if (user.length > 0) {
+                    user = user[0];
+                    if (user.status == true) {
+                        console.log("USER_ADDRESS_ID: " + user.address._id);
+                        console.log(mAddress)
+                        if (checkData(mAddress)) {
+                            let updateAddress = await Address.findByIdAndUpdate(user.address._id, {
+                                provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
+                                districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
+                                communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
+                                detailAddress: checkData(mAddress.detailAddress) ? mAddress.detailAddress : user.address.detailAddress,
+                                location: {
+                                    latitude:  user.address.location.latitude,
+                                    longitude: user.address.location.longitude
+                                }
+                            });
+                            if (updateAddress) {
+                                console.log("updateAddress:SUCCESS")
+                                console.log(updateAddress)
+                            } else {
+                                console.log("updateAddress:Fail")
                             }
-                        });
-                        if (updateAddress) {
-                            console.log("updateAddress:SUCCESS")
-                            console.log(updateAddress)
-                        } else {
-                            console.log("updateAddress:Fail")
                         }
-                    }
-                    // update data vao bang chinh
-                    let updateAt = moment(Date.now()).format(formatDate);
-                    let lvUp = 0;
-                    if (user.level === 0 &&
-                        checkData(user.address._id) &&
-                        checkData(user.birth) &&
-                        checkData(user.full_name) &&
-                        checkData(user.gender)) {
-                        lvUp = 1;
-                    } else {
-                        lvUp = user.level
-                    }
-                    let updateUser = await User.findByIdAndUpdate(userId, {
-                        level: lvUp,
-                        password: user.password,
-                        address: user.address._id,
-                        avatar: checkData(avatar) ? avatar : user.avatar,
-                        coverImage: checkData(converImage) ? converImage : user.converImage,
-                        gender: checkData(gender) ? gender : user.gender,
-                        birth: checkData(birth) ? birth : user.birth,
-                        full_name: checkData(fullName) ? fullName : user.full_name,
-                        phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
-                        deleteAt: user.deleteAt,
-                        updateAt: updateAt,
-                        createAt: user.createAt,
-                        status: user.status
-                    })
-                    if (updateUser) {
-                        if (lvUp == 1) {
-                            res_body = {status: 'Successfully upgraded account level 1'};
-
-                            let confirm = await ConfirmPost({
-                                product: null,
-                                admin: null,
-                                user: userId,
-                                status: name + "-LEVEL-1",
-                                createAt: updateAt
-                            });
-                            let confirPrd = await confirm.save();
-                            response.json(getResponse(name, 200, sttOK, res_body));
+                        // update data vao bang chinh
+                        let updateAt = moment(Date.now()).format(formatDate);
+                        let lvUp = 0;
+                        if (user.level === 0 &&
+                            checkData(user.address._id) &&
+                            checkData(user.birth) &&
+                            checkData(user.full_name) &&
+                            checkData(user.gender)) {
+                            lvUp = 1;
                         } else {
-                            res_body = {status: sttOK};
-                            let confirm = await ConfirmPost({
-                                product: null,
-                                admin: null,
-                                user: userId,
-                                status: name,
-                                createAt: updateAt
-                            });
-                            let confirPrd = await confirm.save();
-                            response.json(getResponse(name, 200, sttOK, res_body));
+                            lvUp = user.level
                         }
+                        let updateUser = await User.findByIdAndUpdate(userId, {
+                            level: lvUp,
+                            password: user.password,
+                            address: user.address._id,
+                            avatar: checkData(avatar) ? avatar : user.avatar,
+                            coverImage: checkData(converImage) ? converImage : user.converImage,
+                            gender: checkData(gender) ? gender : user.gender,
+                            birth: checkData(birth) ? birth : user.birth,
+                            full_name: checkData(fullName) ? fullName : user.full_name,
+                            phone_number: checkData(phoneNumber) ? phoneNumber : user.phone_number,
+                            deleteAt: user.deleteAt,
+                            updateAt: updateAt,
+                            createAt: user.createAt,
+                            status: user.status
+                        })
+                        if (updateUser) {
+                            if (lvUp == 1) {
+                                res_body = {status: 'Successfully upgraded account level 1'};
 
+                                let confirm = await ConfirmPost({
+                                    product: null,
+                                    admin: null,
+                                    user: userId,
+                                    status: name + "-LEVEL-1",
+                                    createAt: updateAt
+                                });
+                                let confirPrd = await confirm.save();
+                                response.json(getResponse(name, 200, sttOK, res_body));
+                            } else {
+                                res_body = {status: sttOK};
+                                let confirm = await ConfirmPost({
+                                    product: null,
+                                    admin: null,
+                                    user: userId,
+                                    status: name,
+                                    createAt: updateAt
+                                });
+                                let confirPrd = await confirm.save();
+                                response.json(getResponse(name, 200, sttOK, res_body));
+                            }
+
+                        } else {
+                            res_body = {status: "Fail"};
+                            response.json(getResponse(name, 200, 'Fail', res_body))
+                        }
                     } else {
-                        res_body = {status: "Fail"};
+                        res_body = {status: "The account has been locked"};
                         response.json(getResponse(name, 200, 'Fail', res_body))
                     }
                 } else {
-                    res_body = {status: "The account has been locked"};
-                    response.json(getResponse(name, 200, 'Fail', res_body))
+                    response.json(getResponse(name, 404, 'User not found', null))
                 }
             } else {
-                response.json(getResponse(name, 404, 'User not found', null))
+                response.json(getResponse(name, 400, 'Bad request', null))
             }
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
