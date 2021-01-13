@@ -1,11 +1,14 @@
 
 package com.poly.smartfindpro.data.model.notification.res;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.poly.smartfindpro.data.model.base.User;
+import com.poly.smartfindpro.data.model.product.res.Product;
+import com.poly.smartfindpro.data.model.product.res.Products;
 
-public class Notification {
+public class History {
 
     @SerializedName("_id")
     @Expose
@@ -41,7 +44,7 @@ public class Notification {
         return product;
     }
 
-    public void setProduct(Object product) {
+    public void setProduct(Products product) {
         this.product = product;
     }
 
