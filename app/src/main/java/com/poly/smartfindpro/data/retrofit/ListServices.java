@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.retrofit;
 import com.poly.smartfindpro.data.model.addressgoogle.AddressGoogleResponse;
 import com.poly.smartfindpro.data.model.area.req.AreaRequest;
 import com.poly.smartfindpro.data.model.area.res.AreaResponse;
+import com.poly.smartfindpro.data.model.comment.deleteComment.req.DeleteCommentRequest;
 import com.poly.smartfindpro.data.model.comment.initcomment.InitComment;
 import com.poly.smartfindpro.data.model.comment.initrecomment.req.CommentDetailRequest;
 import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentResponse;
@@ -32,6 +33,7 @@ import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
+import com.poly.smartfindpro.data.model.updateaddress.RequestUpdateAddress;
 import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateAvatar;
 import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateCover;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
@@ -91,6 +93,9 @@ public interface ListServices {
     @POST("/delete-product")
     Call<DeleteProductResponse> getDeleteProduct(@Body DeleteProductRequest request);
 
+    @POST("/delete-comment")
+    Call<DeleteProductResponse> getDeleteComment(@Body DeleteCommentRequest request);
+
     @POST("/product-comment")
     Call<CommentResponse> getComment(@Body CommentRequest request);
 
@@ -108,6 +113,9 @@ public interface ListServices {
 
     @POST("/update-user")
     Call<DeleteProductResponse> getUpdateUser(@Body UserRequest request);
+
+    @POST("/update-user")
+    Call<DeleteProductResponse> updateAddress(@Body RequestUpdateAddress request);
 
     @POST("/upgrade-user")
     Call<DeleteProductResponse> getUpgrade(@Body RequestIndentifi request);

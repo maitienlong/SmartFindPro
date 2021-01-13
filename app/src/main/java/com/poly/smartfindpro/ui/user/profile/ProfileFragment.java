@@ -163,6 +163,11 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     }
 
     @Override
+    public void onShowPhoto() {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_PICK_CODE_AVATAR && resultCode == Activity.RESULT_OK && data != null) {

@@ -16,6 +16,7 @@ import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.req.UserRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
+import com.poly.smartfindpro.data.model.updateaddress.AddressUpdate;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentInformationProfileBinding;
 
@@ -32,6 +33,8 @@ public class InforPresenter implements InforContact.Presenter {
     private FragmentInformationProfileBinding mBinding;
 
     private ProfileResponse mProfile;
+
+    private AddressUpdate address;
 
 
     public ObservableField<String> nameInfor;
@@ -55,7 +58,7 @@ public class InforPresenter implements InforContact.Presenter {
         addressInfor = new ObservableField<>();
         gender = new ObservableField<>();
         idCard = new ObservableField<>();
-
+        address = new AddressUpdate();
         getInfor();
     }
 
@@ -83,6 +86,7 @@ public class InforPresenter implements InforContact.Presenter {
     @Override
     public void onClickAddress() {
         mViewModel.onClickAddress();
+
     }
 
     public void updateUser() {
@@ -101,7 +105,9 @@ public class InforPresenter implements InforContact.Presenter {
                         response.body().getResponseHeader().getResMessage().equals("Success")) {
 
                     Log.d("check", new Gson().toJson(response.body()));
+                    Log.d("check2", new Gson().toJson(request));
 
+                    getInfor();
                     Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("check", new Gson().toJson(response.body()));
@@ -128,6 +134,11 @@ public class InforPresenter implements InforContact.Presenter {
                     mProfile = response.body();
 //                    Log.d("TAG",response.body().getResponseBody().getUser().getFullName());
                     showData(mProfile);
+//                    address.setId(mProfile.getResponseBody().getUser().getAddress().getId());
+//                    address.setDetailAddress(mProfile.getResponseBody().getUser().getAddress().getDetailAddress());
+//                    address.setCommuneWardTown(mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown());
+//                    address.setDistrictsTowns(mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns());
+//                    address.setProvinceCity(mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
 
                 } else {
 
@@ -143,10 +154,11 @@ public class InforPresenter implements InforContact.Presenter {
 
 
     private void showData(ProfileResponse mProfile) {
-
         nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
-        addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
+
+        addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
         //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
+
         gender.set(mProfile.getResponseBody().getUser().getGender());
         birthday.set(mProfile.getResponseBody().getUser().getBirth());
     }

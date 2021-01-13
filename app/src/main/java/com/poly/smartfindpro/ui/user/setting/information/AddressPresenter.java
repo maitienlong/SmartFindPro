@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.user.setting.information;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,10 +18,13 @@ import com.poly.smartfindpro.data.model.area.result.ResultArea;
 import com.poly.smartfindpro.data.model.base.Location;
 import com.poly.smartfindpro.data.model.base.User;
 import com.poly.smartfindpro.data.model.home.res.Address;
+import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.req.UserRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.model.updateaddress.AddressUpdate;
+import com.poly.smartfindpro.data.model.updateaddress.RequestUpdateAddress;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSearchAddressMap;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
@@ -40,13 +44,12 @@ public class AddressPresenter implements AddressContact.Presenter {
 
     private FragmentAddressBinding mBinding;
 
-    private com.poly.smartfindpro.data.model.home.res.Address address;
+    private Address mAddress;
 
     private ResultArea resultArea;
 
     private ProfileResponse mProfile;
 
-    private User user;
 
     public AddressPresenter(Context mContext, AddressContact.ViewModel mViewModel, FragmentAddressBinding mBinding) {
         this.mContext = mContext;
@@ -57,8 +60,8 @@ public class AddressPresenter implements AddressContact.Presenter {
 
     private void initData() {
         resultArea = new ResultArea();
-        address = new Address();
-//        getInfor();
+        mAddress = new Address();
+        getInfor();
     }
 
     @Override
@@ -119,17 +122,23 @@ public class AddressPresenter implements AddressContact.Presenter {
         });
     }
 
+    @Override
+    public void onNext() {
+        mViewModel.onNext();
+        updateAddress();
+    }
+
 
     public void setP(String p) {
-        address.setProvinceCity(p);
+        mAddress.setProvinceCity(p);
     }
 
     public void setD(String d) {
-        address.setDistrictsTowns(d);
+        mAddress.setDistrictsTowns(d);
     }
 
     public void setC(String c) {
-        address.setCommuneWardTown(c);
+        mAddress.setCommuneWardTown(c);
     }
 
     private AreaReqHeader areaReqHeader() {
@@ -155,22 +164,14 @@ public class AddressPresenter implements AddressContact.Presenter {
         return areaReqHeader;
     }
 
-    public void onNext() {
-        mViewModel.onNext();
-        onGetLocation();
-        updateUser();
+
+
+    @Override
+    public void onBackClick() {
+        mViewModel.onBackClick();
     }
 
 
-    private void onGetLocation() {
-        address.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
-        String input = address.getDetailAddress() + ", " + address.getCommuneWardTown() + ", " + address.getDistrictsTowns() + ", " + address.getProvinceCity();
-        Log.d("CheckInput", input);
-        Log.d("CheckAddress",new Gson().toJson(address));
-        getInfor();
-
-    }
-//
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
         request.setId(Config.TOKEN_USER);
@@ -179,8 +180,7 @@ public class AddressPresenter implements AddressContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-                    user = mProfile.getResponseBody().getUser();
-                    user.setAddress(address);
+
                 } else {
 
                 }
@@ -193,18 +193,31 @@ public class AddressPresenter implements AddressContact.Presenter {
         });
     }
 
-    public void updateUser() {
-        UserRequest request = new UserRequest();
-
+    public void updateAddress() {
+        RequestUpdateAddress request = new RequestUpdateAddress();
         request.setUserId(Config.TOKEN_USER);
+        AddressUpdate addressUpdate = new AddressUpdate();
+        addressUpdate.setId(mProfile.getResponseBody().getUser().getAddress().getId());
+        addressUpdate.setProvinceCity(mAddress.getProvinceCity());
+        addressUpdate.setDetailAddress(mBinding.edtDetialAdress.getText().toString());
+        addressUpdate.setCommuneWardTown(mAddress.getCommuneWardTown());
+        addressUpdate.setDistrictsTowns(mAddress.getDistrictsTowns());
+        request.setAddress(addressUpdate);
 
-        request.setAddress(address);
-
-        MyRetrofitSmartFind.getInstanceSmartFind().getUpdateUser(request).enqueue(new Callback<DeleteProductResponse>() {
+        MyRetrofitSmartFind.getInstanceSmartFind().updateAddress(request).enqueue(new Callback<DeleteProductResponse>() {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
-                Log.d("CheckUpdate" ,new Gson().toJson(request));
-                Log.d("CheckUpdate" ,new Gson().toJson(response.body()));
+                if (response.body().getResponseHeader().getResCode() == 200 &&
+                        response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                    Log.d("checkStatus", new Gson().toJson(response.body()));
+                    Log.d("checkUpdate", new Gson().toJson(request));
+                    initData();
+                    Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Log.d("checkStatus", new Gson().toJson(response.body()));
+                    Toast.makeText(mContext, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -213,8 +226,6 @@ public class AddressPresenter implements AddressContact.Presenter {
             }
         });
     }
-
-
 
 
 }

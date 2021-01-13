@@ -17,12 +17,16 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingRight="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical">
+
+            <com.poly.smartfindpro.widget.CommonToolbar
+                android:id="@+id/cmtb"
+                onBackClick="@{()->presenter.onBackClick()}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -3,6 +3,7 @@ package com.poly.smartfindpro.data.model.profile.req;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.poly.smartfindpro.data.model.home.res.Address;
+import com.poly.smartfindpro.data.model.updateaddress.RequestUpdateAddress;
 
 public class UserRequest {
     @SerializedName("userId")
@@ -11,9 +12,14 @@ public class UserRequest {
     @SerializedName("full_name")
     @Expose
     private String fullname;
-    @SerializedName("mAddress")
-    @Expose
-    private Address mAddress;
+//    @SerializedName("address")
+//    @Expose
+//    private Address address;
+
+//    @SerializedName("address")
+//    @Expose
+//    private RequestUpdateAddress address;
+
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -44,14 +50,23 @@ public class UserRequest {
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
+//
+//    public RequestUpdateAddress getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(RequestUpdateAddress address) {
+//        this.address = address;
+//    }
 
-    public Address getmAddress() {
-        return mAddress;
-    }
+    //    public Address getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(Address address) {
+//        this.address = address;
+//    }
 
-    public void setmAddress(Address mAddress) {
-        this.mAddress = mAddress;
-    }
 
     public String getGender() {
         return gender;

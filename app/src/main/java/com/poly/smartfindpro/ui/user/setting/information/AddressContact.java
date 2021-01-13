@@ -20,6 +20,7 @@ public interface AddressContact {
         void onSubmitData(Address address, int status, List<Candidate> locationList);
 
         void onNext();
+        void onBackClick();
 
 
     }
@@ -28,6 +29,7 @@ public interface AddressContact {
         void getDataApiArea(int areaType, String jsonData);
 
         void onNext();
+        void onBackClick();
 
 
     }

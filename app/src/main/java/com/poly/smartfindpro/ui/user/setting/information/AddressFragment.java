@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
@@ -27,19 +28,18 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding, AddressPresenter> implements AddressContact.ViewModel {
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_address;
     }
 
-    private Address address;
-
-
-
     @Override
     protected void initView() {
         mPresenter = new AddressPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
+        mBinding.cmtb.setTitle("Địa chỉ");
+
 
         BodyReq proviceReq = new BodyReq("P", "");
         mPresenter.getDataApiArea(0, new Gson().toJson(proviceReq));
@@ -52,7 +52,6 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
                 mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
 
                 mPresenter.setP(listArea.getAreaName());
-//                address.setProvinceCity(listArea.getAreaName());
 
             }
 
@@ -61,7 +60,6 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
 
             }
         });
-
 
         mBinding.spnDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,6 +83,7 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ListArea listArea = (ListArea) parent.getItemAtPosition(position);
                 mPresenter.setC(listArea.getAreaName());
+
             }
 
             @Override
@@ -97,6 +96,7 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
 
     @Override
     protected void initData() {
+
 
     }
 
@@ -127,13 +127,17 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
 
     @Override
     public void onNext() {
+        if (mBinding.edtDetialAdress.getText().toString().trim().length() == 0) {
+            Toast.makeText(mActivity, "Bạn hãy nhập địa chỉ chi tiết", Toast.LENGTH_SHORT).show();
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString("Detail", mBinding.edtDetialAdress.getText().toString().trim());
-//        bundle.putString("Commune", address.getCommuneWardTown());
-//        bundle.putString("District", address.getDistrictsTowns());
-//        bundle.putString("Province", address.getProvinceCity());
-        getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
+        } else {
+            getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
+        }
+    }
+
+    @Override
+    public void onBackClick() {
+        getBaseActivity().onBackFragment();
     }
 
 }
