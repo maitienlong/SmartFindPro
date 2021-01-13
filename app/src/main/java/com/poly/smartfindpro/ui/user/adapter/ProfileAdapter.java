@@ -267,6 +267,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
         private ImageView img1, img2, img3, img_avatar;
         private NumberPicker np_total_people;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             btn_menu = itemView.findViewById(R.id.btn_menu_profile_post);

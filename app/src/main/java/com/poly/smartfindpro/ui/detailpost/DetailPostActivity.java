@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +53,7 @@ import com.poly.smartfindpro.ui.detailpost.adapter.CommentPostAdapter;
 import com.poly.smartfindpro.ui.detailpost.adapter.DetailImageAdapter;
 import com.poly.smartfindpro.ui.user.profile.ProfileFragment;
 import com.poly.smartfindpro.utils.BindingUtils;
+
 
 import java.io.IOException;
 import java.lang.reflect.Type;

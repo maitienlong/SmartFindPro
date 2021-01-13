@@ -83,8 +83,15 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="@={presenter.timePostDetail}" />
-                                </LinearLayout>
 
+                                </LinearLayout>
+                                    <TextView
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@={presenter.total_people_lease}">
+                                    </TextView>
                             </LinearLayout>
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -98,7 +105,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-
                                 <TextView
                                     style="@style/textStyleRegular_10dp"
                                     android:layout_width="wrap_content"
@@ -110,6 +116,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@={presenter.amountDetail}" />
+                                <ImageView
+                                    android:src="@drawable/ic_baseline_emoji_people_24"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"/>
 
                             </LinearLayout>
 
@@ -204,6 +214,7 @@
 
                                     <TextView
                                         style="@style/textStyleRegular_10dp"
+                                        android:layout_gravity="center"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/text_infor_price_water" />
@@ -232,6 +243,7 @@
                                     <TextView
                                         style="@style/textStyleRegular_10dp"
                                         android:layout_width="wrap_content"
+                                        android:layout_gravity="center"
                                         android:layout_height="wrap_content"
                                         android:text="@string/tv_deposit"
                                         android:textColor="@color/black" />
@@ -276,6 +288,7 @@
                                         style="@style/textStyleBlack_14dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:textIsSelectable="true"
                                         android:layout_marginLeft="@dimen/_10sdp"
                                         android:text="@={presenter.addressDetail}" />
                                 </LinearLayout>
@@ -295,6 +308,7 @@
                                         android:id="@+id/tv_phoneNumber"
                                         style="@style/textStyleBlack_14dp"
                                         android:layout_width="wrap_content"
+                                        android:textIsSelectable="true"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/_10sdp"
                                         android:text="@={presenter.phoneNumberDetail}" />
