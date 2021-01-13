@@ -430,9 +430,8 @@ app.post('/update-user', async function (request, response) {
                 user = user[0];
                 if (user.status == true) {
                     console.log("USER_ADDRESS_ID: " + user.address._id);
-                    let address = '';
                     if (checkData(mAddress)) {
-                        address = await Address.findByIdAndUpdate(user.address._id, {
+                      let updateAddress  = await Address.findByIdAndUpdate(user.address._id, {
                             provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
                             districtsTowns: checkData(mAddress.districtsTowns) ? mAddress.districtsTowns : user.address.districtsTowns,
                             communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
@@ -442,6 +441,12 @@ app.post('/update-user', async function (request, response) {
                                 longitude: checkData(mAddress.location.longitude) ? mAddress.location.longitude : user.address.location.longitude
                             }
                         });
+                      if (updateAddress){
+                          console.log("updateAddress:SUCCESS")
+                          console.log(updateAddress)
+                      }else {
+                          console.log("updateAddress:Fail")
+                      }
                     }
                     // update data vao bang chinh
                     let updateAt = moment(Date.now()).format(formatDate);
@@ -458,7 +463,7 @@ app.post('/update-user', async function (request, response) {
                     let updateUser = await User.findByIdAndUpdate(userId, {
                         level: lvUp,
                         password: user.password,
-                        address: checkData(address) ? address._id : user.address._id,
+                        address: user.address._id,
                         avatar: checkData(avatar) ? avatar : user.avatar,
                         coverImage: checkData(converImage) ? converImage : user.converImage,
                         gender: checkData(gender) ? gender : user.gender,
