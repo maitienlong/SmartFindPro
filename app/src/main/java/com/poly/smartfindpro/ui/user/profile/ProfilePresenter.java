@@ -65,7 +65,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
         nameInfor = new ObservableField<>();
         heightStatus = new ObservableField<>(Config.HEIGHT_STATUS_BAR);
         getInfor();
-//        getProduct();
         getProductApproved();
     }
 
@@ -88,6 +87,11 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     @Override
     public void onClickEditUser() {
         mViewModel.onClickEditUser();
+    }
+
+
+    public void onClickImage() {
+        mViewModel.onShowPhoto();
     }
 
     @Override

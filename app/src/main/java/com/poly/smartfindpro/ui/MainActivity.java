@@ -203,5 +203,4 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
                 break;
         }
     }
-
 }

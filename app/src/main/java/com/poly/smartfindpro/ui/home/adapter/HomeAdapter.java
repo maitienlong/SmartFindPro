@@ -27,6 +27,7 @@ import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 import com.poly.smartfindpro.ui.home.HomeContract;
+import com.poly.smartfindpro.ui.message.ChatActivity;
 
 import java.io.IOException;
 import java.net.URL;
@@ -181,6 +182,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
                 }
             });
+
+            holder.btn_message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                    ListMessageFragment myFragment = new ListMessageFragment();
+//                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fl_native, myFragment).addToBackStack(null).commit();
+                    Intent intent = new Intent(mContext, ChatActivity.class);
+                    intent.putExtra(Config.POST_BUNDEL_RES, new Gson().toJson(item));
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -214,13 +227,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private Button btn_menu;
+        private Button btn_menu, btn_message;
         private TextView tv_username_post, tv_adress_profile, tv_price_product, tv_time_post, tv_title_post;
         private ImageView img1, img2, img3, img_avatar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             btn_menu = itemView.findViewById(R.id.btn_menu_profile_post);
+            btn_message = itemView.findViewById(R.id.btn_message);
             tv_username_post = itemView.findViewById(R.id.tv_username_post);
             tv_adress_profile = itemView.findViewById(R.id.tv_adress_profile);
             tv_price_product = itemView.findViewById(R.id.tv_price_product);

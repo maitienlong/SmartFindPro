@@ -30,12 +30,17 @@ public interface ProfileContact {
         void onClickChangeAvatar();
 
         void onClickChangeCover();
+
+        void onShowPhoto();
+
     }
 
     interface Presenter extends BasePresenter {
         void onBackClick();
 
         void onClickEditUser();
+
+        void onClickImage();
 
         void onClickPending();
 
