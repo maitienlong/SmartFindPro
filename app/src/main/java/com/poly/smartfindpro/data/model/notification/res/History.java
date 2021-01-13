@@ -1,6 +1,8 @@
 
 package com.poly.smartfindpro.data.model.notification.res;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.poly.smartfindpro.data.model.product.res.Product;
@@ -13,7 +15,7 @@ public class History {
     private String id;
     @SerializedName("product")
     @Expose
-    private Products product;
+    private Object product;
     @SerializedName("admin")
     @Expose
     private Object admin;
@@ -38,7 +40,7 @@ public class History {
         this.id = id;
     }
 
-    public Products getProduct() {
+    public Object getProduct() {
         return product;
     }
 

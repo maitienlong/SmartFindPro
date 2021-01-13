@@ -51,7 +51,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         History item = listItem.get(position);
         // ten
-        holder.tvContent.setText(item.getUser().getFullName() + " đã " + item.getStatus());
+        holder.tvContent.setText(item.getUser().getFullName() + " " + item.getStatus());
 
         // avatar
         Glide.

@@ -9,6 +9,7 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.notification.req.NotificationRequest;
 import com.poly.smartfindpro.data.model.notification.res.History;
 import com.poly.smartfindpro.data.model.notification.res.NotifyResponse;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentNotificationBinding;
 
@@ -47,6 +48,8 @@ public class NotificationPresenter implements NotificationContract.Presenter {
                     Log.d("onResponse: ", new Gson().toJson(resList));
                     List<History> notificationList = new ArrayList<>();
                     for (int i = 0; i < resList.size(); i++) {
+
+
                         switch (resList.get(i).getStatus()) {
                             case "LOGIN-APP":
                                 break;
@@ -83,19 +86,44 @@ public class NotificationPresenter implements NotificationContract.Presenter {
                                 notificationList.add(resList.get(i));
                                 break;
                             case "UPDATE-PRODUCT":
-                                resList.get(i).setStatus("Bạn đã cập nhật thông tin của bài đăng " + resList.get(i).getProduct().getContent());
+                                try {
+                                    Products products = (Products) resList.get(i).getProduct();
+                                    resList.get(i).setStatus("Bạn đã cập nhật thông tin của bài đăng " + products.getContent());
+                                } catch (Exception e) {
+                                    Log.d("getProduct", e.toString());
+                                }
+                                resList.get(i).setStatus("Bạn đã cập nhật thông tin của bài đăng ");
                                 notificationList.add(resList.get(i));
                                 break;
                             case "UPDATE-TOTAL-PEOPLE-LEASE":
-                                resList.get(i).setStatus("Bạn đã cập nhật số lượng người đã thuê của bài đăng " + resList.get(i).getProduct().getContent());
+
+                                try {
+                                    Products products = (Products) resList.get(i).getProduct();
+                                    resList.get(i).setStatus("Bạn đã cập nhật số lượng người đã thuê của bài đăng " + products.getContent());
+                                } catch (Exception e) {
+                                    Log.d("getProduct", e.toString());
+                                }
+                                resList.get(i).setStatus("Bạn đã cập nhật số lượng người đã thuê của bài đăng ");
                                 notificationList.add(resList.get(i));
                                 break;
                             case "DELETE-PRODUCT-USER":
-                                resList.get(i).setStatus("Bài đăng " + resList.get(i).getProduct().getContent() + "đã được xóa thành công");
+                                try {
+                                    Products products = (Products) resList.get(i).getProduct();
+                                    resList.get(i).setStatus("Bài đăng " + products.getContent() + "đã được xóa thành công");
+                                } catch (Exception e) {
+                                    Log.d("getProduct", e.toString());
+                                }
+                                resList.get(i).setStatus("Bài đăng bạn vừa xóa đã được xóa thành công");
                                 notificationList.add(resList.get(i));
                                 break;
                             case "DELETE-PRODUCT-ADMIN":
-                                resList.get(i).setStatus("Bài đăng " + resList.get(i).getProduct().getContent() + "đã được xóa bởi quản lý");
+                                try {
+                                    Products products = (Products) resList.get(i).getProduct();
+                                    resList.get(i).setStatus("Bài đăng " + products.getContent() + "đã được xóa bởi quản lý");
+                                } catch (Exception e) {
+                                    Log.d("getProduct", e.toString());
+                                }
+                                resList.get(i).setStatus("Bài đăng đã được xóa bởi quản lý");
                                 notificationList.add(resList.get(i));
                                 break;
                             case "INIT-COMMENT-COMMENT":
@@ -107,11 +135,24 @@ public class NotificationPresenter implements NotificationContract.Presenter {
                             case "LOGIN-WEB-SERVER":
                                 break;
                             case "CONFIRM-PRODUCT":
-                                resList.get(i).setStatus("Bài đăng " + resList.get(i).getProduct().getContent() + "đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm");
+                                try {
+                                    Products products = (Products) resList.get(i).getProduct();
+                                    resList.get(i).setStatus("Bài đăng " + products.getContent() + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm");
+
+                                } catch (Exception e) {
+                                    Log.d("getProduct", e.toString());
+                                }
+                                resList.get(i).setStatus("Bài đăng đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm");
                                 notificationList.add(resList.get(i));
                                 break;
                             case "CANCEL-PRODUCT":
-                                resList.get(i).setStatus("Bài đăng " + resList.get(i).getProduct().getContent() + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166");
+                                try {
+                                    Products products = (Products) resList.get(i).getProduct();
+                                    resList.get(i).setStatus("Bài đăng " + products.getContent() + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166");
+                                } catch (Exception e) {
+                                    Log.d("getProduct", e.toString());
+                                }
+                                resList.get(i).setStatus("Bài đăng không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166");
                                 notificationList.add(resList.get(i));
                                 break;
                             case "CONFIRM-UPGRADE-USER-LEVEL-2":
@@ -131,7 +172,7 @@ public class NotificationPresenter implements NotificationContract.Presenter {
                     }
                     mViewModel.onShowNotification(notificationList);
                 } else {
-                    //                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
+                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
                 }
             }
 
