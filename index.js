@@ -365,10 +365,10 @@ app.post('/init-user', async function (request, response) {
 app.post('/update-user-password', async function (request, response) {
     let name = 'UPDATE-USER-PASSWORD'
     try {
-        let userId = request.body.userId;
+        let phoneNumber = request.body.phone_number;
         let password = request.body.password;
         if (checkData(userId) && checkData(password)) {
-            let user = await User.find({_id: userId}).populate(['address']).lean();
+            let user = await User.find({phone_number: phoneNumber}).populate(['address']).lean();
             console.log(JSON.stringify(user))
             let res_body = {status: null};
             if (user.length > 0) {
