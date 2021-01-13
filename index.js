@@ -375,7 +375,7 @@ app.post('/update-user-password', async function (request, response) {
                 user = user[0];
                 if (user.status == true) {
                     let updateAt = moment(Date.now()).format(formatDate);
-                    let updateUser = await User.findByIdAndUpdate(userId, {
+                    let updateUser = await User.findByIdAndUpdate(user._id, {
                         password: password,
                         updateAt: updateAt,
                     })
