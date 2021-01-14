@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.poly.smartfindpro.data.model.home.res.Address;
 import com.poly.smartfindpro.data.model.base.User;
 
-public class Products implements Parcelable {
+public class Products {
 
     @SerializedName("_id")
     @Expose
@@ -145,13 +145,4 @@ public class Products implements Parcelable {
         this.v = v;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

@@ -11,73 +11,78 @@
     </data>
 
     <RelativeLayout
-        android:background="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical">
+        android:focusable="true">
 
-        <com.poly.smartfindpro.widget.CommonToolbar
-            android:onClick="@{()->presenter.onBackClick()}"
-            android:id="@+id/cmtb"
+        <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp" />
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/LayoutEditText"
-            android:hint="@string/change_pass_old">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPassOld"
-                android:background="@drawable/custom_edt_change_pass"
-                style="@style/EditText"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.poly.smartfindpro.widget.CommonToolbar
+                android:id="@+id/cmtb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:onClick="@{()->presenter.onBackClick()}" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/LayoutEditText"
-            android:hint="@string/change_pass_new">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/LayoutEditText"
+                android:hint="@string/change_pass_old">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPassNew"
-                style="@style/EditText"
-                android:background="@drawable/custom_edt_change_pass"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPassOld"
+                    style="@style/EditText"
+                    android:background="@drawable/custom_edt_change_pass"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:textColorHint="@color/grey_1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/LayoutEditText"
-            android:hint="@string/change_pass_confirm">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/LayoutEditText"
+                android:hint="@string/change_pass_new">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPassConfirm"
-                style="@style/EditText"
-                android:background="@drawable/custom_edt_change_pass"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPassNew"
+                    style="@style/EditText"
+                    android:background="@drawable/custom_edt_change_pass"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:textColorHint="@color/grey_1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/LayoutEditText"
+                android:hint="@string/change_pass_confirm">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPassConfirm"
+                    style="@style/EditText"
+                    android:background="@drawable/custom_edt_change_pass"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:textColorHint="@color/grey_1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/btn_Action"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:textColor="@color/white"
-            android:layout_marginHorizontal="@dimen/_40sdp"
-            android:background="@drawable/background_button"
-            android:text="@string/text_change" />
+            <Button
+                android:id="@+id/btn_Action"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/background_button"
+                android:text="@string/text_change"
+                android:textColor="@color/white" />
 
 
-    </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </layout>

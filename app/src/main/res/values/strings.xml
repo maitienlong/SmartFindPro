@@ -75,6 +75,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="str_notification">Thông báo</string>
     <string name="str_user">Người dùng</string>
     <string name="setting">Cài đặt</string>
     <string name="rules">Điều khoản</string>
@@ -187,5 +188,6 @@
     <string name="camera_open_setting">Để sử dụng máy ảnh, vui lòng vào Cài đặt của điện thoại và cấp quyền truy cập máy ảnh cho ứng dụng</string>
     <string name="contact_open_setting_text">Mở cài đặt</string>
     <string name="close">Đóng</string>
+    <string name="search">Tìm kiếm</string>
 
 </resources>

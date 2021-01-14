@@ -22,6 +22,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/fab_circle"
             android:text="1000+"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -93,6 +94,7 @@
                                 android:id="@+id/edtSearch"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:afterTextChanged="@{() -> presenter.onListener()}"
                                 android:background="@drawable/bg_circle_editext_while"
                                 android:hint="@{presenter.hint}"
                                 android:paddingLeft="@dimen/_8sdp"
@@ -141,7 +143,7 @@
                     <FrameLayout
                         android:id="@+id/fl_search"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent">
 
                     </FrameLayout>
 

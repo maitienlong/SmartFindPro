@@ -128,6 +128,7 @@ public class ConfirmOTPFragment extends BaseDataBindFragment<FragmentConfirmOtpB
                 });
     }
 
+
     private void onconfirmOTP() {
         showLoadingDialog();
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(idOTP, mBinding.edtOtp.getText().toString());

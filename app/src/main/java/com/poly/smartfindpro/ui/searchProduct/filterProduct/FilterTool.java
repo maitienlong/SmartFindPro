@@ -5,19 +5,14 @@ public class FilterTool {
     private int soLuongNguoi;
     private int gia;
     private String gioiTinh;
-    private int tienDien;
-    private int tienNuoc;
-
     public FilterTool() {
     }
 
-    public FilterTool(String theLoai, int soLuongNguoi, int gia, String gioiTinh, int tienDien, int tienNuoc) {
+    public FilterTool(String theLoai, int soLuongNguoi, int gia, String gioiTinh) {
         this.theLoai = theLoai;
         this.soLuongNguoi = soLuongNguoi;
         this.gia = gia;
         this.gioiTinh = gioiTinh;
-        this.tienDien = tienDien;
-        this.tienNuoc = tienNuoc;
     }
 
     public String getTheLoai() {
@@ -52,19 +47,4 @@ public class FilterTool {
         this.gioiTinh = gioiTinh;
     }
 
-    public int getTienDien() {
-        return tienDien;
-    }
-
-    public void setTienDien(int tienDien) {
-        this.tienDien = tienDien;
-    }
-
-    public int getTienNuoc() {
-        return tienNuoc;
-    }
-
-    public void setTienNuoc(int tienNuoc) {
-        this.tienNuoc = tienNuoc;
-    }
 }

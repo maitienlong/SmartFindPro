@@ -37,6 +37,7 @@
                     android:id="@+id/edt_Account_Number_Register"
                     style="@style/EditText"
                     android:gravity="center"
+                    android:textColorHint="@color/black"
                     android:inputType="number"
                     app:addTextChangedListener="@{presenter.changeColorButton()}" />
             </com.google.android.material.textfield.TextInputLayout>

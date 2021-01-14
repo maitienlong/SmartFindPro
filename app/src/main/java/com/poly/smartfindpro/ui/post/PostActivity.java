@@ -1,17 +1,13 @@
 package com.poly.smartfindpro.ui.post;
 
-import android.Manifest;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableField;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,11 +16,9 @@ import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.callback.OnFragmentDataCallBack;
 import com.poly.smartfindpro.data.Config;
-import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
 import com.poly.smartfindpro.databinding.ActivityPostBinding;
 import com.poly.smartfindpro.ui.post.adressPost.AddressPostFragment;
 import com.poly.smartfindpro.ui.post.anim.ProgressBarAnimation;
-import com.poly.smartfindpro.ui.post.confirmPost.ConfirmPostFragment;
 import com.poly.smartfindpro.ui.post.inforPost.InforPostFragment;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
@@ -50,12 +44,11 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
     @Override
     protected int getLayoutId() {
+        Config.setStatusBarGradiant(this);
         return R.layout.activity_post;
     }
 
-
     @SuppressLint("ResourceAsColor")
-
     @Override
     protected void initView() {
         mBinding.ctbPost.setTitle("Đăng bài");
@@ -64,7 +57,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
         mBinding.pbTientrinh.getIndeterminateDrawable().setTint(R.color.color_progress_loading);
         Bundle bundle = new Bundle();
         bundle.putString(Config.POST_BUNDlE_RES_ID, getIntent().getStringExtra(Config.POST_BUNDlE_RES_ID));
-        goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
+        goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this);
         statusProress("1");
     }
 
@@ -86,6 +79,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -96,19 +90,19 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
 
         switch (v.getId()) {
             case R.id.btn_infor:
-                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this::onResult);
+                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), bundle, this);
                 statusProress("1");
                 position = 1;
                 break;
 
             case R.id.btn_address:
-                goToFragmentCallBackData(R.id.fl_post, new AddressPostFragment(), bundle, this::onResult);
+                goToFragmentCallBackData(R.id.fl_post, new AddressPostFragment(), bundle, this);
                 statusProress("2");
                 position = 2;
                 break;
 
             case R.id.btn_tool:
-                goToFragmentCallBackData(R.id.fl_post, new UtilitiesPostFragment(), bundle, this::onResult);
+                goToFragmentCallBackData(R.id.fl_post, new UtilitiesPostFragment(), bundle, this);
                 statusProress("3");
                 position = 3;
                 break;
@@ -123,7 +117,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
     public void statusProress(String isStatus) {
         switch (isStatus) {
             case "1":
-                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 10);
+                ProgressBarAnimation anim = new ProgressBarAnimation(mBinding.pbTientrinh, 0, 2);
                 anim.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim);
                 mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
@@ -134,7 +128,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case "2":
-                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 10, 50);
+                ProgressBarAnimation anim2 = new ProgressBarAnimation(mBinding.pbTientrinh, 2, 35);
                 anim2.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim2);
                 mBinding.imgInfor.setImageResource(R.mipmap.btn_rdo_true);
@@ -144,7 +138,7 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
                 break;
 
             case "3":
-                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 50, 75);
+                ProgressBarAnimation anim3 = new ProgressBarAnimation(mBinding.pbTientrinh, 35, 65);
                 anim3.setDuration(1000);
                 mBinding.pbTientrinh.startAnimation(anim3);
                 mBinding.pbTientrinh.setProgress(75);
@@ -196,22 +190,18 @@ public class PostActivity extends BaseDataBindActivity<ActivityPostBinding, Post
             statusProress(intent.getStringExtra(Config.DATA_CALL_BACK));
             postRequest = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES), typeData);
             imagePost = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES_PHOTO), typePhoto);
-        } else {
-
         }
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this::onResult);
-                } else {
-                    showMessage("Quyền truy cập đã được từ chối");
-                }
+        if (requestCode == MY_PERMISSIONS_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                goToFragmentCallBackData(R.id.fl_post, new InforPostFragment(), null, this);
+            } else {
+                showMessage("Quyền truy cập đã được từ chối");
+            }
         }
     }
 

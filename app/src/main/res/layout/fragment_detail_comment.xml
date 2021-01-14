@@ -177,7 +177,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/custom_edt_change_pass"
-                android:hint="Viết bình luận ..." />
+                android:hint="Viết bình luận ..."
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey_1" />
 
             <ImageView
                 android:id="@+id/btnSendComment"

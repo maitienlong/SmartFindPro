@@ -60,6 +60,7 @@
                     android:layout_gravity="top"
                     android:layout_height="@dimen/_30sdp"
                     android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/black"
                     android:text="Đã thuê" />
 
                 <Button
@@ -165,11 +166,11 @@
                     android:gravity="right|center">
 
                     <Button
-
+                        android:id="@+id/btn_message"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginLeft="@dimen/_30sdp"
-                        android:background="@drawable/ic_baseline_message_24" />
+                        android:background="@mipmap/message" />
 
                     <Button
                         android:layout_width="@dimen/_20sdp"

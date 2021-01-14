@@ -44,9 +44,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class InforPostFragment extends BaseDataBindFragment<FragmentInforPostBinding, InforPostPresenter>
         implements InforPostContract.ViewModel, View.OnTouchListener, View.OnClickListener {
-    private static final int IMAGE_PICK_CODE = 1000;
-
-    private static final int MY_PERMISSIONS_REQUEST = 1001;
+    public static final int IMAGE_PICK_CODE = 1000;
+    public static final int MY_PERMISSIONS_REQUEST = 1001;
     String category;
     String mAmountPeople = "";
     String mPrice = "";

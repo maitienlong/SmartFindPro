@@ -37,7 +37,6 @@ public class SettingFragment extends BaseDataBindFragment<FragmentSettingUserBin
 
     @Override
     protected void initData() {
-
     }
 
     @Override
@@ -64,4 +63,5 @@ public class SettingFragment extends BaseDataBindFragment<FragmentSettingUserBin
     public void onClickConfirmAccount() {
         getBaseActivity().goToFragment(R.id.fl_native, new ConfirmAccountFragment(), null);
     }
+
 }

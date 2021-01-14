@@ -27,6 +27,11 @@ public interface ProfileContact {
 
         void setAmountPeople(String amount);
 
+        void onClickChangeAvatar();
+
+        void onClickChangeCover();
+
+        void onShowPhoto();
 
     }
 
@@ -34,6 +39,8 @@ public interface ProfileContact {
         void onBackClick();
 
         void onClickEditUser();
+
+        void onClickImage();
 
         void onClickPending();
 

@@ -15,7 +15,7 @@ public class MyRetrofitSmartFind {
 
     private static ListServices listService;
 
-    public static final String smartFind = "http://128.199.99.9:9090/";
+    public static final String smartFind = "http://smartfind.me/";
 
     public static final int CONNECT_TIMEOUT = 10 * 1000000;
 

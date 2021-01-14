@@ -24,9 +24,12 @@ public class User {
     @SerializedName("phone_number")
     @Expose
     private String phoneNumber;
-    @SerializedName("age")
+    @SerializedName("status")
     @Expose
-    private String age;
+    private String status;
+    @SerializedName("birth")
+    @Expose
+    private String birth;
     @SerializedName("avatar")
     @Expose
     private String avatar;
@@ -84,12 +87,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAge() {
-        return age;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAvatar() {
@@ -130,5 +133,13 @@ public class User {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 }

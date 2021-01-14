@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_16sdp"
             android:padding="@dimen/_8sdp"
-            android:text="Thành viên đồng có những tính năng gì ?" />
+            android:text="Cho phép xem bài viết, chia sẻ bài viết. Giới hạn đăng bài, xem số điện thoại, bình luận bài đăng" />
 
 
     </LinearLayout>

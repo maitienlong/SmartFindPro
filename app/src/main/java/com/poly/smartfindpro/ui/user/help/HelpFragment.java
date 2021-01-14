@@ -20,7 +20,7 @@ public class HelpFragment extends BaseDataBindFragment<FragmentHelpUserBinding, 
 
     @Override
     protected void initView() {
-        mPresenter = new HelpPresenter(mActivity,this);
+        mPresenter = new HelpPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trợ giúp và phản hồi");
 

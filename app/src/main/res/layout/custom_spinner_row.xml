@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/_6sdp"
+    android:paddingRight="@dimen/_6sdp"
+    android:background="@color/white"
     android:layout_marginTop="@dimen/_8sdp">
 
     <TextView
@@ -9,8 +12,8 @@
         style="@style/textStyleNormal_15dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_30sdp"
-        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:gravity="center_vertical"
-        android:text="Ha Noi" />
+        android:textColor="@color/black" />
 
 </LinearLayout>

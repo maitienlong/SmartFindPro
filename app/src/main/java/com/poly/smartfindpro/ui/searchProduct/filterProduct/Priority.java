@@ -1,39 +1,30 @@
 package com.poly.smartfindpro.ui.searchProduct.filterProduct;
 
 public class Priority {
-    private int priority;
+    private int id;
+    private String value;
 
-    private boolean isAvail = false;
-
-    private int sbd;
-
-    public Priority(int priority, boolean isAvail, int sbd) {
-        this.priority = priority;
-        this.isAvail = isAvail;
-        this.sbd = sbd;
+    public Priority() {
     }
 
-    public int getPriority() {
-        return priority;
+    public Priority(int id, String value) {
+        this.id = id;
+        this.value = value;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public int getId() {
+        return id;
     }
 
-    public boolean isAvail() {
-        return isAvail;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAvail(boolean avail) {
-        isAvail = avail;
+    public String getValue() {
+        return value;
     }
 
-    public int getSbd() {
-        return sbd;
-    }
-
-    public void setSbd(int sbd) {
-        this.sbd = sbd;
+    public void setValue(String value) {
+        this.value = value;
     }
 }
