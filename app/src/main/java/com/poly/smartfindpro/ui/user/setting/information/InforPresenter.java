@@ -96,7 +96,7 @@ public class InforPresenter implements InforContact.Presenter {
         request.setFullname(nameInfor.get());
         request.setBirth(birthday.get());
         request.setGender(gender.get());
-//        request.setAddress(mProfile.getResponseBody().getUser().getAddress());
+// request.setAddress(mProfile.getResponseBody().getUser().getAddress());
 
         MyRetrofitSmartFind.getInstanceSmartFind().getUpdateUser(request).enqueue(new Callback<DeleteProductResponse>() {
             @Override
@@ -132,13 +132,13 @@ public class InforPresenter implements InforContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-//                    Log.d("TAG",response.body().getResponseBody().getUser().getFullName());
+// Log.d("TAG",response.body().getResponseBody().getUser().getFullName());
                     showData(mProfile);
-//                    address.setId(mProfile.getResponseBody().getUser().getAddress().getId());
-//                    address.setDetailAddress(mProfile.getResponseBody().getUser().getAddress().getDetailAddress());
-//                    address.setCommuneWardTown(mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown());
-//                    address.setDistrictsTowns(mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns());
-//                    address.setProvinceCity(mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
+// address.setId(mProfile.getResponseBody().getUser().getAddress().getId());
+// address.setDetailAddress(mProfile.getResponseBody().getUser().getAddress().getDetailAddress());
+// address.setCommuneWardTown(mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown());
+// address.setDistrictsTowns(mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns());
+// address.setProvinceCity(mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
 
                 } else {
 
@@ -157,13 +157,9 @@ public class InforPresenter implements InforContact.Presenter {
         nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
 
         addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
-        //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
+// idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
 
         gender.set(mProfile.getResponseBody().getUser().getGender());
         birthday.set(mProfile.getResponseBody().getUser().getBirth());
-    }
-
-    public void onChangeInfor(){
-
     }
 }

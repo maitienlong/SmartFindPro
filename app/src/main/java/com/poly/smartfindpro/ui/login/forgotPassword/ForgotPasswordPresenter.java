@@ -25,6 +25,7 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
     public ForgotPasswordPresenter(Context context, ForgotPasswordContract.ViewModel mViewModel, FragmentForgotPasswordBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
+        this.mBinding = mBinding;
     }
 
     @Override
@@ -43,10 +44,8 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
     }
 
     public void onNextClick() {
-        if (mBinding.edtCMTNDIdentity.getText().toString().trim().equals("")) {
-
-        } else if (mBinding.edtPhoneNummber.getText().toString().trim().equals("")) {
-
+        if (mBinding.edtPhoneNummber.getText().toString().trim().equals("")) {
+            mViewModel.showMessage("Không để trống");
         } else {
             mViewModel.showLoading();
             CheckPhoneNumberRequest request = new CheckPhoneNumberRequest();
