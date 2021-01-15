@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.intro;
 
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
@@ -23,6 +24,7 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -223,12 +225,8 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
                 Intent detailActivity = new Intent(IntroActivity.this, DetailPostActivity.class);
 
                 detailActivity.putExtra(Config.POST_BUNDEL_RES, data);
-
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(IntroActivity.this);
-
-                stackBuilder.addNextIntentWithParentStack(detailActivity);
-
-                PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                detailActivity.putExtra(Config.DATA_CALL_BACK, "ok");
+                startActivity(detailActivity);
 
             }
 

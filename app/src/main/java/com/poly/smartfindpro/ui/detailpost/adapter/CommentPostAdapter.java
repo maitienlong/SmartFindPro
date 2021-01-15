@@ -116,36 +116,44 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         holder.favoris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InitFavorite request = new InitFavorite();
-                request.setUser(Config.TOKEN_USER);
-                request.setProduct(item.getComment().getProduct());
-                request.setComment(item.getComment().getId());
 
-                if (item.getIsFavorite()) {
-                    item.setIsFavorite(false);
-                    item.getFavorites().setCount(item.getFavorites().getCount() - 1);
-                    onChange();
-                } else {
-                    item.setIsFavorite(true);
-                    item.getFavorites().setCount(item.getFavorites().getCount() + 1);
-                    onChange();
-                }
+                if (Config.isClick()) {
 
-                MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
-                    @Override
-                    public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
-                        if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
 
-                        } else {
+                    InitFavorite request = new InitFavorite();
+                    request.setUser(Config.TOKEN_USER);
+                    request.setProduct(item.getComment().getProduct());
+                    request.setComment(item.getComment().getId());
+
+                    if (item.getIsFavorite()) {
+                        item.setIsFavorite(false);
+                        item.getFavorites().setCount(item.getFavorites().getCount() - 1);
+                        onChange();
+                    } else {
+                        item.setIsFavorite(true);
+                        item.getFavorites().setCount(item.getFavorites().getCount() + 1);
+                        onChange();
+                    }
+
+                    MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
+                        @Override
+                        public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                            if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+
+                            } else {
+                                Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
                             Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
                         }
-                    }
+                    });
 
-                    @Override
-                    public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
-                        Toast.makeText(context, "Hiện tại bạn không thể thích bình luận này", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                } else {
+                    Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -154,18 +162,25 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Config.isClick()) {
+                    CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
-                CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
-
-                mViewmodel.onCallBackAdapter(commentDetailRequest);
+                    mViewmodel.onCallBackAdapter(commentDetailRequest);
+                } else {
+                    Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         holder.tv_amount_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
+                if (Config.isClick()) {
+                    CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
-                mViewmodel.onCallBackAdapter(commentDetailRequest);
+                    mViewmodel.onCallBackAdapter(commentDetailRequest);
+                } else {
+                    Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

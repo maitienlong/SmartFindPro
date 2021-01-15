@@ -30,15 +30,10 @@ import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 
 public class MyFirebaseService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseService";
-    private NotificationManagerCompat notificationManager;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // handle a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getTitle());
-
             // onNotify(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle());
             sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
@@ -74,10 +69,6 @@ public class MyFirebaseService extends FirebaseMessagingService {
                         .setContentIntent(pendingIntent)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setPriority(NotificationManager.IMPORTANCE_HIGH)
-                        .addAction(new NotificationCompat.Action(
-                                android.R.drawable.sym_call_missed,
-                                "Thôi",
-                                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)))
                         .addAction(new NotificationCompat.Action(
                                 android.R.drawable.sym_call_outgoing,
                                 "Mở",
