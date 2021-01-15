@@ -1562,7 +1562,7 @@ app.post('/init-favorite', async function (request, response) {
                     product: product,
                     admin: null,
                     user: user,
-                    status: findProduct[0].user, findUser.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn",
+                    status: findUser.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn",
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
@@ -2965,7 +2965,7 @@ app.post('/confirm-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: updateProduct.user, "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
+                            status:  "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
@@ -3019,7 +3019,7 @@ app.post('/cancel-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: updateProduct.user, "Bài đăng " + updateProduct.content + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166",
+                            status: "Bài đăng " + updateProduct.content + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166",
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
