@@ -10,6 +10,7 @@ const crypto = require('crypto');
 const request = require('request');
 const Handlebars = require('handlebars');
 const buffer = require('buffer').Buffer;
+const fetch = require('node-fetch');
 
 //anh xa model
 const loginSchema = require('./model/LoginSchema');
