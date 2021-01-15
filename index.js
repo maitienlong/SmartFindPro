@@ -464,7 +464,7 @@ app.post('/update-user-password', async function (request, response) {
                             product: null,
                             admin: null,
                             user: user._id,
-                            status: name,
+                            status: "Bạn đã đổi mật khẩu thành công",
                             createAt: updateAt
                         });
                         let confirPrd = await confirm.save();
@@ -573,7 +573,7 @@ app.post('/update-user', async function (request, response) {
                                     product: null,
                                     admin: null,
                                     user: userId,
-                                    status: name + "-LEVEL-1",
+                                    status: "Tài khoản của bạn đã được nâng cấp lên thành viên Đồng(tài khoản cấp 1)",
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
@@ -585,7 +585,7 @@ app.post('/update-user', async function (request, response) {
                                     product: null,
                                     admin: null,
                                     user: userId,
-                                    status: name,
+                                    status: "Bạn đã cập nhật thông tin tài khoản thành công",
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
@@ -701,7 +701,7 @@ app.post('/upgrade-user', async function (request, response) {
                                         product: null,
                                         admin: null,
                                         user: userId,
-                                        status: name,
+                                        status: "Bạn đã cập nhật lại thông tin để nâng cấp lên thành Viên bạc(tài khoản cấp 2)",
                                         createAt: createAt
                                     });
                                     let confirPrd = await confirm.save();
@@ -730,7 +730,7 @@ app.post('/upgrade-user', async function (request, response) {
                                             product: null,
                                             admin: null,
                                             user: userId,
-                                            status: name,
+                                            status: "Bạn đã gửi thông tin để nâng cấp tài khoản lên thành Viên bạc(tài khoản cấp 2). Vui lòng chờ xác nhận từ người quản lý",
                                             createAt: createAt
                                         });
                                         sendNotification(request, response, userId, "Bạn đã gửi thông tin để nâng cấp tài khoản lên thành Viên bạc(tài khoản cấp 2). Vui lòng chờ xác nhận từ người quản lý");
@@ -854,10 +854,10 @@ app.post('/disable-user', async function (request, response) {
                     let uSTT = user.status;
                     if (user.status == true) {
                         uSTT = false;
-                        name = 'DISABLE-USER'
+                        name = "Tài khoản của bạn đã bị khóa bởi tài khoản quản lý vì bạn đã vi phạm trong các điều khoản khi sử dụng ứng dụng"
                     } else {
                         uSTT = true;
-                        name = 'ENABLE-USER'
+                        name = "Tài khoản của bạn đã được khôi phục"
                     }
                     let disableUser = await User.findByIdAndUpdate(user._id, {
                         status: uSTT,
@@ -872,11 +872,7 @@ app.post('/disable-user', async function (request, response) {
                             createAt: createAt
                         });
                         let confirPrd = await confirm.save();
-                        if (name = 'DISABLE-USER') {
-                            sendNotification(request, response, id, "Tài khoản của bạn đã bị khóa bởi tài khoản quản lý vì bạn đã vi phạm trong các điều khoản khi sử dụng ứng dụng");
-                        } else {
-                            sendNotification(request, response, id, "Tài khoản của bạn đã được khôi phục");
-                        }
+                        sendNotification(request, response, id, name);
                         let res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
@@ -1039,7 +1035,7 @@ app.post('/init-product', async function (request, response) {
                             product: initProduct._id,
                             admin: null,
                             user: id,
-                            status: name,
+                            status: "Phòng của bạn đã được gửi cho bên duyệt bài của chúng tôi. Vui lòng chờ phản hồi từ chúng tôi",
                             createAt: createAt
                         });
                         console.log(JSON.stringify(confirm));
@@ -1126,7 +1122,7 @@ app.post('/update-product', async function (request, response) {
                                 product: id,
                                 admin: null,
                                 user: userId,
-                                status: name,
+                                status: "Bạn đã cập nhật thông tin của bài đăng " + updateProduct[0].content,
                                 createAt: updateAt
                             });
                             console.log(JSON.stringify(confirm));
@@ -1195,7 +1191,7 @@ app.post('/total-people-lease-product', async function (request, response) {
                                     product: id,
                                     admin: null,
                                     user: userId,
-                                    status: name,
+                                    status: "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct[0].content + " là: " + updateProduct[0].total_people_lease,
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
@@ -1256,7 +1252,7 @@ app.post('/delete-product', async function (request, response) {
                                 product: id,
                                 admin: null,
                                 user: userId,
-                                status: name + "-USER",
+                                status: "Bài đăng " + product.content + " đã được xóa thành công",
                                 createAt: createAt
                             });
                             console.log(JSON.stringify(confirm));
@@ -1282,7 +1278,7 @@ app.post('/delete-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: name + "-ADMIN",
+                            status: "Bài đăng " + product.content + " đã được xóa bởi quản lý",
                             createAt: createAt
                         });
                         console.log(JSON.stringify(confirm));
@@ -1470,7 +1466,7 @@ app.post('/init-comment', async function (request, response) {
                     product: product,
                     admin: null,
                     user: user,
-                    status: name + "-" + status,
+                    status: findUser[0].full_name + " đã bình luận bài đăng " + findProduct[0].content + " của bạn",
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
@@ -1566,7 +1562,7 @@ app.post('/init-favorite', async function (request, response) {
                     product: product,
                     admin: null,
                     user: user,
-                    status: name,
+                    status: findProduct[0].user, findUser.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn",
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
@@ -2969,7 +2965,7 @@ app.post('/confirm-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: name,
+                            status: updateProduct.user, "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
@@ -3023,7 +3019,7 @@ app.post('/cancel-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status: name,
+                            status: updateProduct.user, "Bài đăng " + updateProduct.content + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166",
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
@@ -3100,7 +3096,7 @@ app.post('/confirm-upgrade', async function (request, response) {
                                     product: null,
                                     admin: adminId,
                                     user: id,
-                                    status: name,
+                                    status: notifi,
                                     createAt: updatedAt
                                 });
                                 let confirPrd = await confirm.save();
@@ -3155,7 +3151,7 @@ app.post('/cancel-upgrade', async function (request, response) {
                         product: null,
                         admin: adminId,
                         user: id,
-                        status: name,
+                        status: 'Tài khoản của bạn không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166',
                         createAt: deleteAt
                     });
                     let confirPrd = await confirm.save();
