@@ -12,8 +12,12 @@ const Handlebars = require('handlebars');
 const buffer = require('buffer').Buffer;
 
 //anh xa model
+const loginSchema = require('./model/LoginSchema');
+const Login = db.model('Login', loginSchema, 'login');
+
 const commentSchema = require('./model/CommentSchema');
 const Comment = db.model('Comment', commentSchema, 'comment');
+
 const favoriteSchema = require('./model/FavoriteSchema');
 const Favorite = db.model('Favorite', favoriteSchema, 'favorite');
 
@@ -189,6 +193,15 @@ async function getProducts(successPost) {
     return products
 }
 
+Array.prototype.remove_by_value = function (val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === val) {
+            this.splice(i, 1);
+            i--;
+        }
+    }
+    return this;
+}
 //API
 //post anh
 app.post("/upload-photo", multer({storage: storage}).single('photo'), function (req, res) {
@@ -221,16 +234,68 @@ app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), fu
     }
 });
 // App
+//log-out
+app.post('/log-out', async function (request, response) {
+    let name = 'LOG-OUT'
+    try {
+        let id = request.body.userId;
+        let deviceId = request.body.deviceId;
+        if (checkData(id) && checkData(deviceId)) {
+            let user = await User.find({_id: id}).lean();
+            if (user.length > 0) {
+                let findLogin = await Login.find({user: id}).lean();
+                if (findLogin.length > 0) {
+                    findLogin = findLogin[0];
+                    var devices = findLogin.devices
+                    console.log(devices)
+                    if (devices.length == 1) {
+                        let logOut = await Login.findByIdAndDelete(findLogin._id);
+                        if (logOut) {
+                            let res_body = {status: sttOK};
+                            response.json(getResponse(name, 200, sttOK, res_body));
+                        } else {
+                            let res_body = {status: 'Fail'};
+                            response.json(getResponse(name, 200, 'Fail', res_body));
+                        }
+                    } else if (devices.length > 1) {
+                        devices.remove_by_value(deviceId)
+                        let updateUserDevices = await Login.findByIdAndUpdate(findLogin._id, {
+                            devices: devices
+                        });
+                        if (updateUserDevices) {
+                            let res_body = {status: sttOK};
+                            deviceID = '';
+                            response.json(getResponse(name, 200, sttOK, res_body));
+                        } else {
+                            let res_body = {status: 'Fail'};
+                            response.json(getResponse(name, 200, 'Fail', res_body));
+                        }
+                    }
+                } else {
+                    response.json(getResponse(name, 404, 'Login not found', null))
+                }
+            } else {
+                response.json(getResponse(name, 404, 'User not found', null))
+            }
+        } else {
+            response.json(getResponse(name, 400, 'Bad request', null))
+        }
+    } catch (e) {
+        console.log('loi ne: \n' + e)
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+});
 //login
 app.post('/login', async function (request, response) {
     let name = 'LOGIN'
     let res_body = {type: 'PHONE_NUMBER', user: null}
     try {
-        let id = request.body.id;
+        let deviceId = request.body.deviceId;
         let account = request.body.account;
         let password = request.body.password;
         if (checkData(account) &&
-            checkData(password)) {
+            checkData(password) &&
+            checkData(deviceId)) {
             let userByPhone = await User.find({
                 phone_number: account,
                 password: password
@@ -240,6 +305,20 @@ app.post('/login', async function (request, response) {
                 userByPhone = userByPhone[0];
                 if (userByPhone) {
                     res_body = {type: 'PHONE_NUMBER', user: userByPhone}
+                    let findLogin = await Login.find({user: userByPhone._id}).lean();
+                    if (findLogin.length > 0) {
+                        var devices = findLogin[0].devices
+                        devices.push(deviceId)
+                        let updateUserDevices = await Login.findByIdAndUpdate(findLogin[0]._id, {
+                            devices: devices
+                        });
+                    } else {
+                        let newLogin = new Login({
+                            user: userByPhone._id,
+                            devices: deviceId,
+                        });
+                        let saveLogin = await newLogin.save();
+                    }
                     response.json(getResponse(name, 200, sttOK, res_body))
                 } else {
                     response.json(getResponse(name, 200, 'Fail', res_body))
@@ -388,6 +467,7 @@ app.post('/update-user-password', async function (request, response) {
                             createAt: updateAt
                         });
                         let confirPrd = await confirm.save();
+                        sendNotification(request, response, user._id, "Bạn đã đổi mật khẩu thành công");
                         res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
@@ -446,7 +526,7 @@ app.post('/update-user', async function (request, response) {
                                 communeWardTown: checkData(mAddress.communeWardTown) ? mAddress.communeWardTown : user.address.communeWardTown,
                                 detailAddress: checkData(mAddress.detailAddress) ? mAddress.detailAddress : user.address.detailAddress,
                                 location: {
-                                    latitude:  user.address.location.latitude,
+                                    latitude: user.address.location.latitude,
                                     longitude: user.address.location.longitude
                                 }
                             });
@@ -496,6 +576,7 @@ app.post('/update-user', async function (request, response) {
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
+                                sendNotification(request, response, userId, "Tài khoản của bạn đã được nâng cấp lên thành viên Đồng(tài khoản cấp 1)");
                                 response.json(getResponse(name, 200, sttOK, res_body));
                             } else {
                                 res_body = {status: sttOK};
@@ -507,6 +588,7 @@ app.post('/update-user', async function (request, response) {
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
+                                sendNotification(request, response, userId, "Bạn đã cập nhật thông tin tài khoản thành công");
                                 response.json(getResponse(name, 200, sttOK, res_body));
                             }
 
@@ -622,6 +704,7 @@ app.post('/upgrade-user', async function (request, response) {
                                         createAt: createAt
                                     });
                                     let confirPrd = await confirm.save();
+                                    sendNotification(request, response, userId, "Bạn đã cập nhật lại thông tin để nâng cấp lên thành Viên bạc(tài khoản cấp 2)");
                                     res_body = {status: sttOK};
                                     response.json(getResponse(name, 200, sttOK, res_body));
                                 } else {
@@ -649,6 +732,7 @@ app.post('/upgrade-user', async function (request, response) {
                                             status: name,
                                             createAt: createAt
                                         });
+                                        sendNotification(request, response, userId, "Bạn đã gửi thông tin để nâng cấp tài khoản lên thành Viên bạc(tài khoản cấp 2). Vui lòng chờ xác nhận từ người quản lý");
                                         let confirPrd = await confirm.save();
                                         res_body = {status: sttOK};
                                         response.json(getResponse(name, 200, sttOK, res_body));
@@ -787,6 +871,11 @@ app.post('/disable-user', async function (request, response) {
                             createAt: createAt
                         });
                         let confirPrd = await confirm.save();
+                        if (name = 'DISABLE-USER') {
+                            sendNotification(request, response, id, "Tài khoản của bạn đã bị khóa bởi tài khoản quản lý vì bạn đã vi phạm trong các điều khoản khi sử dụng ứng dụng");
+                        } else {
+                            sendNotification(request, response, id, "Tài khoản của bạn đã được khôi phục");
+                        }
                         let res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
@@ -954,6 +1043,8 @@ app.post('/init-product', async function (request, response) {
                         });
                         console.log(JSON.stringify(confirm));
                         let confirPrd = await confirm.save();
+
+                        sendNotification(request, response, id, "Phòng của bạn đã được gửi cho bên duyệt bài của chúng tôi. Vui lòng chờ phản hồi từ chúng tôi");
                         let res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body));
                     } else {
@@ -1039,6 +1130,8 @@ app.post('/update-product', async function (request, response) {
                             });
                             console.log(JSON.stringify(confirm));
                             let confirPrd = await confirm.save();
+
+                            sendNotification(request, response, userId, "Bạn đã cập nhật thông tin của bài đăng " + updateProduct[0].content);
                             let res_body = {status: sttOK};
                             response.json(getResponse(name, 200, sttOK, res_body))
                         } else {
@@ -1105,6 +1198,8 @@ app.post('/total-people-lease-product', async function (request, response) {
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
+
+                                sendNotification(request, response, userId, "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct[0].content + " là: " + updateProduct[0].total_people_lease);
                                 let res_body = {status: sttOK};
                                 response.json(getResponse(name, 200, sttOK, res_body))
                             } else {
@@ -1165,6 +1260,8 @@ app.post('/delete-product', async function (request, response) {
                             });
                             console.log(JSON.stringify(confirm));
                             let confirPrd = await confirm.save();
+
+                            sendNotification(request, response, userId, "Bài đăng " + product.content + " đã được xóa thành công");
                             let res_body = {status: sttOK};
                             response.json(getResponse(name, 200, sttOK, res_body));
                         } else {
@@ -1189,6 +1286,8 @@ app.post('/delete-product', async function (request, response) {
                         });
                         console.log(JSON.stringify(confirm));
                         let confirPrd = await confirm.save();
+
+                        sendNotification(request, response, userId, "Bài đăng " + product.content + " đã được xóa bởi quản lý");
                         let res_body = {status: sttOK};
                         response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
@@ -1326,7 +1425,13 @@ app.post('/init-comment', async function (request, response) {
                 response.json(getResponse(name, 200, 'Fail', res_body))
                 return
             }
-            let findProduct = await Product.find({_id: product}).lean();
+            let findProduct = await Product.find({_id: product}).populate(['address', 'product'])
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                }).lean();
             if (findProduct.length <= 0) {
                 res_body = {status: "Product not found"};
                 response.json(getResponse(name, 404, 'Product not found', res_body))
@@ -1368,6 +1473,8 @@ app.post('/init-comment', async function (request, response) {
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
+
+                sendNotification(request, response, findProduct[0].user, findProduct[0].user.full_name + " đã bình luận bài đăng " + findProduct[0].content + " của bạn");
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -1399,7 +1506,13 @@ app.post('/init-favorite', async function (request, response) {
                 response.json(getResponse(name, 404, 'User not found', res_body))
                 return
             }
-            let findProduct = await Product.find({_id: product}).lean();
+            let findProduct = await Product.find({_id: product}).populate(['address', 'product'])
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'address'
+                    }
+                }).lean();
             if (findProduct.length <= 0) {
                 let res_body = {status: 'Product not found'};
                 response.json(getResponse(name, 404, 'Product not found', res_body))
@@ -1456,6 +1569,8 @@ app.post('/init-favorite', async function (request, response) {
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
+
+                sendNotification(request, response, findProduct[0].user, findProduct[0].user.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn");
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -1897,7 +2012,7 @@ app.post('/delete-comment', async function (request, response) {
 //Web
 //Khai bao bien web
 const sttOK = 'Success'
-let nameDN = '', allAdmin = '', adminID = '';
+let nameDN = '', allAdmin = '', adminID = '', deviceID = '';
 //404
 app.get('/404', function (request, response) {
     response.render('error');
@@ -2698,7 +2813,8 @@ app.post('/confirm-product', async function (request, response) {
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
-
+                        updateProduct = updateProduct[0];
+                        sendNotification(request, response, updateProduct.user, "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm");
                         let res_body = {status: sttOK}
                         response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
@@ -2749,6 +2865,9 @@ app.post('/cancel-product', async function (request, response) {
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
+                        updateProduct = updateProduct[0];
+                        sendNotification(request, response, updateProduct.user, "Bài đăng " + updateProduct.content + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166");
+
                         let res_body = {status: sttOK}
                         response.json(getResponse(name, 200, sttOK, res_body))
                     } else {
@@ -2793,14 +2912,17 @@ app.post('/confirm-upgrade', async function (request, response) {
                         identityCard = identityCard[0];
                         if (user.level == 1 || user.level == 2) {
                             let number = 0;
+                            let notifi = '';
                             if (user.level == 1) {
                                 number = 2;
                                 name = name + '-LEVEL-2';
+                                notifi = 'Tài khoản của bạn đã được nâng cấp lên thành viên Bạc(tài khoản cấp 2)';
                                 let updateUser = await UpgradeUser.findByIdAndUpdate(id, {
                                     updateAt: updatedAt
                                 });
                             } else {
                                 number = 3;
+                                notifi = 'Tài khoản của bạn đã được nâng cấp lên thành viên Vàng(tài khoản cấp 3)'
                                 name = name + '-LEVEL-3';
                                 let deleteUpgradeUser = await UpgradeUser.findByIdAndDelete(id);
                             }
@@ -2821,6 +2943,9 @@ app.post('/confirm-upgrade', async function (request, response) {
                                     createAt: updatedAt
                                 });
                                 let confirPrd = await confirm.save();
+
+                                sendNotification(request, response, id, notifi);
+
                                 res_body = {status: sttOK};
                                 response.json(getResponse(name, 200, sttOK, res_body));
                             } else {
@@ -2868,11 +2993,13 @@ app.post('/cancel-upgrade', async function (request, response) {
                     let confirm = await ConfirmPost({
                         product: null,
                         admin: adminId,
-                        user: null,
+                        user: id,
                         status: name,
                         createAt: deleteAt
                     });
                     let confirPrd = await confirm.save();
+
+                    sendNotification(request, response, id, 'Tài khoản của bạn không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166');
                     res_body = {status: sttOK};
                     response.json(getResponse(name, 200, sttOK, res_body));
                 } else {
@@ -2895,3 +3022,44 @@ app.get('/applinks', async function (request, response) {
     let id = request.query.id;
     return response.redirect('https://smartfindpro.page.link/?link=http://www.smartfind.me/applinks/?id=' + id + '&apn=com.poly.smartfindpro');
 });
+
+async function sendNotification(req, res, userId, text) {
+    let name = 'SEND-NOTIFICATION'
+    try {
+        let findLogin = await Login.find({user: userId}).lean();
+        if (findLogin.length > 0) {
+            var devices = findLogin[0].devices
+            var notification = {
+                'title': "Thông báo",
+                'text': text
+            }
+            var notify_body = {
+                'sound': 'Enabled',
+                'notification': notification,
+                'registration_ids': fcm_tokens
+            }
+            fetch('https://fcm.googleapis.com/fcm/send', {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': 'key=' + 'AAAAWAuqHu8:APA91bEnNddxBGFG0qM_f6CYQH-93iMuot1TvEdx6-r867-qvWcrzoK477r4TDGIEv999XxBDDkRwBzThwm9QNl203ZVB0LqhhRQsq82JJagR77m5XYHYe-eAPvMy8R3xyeZdSKtQ2uh',
+                    'Content-Type': 'application/json'
+                },
+                'body': JSON.stringify(notify_body)
+            }).then(() => {
+                let res_body = {status: "notification send thanh cong"};
+                res.status(200).send(getResponse(name, 200, sttOK, res_body));
+            }).catch((e) => {
+                console.log('[200]-sendNotification: \n' + e);
+                let res_body = {status: "notification send KHONG thanh cong"};
+                res.status(200).send(getResponse(name, 200, 'Fail', res_body));
+            })
+        } else {
+            res.status(200).send(getResponse(name, 404, 'Login not found', null));
+        }
+    } catch (e) {
+        console.log('[500]-sendNotification: \n' + e);
+        response.status(500).json(getResponse(name, 500, 'Server error', null))
+    }
+}
+
+
