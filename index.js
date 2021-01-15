@@ -1475,7 +1475,7 @@ app.post('/init-comment', async function (request, response) {
                 });
                 let confirPrd = await confirm.save();
 
-                sendNotification(request, response, findProduct[0].user, findProduct[0].user.full_name + " đã bình luận bài đăng " + findProduct[0].content + " của bạn");
+                sendNotification(request, response, findProduct[0].user, findUser[0].full_name + " đã bình luận bài đăng " + findProduct[0].content + " của bạn");
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -1571,7 +1571,7 @@ app.post('/init-favorite', async function (request, response) {
                 });
                 let confirPrd = await confirm.save();
 
-                sendNotification(request, response, findProduct[0].user, findProduct[0].user.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn");
+                sendNotification(request, response, findProduct[0].user, findUser.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn");
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
