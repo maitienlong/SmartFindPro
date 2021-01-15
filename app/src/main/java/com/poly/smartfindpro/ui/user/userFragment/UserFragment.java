@@ -34,7 +34,7 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
     protected void initData() {
         if (Config.isClick()) {
             mPresenter.setTextLogOut("Đăng xuất");
-        }else {
+        } else {
             mPresenter.setTextLogOut("Đăng nhập");
         }
     }
@@ -61,14 +61,11 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
     @Override
     public void onClickLogOut() {
-        if(Config.isClick()){
+        if (Config.isClick()) {
             showAlertDialog("Thông báo", "Bạn muốn đăng xuất", "Đăng xuất", "Hủy", true, new AlertDialogListener() {
                 @Override
                 public void onAccept() {
-                    Config.TOKEN_USER = "";
-                    onSaveLogin("", "", "", 0, false);
-                    mActivity.finish();
-                    getBaseActivity().openActivity(LoginActivity.class);
+                    mPresenter.onSigOut();
                 }
 
                 @Override
@@ -76,7 +73,7 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
 
                 }
             });
-        }else {
+        } else {
             Config.TOKEN_USER = "";
             onSaveLogin("", "", "", 0, false);
             mActivity.finish();
@@ -84,7 +81,14 @@ public class UserFragment extends BaseDataBindFragment<FragmentUserBinding, User
         }
 
 
+    }
 
+    @Override
+    public void onLogOut() {
+        Config.TOKEN_USER = "";
+        onSaveLogin("", "", "", 0, false);
+        mActivity.finish();
+        getBaseActivity().openActivity(LoginActivity.class);
     }
 
     private boolean onSaveLogin(String username, String password, String token, int level, boolean isSave) {

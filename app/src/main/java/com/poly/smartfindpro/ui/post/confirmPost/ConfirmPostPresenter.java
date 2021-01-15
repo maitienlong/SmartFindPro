@@ -18,6 +18,7 @@ import com.poly.smartfindpro.data.model.post.req.Information;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,11 +109,11 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
     }
 
     public void setGia(int gia) {
-        this.gia.set(String.valueOf(gia));
+        this.gia.set(NumberFormat.getNumberInstance().format(gia));
     }
 
     public void setDatCoc(int datCoc) {
-        this.datCoc.set(String.valueOf(datCoc));
+        this.datCoc.set(NumberFormat.getNumberInstance().format(datCoc));
     }
 
     public void setGioiTinh(String gioiTinh) {
@@ -124,11 +125,11 @@ public class ConfirmPostPresenter implements ConfirmPostContract.Presenter {
     }
 
     public void setTienDien(int tienDien) {
-        this.tienDien.set(String.valueOf(tienDien));
+        this.tienDien.set(NumberFormat.getNumberInstance().format(tienDien));
     }
 
     public void setTienNuoc(int tienNuoc) {
-        this.tienNuoc.set(String.valueOf(tienNuoc));
+        this.tienNuoc.set(NumberFormat.getNumberInstance().format(tienNuoc));
     }
 
     public void setTienIch(List<String> tienIch) {

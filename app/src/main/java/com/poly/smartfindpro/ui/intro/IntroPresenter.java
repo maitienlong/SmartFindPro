@@ -57,6 +57,7 @@ public class IntroPresenter implements IntroContract.Presenter {
     public void requestData(String idPost) {
         ProductRequest request = new ProductRequest();
         request.setId(Config.TOKEN_USER);
+
         MyRetrofitSmartFind.getInstanceSmartFind().getAllProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
@@ -71,7 +72,7 @@ public class IntroPresenter implements IntroContract.Presenter {
                             }
                         }
 
-                        if(product != null){
+                        if (product != null) {
                             mViewModel.onNextDetail(new Gson().toJson(product));
                         }
                     } else {
@@ -101,6 +102,10 @@ public class IntroPresenter implements IntroContract.Presenter {
 
             request.setPassword(password);
 
+            request.setDeviceId(Config.TOKEN_DEVICE);
+
+
+            Log.d("CheckLogin", new Gson().toJson(request));
             if (username != null && !username.isEmpty()) {
 
 

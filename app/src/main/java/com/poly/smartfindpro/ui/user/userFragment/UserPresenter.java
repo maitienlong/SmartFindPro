@@ -88,8 +88,7 @@ public class UserPresenter implements UserContact.Presenter {
 
     }
 
-    @Override
-    public void onClickLogOut() {
+    public void onSigOut() {
         LogoutRequest request = new LogoutRequest();
         request.setUserId(Config.TOKEN_USER);
         request.setDeviceId(Config.TOKEN_DEVICE);
@@ -99,7 +98,7 @@ public class UserPresenter implements UserContact.Presenter {
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.code() == 200) {
                     if (response.body().getResponseHeader().getResCode() == 200 && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
-                        mViewModel.onClickLogOut();
+                        mViewModel.onLogOut();
                     } else {
                         mViewModel.showMessage("Đăng xuất không thành công, vui lòng kiểm tra lại kết nối");
                     }
@@ -113,7 +112,11 @@ public class UserPresenter implements UserContact.Presenter {
                 mViewModel.showMessage("Đăng xuất không thành công, vui lòng kiểm tra lại kết nối");
             }
         });
+    }
 
+    @Override
+    public void onClickLogOut() {
+        mViewModel.onClickLogOut();
     }
 
     public void getInfor() {
