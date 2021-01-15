@@ -3047,18 +3047,17 @@ async function sendNotification(req, res, userId, text) {
                 'body': JSON.stringify(notify_body)
             }).then(() => {
                 let res_body = {status: "notification send thanh cong"};
-                res.status(200).send(getResponse(name, 200, sttOK, res_body));
+                console.log(res_body)
             }).catch((e) => {
                 console.log('[200]-sendNotification: \n' + e);
                 let res_body = {status: "notification send KHONG thanh cong"};
-                res.status(200).send(getResponse(name, 200, 'Fail', res_body));
+                console.log(res_body)
             })
         } else {
-            res.status(200).send(getResponse(name, 404, 'Login not found', null));
+            console.log('Login not found')
         }
     } catch (e) {
         console.log('[500]-sendNotification: \n' + e);
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
     }
 }
 
