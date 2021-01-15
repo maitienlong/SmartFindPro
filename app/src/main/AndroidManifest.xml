@@ -38,6 +38,7 @@
     </queries>
 
     <application
+        android:name=".data.notification.App"
         android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/logo_app"
@@ -139,6 +140,12 @@
         <provider android:authorities="com.facebook.app.FacebookContentProvider176696500819373"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
+
+        <service android:name=".data.notification.MyFirebaseService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

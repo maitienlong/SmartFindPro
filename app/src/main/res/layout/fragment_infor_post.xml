@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_category_selector"
                         android:text="@string/btn_apartment"
-                        android:textColor="@drawable/btn_category_textcolor_selector"></Button>
+                        android:textColor="@drawable/btn_category_textcolor_selector" />
                 </LinearLayout>
 
                 <LinearLayout

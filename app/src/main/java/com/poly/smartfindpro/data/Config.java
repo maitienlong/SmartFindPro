@@ -45,6 +45,8 @@ public class Config {
 
     public static int HEIGHT_STATUS_BAR = 0;
 
+    public static String TOKEN_DEVICE = "";
+
     public static boolean isClick(){
         if (TOKEN_USER != null && !TOKEN_USER.isEmpty()){
             return true;

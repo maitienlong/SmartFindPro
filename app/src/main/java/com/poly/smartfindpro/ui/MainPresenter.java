@@ -31,12 +31,12 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onSelecFind() {
-
-        if (Config.isClick()) {
-            mViewModel.onSelecFind();
-        } else {
-            mViewModel.showMessage(mContex.getString(R.string.pl_login));
-        }
+        mViewModel.onSelecFind();
+//        if (Config.isClick()) {
+//
+//        } else {
+//            mViewModel.showMessage(mContex.getString(R.string.pl_login));
+//        }
     }
 
     @Override

@@ -47,6 +47,8 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     private Products mProduct;
 
+    private String deepLink = "deepLink";
+
     public ObservableField<String> priceDetail;
     public ObservableField<String> addressDetail;
     public ObservableField<String> genderDetail;
@@ -104,6 +106,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     }
 
+
     private void onRequestComment(String idPost) {
         CommentRequest request = new CommentRequest(Config.TOKEN_USER, idPost);
         MyRetrofitSmartFind.getInstanceSmartFind().getComment(request).enqueue(new Callback<CommentResponse>() {
@@ -113,7 +116,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                     mViewModel.onShowComment(response.body().getResponseBody().getComments());
 
                 } else {
-    //                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
+                    //                    mViewModel.showMessage("Bình luận bài viết hiện không thể thực hiện");
                 }
             }
 
@@ -134,8 +137,8 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         priceWaterDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getWaterBill()) + "đ/" + product.getProduct().getInformation().getWaterUnit());
         priceDepositDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getDeposit()) + " " + product.getProduct().getInformation().getUnit());
         categoryDetail.set(product.getProduct().getCategory() + "  ");
-        total_people_lease.set("Đã thuê "+"\n"+product.getTotal_people_lease()+"/"+product.getProduct().getInformation().getAmountPeople());
-        Log.d("CheckPeople",product.getTotal_people_lease());
+        total_people_lease.set("Đã thuê " + "\n" + product.getTotal_people_lease() + "/" + product.getProduct().getInformation().getAmountPeople());
+        Log.d("CheckPeople", product.getTotal_people_lease());
         if (Config.LEVEL_ACCOUNT > 0) {
             phoneNumberDetail.set(product.getUser().getPhoneNumber());
         }
@@ -307,26 +310,28 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     @Override
     public void onClickLike() {
-        InitFavorite request = new InitFavorite();
-        request.setUser(Config.TOKEN_USER);
-        request.setProduct(mProduct.getId());
+        if (Config.isClick()) {
+            InitFavorite request = new InitFavorite();
+            request.setUser(Config.TOKEN_USER);
+            request.setProduct(mProduct.getId());
 
-        MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
-            @Override
-            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
-                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
-                    onGetFavorite(mProduct.getId());
-                } else {
+            MyRetrofitSmartFind.getInstanceSmartFind().initFavorite(request).enqueue(new Callback<CheckPhoneResponse>() {
+                @Override
+                public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                    if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+                        onGetFavorite(mProduct.getId());
+                    } else {
+                        mViewModel.showMessage("Hiện tại bạn không thể thích bài viết này, vui lòng thử lại sau");
+                    }
+                }
+                @Override
+                public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
                     mViewModel.showMessage("Hiện tại bạn không thể thích bài viết này, vui lòng thử lại sau");
                 }
-            }
-
-            @Override
-            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
-
-            }
-        });
-
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public TextWatcher onCommentListenner() {

@@ -100,7 +100,7 @@
                                 android:paddingLeft="@dimen/_8sdp"
                                 android:paddingRight="@dimen/_8sdp"
                                 android:singleLine="true"
-                                android:text="@{presenter.textSearch}"
+                                android:text="@={presenter.textSearch}"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/gray2"
                                 app:addTextChangedListener="@{presenter.changeColorButton()}" />
