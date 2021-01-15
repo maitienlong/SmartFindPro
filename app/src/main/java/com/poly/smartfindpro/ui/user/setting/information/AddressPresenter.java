@@ -208,7 +208,7 @@ public class AddressPresenter implements AddressContact.Presenter {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.body().getResponseHeader().getResCode() == 200 &&
-                        response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        response.body().getResponseHeader().getResMessage().equalsIgnoreCase("Success")) {
                     Log.d("checkStatus", new Gson().toJson(response.body()));
                     Log.d("checkUpdate", new Gson().toJson(request));
                     initData();

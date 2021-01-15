@@ -102,12 +102,12 @@ public class InforPresenter implements InforContact.Presenter {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.body().getResponseHeader().getResCode() == 200 &&
-                        response.body().getResponseHeader().getResMessage().equals("Success")) {
+                        response.body().getResponseHeader().getResMessage().equalsIgnoreCase("Success")) {
 
                     Log.d("check", new Gson().toJson(response.body()));
                     Log.d("check2", new Gson().toJson(request));
 
-                    getInfor();
+                    initData();
                     Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("check", new Gson().toJson(response.body()));
@@ -132,13 +132,15 @@ public class InforPresenter implements InforContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-//                    Log.d("TAG",response.body().getResponseBody().getUser().getFullName());
-                    showData(mProfile);
+                    Log.d("TAG",mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns());
+
 //                    address.setId(mProfile.getResponseBody().getUser().getAddress().getId());
 //                    address.setDetailAddress(mProfile.getResponseBody().getUser().getAddress().getDetailAddress());
 //                    address.setCommuneWardTown(mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown());
 //                    address.setDistrictsTowns(mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns());
 //                    address.setProvinceCity(mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
+                    showData(mProfile);
+
 
                 } else {
 
@@ -158,6 +160,7 @@ public class InforPresenter implements InforContact.Presenter {
 
         addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
         //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
+//        addressInfor.set(address.getDetailAddress() + ", " + address.getCommuneWardTown() + ", " + address.getDistrictsTowns() + ", " + address.getProvinceCity());
 
         gender.set(mProfile.getResponseBody().getUser().getGender());
         birthday.set(mProfile.getResponseBody().getUser().getBirth());

@@ -57,9 +57,6 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
 
     @Override
     public void onClickAddress() {
-        Bundle bundle = new Bundle();
-        bundle.putString(Config.TOKEN_USER, Config.TOKEN_USER);
-        Log.d("TAG", Config.TOKEN_USER);
-        getBaseActivity().goToFragment(R.id.fl_native, new AddressFragment(), bundle);
+        getBaseActivity().goToFragment(R.id.fl_native, new AddressFragment(), null);
     }
 }

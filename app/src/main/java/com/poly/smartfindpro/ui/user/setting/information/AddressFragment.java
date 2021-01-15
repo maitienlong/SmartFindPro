@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
@@ -40,6 +42,13 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Địa chỉ");
 
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         BodyReq proviceReq = new BodyReq("P", "");
         mPresenter.getDataApiArea(0, new Gson().toJson(proviceReq));
