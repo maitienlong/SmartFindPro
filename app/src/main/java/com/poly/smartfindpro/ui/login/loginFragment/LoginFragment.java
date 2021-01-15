@@ -1,11 +1,9 @@
 package com.poly.smartfindpro.ui.login.loginFragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -13,13 +11,11 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.callback.AlertDialogListener;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.ConfigSharedPreferences;
-import com.poly.smartfindpro.data.notification.MyFirebaseService;
 import com.poly.smartfindpro.databinding.FragmentLoginBinding;
 import com.poly.smartfindpro.ui.MainActivity;
 
@@ -49,7 +45,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     @Override
     protected void initData() {
-
+        initTokenFirebase();
     }
 
     @Override
@@ -62,7 +58,6 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
             public void onAccept() {
                 showLoadingDialog();
                 if (onSaveLogin(username, password, token, level, true)) {
-                    initTokenFirebase();
                     Intent intent = new Intent(mActivity, MainActivity.class);
                     startActivity(intent);
                     mActivity.finish();
@@ -121,7 +116,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
         return editor.commit();
     }
 
-    private void initTokenFirebase(){
+    public void initTokenFirebase() {
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -131,10 +126,9 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
                             Log.d("TOKEN", "Fetching FCM registration token failed", task.getException());
                             return;
                         }
-
+                        Config.TOKEN_DEVICE = task.getResult();
                         // Get new FCM registration token
-                        String token = task.getResult();
-                        Log.d("TOKEN", token);
+                        Log.d("TOKEN", task.getResult());
                     }
                 });
 

@@ -15,6 +15,7 @@ import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
+import com.poly.smartfindpro.data.model.login.logout.LogoutRequest;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.notification.req.NotificationRequest;
@@ -138,4 +139,7 @@ public interface ListServices {
 
     @POST("/update-user-password")
     Call<DeleteProductResponse> forgotPassword(@Body ForgotPasswordRequest request);
+
+    @POST("/log-out")
+    Call<DeleteProductResponse> logOut(@Body LogoutRequest request);
 }

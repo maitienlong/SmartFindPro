@@ -13,7 +13,6 @@ public interface LoginFragmentContract {
         void onShowDialog(String msg);
 
         void onClickLogin();
-
     }
 
     interface Presenter extends BasePresenter {

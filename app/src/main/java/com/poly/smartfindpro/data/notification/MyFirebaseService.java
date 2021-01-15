@@ -7,26 +7,20 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
 import static com.poly.smartfindpro.data.notification.App.CHANNEL_1_ID;
-import static com.poly.smartfindpro.data.notification.App.CHANNEL_2_ID;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.ui.MainActivity;
-import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 
 public class MyFirebaseService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseService";
@@ -46,8 +40,8 @@ public class MyFirebaseService extends FirebaseMessagingService {
 
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
-        Config.TOKEN_DEVECI = token;
-        Log.d(TAG, Config.TOKEN_DEVECI);
+        Config.TOKEN_DEVICE = token;
+        Log.d(TAG, Config.TOKEN_DEVICE);
     }
 
     private void sendNotification(String title, String messageBody) {

@@ -5,12 +5,9 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
@@ -93,6 +90,7 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
         LoginRequest request = new LoginRequest();
         request.setAccount(mBinding.edtAccountNumber.getText().toString().trim());
         request.setPassword(mBinding.edtPassword.getText().toString());
+        request.setDeviceId(Config.TOKEN_DEVICE);
 
         MyRetrofitSmartFind.getInstanceSmartFind().getLogin(request).enqueue(new Callback<LoginResponse>() {
             @Override
@@ -106,13 +104,11 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
                     Config.PROFILE = response.body().getResponseBody().getUser();
                     Config.TOKEN_USER = token;
                     Config.LEVEL_ACCOUNT = level;
-                    Log.d("getUser", String.valueOf(level));
                     mViewmodel.saveLogin(mBinding.edtAccountNumber.getText().toString().trim(), mBinding.edtPassword.getText().toString().trim(), token, level);
                 } else {
                     mViewmodel.hideLoading();
                     mViewmodel.showMessage("Tài khoản hoặc mật khẩu không chính xác");
                 }
-
             }
 
 
