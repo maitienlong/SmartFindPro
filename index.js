@@ -2694,7 +2694,6 @@ app.get('/postManage', async function (request, response) {
                 productShare: productShare.length
             }
         }
-        console.log(JSON.stringify(successPost))
         response.render('postManage', {
             data: data, adminId: adminID
         });
@@ -2974,7 +2973,9 @@ app.post('/confirm-product', async function (request, response) {
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
-                        updateProduct = updateProduct[0];
+                        console.log("h1: " + oldProduct)
+                        console.log("h2: " + product)
+                        console.log("h3: " + updateProduct)
                         sendNotification(request, response, updateProduct.user, "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm");
                         let res_body = {status: sttOK}
                         response.json(getResponse(name, 200, sttOK, res_body))
@@ -3026,7 +3027,6 @@ app.post('/cancel-product', async function (request, response) {
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
-                        updateProduct = updateProduct[0];
                         sendNotification(request, response, updateProduct.user, "Bài đăng " + updateProduct.content + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166");
 
                         let res_body = {status: sttOK}
