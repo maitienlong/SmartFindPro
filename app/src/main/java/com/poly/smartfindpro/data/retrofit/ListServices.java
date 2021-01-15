@@ -10,6 +10,7 @@ import com.poly.smartfindpro.data.model.comment.initrecomment.res.ReplycommentRe
 import com.poly.smartfindpro.data.model.comment.getcomment.req.CommentRequest;
 import com.poly.smartfindpro.data.model.comment.getcomment.res.CommentResponse;
 import com.poly.smartfindpro.data.model.favorite.ResponseFavoritePost;
+import com.poly.smartfindpro.data.model.forgotpasswrd.ForgotPasswordRequest;
 import com.poly.smartfindpro.data.model.home.req.HomeRequest;
 import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
@@ -17,8 +18,7 @@ import com.poly.smartfindpro.data.model.initfavorite.InitFavorite;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
 import com.poly.smartfindpro.data.model.notification.req.NotificationRequest;
-import com.poly.smartfindpro.data.model.notification.res.NotificationBody;
-import com.poly.smartfindpro.data.model.notification.res.NotificationResponse;
+import com.poly.smartfindpro.data.model.notification.res.NotifyResponse;
 import com.poly.smartfindpro.data.model.post.res.postresponse.PostResponse;
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.DeleteProductRequest;
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
@@ -30,7 +30,6 @@ import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.data.model.profile.req.UserRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.model.register.regisRequest.RegisterRequest;
-import com.poly.smartfindpro.data.model.register.regisRes.RegisterResponse;
 import com.poly.smartfindpro.data.model.register.req.CheckPhoneNumberRequest;
 import com.poly.smartfindpro.data.model.register.resphonenumber.CheckPhoneResponse;
 import com.poly.smartfindpro.data.model.updateaddress.RequestUpdateAddress;
@@ -39,7 +38,6 @@ import com.poly.smartfindpro.data.model.updateavatar.RequestUpdateCover;
 import com.poly.smartfindpro.data.model.uploadphoto.ResponsePostPhoto;
 
 import okhttp3.MultipartBody;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -127,11 +125,17 @@ public interface ListServices {
     Call<CheckPhoneResponse> getTotalPeopleLease(@Body TotalPeopleLeaseRequest request);
 
     @POST("/find-history")
-    Call<NotificationResponse> getNotification(@Body NotificationRequest request);
+    Call<NotifyResponse> getNotification(@Body NotificationRequest request);
 
     @POST("/update-user")
     Call<DeleteProductResponse> updateAvatar(@Body RequestUpdateAvatar request);
 
     @POST("/update-user")
     Call<DeleteProductResponse> updateCover(@Body RequestUpdateCover request);
+
+    @POST("/update-user")
+    Call<DeleteProductResponse> updateInfor(@Body RequestUpdateCover request);
+
+    @POST("/update-user-password")
+    Call<DeleteProductResponse> forgotPassword(@Body ForgotPasswordRequest request);
 }

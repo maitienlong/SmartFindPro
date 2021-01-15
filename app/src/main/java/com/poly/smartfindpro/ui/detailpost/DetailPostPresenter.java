@@ -134,7 +134,8 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         priceWaterDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getWaterBill()) + "đ/" + product.getProduct().getInformation().getWaterUnit());
         priceDepositDetail.set(NumberFormat.getNumberInstance().format(product.getProduct().getInformation().getDeposit()) + " " + product.getProduct().getInformation().getUnit());
         categoryDetail.set(product.getProduct().getCategory() + "  ");
-        total_people_lease.set("Đã thuê "+product.getTotal_people_lease()+"/"+product.getProduct().getInformation().getAmountPeople());
+        total_people_lease.set("Đã thuê "+"\n"+product.getTotal_people_lease()+"/"+product.getProduct().getInformation().getAmountPeople());
+        Log.d("CheckPeople",product.getTotal_people_lease());
         if (Config.LEVEL_ACCOUNT > 0) {
             phoneNumberDetail.set(product.getUser().getPhoneNumber());
         }

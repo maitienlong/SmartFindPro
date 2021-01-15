@@ -17,62 +17,16 @@ import retrofit2.Response;
 public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter {
 
     private Context context;
-    private ForgotPasswordContract.ViewModel mViewModel;
-    private FragmentForgotPasswordBinding mBinding;
 
+    private ForgotPasswordContract.ViewModel mViewModel;
+
+    private FragmentForgotPasswordBinding mBinding;
 
     public ForgotPasswordPresenter(Context context, ForgotPasswordContract.ViewModel mViewModel, FragmentForgotPasswordBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
         this.mBinding = mBinding;
     }
-
-    @Override
-    public void OnBackClick() {
-        mViewModel.OnBackClick();
-    }
-
-
-    @Override
-    public void onClickForgot() {
-        if (mBinding.edtPhoneNummber.getText().toString().equals("")) {
-            mViewModel.showMessage("Vui lòng nhập số điện thoại");
-        } else {
-            getCheckNum();
-        }
-    }
-
-    private void getCheckNum() {
-        mViewModel.showLoading();
-        CheckPhoneNumberRequest request = new CheckPhoneNumberRequest();
-        request.setPhoneNumber(mBinding.edtPhoneNummber.getText().toString());
-        MyRetrofitSmartFind.getInstanceSmartFind().getCheckNum(request).enqueue(new Callback<CheckPhoneResponse>() {
-            @Override
-            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
-                if (response.code() == 200) {
-                    mViewModel.hideLoading();
-                    if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
-//                        registerRequest.setPhoneNumber(mBinding.edtAccountNumberRegister.getText().toString());
-                        mViewModel.checkData(mBinding.edtPhoneNummber.getText().toString());
-                    } else if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Fail")) {
-//                        mViewModel.showMessage("Số điện thoại đã được đăng ký");
-                    } else {
-                        mViewModel.showMessage("Số điện thoại không chính xác");
-                    }
-                } else {
-                    mViewModel.hideLoading();
-                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
-                mViewModel.hideLoading();
-                mViewModel.showMessage(context.getString(R.string.services_not_avail));
-            }
-        });
-    }
-
 
     @Override
     public void subscribe() {
@@ -82,5 +36,44 @@ public class ForgotPasswordPresenter implements ForgotPasswordContract.Presenter
     @Override
     public void unSubscribe() {
 
+    }
+
+    @Override
+    public void OnBackClick() {
+        mViewModel.OnBackClick();
+    }
+
+    public void onNextClick() {
+        if (mBinding.edtPhoneNummber.getText().toString().trim().equals("")) {
+            mViewModel.showMessage("Không để trống");
+        } else {
+            mViewModel.showLoading();
+            CheckPhoneNumberRequest request = new CheckPhoneNumberRequest();
+            request.setPhoneNumber(mBinding.edtPhoneNummber.getText().toString());
+            MyRetrofitSmartFind.getInstanceSmartFind().getCheckNum(request).enqueue(new Callback<CheckPhoneResponse>() {
+                @Override
+                public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                    if (response.code() == 200) {
+                        mViewModel.hideLoading();
+                        if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                            mViewModel.showMessage("Số điện thoại chưa được đăng ký");
+                        } else if (response.body().getResponseBody().getStatus().equalsIgnoreCase("Fail")) {
+                            mViewModel.onNextCreatePassword(mBinding.edtPhoneNummber.getText().toString().trim());
+                        } else {
+                            mViewModel.showMessage("Số điện thoại không chính xác");
+                        }
+                    } else {
+                        mViewModel.hideLoading();
+                        mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
+                    mViewModel.hideLoading();
+                    mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                }
+            });
+        }
     }
 }

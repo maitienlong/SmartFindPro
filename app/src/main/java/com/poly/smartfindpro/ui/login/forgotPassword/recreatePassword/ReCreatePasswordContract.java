@@ -8,6 +8,8 @@ import com.poly.smartfindpro.basedatabind.BaseView;
 public interface ReCreatePasswordContract {
     interface ViewModel extends BaseView {
         void OnBackClick();
+
+        void onSuccess();
     }
 
     interface Presenter extends BasePresenter {

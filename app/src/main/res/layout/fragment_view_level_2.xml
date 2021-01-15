@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_16sdp"
-        android:text="Thành viên bạc có những tính năng gì ?" />
+        android:text="Cho phép xem bài viết, chia sẻ bài viết. Giới hạn đăng bài 3 lượt/ngày" />
 
 
 </LinearLayout>

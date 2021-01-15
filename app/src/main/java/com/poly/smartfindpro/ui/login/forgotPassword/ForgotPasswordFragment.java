@@ -11,6 +11,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.poly.smartfindpro.R;
+import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.databinding.FragmentCreatePasswordBinding;
@@ -31,9 +32,8 @@ public class ForgotPasswordFragment extends BaseDataBindFragment<FragmentForgotP
 
     @Override
     protected void initView() {
+
         mBinding.cmtb.setTitle("Quên Mật Khẩu");
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.setLanguageCode("vi");
     }
 
     @Override
@@ -42,12 +42,8 @@ public class ForgotPasswordFragment extends BaseDataBindFragment<FragmentForgotP
         mPresenter = new ForgotPasswordPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
-        mBinding.btnAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                goToFragment(R.id.fl_forgot_password, new ReCreatePasswordFragment(), null);
-            }
-        });
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.setLanguageCode("vi");
     }
 
     @Override
@@ -56,11 +52,12 @@ public class ForgotPasswordFragment extends BaseDataBindFragment<FragmentForgotP
     }
 
     @Override
-    public void checkData(String phone) {
+    public void onNextCreatePassword(String phoneNumber) {
         showLoadingDialog();
+
         PhoneAuthOptions phoneAuthOptions =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+84"+phone)       // Phone number to verify
+                        .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(mActivity)                 // Activity (for callback binding)
                         .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -74,7 +71,7 @@ public class ForgotPasswordFragment extends BaseDataBindFragment<FragmentForgotP
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 hideLoading();
                                 FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
-                                showMessage("Xác thực bằng mã OTP không thành công, vui lòng thử lại - Lỗi: "+e.toString());
+                                showMessage("Xác thực bằng mã OTP không thành công, vui lòng thử lại "+ e.toString());
                             }
 
                             @Override
@@ -82,17 +79,16 @@ public class ForgotPasswordFragment extends BaseDataBindFragment<FragmentForgotP
                                 super.onCodeSent(s, forceResendingToken);
                                 hideLoading();
                                 Bundle bundle = new Bundle();
-//                                bundle.putString(Config.POST_BUNDEL_RES);
-                                bundle.putString(Config.POST_BUNDEL_ID_OTP, s);
-                                bundle.putString(Config.POST_BUNDEL_SDT, phone);
-                                getBaseActivity().goToFragmentReplace(R.id.fl_Login, new ConfirmOTPFragment(), bundle);
+                                bundle.putString(Config.POST_BUNDEL_RES, mBinding.edtPhoneNummber.getText().toString().trim());
+                                getBaseActivity().goToFragment(R.id.fl_forgot_password, new ReCreatePasswordFragment(), bundle);
+
                             }
 
                             @Override
                             public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
                                 super.onCodeAutoRetrievalTimeOut(s);
                                 hideLoading();
-                                showMessage("Hệ thống OTP đang mất kết nối - Lỗi: " +s);
+                                showMessage("Hệ thống OTP đang mất kết nối");
                             }
                         })
                         .build();

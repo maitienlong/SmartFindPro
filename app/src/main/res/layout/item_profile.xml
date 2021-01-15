@@ -60,6 +60,7 @@
                     android:layout_gravity="top"
                     android:layout_height="@dimen/_30sdp"
                     android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/black"
                     android:text="Đã thuê" />
 
                 <Button

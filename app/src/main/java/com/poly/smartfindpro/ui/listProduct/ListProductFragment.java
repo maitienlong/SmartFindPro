@@ -25,8 +25,7 @@ implements ListProductContract.ViewModel{
 
     @Override
     protected void initView() {
-        List<Products> list = mActivity.getSupportParentActivityIntent().getParcelableArrayListExtra("list");
-        Log.d("haha", "initView: " + list.size());
+
     }
 
     @Override

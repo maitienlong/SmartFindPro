@@ -6,11 +6,11 @@ import com.poly.smartfindpro.basedatabind.BaseView;
 public interface ForgotPasswordContract {
     interface ViewModel extends BaseView {
         void OnBackClick();
-        void checkData(String phone);
+
+        void onNextCreatePassword(String phoneNumber);
     }
 
     interface Presenter extends BasePresenter {
         void OnBackClick();
-        void onClickForgot();
     }
 }

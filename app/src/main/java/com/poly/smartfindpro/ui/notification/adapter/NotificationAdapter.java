@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.CircularImageView;
-import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
-import com.poly.smartfindpro.data.model.notification.res.Notification;
+import com.poly.smartfindpro.data.model.notification.res.History;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.ui.notification.NotificationContract;
 
@@ -27,7 +26,7 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private Context context;
 
-    List<Notification> listItem;
+    List<History> listItem;
 
     private NotificationContract.ViewModel mViewmodel;
 
@@ -36,7 +35,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         this.mViewmodel = mViewmodel;
     }
 
-    public void setItem(List<Notification> listItem) {
+    public void setItem(List<History> listItem) {
         this.listItem = listItem;
     }
 
@@ -50,9 +49,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Notification item = listItem.get(position);
+        History item = listItem.get(position);
         // ten
-        holder.tvContent.setText(item.getUser().getFullname() + " đã " + item.getStatus());
+        holder.tvContent.setText(item.getUser().getFullName() + " " + item.getStatus());
 
         // avatar
         Glide.

@@ -23,7 +23,7 @@ import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.retrofit.MyRetrofit;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityLoginBinding;
-import com.poly.smartfindpro.ui.login.forgotPassword.ForgotPasswordFragment;
+import com.poly.smartfindpro.ui.login.forgotPassword.ForgotPasswordActivity;
 import com.poly.smartfindpro.ui.login.loginFragment.LoginFragment;
 import com.poly.smartfindpro.ui.login.registerFragment.RegisterFragment;
 
@@ -46,9 +46,6 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
 
     @Override
     protected void initView() {
-        mPresenter =  new LoginPresenter(this, this, mBinding);
-        mBinding.setPresenter(mPresenter);
-
         currentHeight = new ObservableField<>();
         currentHeight.set(mBinding.flLogin.getMeasuredHeight());
 
@@ -84,7 +81,8 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
 
     @Override
     protected void initData() {
-
+        mPresenter = new LoginPresenter(this, this);
+        mBinding.setPresenter(mPresenter);
     }
 
     private void checkViewLogin() {
@@ -135,8 +133,9 @@ public class LoginActivity extends BaseDataBindActivity<ActivityLoginBinding, Lo
         newHeight.set(mBinding.cvLogin.getHeight());
     }
 
+
     @Override
-    public void openForgotPassword() {
-        goToFragmentReplace(R.id.fl_Login, new ForgotPasswordFragment(), null);
+    public void onForgotClick() {
+        openActivity(ForgotPasswordActivity.class);
     }
 }

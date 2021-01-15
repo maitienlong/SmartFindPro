@@ -6,6 +6,7 @@
     style="@style/CoffeeDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -35,6 +36,7 @@
                     android:id="@+id/img_bottom_avatar"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/imgplaceholder" />
 
                 <TextView
