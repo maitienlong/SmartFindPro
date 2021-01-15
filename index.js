@@ -3196,7 +3196,7 @@ async function sendNotification(req, res, userId, text) {
             var notify_body = {
                 'sound': 'Enabled',
                 'notification': notification,
-                'registration_ids': fcm_tokens
+                'registration_ids': devices
             }
             fetch('https://fcm.googleapis.com/fcm/send', {
                 'method': 'POST',
