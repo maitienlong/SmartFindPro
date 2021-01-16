@@ -40,9 +40,9 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
         mBinding.ctb.setTitle("Xác thực tài khoản");
 
         List<RankAccount> rankAccountList = new ArrayList<>();
-        RankAccount rankDong = new RankAccount(R.mipmap.rank_dong, "Rank dong co nhung chuc nang nhu sau");
-        RankAccount rankBac = new RankAccount(R.mipmap.rank_bac, "Rank bac co nhung chuc nang nhu sau");
-        RankAccount rankVang = new RankAccount(R.mipmap.rank_vang, "Rank vang co nhung chuc nang nhu sau");
+        RankAccount rankDong = new RankAccount(R.mipmap.rank_dong, getResources().getString(R.string.text_rank_bronze));
+        RankAccount rankBac = new RankAccount(R.mipmap.rank_bac, getResources().getString(R.string.text_rank_silver));
+        RankAccount rankVang = new RankAccount(R.mipmap.rank_vang, getResources().getString(R.string.text_rank_golden));
 
         rankAccountList.add(rankDong);
         rankAccountList.add(rankBac);
