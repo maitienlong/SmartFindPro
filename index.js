@@ -3082,8 +3082,8 @@ app.post('/confirm-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             status_code: name,
-                            user_w: null,
-                            user: null,
+                            user_w: updateProduct.user,
+                            user: updateProduct.user,
                             status: "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
                             createAt: updateAt
                         })
