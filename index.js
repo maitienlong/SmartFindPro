@@ -1562,7 +1562,7 @@ app.post('/init-favorite', async function (request, response) {
                     product: product,
                     admin: null,
                     user: user,
-                    status: findUser.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn",
+                    status: findUser[0].full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn",
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
