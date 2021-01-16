@@ -3216,15 +3216,15 @@ app.post('/confirm-upgrade', async function (request, response) {
                                 let confirm = await ConfirmPost({
                                     product: null,
                                     admin: adminId,
-                                    user: id,
+                                    user: user._id,
                                     status_code: name,
-                                    user_w: id,
+                                    user_w: user._id,
                                     status: notifi,
                                     createAt: updatedAt
                                 });
                                 let confirPrd = await confirm.save();
 
-                                sendNotification(request, response, id, notifi);
+                                sendNotification(request, response, user._id, notifi);
 
                                 res_body = {status: sttOK};
                                 response.json(getResponse(name, 200, sttOK, res_body));
