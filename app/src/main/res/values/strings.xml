@@ -332,6 +332,41 @@
         </br>
 
     </string>
+    <string name="text_rank_bronze">
+        <br>
+            Rank đồng có các chức năng như sau:\n\n
+        </br>
+
+        <br>
+            - Được bình luận và nhắn tin, trao đổi với chủ trọ, có lịch sử tìm kiếm tại màn hình tìm kiếm\n\n
+        </br>
+        <br></br>
+    </string>
+
+    <string name="text_rank_silver">
+        <br>
+            Rank bạc có các chức năng như sau:\n\n
+        </br>
+        <br></br>
+        <br>
+            - Được bình luận và nhắn tin, trao đổi với chủ trọ, có lịch sử tìm kiếm tại màn hình tìm kiếm\n\n
+            - Được đăng 1 bài viết một ngày, cập nhật, xóa bài viết đã đăng\n\n
+        </br>
+        <br></br>
+    </string>
+
+    <string name="text_rank_golden">
+        <br>
+            Rank vàng có các chức năng như sau:\n\n
+        </br>
+        <br></br>
+        <br>
+            - Được bình luận và nhắn tin, trao đổi với chủ trọ, có lịch sử tìm kiếm tại màn hình tìm kiếm\n\n
+            - Được đăng 10 bài viết một ngày, cập nhật, xóa bài viết đã đăng\n\n
+        </br>
+        <br></br>
+    </string>
+
 
     <string name="search">Tìm kiếm</string>
     <string name="msg_token_fmt">abcd1234</string>
