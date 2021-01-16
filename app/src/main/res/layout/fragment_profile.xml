@@ -110,7 +110,6 @@
                         android:id="@+id/rl_avatar"
                         android:layout_width="@dimen/_90sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:onClick="@{()-> presenter.onClickChangeAvatar()}"
                         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
@@ -134,6 +133,7 @@
                             android:background="@drawable/border_image_avata">
 
                             <Button
+                                android:onClick="@{()-> presenter.onClickChangeAvatar()}"
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
                                 android:layout_gravity="center_vertical"

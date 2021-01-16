@@ -76,29 +76,13 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
         bottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "ONCLickListner");
-
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    Log.d(TAG, "state expand");
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 } else {
-                    Log.d(TAG, "state collapse");
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
         });
-        //Check permission
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            if (!Settings.canDrawOverlays(SearchProductActivity.this)) {
-//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-//                        Uri.parse("package:" + getPackageName()));
-//                startActivityForResult(intent, 1234);
-//                Log.d("onClick: btnAddBubble", "1");
-//                startService(new Intent(SearchProductActivity.this, ChatHeadService.class));
-//                Log.d("onClick: btnAddBubble", "2");
-//            }
-//        }
-
     }
 
 
@@ -206,8 +190,6 @@ public class SearchProductActivity extends BaseDataBindActivity<ActivitySearchPr
 
     @Override
     public void onResult(int resultCode, Intent intent) {
-
-        Log.d("CheckCallback", resultCode + "");
         if (resultCode == Activity.RESULT_OK && intent.hasExtra("data")) {
             mPresenter.onDataCallBackMap(intent.getStringExtra("data"));
         }

@@ -1,7 +1,10 @@
 package com.poly.smartfindpro.data;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
@@ -64,6 +67,13 @@ public class Config {
             window.setNavigationBarColor(activity.getResources().getColor(android.R.color.transparent));
             window.setBackgroundDrawable(background);
         }
+    }
+
+    public static void openGMap(Context context, String lat, String log){
+        Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?daddr="+lat+","+log);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        context.startActivity(mapIntent);
     }
 
 
