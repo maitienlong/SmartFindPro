@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
@@ -82,8 +83,18 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     @Override
     public void onShow(List<Products> productList) {
-        profileAdapter.setItemList(productList);
-        BindingUtils.setAdapter(mBinding.rcProfile, profileAdapter, false);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideLoading();
+                profileAdapter.setItemList(productList);
+                mBinding.rcProfile.setHasFixedSize(true);
+                BindingUtils.setAdapter(mBinding.rcProfile, profileAdapter, false);
+
+            }
+        }, 150);
+
     }
 
 

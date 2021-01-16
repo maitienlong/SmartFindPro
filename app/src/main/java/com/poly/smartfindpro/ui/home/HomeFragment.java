@@ -9,10 +9,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
@@ -61,6 +63,14 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
         Slider.init(picassoImageLoadingService);
         mBinding.sliderHome.setAdapter(new MainSliderAdapter(mListImage));
 
+        mBinding.srlHome.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onRefresh() {
+                onCheckStatus(1);
+                mPresenter.getProductRental();
+            }
+        });
 
     }
 
@@ -112,9 +122,18 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
 
     @Override
     public void onShow(List<Product> productList) {
-        homeAdapter.setListItem(productList);
-        mBinding.rvList.setHasFixedSize(true);
-        BindingUtils.setAdapter(mBinding.rvList, homeAdapter, true);
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            if(mBinding.srlHome.isRefreshing()){
+                mBinding.srlHome.setRefreshing(false);
+            }
+            hideLoading();
+            homeAdapter.setListItem(productList);
+            mBinding.rvList.setHasFixedSize(true);
+            BindingUtils.setAdapter(mBinding.rvList, homeAdapter, true);
+
+        }, 150);
+
     }
 
     @Override

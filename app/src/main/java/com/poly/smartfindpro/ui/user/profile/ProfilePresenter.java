@@ -141,7 +141,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
-                    mViewModel.hideLoading();
                     productsList = new ArrayList<>();
                     if (response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() != null) {
                         for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
@@ -174,7 +173,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
-                    mViewModel.hideLoading();
                     if (response.body().getResponseBody() != null && response.body().getResponseBody().getProducts() != null) {
                         productsList = new ArrayList<>();
                         for (int i = 0; i < response.body().getResponseBody().getProducts().size(); i++) {
@@ -393,7 +391,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.code() == 200) {
                     mViewModel.hideLoading();
-                    if (response.body().getResponseHeader().getResCode() == 200 && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                    if (response.body().getResponseHeader().getResCode() == 200) {
                         getInfor();
                         Toast.makeText(context, "Ảnh bìa đã được thay đổi", Toast.LENGTH_SHORT).show();
                     } else {

@@ -113,7 +113,7 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
         List<Products> listResult = new ArrayList<>();
 
         for (int i = 0; i < mListProduct.size(); i++) {
-            if (mListProduct.get(i).getProduct().getInformation().getAmountPeople() == value) {
+            if (mListProduct.get(i).getProduct().getInformation().getAmountPeople() >= value) {
                 listResult.add(mListProduct.get(i));
             }
         }
@@ -141,7 +141,6 @@ public class FilterProductPresenter implements FilterProductContact.Presenter {
                 listResult.add(mListProduct.get(i));
             }
         }
-
         return listResult;
     }
 

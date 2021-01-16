@@ -259,8 +259,7 @@
                                 android:id="@+id/rbAll"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:text="@string/tv_both"
+                                android:text="@string/tv_all"
                                 android:textColor="@color/black">
 
                             </RadioButton>

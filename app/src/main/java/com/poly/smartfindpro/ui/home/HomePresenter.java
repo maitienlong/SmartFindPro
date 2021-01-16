@@ -51,7 +51,7 @@ public class HomePresenter implements HomeContract.Presenter {
                 mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
                 break;
             case 2:
-                mViewmodel.showMessagePost("Tài khoản của bạn bị giới hạn lượt đăng là 3 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
+                mViewmodel.showMessagePost("Tài khoản của bạn bị giới hạn lượt đăng là 1 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
                 break;
             case 3:
                 mViewmodel.openPost();
@@ -82,12 +82,14 @@ public class HomePresenter implements HomeContract.Presenter {
 
     }
 
-    private void getProductRental() {
+    public void getProductRental() {
+        mViewmodel.showLoading();
         HomeRequest request = new HomeRequest();
         request.setId(Config.TOKEN_USER);
         MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+
                 if (response.code() == 200) {
                     if (response.body().getResponseBody() != null) {
                         productsList = new ArrayList<>();
@@ -109,6 +111,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
             @Override
             public void onFailure(Call<HomeResponse> call, Throwable t) {
+                mViewmodel.hideLoading();
                 mViewmodel.showMessage(mContext.getString(R.string.services_not_avail) + t.toString());
             }
         });
