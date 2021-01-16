@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.user.profile;
 import com.poly.smartfindpro.basedatabind.BasePresenter;
 import com.poly.smartfindpro.basedatabind.BaseView;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 
 import java.util.List;
 
@@ -31,7 +32,9 @@ public interface ProfileContact {
 
         void onClickChangeCover();
 
-        void onShowPhoto();
+        void onShowPhoto(ProfileResponse mProfile);
+
+        void onShowCoverImages(ProfileResponse mProfile);
 
     }
 
@@ -49,6 +52,8 @@ public interface ProfileContact {
         void onGetTotalPeople();
 
         void setAmountPeople(String amount);
+
+        void onClickCoverImages();
 
     }
 }

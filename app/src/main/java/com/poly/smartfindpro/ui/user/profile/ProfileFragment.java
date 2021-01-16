@@ -3,6 +3,7 @@ package com.poly.smartfindpro.ui.user.profile;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,18 +14,25 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.post.req.ImageInforPost;
 import com.poly.smartfindpro.data.model.product.res.Products;
+import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
+import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.FragmentProfileBinding;
 import com.poly.smartfindpro.ui.detailpost.DetailPostActivity;
 import com.poly.smartfindpro.ui.login.otp.ConfirmOTPFragment;
@@ -177,8 +185,53 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
     }
 
     @Override
-    public void onShowPhoto() {
+    public void onShowPhoto(ProfileResponse mProfile) {
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        View alertLayout = inflater.inflate(R.layout.dia_log_custom_image_detail, null);
+        final ImageView img_detail = (ImageView) alertLayout.findViewById(R.id.img_detail);
+        final Button btn_close = (Button) alertLayout.findViewById(R.id.btn_close);
+        AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+        AlertDialog dialog = alert.create();
+        dialog.show();
+        Glide.
+                with(mActivity)
+                .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getAvatar())
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgplaceholder)
+                .into(img_detail);
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
 
+    @Override
+    public void onShowCoverImages(ProfileResponse mProfile) {
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        View alertLayout = inflater.inflate(R.layout.dia_log_custom_image_detail, null);
+        final ImageView img_detail = (ImageView) alertLayout.findViewById(R.id.img_detail);
+        final Button btn_close = (Button) alertLayout.findViewById(R.id.btn_close);
+        AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+        AlertDialog dialog = alert.create();
+        dialog.show();
+        Glide.
+                with(mActivity)
+                .load(MyRetrofitSmartFind.smartFind + mProfile.getResponseBody().getUser().getCoverImage())
+                .placeholder(R.mipmap.imgplaceholder)
+                .error(R.mipmap.imgplaceholder)
+                .into(img_detail);
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override

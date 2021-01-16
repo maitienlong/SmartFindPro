@@ -52,6 +52,8 @@
                             android:layout_weight="1">
 
                             <ImageView
+                                android:onClick="@{()->presenter.onClickCoverImages()}"
+
                                 android:id="@+id/img_cover_image"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
