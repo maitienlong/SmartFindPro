@@ -578,7 +578,7 @@ app.post('/update-user', async function (request, response) {
                             if (checkData(converImage)) {
                                 status = "Bạn đã thay đổi ảnh bìa thành công";
                             }
-                            if (!checkData(avatar) && user.level == 0 || !checkData(converImage) && user.level == 0) {
+                            if (!checkData(avatar) && user.level == 0 || !checkData(coverImage) && user.level == 0) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
                                 let confirm = await ConfirmPost({
                                     product: null,
