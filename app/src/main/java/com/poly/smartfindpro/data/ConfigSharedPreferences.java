@@ -7,4 +7,5 @@ public class ConfigSharedPreferences {
     public static String PASSWORD = "password";
     public static String LEVEL = "level";
     public static String IS_SAVE = "isSave";
+    public static String TOKEN_DEVICE = "tokendevice";
 }

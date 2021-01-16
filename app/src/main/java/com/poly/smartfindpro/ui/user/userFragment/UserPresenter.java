@@ -7,6 +7,8 @@ import androidx.databinding.ObservableField;
 import com.bumptech.glide.Glide;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
+import com.poly.smartfindpro.data.model.login.logout.LogoutRequest;
+import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
@@ -25,23 +27,25 @@ public class UserPresenter implements UserContact.Presenter {
     public ObservableField<String> nameInfor;
 
     public ObservableField<String> dangXuat;
-    public UserPresenter(Context context, UserContact.ViewModel mViewModel,FragmentUserBinding mBinding) {
+
+    public UserPresenter(Context context, UserContact.ViewModel mViewModel, FragmentUserBinding mBinding) {
         this.context = context;
         this.mViewModel = mViewModel;
         this.mBinding = mBinding;
 
         initData();
     }
+
     private void initData() {
         nameInfor = new ObservableField<>();
         dangXuat = new ObservableField<>();
-        if(Config.isClick()){
+        if (Config.isClick()) {
             getInfor();
         }
 
     }
 
-    public void setTextLogOut(String msg){
+    public void setTextLogOut(String msg) {
         dangXuat.set(msg);
     }
 
@@ -57,10 +61,10 @@ public class UserPresenter implements UserContact.Presenter {
 
     @Override
     public void onClickProfile() {
-        if(Config.isClick()){
+        if (Config.isClick()) {
             mViewModel.onClickProfile();
-        }else {
-           mViewModel.showMessage(context.getString(R.string.pl_login));
+        } else {
+            mViewModel.showMessage(context.getString(R.string.pl_login));
         }
 
     }
@@ -84,10 +88,37 @@ public class UserPresenter implements UserContact.Presenter {
 
     }
 
+    public void onSigOut() {
+        LogoutRequest request = new LogoutRequest();
+        request.setUserId(Config.TOKEN_USER);
+        request.setDeviceId(Config.TOKEN_DEVICE);
+
+        MyRetrofitSmartFind.getInstanceSmartFind().logOut(request).enqueue(new Callback<DeleteProductResponse>() {
+            @Override
+            public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body().getResponseHeader().getResCode() == 200 && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                        mViewModel.onLogOut();
+                    } else {
+                        mViewModel.showMessage("Đăng xuất không thành công, vui lòng kiểm tra lại kết nối");
+                    }
+                } else {
+                    mViewModel.showMessage("Đăng xuất không thành công, vui lòng kiểm tra lại kết nối");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
+                mViewModel.showMessage("Đăng xuất không thành công, vui lòng kiểm tra lại kết nối");
+            }
+        });
+    }
+
     @Override
     public void onClickLogOut() {
         mViewModel.onClickLogOut();
     }
+
     public void getInfor() {
         ProfileRequest request = new ProfileRequest();
         request.setId(Config.TOKEN_USER);

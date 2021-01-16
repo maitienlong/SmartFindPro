@@ -19,11 +19,23 @@ public class LoginRequest {
     @Expose
     private String password;
 
+    @SerializedName("deviceId")
+    @Expose
+    private String deviceId;
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

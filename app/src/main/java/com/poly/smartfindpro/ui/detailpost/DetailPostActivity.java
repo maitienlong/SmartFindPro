@@ -48,6 +48,7 @@ import com.poly.smartfindpro.data.model.comment.getcomment.res.Comments;
 import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
 import com.poly.smartfindpro.databinding.ActivityInformationPostBinding;
+import com.poly.smartfindpro.ui.MainActivity;
 import com.poly.smartfindpro.ui.detailcomment.DetailCommentFragment;
 import com.poly.smartfindpro.ui.detailpost.adapter.CommentPostAdapter;
 import com.poly.smartfindpro.ui.detailpost.adapter.DetailImageAdapter;
@@ -76,6 +77,8 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
     private CallbackManager callbackManager;
 
     private ShareButton btnShareButton;
+
+    private String deepLink = "";
 
     @Override
     protected int getLayoutId() {
@@ -117,12 +120,23 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         Intent intent = getIntent();
         mProduct = new Products();
         mProduct = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES), type);
+        if(getIntent().hasExtra(Config.DATA_CALL_BACK)){
+            deepLink = getIntent().getStringExtra(Config.DATA_CALL_BACK);
+        }
 
     }
 
     @Override
     public void onBackClick() {
-        finish();
+        if(deepLink.equals("ok")){
+            openActivity(MainActivity.class);
+            finish();
+        }else if(deepLink.isEmpty()){
+            finish();
+        }else {
+            finish();
+        }
+
     }
 
     @Override

@@ -21,8 +21,10 @@ import com.poly.smartfindpro.data.model.post.req.Address;
 import com.poly.smartfindpro.data.model.post.req.PostRequest;
 import com.poly.smartfindpro.ui.post.adressPost.chooselocation.ChooseLoactionFragment;
 import com.poly.smartfindpro.ui.post.utilitiesPost.UtilitiesPostFragment;
+import com.poly.smartfindpro.ui.searchProduct.adapter.SpinnerCatalory;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -53,18 +55,20 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
         mPresenter = new AddressPostPresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
 
-        BodyReq proviceReq = new BodyReq("P", "");
-        mPresenter.getDataApiArea(0, new Gson().toJson(proviceReq));
+        List<String> listCatalory = new ArrayList<>();
+        listCatalory.add("Hà Nội");
+        SpinnerCatalory spinnerCatalory = new SpinnerCatalory(mActivity, listCatalory);
+        mBinding.spnProvince.setAdapter(spinnerCatalory);
+
+        BodyReq bodyReq = new BodyReq("D", "HNO");
+        mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
 
         mBinding.spnProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
-                BodyReq bodyReq = new BodyReq("D", listArea.getAreaCode());
+                BodyReq bodyReq = new BodyReq("D", "HNO");
                 mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
-
-                mPresenter.setP(listArea.getAreaName());
-
+                mPresenter.setP(listCatalory.get(i));
             }
 
             @Override
@@ -110,11 +114,8 @@ public class AddressPostFragment extends BaseDataBindFragment<FragmentAddressPos
 
     }
 
-
     public void onShowProvince(ResultArea resultArea) {
-        SpinnerAreaAdapter adapter = new SpinnerAreaAdapter(mActivity, resultArea.getListArea());
 
-        mBinding.spnProvince.setAdapter(adapter);
     }
 
     public void onShowDistrict(ResultArea resultArea) {

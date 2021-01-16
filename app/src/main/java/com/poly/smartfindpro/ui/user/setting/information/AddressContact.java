@@ -19,7 +19,7 @@ public interface AddressContact {
 
         void onSubmitData(Address address, int status, List<Candidate> locationList);
 
-        void onNext();
+        void onNext(String jsonData);
         void onBackClick();
 
 

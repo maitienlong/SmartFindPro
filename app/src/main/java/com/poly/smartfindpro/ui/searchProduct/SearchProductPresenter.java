@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.ObservableField;
@@ -55,6 +56,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     private void initData() {
         key = new ObservableField<>();
         hint = new ObservableField<>();
+        textSearch = new ObservableField<>();
         hint.set("Nhập địa chỉ tìm kiếm");
         getProduct();
     }
@@ -114,21 +116,33 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
             }
         } else if (type == 2) {
             List<Products> mListAddress = new ArrayList<>();
-
-            for (Products item : mListProduct) {
-                if (item.getProduct().getInformation().getPrice() < Integer.valueOf(key)) {
-                    mListAddress.add(item);
+            if (checkNumber(key)) {
+                for (Products item : mListProduct) {
+                    if (item.getProduct().getInformation().getPrice() < Integer.valueOf(key)) {
+                        mListAddress.add(item);
+                    }
                 }
-            }
 
-            if (!mListAddress.isEmpty()) {
-                mViewModel.onShow(mListAddress);
+
+                if (!mListAddress.isEmpty()) {
+                    mViewModel.onShow(mListAddress);
+                } else {
+                    mViewModel.showMessage("Không có kết quả nào !");
+                }
             } else {
-                mViewModel.showMessage("Không có kết quả nào !");
+                mViewModel.showMessage("Dữ liệu nhập vào là dạng số");
             }
         }
 
+    }
 
+    private boolean checkNumber(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public TextWatcher onListener() {
@@ -214,6 +228,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     @Override
     public void filterAddress() {
         type = 1;
+        textSearch.set("");
         hint.set("Nhập địa chỉ tìm kiếm");
     }
 
@@ -221,6 +236,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
     public void filterPrice() {
 
         type = 2;
+        textSearch.set("");
         hint.set("Nhập số tiền lớn nhất");
 
     }

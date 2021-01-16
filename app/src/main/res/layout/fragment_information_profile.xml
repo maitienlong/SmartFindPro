@@ -93,20 +93,44 @@
 
                 </TextView>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_birthday_profile"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_birthday_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_edt_change_pass"
+                            android:text="@={presenter.birthday}" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:inputType="date"
                         android:layout_height="match_parent"
-                        android:background="@drawable/custom_edt_change_pass"
-                        android:text="@={presenter.birthday}" />
+                        android:layout_weight="3"
+                        android:gravity="center">
 
+                        <ImageView
+                            android:id="@+id/btn_dialog_date"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:background="@drawable/ic_calendar_today_24"
+                            android:padding="@dimen/_12sdp" />
+                    </LinearLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,31 +147,30 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_address_profile"
-                        android:editable="false"
-                        android:onClick="@{()->presenter.onClickAddress()}"
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_edt_change_pass"
+                        android:editable="false"
+                        android:onClick="@{()->presenter.onClickAddress()}"
                         android:text="@={presenter.addressInfor}" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/tv_id_card"
-                    android:textSize="@dimen/_15sdp">
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="gone">
 
                 </TextView>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp">
+                    android:layout_height="@dimen/_40sdp"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_email_profile"
@@ -161,12 +184,12 @@
 
                 <Button
                     android:id="@+id/btn_change_info_user"
-                    android:onClick="@{()->presenter.onCLickUpdate()}"
                     android:layout_width="@dimen/_200sdp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:background="@drawable/background_button"
+                    android:onClick="@{()->presenter.onCLickUpdate()}"
                     android:text="@string/btn_change"
                     android:textColor="@color/white" />
             </LinearLayout>

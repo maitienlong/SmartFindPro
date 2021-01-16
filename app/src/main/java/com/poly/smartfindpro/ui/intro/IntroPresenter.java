@@ -14,6 +14,9 @@ import com.poly.smartfindpro.data.model.home.res.HomeResponse;
 import com.poly.smartfindpro.data.model.home.res.Product;
 import com.poly.smartfindpro.data.model.login.req.LoginRequest;
 import com.poly.smartfindpro.data.model.login.res.LoginResponse;
+import com.poly.smartfindpro.data.model.product.req.ProductRequest;
+import com.poly.smartfindpro.data.model.product.res.ProductResponse;
+import com.poly.smartfindpro.data.model.product.res.Products;
 import com.poly.smartfindpro.data.model.profile.req.ProfileRequest;
 import com.poly.smartfindpro.data.model.profile.res.ProfileResponse;
 import com.poly.smartfindpro.data.retrofit.MyRetrofitSmartFind;
@@ -52,26 +55,27 @@ public class IntroPresenter implements IntroContract.Presenter {
     }
 
     public void requestData(String idPost) {
-        HomeRequest request = new HomeRequest();
+        ProductRequest request = new ProductRequest();
         request.setId(Config.TOKEN_USER);
-        MyRetrofitSmartFind.getInstanceSmartFind().getProduct(request).enqueue(new Callback<HomeResponse>() {
+
+        MyRetrofitSmartFind.getInstanceSmartFind().getAllProduct(request).enqueue(new Callback<ProductResponse>() {
             @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.code() == 200) {
                     if (response.body().getResponseBody() != null) {
-                        Product product = new Product();
+                        Products product = new Products();
 
-                        for (Product item : response.body().getResponseBody().getProducts()) {
+                        for (Products item : response.body().getResponseBody().getProducts()) {
                             if (item.getId().equals(idPost)) {
                                 product = item;
+                                break;
                             }
                         }
 
-                        if(product != null){
+                        if (product != null) {
                             mViewModel.onNextDetail(new Gson().toJson(product));
                         }
                     } else {
-
                         mViewModel.onShowDialogMsg("Không thể kết nối tới Server");
                     }
 
@@ -81,8 +85,8 @@ public class IntroPresenter implements IntroContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
-                mViewModel.onShowDialogMsg("Không thể kết nối tới Server");
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+
             }
         });
     }
@@ -98,6 +102,10 @@ public class IntroPresenter implements IntroContract.Presenter {
 
             request.setPassword(password);
 
+            request.setDeviceId(Config.TOKEN_DEVICE);
+
+
+            Log.d("CheckLogin", new Gson().toJson(request));
             if (username != null && !username.isEmpty()) {
 
 

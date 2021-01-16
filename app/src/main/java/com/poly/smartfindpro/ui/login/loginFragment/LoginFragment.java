@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
 import com.poly.smartfindpro.callback.AlertDialogListener;
@@ -41,7 +45,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
 
     @Override
     protected void initData() {
-
+        initTokenFirebase();
     }
 
     @Override
@@ -108,7 +112,27 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
         editor.putString(ConfigSharedPreferences.TOKEN, token);
         editor.putInt(ConfigSharedPreferences.LEVEL, level);
         editor.putBoolean(ConfigSharedPreferences.IS_SAVE, isSave);
+        editor.putString(ConfigSharedPreferences.TOKEN_DEVICE, Config.TOKEN_DEVICE);
 
         return editor.commit();
     }
+
+    public void initTokenFirebase() {
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("TOKEN", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+                        Config.TOKEN_DEVICE = task.getResult();
+                        // Get new FCM registration token
+                        Log.d("TOKEN", task.getResult());
+                    }
+                });
+
+    }
+
 }

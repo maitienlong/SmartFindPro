@@ -1,5 +1,6 @@
 package com.poly.smartfindpro.ui.user.setting.information;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding, AddressPresenter> implements AddressContact.ViewModel {
 
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_address;
@@ -59,7 +61,6 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
                 ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
                 BodyReq bodyReq = new BodyReq("D", listArea.getAreaCode());
                 mPresenter.getDataApiArea(1, new Gson().toJson(bodyReq));
-
                 mPresenter.setP(listArea.getAreaName());
 
             }
@@ -76,9 +77,7 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
                 ListArea listArea = (ListArea) adapterView.getItemAtPosition(i);
                 BodyReq bodyReq = new BodyReq("C", listArea.getAreaCode());
                 mPresenter.getDataApiArea(2, new Gson().toJson(bodyReq));
-
                 mPresenter.setD(listArea.getAreaName());
-
             }
 
             @Override
@@ -92,7 +91,6 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ListArea listArea = (ListArea) parent.getItemAtPosition(position);
                 mPresenter.setC(listArea.getAreaName());
-
             }
 
             @Override
@@ -105,7 +103,6 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
 
     @Override
     protected void initData() {
-
 
     }
 
@@ -135,13 +132,12 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
     }
 
     @Override
-    public void onNext() {
-        if (mBinding.edtDetialAdress.getText().toString().trim().length() == 0) {
-            Toast.makeText(mActivity, "Bạn hãy nhập địa chỉ chi tiết", Toast.LENGTH_SHORT).show();
+    public void onNext(String jsonData) {
+        Intent intent = new Intent();
+        intent.putExtra(Config.DATA_CALL_BACK, jsonData);
 
-        } else {
-            getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null);
-        }
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -150,4 +146,5 @@ public class AddressFragment extends BaseDataBindFragment<FragmentAddressBinding
     }
 
 }
+
 
