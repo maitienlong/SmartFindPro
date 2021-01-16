@@ -569,7 +569,7 @@ app.post('/update-user', async function (request, response) {
                             status: user.status
                         })
                         if (updateUser) {
-                            if (lvUp == 1 && !checkData(avatar) || lvUp == 1 && !checkData(converImage)) {
+                            if (!checkData(avatar) || !checkData(converImage)) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
 
                                 let confirm = await ConfirmPost({
@@ -584,21 +584,21 @@ app.post('/update-user', async function (request, response) {
                                 let confirPrd = await confirm.save();
                                 sendNotification(request, response, userId, "Tài khoản của bạn đã được nâng cấp lên thành viên Đồng(tài khoản cấp 1)");
                                 response.json(getResponse(name, 200, sttOK, res_body));
-                            } else {
-                                res_body = {status: sttOK};
-                                let confirm = await ConfirmPost({
-                                    product: null,
-                                    admin: null,
-                                    status_code: name,
-                                    user_w: userId,
-                                    user: userId,
-                                    status: "Bạn đã cập nhật thông tin tài khoản thành công",
-                                    createAt: updateAt
-                                });
-                                let confirPrd = await confirm.save();
-                                sendNotification(request, response, userId, "Bạn đã cập nhật thông tin tài khoản thành công");
-                                response.json(getResponse(name, 200, sttOK, res_body));
                             }
+                            res_body = {status: sttOK};
+                            let confirm = await ConfirmPost({
+                                product: null,
+                                admin: null,
+                                status_code: name,
+                                user_w: userId,
+                                user: userId,
+                                status: "Bạn đã cập nhật thông tin tài khoản thành công",
+                                createAt: updateAt
+                            });
+                            let confirPrd = await confirm.save();
+                            sendNotification(request, response, userId, "Bạn đã cập nhật thông tin tài khoản thành công");
+                            response.json(getResponse(name, 200, sttOK, res_body));
+
 
                         } else {
                             res_body = {status: "Fail"};
