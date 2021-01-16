@@ -592,7 +592,7 @@ app.post('/update-user', async function (request, response) {
                             } else {
                                 console.log("false")
                             }
-                            if (!checkData(avatar) && lvUp == 1 || !checkData(converImage) && lvUp == 1) {
+                            if (checkData(avatar) == false && lvUp == 1 || checkData(converImage) == false && lvUp == 1) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
 
                                 let confirm = await ConfirmPost({
