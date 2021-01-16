@@ -511,7 +511,7 @@ app.post('/update-user', async function (request, response) {
         let userId = request.body.userId;
         let mAddress = request.body.address;
         let avatar = request.body.avatar;
-        let converImage = request.body.coverImage;
+        let coverImage = request.body.coverImage;
         let gender = request.body.gender;
         let birth = request.body.birth;
         let fullName = request.body.full_name;
@@ -520,7 +520,7 @@ app.post('/update-user', async function (request, response) {
             if (
                 checkData(mAddress) ||
                 checkData(avatar) ||
-                checkData(converImage) ||
+                checkData(coverImage) ||
                 checkData(gender) ||
                 checkData(birth) ||
                 checkData(fullName) ||
@@ -560,7 +560,7 @@ app.post('/update-user', async function (request, response) {
                             password: user.password,
                             address: user.address._id,
                             avatar: checkData(avatar) ? avatar : user.avatar,
-                            coverImage: checkData(converImage) ? converImage : user.converImage,
+                            coverImage: checkData(coverImage) ? coverImage : user.coverImage,
                             gender: checkData(gender) ? gender : user.gender,
                             birth: checkData(birth) ? birth : user.birth,
                             full_name: checkData(fullName) ? fullName : user.full_name,
