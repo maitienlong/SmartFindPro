@@ -108,4 +108,12 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
                     + address.getProvinceCity());
         }
     }
+
+    @Override
+    public void onSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra(Config.DATA_CALL_BACK, "ok");
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
 }

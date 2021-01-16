@@ -12,18 +12,20 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.callback.OnFragmentCloseCallback;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.ConfigSharedPreferences;
 import com.poly.smartfindpro.databinding.FragmentConfirmAccountBinding;
 import com.poly.smartfindpro.ui.identification.activity.IdentificationActivity;
 import com.poly.smartfindpro.ui.identification.adapter.RankAccount;
 import com.poly.smartfindpro.ui.identification.adapter.SlideshowLevelAdapter;
+import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirmAccountBinding, ConfirmAccountPresenter>
-        implements ConfirmAccountContact.ViewModel {
+        implements ConfirmAccountContact.ViewModel, OnFragmentCloseCallback {
 
 
     private SlideshowLevelAdapter levelAdapter;
@@ -114,9 +116,13 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
 
     @Override
     public void onConfirm() {
-        Intent intent = new Intent(mActivity, IdentificationActivity.class);
+        if (mBinding.viewPagerRank.getCurrentItem() != 0) {
+            Intent intent = new Intent(mActivity, IdentificationActivity.class);
+            startActivityForResult(intent, Config.RESULT_REQUEST);
+        } else {
+            getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null, this::onClose);
+        }
 
-        startActivityForResult(intent, Config.RESULT_REQUEST);
     }
 
     @Override
@@ -154,4 +160,25 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
 
         return editor.commit();
     }
+
+    @Override
+    public void onClose(int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            mPresenter.getInfor();
+        }
+    }
+
+    public boolean onSaveLevel(String username, String password, String token, int level, String tokenDevice) {
+        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(ConfigSharedPreferences.USERNAME, username);
+        editor.putString(ConfigSharedPreferences.PASSWORD, password);
+        editor.putString(ConfigSharedPreferences.TOKEN, token);
+        editor.putInt(ConfigSharedPreferences.LEVEL, level);
+        editor.putString(ConfigSharedPreferences.TOKEN_DEVICE, token);
+
+        return editor.commit();
+    }
+
 }

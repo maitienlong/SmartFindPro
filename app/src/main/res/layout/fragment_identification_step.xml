@@ -243,14 +243,27 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:text="Ngày cấp" />
 
-                        <EditText
-                            android:id="@+id/edt_date_supply"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginTop="@dimen/_6sdp"
-                            android:background="@drawable/custom_edt_change_pass"
-                            android:hint="dd/MM/yyyy"
-                            android:inputType="date" />
+                            android:layout_height="wrap_content">
+                            <EditText
+                                android:id="@+id/edt_date_supply"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginTop="@dimen/_6sdp"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:hint="dd/MM/yyyy"
+                                android:inputType="date" />
+                            <ImageView
+                                android:padding="@dimen/_6sdp"
+                                android:id="@+id/btn_dialog_date_supply"
+                                android:layout_centerVertical="true"
+                                android:layout_alignEnd="@id/edt_date_supply"
+                                android:src="@drawable/ic_calendar_today_24"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"/>
+                        </RelativeLayout>
+
 
 
                     </LinearLayout>
@@ -302,14 +315,28 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:text="Ngày sinh" />
 
-                        <EditText
-                            android:id="@+id/edt_birth_day"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginTop="@dimen/_6sdp"
-                            android:background="@drawable/custom_edt_change_pass"
-                            android:hint="dd/MM/yyyy"
-                            android:inputType="date" />
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:id="@+id/edt_birth_day"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginTop="@dimen/_6sdp"
+                                android:background="@drawable/custom_edt_change_pass"
+                                android:hint="dd/MM/yyyy"
+                                android:inputType="date" />
+
+                            <ImageView
+                                android:padding="@dimen/_6sdp"
+                                android:id="@+id/btn_dialog_date_birth_day"
+                                android:layout_centerVertical="true"
+                                android:layout_alignEnd="@id/edt_birth_day"
+                                android:src="@drawable/ic_calendar_today_24"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"/>
+                        </RelativeLayout>
 
 
                     </LinearLayout>
