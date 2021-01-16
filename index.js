@@ -575,7 +575,7 @@ app.post('/update-user', async function (request, response) {
                             if (checkData(avatar)) {
                                 status = "Bạn đã thay đổi ảnh đại diện thành công";
                             }
-                            if (checkData(converImage)) {
+                            if (checkData(coverImage)) {
                                 status = "Bạn đã thay đổi ảnh bìa thành công";
                             }
                             if (!checkData(avatar) && user.level == 0 || !checkData(coverImage) && user.level == 0) {
