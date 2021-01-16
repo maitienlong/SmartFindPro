@@ -577,20 +577,12 @@ app.post('/update-user', async function (request, response) {
                             status: user.status
                         })
                         if (updateUser) {
-                            console.log("update user")
-                            console.log(avatar)
-                            console.log(converImage)
-                            console.log(lvUp)
-                            console.log("------------")
+                            var status = "Bạn đã cập nhật thông tin tài khoản thành công";
                             if (checkData(avatar)) {
-                                console.log("true")
-                            } else {
-                                console.log("false")
+                                status = "Bạn đã thay đổi ảnh đại diện thành công";
                             }
-                            if (lvUp == 1) {
-                                console.log("true")
-                            } else {
-                                console.log("false")
+                            if (checkData(converImage)) {
+                                status = "Bạn đã thay đổi ảnh bìa thành công";
                             }
                             if (!checkData(avatar) && user.level == 0 || !checkData(converImage) && user.level == 0) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
@@ -615,7 +607,7 @@ app.post('/update-user', async function (request, response) {
                                 status_code: name,
                                 user_w: userId,
                                 user: userId,
-                                status: "Bạn đã cập nhật thông tin tài khoản thành công",
+                                status: status,
                                 createAt: updateAt
                             });
                             let confirPrd = await confirm.save();
