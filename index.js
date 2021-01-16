@@ -1493,22 +1493,33 @@ app.post('/init-comment', async function (request, response) {
                 if (status == "REPLY") {
                     let findF = await Comment.find({oldComment: oldComment, status: status}).lean();
                     count = findF.length;
-                    if (count > 1) {
-                        notifi = findUser[0].full_name + " và " + (count - 1) + " người khác đã trả lời bình luận " + findOldComment.title + " của bạn";
-                    } else {
-                        notifi = findUser[0].full_name + " đã trả lời bình luận " + findOldComment.title + " của bạn";
-                    }
                     userDevices = findOldComment.user._id;
+                    let nameNo = "Bạn";
+                    let id1 = userDevices;
+                    let id2 = findUser[0]._id
+                    if (id1.toString() != id2.toString()) {
+                        nameNo = findUser[0].full_name;
+                    }
+                    if (count > 1) {
+                        notifi = nameNo + " và " + (count - 1) + " người khác đã trả lời bình luận " + findOldComment.title + " của bạn";
+                    } else {
+                        notifi = nameNo + " đã trả lời bình luận " + findOldComment.title + " của bạn";
+                    }
                 } else if (status == "COMMENT") {
                     let findF = await Comment.find({product: product, status: status}).lean();
                     count = findF.length;
-
-                    if (count > 1) {
-                        notifi = findUser[0].full_name + " và " + (count - 1) + " người khác đã bình luận trong bài đăng " + findProduct[0].content + " của bạn";
-                    } else {
-                        notifi = findUser[0].full_name + " đã bình luận trong bài đăng " + findProduct[0].content + " của bạn"
-                    }
                     userDevices = findProduct[0].user._id;
+                    let nameNo = "Bạn";
+                    let id1 = userDevices;
+                    let id2 = findUser[0]._id
+                    if (id1.toString() != id2.toString()) {
+                        nameNo = findUser[0].full_name;
+                    }
+                    if (count > 1) {
+                        notifi = nameNo + " và " + (count - 1) + " người khác đã bình luận trong bài đăng " + findProduct[0].content + " của bạn";
+                    } else {
+                        notifi = nameNo + " đã bình luận trong bài đăng " + findProduct[0].content + " của bạn"
+                    }
                 }
 
                 let confirm = await ConfirmPost({
@@ -1618,20 +1629,32 @@ app.post('/init-favorite', async function (request, response) {
                 let userDevices = null;
                 if (status == "POST") {
                     let findF = await Favorite.find({product: product, status: status}).lean();
-                    if (findF.length > 1) {
-                        notifi = findUser[0].full_name + " và " + (findF.length - 1) + " người khác đã thích bài đăng " + findProduct[0].content + " của bạn";
-                    } else {
-                        notifi = findUser[0].full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn";
-                    }
                     userDevices = findProduct[0].user._id;
+                    let nameNo = "Bạn";
+                    let id1 = userDevices;
+                    let id2 = findUser[0]._id
+                    if (id1.toString() != id2.toString()) {
+                        nameNo = findUser[0].full_name;
+                    }
+                    if (findF.length > 1) {
+                        notifi = nameNo + " và " + (findF.length - 1) + " người khác đã thích bài đăng " + findProduct[0].content + " của bạn";
+                    } else {
+                        notifi = nameNo + " đã thích bài đăng " + findProduct[0].content + " của bạn";
+                    }
                 } else if (status == "COMMENT") {
                     let findF = await Favorite.find({comment: comment, status: status}).lean();
-                    if (findF.length > 1) {
-                        notifi = findUser[0].full_name + " và " + (findF.length - 1) + " người khác đã thích bình luận " + findComment.title + " của bạn";
-                    } else {
-                        notifi = findUser[0].full_name + " đã thích bình luận " + findComment.title + " của bạn";
-                    }
                     userDevices = findF[0].user;
+                    let nameNo = "Bạn";
+                    let id1 = userDevices;
+                    let id2 = findUser[0]._id
+                    if (id1.toString() != id2.toString()) {
+                        nameNo = findUser[0].full_name;
+                    }
+                    if (findF.length > 1) {
+                        notifi = nameNo + " và " + (findF.length - 1) + " người khác đã thích bình luận " + findComment.title + " của bạn";
+                    } else {
+                        notifi = nameNo + " đã thích bình luận " + findComment.title + " của bạn";
+                    }
                 }
                 let confirm = await ConfirmPost({
                     product: product,
