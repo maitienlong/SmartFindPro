@@ -51,6 +51,8 @@ public class AddressPresenter implements AddressContact.Presenter {
     private ProfileResponse mProfile;
 
 
+
+
     public AddressPresenter(Context mContext, AddressContact.ViewModel mViewModel, FragmentAddressBinding mBinding) {
         this.mContext = mContext;
         this.mViewModel = mViewModel;
@@ -205,9 +207,15 @@ public class AddressPresenter implements AddressContact.Presenter {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.body().getResponseHeader().getResCode() == 200 &&
-                        response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
-                    Log.d("checkStatus", new Gson().toJson(response.body()));
-                    Log.d("checkUpdate", new Gson().toJson(request));
+                        response.body().getResponseHeader().getResMessage().equalsIgnoreCase("Success")) {
+//                    Log.d("checkStatus", new Gson().toJson(response.body()));
+//                    Log.d("checkUpdate", new Gson().toJson(request));
+//                    mAddress.setId(addressUpdate.getId());
+//                    mAddress.setProvinceCity(addressUpdate.getId());
+//                    mAddress.setDetailAddress(addressUpdate.getDetailAddress());
+//                    mAddress.setCommuneWardTown(addressUpdate.getCommuneWardTown());
+//                    mAddress.setDistrictsTowns(addressUpdate.getDistrictsTowns());
+
                     initData();
                     Toast.makeText(mContext, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
 
