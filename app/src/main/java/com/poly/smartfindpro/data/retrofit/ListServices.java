@@ -142,4 +142,8 @@ public interface ListServices {
 
     @POST("/log-out")
     Call<DeleteProductResponse> logOut(@Body LogoutRequest request);
+
+    @POST("/update-user-password")
+    Call<DeleteProductResponse> changePassword(@Body ForgotPasswordRequest request);
+
 }

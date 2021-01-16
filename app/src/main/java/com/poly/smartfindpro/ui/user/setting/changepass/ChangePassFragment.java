@@ -18,7 +18,7 @@ public class ChangePassFragment extends BaseDataBindFragment<FragmentChangePassB
 
     @Override
     protected void initView() {
-        mPresenter = new ChangePassPresenter(mActivity,this);
+        mPresenter = new ChangePassPresenter(mActivity,this, mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Đổi mật khẩu");
 
@@ -39,5 +39,10 @@ public class ChangePassFragment extends BaseDataBindFragment<FragmentChangePassB
     @Override
     public void onBackClick() {
         getBaseActivity().onBackFragment();
+    }
+
+    @Override
+    public void onChangePass() {
+
     }
 }
