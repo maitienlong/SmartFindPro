@@ -15,6 +15,8 @@ public interface UserContact {
         void onClickHelp();
 
         void onClickLogOut();
+
+        void onLogOut();
     }
 
     interface Presenter extends BasePresenter {

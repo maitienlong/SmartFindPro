@@ -5,10 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -16,17 +12,23 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindFragment;
+import com.poly.smartfindpro.callback.OnFragmentCloseCallback;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.ConfigSharedPreferences;
 import com.poly.smartfindpro.databinding.FragmentConfirmAccountBinding;
 import com.poly.smartfindpro.ui.identification.activity.IdentificationActivity;
-import com.poly.smartfindpro.ui.identification.step.StepFragment;
-import com.poly.smartfindpro.ui.user.setting.confirmAccount.adpterViewpage.ViewPagerRankAdapter;
+import com.poly.smartfindpro.ui.identification.adapter.RankAccount;
+import com.poly.smartfindpro.ui.identification.adapter.SlideshowLevelAdapter;
+import com.poly.smartfindpro.ui.user.setting.information.InforFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirmAccountBinding, ConfirmAccountPresenter>
-        implements ConfirmAccountContact.ViewModel {
+        implements ConfirmAccountContact.ViewModel, OnFragmentCloseCallback {
 
-    private ViewPagerRankAdapter rankAdapter;
+
+    private SlideshowLevelAdapter levelAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -38,8 +40,19 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
         mPresenter = new ConfirmAccountPresenter(mActivity, this);
         mBinding.setPresenter(mPresenter);
         mBinding.ctb.setTitle("Xác thực tài khoản");
-        rankAdapter = new ViewPagerRankAdapter(mActivity.getSupportFragmentManager(), mActivity);
-        mBinding.viewPagerRank.setAdapter(rankAdapter);
+
+        List<RankAccount> rankAccountList = new ArrayList<>();
+        RankAccount rankDong = new RankAccount(R.mipmap.rank_dong, "Rank dong co nhung chuc nang nhu sau");
+        RankAccount rankBac = new RankAccount(R.mipmap.rank_bac, "Rank bac co nhung chuc nang nhu sau");
+        RankAccount rankVang = new RankAccount(R.mipmap.rank_vang, "Rank vang co nhung chuc nang nhu sau");
+
+        rankAccountList.add(rankDong);
+        rankAccountList.add(rankBac);
+        rankAccountList.add(rankVang);
+
+        levelAdapter = new SlideshowLevelAdapter(mActivity, rankAccountList);
+
+        mBinding.viewPagerRank.setAdapter(levelAdapter);
 
         mBinding.viewPagerRank.setCurrentItem(0);
 
@@ -103,9 +116,13 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
 
     @Override
     public void onConfirm() {
-        Intent intent = new Intent(mActivity, IdentificationActivity.class);
+        if (mBinding.viewPagerRank.getCurrentItem() != 0) {
+            Intent intent = new Intent(mActivity, IdentificationActivity.class);
+            startActivityForResult(intent, Config.RESULT_REQUEST);
+        } else {
+            getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null, this::onClose);
+        }
 
-        startActivityForResult(intent, Config.RESULT_REQUEST);
     }
 
     @Override
@@ -143,4 +160,25 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
 
         return editor.commit();
     }
+
+    @Override
+    public void onClose(int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            mPresenter.getInfor();
+        }
+    }
+
+    public boolean onSaveLevel(String username, String password, String token, int level, String tokenDevice) {
+        SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(ConfigSharedPreferences.USERNAME, username);
+        editor.putString(ConfigSharedPreferences.PASSWORD, password);
+        editor.putString(ConfigSharedPreferences.TOKEN, token);
+        editor.putInt(ConfigSharedPreferences.LEVEL, level);
+        editor.putString(ConfigSharedPreferences.TOKEN_DEVICE, token);
+
+        return editor.commit();
+    }
+
 }

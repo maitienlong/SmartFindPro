@@ -112,6 +112,7 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
         editor.putString(ConfigSharedPreferences.TOKEN, token);
         editor.putInt(ConfigSharedPreferences.LEVEL, level);
         editor.putBoolean(ConfigSharedPreferences.IS_SAVE, isSave);
+        editor.putString(ConfigSharedPreferences.TOKEN_DEVICE, Config.TOKEN_DEVICE);
 
         return editor.commit();
     }

@@ -117,7 +117,7 @@ public class AddressPostPresenter implements AddressPostContract.Presenter {
 
                     if (areaType == 0) {
                         for (int i = 0; i < resultArea.getListArea().size(); i++) {
-                            if(!resultArea.getListArea().get(i).getProvince().equals("HNO")){
+                            if(resultArea.getListArea().get(i).getId() != 5271){
                                 resultArea.getListArea().remove(i);
                             }
                         }

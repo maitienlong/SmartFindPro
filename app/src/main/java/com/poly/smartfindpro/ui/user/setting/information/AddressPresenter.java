@@ -97,11 +97,6 @@ public class AddressPresenter implements AddressContact.Presenter {
                     resultArea = new Gson().fromJson(jsonData, type);
 
                     if (areaType == 0) {
-                        for (int i = 0; i < resultArea.getListArea().size(); i++) {
-                            if (!resultArea.getListArea().get(i).getProvince().equals("HNO")) {
-                                resultArea.getListArea().remove(i);
-                            }
-                        }
                         mViewModel.onShowProvince(resultArea);
                     } else if (areaType == 1) {
                         mViewModel.onShowDistrict(resultArea);
@@ -124,8 +119,12 @@ public class AddressPresenter implements AddressContact.Presenter {
 
     @Override
     public void onNext() {
-        mViewModel.onNext();
-        updateAddress();
+        if (mBinding.edtDetialAdress.getText().toString().trim().isEmpty()) {
+            mViewModel.showMessage("Vui lòng nhập địa chỉ chi tiết");
+        } else {
+            mAddress.setDetailAddress(mBinding.edtDetialAdress.getText().toString().trim());
+            mViewModel.onNext(new Gson().toJson(mAddress));
+        }
     }
 
 
@@ -165,7 +164,6 @@ public class AddressPresenter implements AddressContact.Presenter {
     }
 
 
-
     @Override
     public void onBackClick() {
         mViewModel.onBackClick();
@@ -180,7 +178,6 @@ public class AddressPresenter implements AddressContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
-
                 } else {
 
                 }

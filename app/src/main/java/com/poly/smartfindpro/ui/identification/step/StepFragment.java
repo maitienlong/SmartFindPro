@@ -1,6 +1,7 @@
 package com.poly.smartfindpro.ui.identification.step;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -90,6 +92,33 @@ public class StepFragment extends BaseDataBindFragment<FragmentIdentificationSte
 
         mBinding.spnSex.setAdapter(spinnerGender);
 
+        mBinding.btnDialogDateSupply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mActivity,
+                        (view, year, monthOfYear, dayOfMonth) -> mBinding.edtDateSupply.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
+        mBinding.btnDialogDateBirthDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mActivity,
+                        (view, year, monthOfYear, dayOfMonth) -> mBinding.edtBirthDay.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
     }
 

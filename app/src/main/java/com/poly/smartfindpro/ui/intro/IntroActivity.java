@@ -26,10 +26,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.basedatabind.BaseDataBindActivity;
 import com.poly.smartfindpro.callback.AlertDialogListener;
@@ -79,8 +82,6 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        onHask();
-        getHeightStatusBar();
         dynamicLink();
     }
 
@@ -126,6 +127,7 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
         mPresenter = new IntroPresenter(this, this);
         mBinding.setPresenter(mPresenter);
         checkSaveLogin();
+
     }
 
     private void onHask() {
@@ -240,6 +242,7 @@ public class IntroActivity extends BaseDataBindActivity<ActivityIntroBinding,
 
     private void checkSaveLogin() {
         SharedPreferences prefs = getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
+        Config.TOKEN_DEVICE = prefs.getString(ConfigSharedPreferences.TOKEN_DEVICE, "");
         mPresenter.getUpdateUser(prefs.getString(ConfigSharedPreferences.USERNAME, "root")
                 , prefs.getString(ConfigSharedPreferences.PASSWORD, "root")
                 , prefs.getBoolean(ConfigSharedPreferences.IS_SAVE, true));
