@@ -43,8 +43,8 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
 
     ProfileAdapter profileAdapter;
 
-    private int IMAGE_PICK_CODE_AVATAR = 123;
-    private int IMAGE_PICK_CODE_COVER = 124;
+    private int IMAGE_PICK_CODE_AVATAR = 560;
+    private int IMAGE_PICK_CODE_COVER = 561;
 
     @Override
     protected int getLayoutId() {

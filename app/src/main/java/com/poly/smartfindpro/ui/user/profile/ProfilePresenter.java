@@ -366,7 +366,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.code() == 200) {
                     mViewModel.hideLoading();
-                    if (response.body().getResponseHeader().getResCode() == 200 && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                    if (response.body().getResponseHeader().getResCode() == 200) {
                         getInfor();
                         getProductApproved();
                         Toast.makeText(context, "Ảnh đại diện đã được thay đổi", Toast.LENGTH_SHORT).show();
