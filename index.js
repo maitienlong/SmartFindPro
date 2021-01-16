@@ -310,10 +310,20 @@ app.post('/login', async function (request, response) {
                     let findLogin = await Login.find({user: userByPhone._id}).lean();
                     if (findLogin.length > 0) {
                         var devices = findLogin[0].devices
-                        devices.push(deviceId)
-                        let updateUserDevices = await Login.findByIdAndUpdate(findLogin[0]._id, {
-                            devices: devices
-                        });
+                        var count = 0;
+                        for (let i = 0; i < devices.length; i++) {
+                            console.log(deviceId.toString())
+                            console.log(devices[i].toString())
+                            if (deviceId.toString() == devices[i].toString()) {
+                                count++;
+                            }
+                        }
+                        if (count == 0) {
+                            devices.push(deviceId)
+                            let updateUserDevices = await Login.findByIdAndUpdate(findLogin[0]._id, {
+                                devices: devices
+                            });
+                        }
                     } else {
                         let newLogin = new Login({
                             user: userByPhone._id,
