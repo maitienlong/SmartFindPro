@@ -1462,16 +1462,43 @@ app.post('/init-comment', async function (request, response) {
 
             let initComment = await newComment.save();
             if (initComment) {
+                var notifi = '';
+                var count = 0;
+                let userDevices = null;
+                if (status == "REPLY") {
+                    let findF = await Comment.find({oldComment: oldComment, status: status}).lean();
+                    count = findF.length;
+                    if (count > 1) {
+                        notifi = findUser[0].full_name + " và " + (count - 1) + " người khác đã trả lời bình luận " + findOldComment.title + " của bạn";
+                    } else {
+                        notifi = findUser[0].full_name + " đã trả lời bình luận " + findOldComment.title + " của bạn";
+                    }
+                    userDevices = findOldComment.user._id;
+                } else if (status == "COMMENT") {
+                    let findF = await Comment.find({product: product, status: status}).lean();
+                    count = findF.length;
+
+                    if (count > 1) {
+                        notifi = findUser[0].full_name + " và " + (count - 1) + " người khác đã bình luận trong bài đăng " + findProduct[0].content + " của bạn";
+                    } else {
+                        notifi = findUser[0].full_name + " đã bình luận trong bài đăng " + findProduct[0].content + " của bạn"
+                    }
+                    userDevices = findProduct[0].user._id;
+                }
+
                 let confirm = await ConfirmPost({
                     product: product,
                     admin: null,
                     user: user,
-                    status: findUser[0].full_name + " đã bình luận bài đăng " + findProduct[0].content + " của bạn",
+                    status: notifi,
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
-
-                sendNotification(request, response, findProduct[0].user, findUser[0].full_name + " đã bình luận bài đăng " + findProduct[0].content + " của bạn");
+                let id1 = userDevices;
+                let id2 = findUser[0]._id
+                if (id1.toString() != id2.toString()) {
+                    sendNotification(request, response, userDevices, notifi);
+                }
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -1557,17 +1584,39 @@ app.post('/init-favorite', async function (request, response) {
                 createAt: createAt
             });
             let initFavorite = await newFavorite.save();
+            console.log("find-U")
+            console.log(findUser[0])
             if (initFavorite) {
+                var notifi = '';
+                if (status == "POST") {
+                    let findF = await Favorite.find({product: product, status: status}).lean();
+                    if (findF.length > 1) {
+                        notifi = findUser[0].full_name + " và " + (findF.length - 1) + " người khác đã thích bài đăng " + findProduct[0].content + " của bạn";
+                    } else {
+                        notifi = findUser[0].full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn";
+                    }
+                } else if (status == "COMMENT") {
+                    let findF = await Favorite.find({comment: comment, status: status}).lean();
+                    if (findF.length > 1) {
+                        notifi = findUser[0].full_name + " và " + (findF.length - 1) + " người khác đã thích bình luận " + findComment.title + " của bạn";
+                    } else {
+                        notifi = findUser[0].full_name + " đã thích bình luận " + findComment.title + " của bạn";
+                    }
+                }
                 let confirm = await ConfirmPost({
                     product: product,
                     admin: null,
                     user: user,
-                    status: findUser[0].full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn",
+                    status: notifi,
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
 
-                sendNotification(request, response, findProduct[0].user, findUser.full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn");
+                let id1 = findProduct[0].user._id;
+                let id2 = findUser[0]._id
+                if (id1.toString() != id2.toString()) {
+                    sendNotification(request, response, findProduct[0].user._id, notifi);
+                }
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
             } else {
@@ -2965,7 +3014,7 @@ app.post('/confirm-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
-                            status:  "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
+                            status: "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
                             createAt: updateAt
                         })
                         let confirPrd = await confirm.save();
