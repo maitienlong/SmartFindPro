@@ -194,15 +194,16 @@ async function getProducts(successPost) {
     return products
 }
 
-// Array.prototype.remove_by_value = function (val) {
-//     for (var i = 0; i < this.length; i++) {
-//         if (this[i] === val) {
-//             this.splice(i, 1);
-//             i--;
-//         }
-//     }
-//     return this;
-// }
+function remove_by_value(list, val) {
+    for (var i = 0; i < list.length; i++) {
+        if (list[i] === val) {
+            list.splice(i, 1);
+            i--;
+        }
+    }
+    return list;
+}
+
 //API
 //post anh
 app.post("/upload-photo", multer({storage: storage}).single('photo'), function (req, res) {
@@ -225,7 +226,7 @@ app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), fu
         var jsonResult = [];
         console.log(req.files)
         for (var i in req.files) {
-            console.log("path i: "+i)
+            console.log("path i: " + i)
             jsonResult.push(req.files[i].path)
         }
         let res_body = {addressImage: jsonResult}
@@ -261,7 +262,7 @@ app.post('/log-out', async function (request, response) {
                             response.json(getResponse(name, 200, 'Fail', res_body));
                         }
                     } else if (devices.length > 1) {
-                        devices.remove_by_value(deviceId)
+                        devices = remove_by_value(devices, deviceId)
                         let updateUserDevices = await Login.findByIdAndUpdate(findLogin._id, {
                             devices: devices
                         });
