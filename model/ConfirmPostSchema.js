@@ -11,7 +11,7 @@ const ConfirmPostSchema = new mongoose.Schema({
         required: false,
         ref: 'Admin'
     },
-    userW: {
+    user_w: {
         type: mongoose.Types.ObjectId,
         required: false,
         ref: 'User'
