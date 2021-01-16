@@ -91,7 +91,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
 
     public void onClickImage() {
-        mViewModel.onShowPhoto();
+        mViewModel.onShowPhoto(mProfile);
     }
 
     @Override
@@ -205,6 +205,11 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     @Override
     public void setAmountPeople(String amount) {
 
+    }
+
+    @Override
+    public void onClickCoverImages() {
+        mViewModel.onShowCoverImages(mProfile);
     }
 
     public void getTotalPeopleLease(String idPost, String amount) {
