@@ -312,8 +312,6 @@ app.post('/login', async function (request, response) {
                         var devices = findLogin[0].devices
                         var count = 0;
                         for (let i = 0; i < devices.length; i++) {
-                            console.log(deviceId.toString())
-                            console.log(devices[i].toString())
                             if (deviceId.toString() == devices[i].toString()) {
                                 count++;
                             }
@@ -579,7 +577,7 @@ app.post('/update-user', async function (request, response) {
                             status: user.status
                         })
                         if (updateUser) {
-                            if (!checkData(avatar) || !checkData(converImage)) {
+                            if (!checkData(avatar) && lvUp === 1 || !checkData(converImage) && lvUp === 1) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
 
                                 let confirm = await ConfirmPost({
@@ -594,6 +592,7 @@ app.post('/update-user', async function (request, response) {
                                 let confirPrd = await confirm.save();
                                 sendNotification(request, response, userId, "Tài khoản của bạn đã được nâng cấp lên thành viên Đồng(tài khoản cấp 1)");
                                 response.json(getResponse(name, 200, sttOK, res_body));
+                                return;
                             }
                             res_body = {status: sttOK};
                             let confirm = await ConfirmPost({
@@ -608,8 +607,6 @@ app.post('/update-user', async function (request, response) {
                             let confirPrd = await confirm.save();
                             sendNotification(request, response, userId, "Bạn đã cập nhật thông tin tài khoản thành công");
                             response.json(getResponse(name, 200, sttOK, res_body));
-
-
                         } else {
                             res_body = {status: "Fail"};
                             response.json(getResponse(name, 200, 'Fail', res_body))
@@ -627,10 +624,9 @@ app.post('/update-user', async function (request, response) {
         } else {
             response.json(getResponse(name, 400, 'Bad request', null))
         }
-    } catch
-        (e) {
+    } catch (e) {
         console.log('loi ne: \n' + e)
-        response.status(500).json(getResponse(name, 500, 'Server error', null))
+        // response.json(getResponse(name, 500, 'Server error', null))
     }
 });
 // nang cap quyen
