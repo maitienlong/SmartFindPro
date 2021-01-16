@@ -2,6 +2,7 @@ package com.poly.smartfindpro.ui.searchProduct.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,12 +86,9 @@ public class ProductDetailBottomAdapter extends RecyclerView.Adapter<ProductDeta
             }
         });
 
-        holder.btn_show_map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.onResultAdapter(item.getId());
-            }
-        });
+        holder.btn_show_map.setOnClickListener(v -> mViewModel.onResultAdapter(item.getId()));
+
+        holder.btnShowGoogleMap.setOnClickListener(v -> Config.openGMap(mContext, item.getAddress().getLocation().getLatitude(), item.getAddress().getLocation().getLongitude()));
     }
 
     @Override
@@ -102,7 +100,7 @@ public class ProductDetailBottomAdapter extends RecyclerView.Adapter<ProductDeta
         private TextView tv_nguoi_dang, tv_the_loai, tv_so_luong, tv_dia_chi, tv_gia, tv_title;
         private ImageView img_detai;
         private CircularImageView imgAvatar;
-        private CardView btn_xem_chi_tiet, btn_show_map;
+        private CardView btn_xem_chi_tiet, btn_show_map, btnShowGoogleMap;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,6 +116,7 @@ public class ProductDetailBottomAdapter extends RecyclerView.Adapter<ProductDeta
 
             btn_xem_chi_tiet = itemView.findViewById(R.id.btn_xem_chi_tiet);
             btn_show_map = itemView.findViewById(R.id.btn_show_map);
+            btnShowGoogleMap = itemView.findViewById(R.id.btn_show_gmap);
 
         }
     }

@@ -12,19 +12,33 @@
         <import type="android.view.View" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.poly.smartfindpro.widget.CommonToolbar
-            android:onClick="@{()->presenter.onBackClick()}"
-            android:id="@+id/cmtb"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <com.poly.smartfindpro.widget.CommonToolbar
+                android:onClick="@{()->presenter.onBackClick()}"
+                android:id="@+id/cmtb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp" />
+
+            <TextView
+                android:id="@+id/tvRule"
+                android:text="@string/Rule"
+                style="@style/textStyleWhite_12dp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 </layout>

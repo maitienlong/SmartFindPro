@@ -188,6 +188,151 @@
     <string name="camera_open_setting">Để sử dụng máy ảnh, vui lòng vào Cài đặt của điện thoại và cấp quyền truy cập máy ảnh cho ứng dụng</string>
     <string name="contact_open_setting_text">Mở cài đặt</string>
     <string name="close">Đóng</string>
+    <string name="Rule">
+
+        <br>
+            I. MỤC ĐÍCH VÀ PHẠM VI THU THẬP\n\n
+        </br>
+        <br></br>
+         <br>
+            SmartFindPro yêu cầu khách hàng cung cấp các thông tin cơ bản bao gồm: số điện thoại, họ tên, mật khẩu đăng nhập,
+             địa chỉ khi khách hàng đăng ký sử dụng dịch vụ của SmartFindPro và một số thông tin không bắt buộc khác khi khách hàng muốn
+             tương tác với một số nội dung trên ứng dụng SmartFindPro. SmartFindPro sử dụng các thông tin này nhằm liên hệ xác nhận
+             với khách hàng và đảm bảo quyền lợi cho Khách hàng khi cần thiết.\n\n
+        </br>
+        <br></br>
+        <br>
+            Việc bạn truy cập, đăng ký, sử dụng SmartFindPro có nghĩa rằng bạn đồng ý và chấp nhận ràng buộc bởi các quy định trong chính sách
+            bảo mật của chúng tôi.\n\n
+        </br>
+        <br></br>
+        <br>
+            Khách hàng sẽ tự chịu trách nhiệm về bảo mật và lưu giữ mọi hoạt động sử dụng dịch vụ dưới tên đăng ký, mật khẩu
+            của mình. SmartFindPro không chịu trách nhiệm về các thất thoát dữ liệu, bí mật
+            thông tin của khách hàng do khách hàng vô tình hoặc cố ý gây ra. Ngoài ra, Khách hàng có trách nhiệm thông báo kịp thời
+            cho SmartFindPro về những hành vi sử dụng trái phép, lạm dụng, vi phạm bảo mật, lưu giữ tên đăng ký và mật khẩu của bên thứ ba
+            để có biện pháp giải quyết phù hợp.\n\n
+        </br>
+        <br></br>
+        <br>
+            II. DỊCH VỤ\n\n
+        </br>
+        <br></br>
+        <br>
+            Để đảm bảo quyền lợi và trải nghiệm tốt nhất cho Khách hàng, SmartFindPro áp dụng một số điều khoản riêng khi Khách hàng
+            sử dụng các dịch vụ, ứng dụng do SmartFindPro cung cấp hoặc có liên kết với SmartFindPro:\n\n
+        </br>
+        <br></br>
+        <br>
+            A. Đối với khách hàng sử dụng Ứng dụng SmartFindPro:\n\n
+        </br>
+        <br></br>
+        <br>
+            1) Lấy vị trí hiện tại của bạn\n\n
+        </br>
+        <br></br>
+        <br>
+            2) Truy cập vào Internet từ thiết bị của bạn\n\n
+        </br>
+        <br></br>
+        <br>
+            3) Truy cập vào bộ nhớ từ thiết bị của bạn\n\n
+        </br>
+        <br></br>
+        <br>
+            4) Sử dụng Máy ảnh từ thiết bị của bạn\n\n
+        </br>
+        <br></br>
+        <br>
+            Tất cả các truy cập này chỉ được chúng tôi thực hiện khi có sự đồng ý của bạn. Bạn hiểu và chấp nhận rằng, khi bạn đã cấp quyền cho
+            chúng tôi, bạn sẽ không có bất kỳ khiếu nại nào đối với việc truy cập này.\n\n
+        </br>
+        <br></br>
+        <br>
+            III. PHẠM VI SỬ DỤNG THÔNG TIN\n\n
+        </br>
+        <br></br>
+        <br>
+            SmartFindPro sử dụng thông tin Khách hàng cung cấp để:\n\n
+        </br>
+        <br></br>
+        <br>
+            – Cung cấp các dịch vụ đến Khách hàng.\n\n
+        </br>
+        <br></br>
+        <br>
+            – Ngăn ngừa các hoạt động phá hủy tài khoản người dùng của Khách hàng hoặc các hoạt động giả mạo Khách hàng.\n\n
+        </br>
+         <br></br>
+        <br>
+            – Liên lạc và giải quyết với khách hàng trong những trường hợp đặc biệt.\n\n
+        </br>
+         <br></br>
+        <br>
+            – SmartFindPro có trách nhiệm hợp tác cung cấp thông tin cá nhân Khách hàng khi có yêu cầu từ cơ quan nhà nước có thẩm quyền.\n\n
+        </br>
+        <br></br>
+        <br>
+            IV. THỜI GIAN LƯU TRỮ THÔNG TIN\n\n
+        </br>
+        <br></br>
+        <br>
+            Trong mọi trường hợp thông tin cá nhân Khách hàng sẽ được bảo mật hoàn toàn trên máy chủ của SmartFindPro.
+            Khách hàng có quyền cập nhật, sửa đổi và xóa thông tin của các Dữ liệu cá nhân này. Tuy nhiên, trong một số
+            trường hợp, SmartFindPro vẫn có thể khôi phục những thông tin đó từ cơ sở dữ liệu của chúng tôi để giải quyết các
+            tranh chấp, thi hành điều khoản sử dụng, hay vì các yêu cầu kỹ thuật, pháp lý liên quan đến sự an toàn và những hoạt
+            động của SmartFindPro.\n\n
+        </br>
+        <br></br>
+        <br>
+            V. ĐỊA CHỈ CỦA ĐƠN VỊ THU THẬP, QUẢN LÝ THÔNG TIN VÀ HỖ TRỢ KHÁCH HÀNG\n\n
+        </br>
+        <br></br>
+        <br>
+            Trụ sở chính: 53A, ngách 53 ngõ 218 Lạc Long Quân, Hà Nội.\n\n
+        </br>
+        <br></br>
+        <br>
+            SĐT: 0399551466\n\n
+        </br>
+        <br></br>
+        <br>
+            Email: smartfindofficial@gmail.com\n\n
+        </br>
+        <br></br>
+        <br>
+            VI. PHƯƠNG TIỆN VÀ CÔNG CỤ ĐỂ KHÁCH HÀNG TIẾP CẬN VÀ CHỈNH SỬA DỮ LIỆU CỦA MÌNH\n\n
+        </br>
+        <br></br>
+        <br>
+            Khách hàng có quyền tự kiểm tra, cập nhật, điều chỉnh thông tin cá nhân của mình bằng cách đăng nhập vào tài khoản
+            và chỉnh sửa thông tin cá nhân. Khách hàng có quyền gửi khiếu nại về việc lộ
+            thông tin các nhân cho bên thứ ba đến Ban quản trị của SmartFindPro. Khi tiếp nhận những phản hồi này, SmartFindPro sẽ xác nhận
+            lại thông tin, phải có trách nhiệm trả lời lý do và hướng dẫn Khách hàng khôi phục và bảo mật lại thông tin.\n\n
+        </br>
+        <br></br>
+        <br>
+            VII. CAM KẾT BẢO MẬT THÔNG TIN CÁ NHÂN KHÁCH HÀNG\n\n
+        </br>
+         <br></br>
+        <br>
+            Thông tin của Khách hàng trên SmartFindPro được SmartFindPro cam kết bảo mật tuyệt đối theo chính sách bảo vệ thông tin
+            cá nhân của SmartFindPro. Việc thu thập và sử dụng thông tin của mỗi Khách hàng chỉ được thực hiện khi có sự đồng ý
+            của Khách hàng đó, trừ những trường hợp pháp luật có quy định khác. SmartFindPro cam kết:\n\n
+        </br>
+        <br></br>
+        <br>
+            – Không sử dụng, không chuyển giao, cung cấp hay tiết lộ cho bên thứ ba nào về thông tin cá nhân của Khách hàng
+            khi không có sự cho phép hoặc đồng ý từ Khách hàng, trừ những trường hợp pháp luật có quy định khác.\n\n
+        </br>
+        <br></br>
+        <br>
+            – Bảo mật tuyệt đối mọi thông tin giao dịch trực tuyến của Khách hàng bao gồm thông tin hóa đơn, chứng từ kế toán
+            số hóa tại khu vực dữ liệu trung tâm an toàn của SmartFindPro.\n\n
+        </br>
+
+    </string>
+
     <string name="search">Tìm kiếm</string>
     <string name="msg_token_fmt">abcd1234</string>
 

@@ -324,6 +324,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                         mViewModel.showMessage("Hiện tại bạn không thể thích bài viết này, vui lòng thử lại sau");
                     }
                 }
+
                 @Override
                 public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
                     mViewModel.showMessage("Hiện tại bạn không thể thích bài viết này, vui lòng thử lại sau");
@@ -390,5 +391,9 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
     @Override
     public void onRefeshComment() {
         onRequestComment(mProduct.getId());
+    }
+
+    public void onOpenGmap() {
+        Config.openGMap(context, mProduct.getAddress().getLocation().getLatitude(), mProduct.getAddress().getLocation().getLongitude());
     }
 }
