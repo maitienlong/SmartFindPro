@@ -96,7 +96,6 @@ public class InforPresenter implements InforContact.Presenter {
         request.setFullname(nameInfor.get());
         request.setBirth(birthday.get());
         request.setGender(gender.get());
-//        request.setAddress(mProfile.getResponseBody().getUser().getAddress());
 
         MyRetrofitSmartFind.getInstanceSmartFind().getUpdateUser(request).enqueue(new Callback<DeleteProductResponse>() {
             @Override
@@ -155,10 +154,8 @@ public class InforPresenter implements InforContact.Presenter {
 
     private void showData(ProfileResponse mProfile) {
         nameInfor.set(mProfile.getResponseBody().getUser().getFullname());
-
         addressInfor.set(mProfile.getResponseBody().getUser().getAddress().getDetailAddress() + ", " + mProfile.getResponseBody().getUser().getAddress().getCommuneWardTown() + ", " + mProfile.getResponseBody().getUser().getAddress().getDistrictsTowns() + ", " + mProfile.getResponseBody().getUser().getAddress().getProvinceCity());
         //     idCard.set(mProfile.getResponseBody().getIdentityCard().getCode());
-
         gender.set(mProfile.getResponseBody().getUser().getGender());
         birthday.set(mProfile.getResponseBody().getUser().getBirth());
     }

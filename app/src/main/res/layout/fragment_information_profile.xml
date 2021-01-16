@@ -100,6 +100,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_birthday_profile"
                         android:layout_width="match_parent"
+                        android:inputType="date"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_edt_change_pass"
                         android:text="@={presenter.birthday}" />
