@@ -569,7 +569,7 @@ app.post('/update-user', async function (request, response) {
                             status: user.status
                         })
                         if (updateUser) {
-                            if (lvUp == 1) {
+                            if (lvUp == 1 && !checkData(avatar) || lvUp == 1 && !checkData(converImage)) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
 
                                 let confirm = await ConfirmPost({
@@ -2971,7 +2971,9 @@ app.get('/confirmUser', async function (request, response) {
         if (listUpgrade.length > 0) {
             let listLv1 = [];
             let listLv2 = [];
+            console.log(listUpgrade)
             for (let i = 0; i < listUpgrade.length; i++) {
+                console.log(listUpgrade[i].user.level)
                 if (listUpgrade[i].user.level == 1) {
                     listLv1.push(listUpgrade[i]);
                 } else if (listUpgrade[i].user.level == 2) {
@@ -3000,6 +3002,8 @@ app.get('/confirmUser', async function (request, response) {
         }
 
     } catch (e) {
+        console.log("confirmUser failed: ")
+        console.log(e)
         response.render('error');
     }
 
