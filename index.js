@@ -194,15 +194,15 @@ async function getProducts(successPost) {
     return products
 }
 
-Array.prototype.remove_by_value = function (val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] === val) {
-            this.splice(i, 1);
-            i--;
-        }
-    }
-    return this;
-}
+// Array.prototype.remove_by_value = function (val) {
+//     for (var i = 0; i < this.length; i++) {
+//         if (this[i] === val) {
+//             this.splice(i, 1);
+//             i--;
+//         }
+//     }
+//     return this;
+// }
 //API
 //post anh
 app.post("/upload-photo", multer({storage: storage}).single('photo'), function (req, res) {
