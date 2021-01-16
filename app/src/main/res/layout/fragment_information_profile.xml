@@ -124,7 +124,6 @@
                         android:id="@+id/edt_address_profile"
                         android:editable="false"
                         android:onClick="@{()->presenter.onClickAddress()}"
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_edt_change_pass"

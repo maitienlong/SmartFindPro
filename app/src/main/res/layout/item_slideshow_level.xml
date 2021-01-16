@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/_8sdp">
+
+    <ImageView
+        android:id="@+id/img_slideshow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp" />
+
+    <TextView
+        android:id="@+id/tv_funtion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:text="một vài chức năng hay ho"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp" />
+
+</LinearLayout>
