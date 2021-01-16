@@ -11,10 +11,19 @@ const ConfirmPostSchema = new mongoose.Schema({
         required: false,
         ref: 'Admin'
     },
+    userW: {
+        type: mongoose.Types.ObjectId,
+        required: false,
+        ref: 'User'
+    },
     user: {
         type: mongoose.Types.ObjectId,
         required: false,
         ref: 'User'
+    },
+    status_code: {
+        type: String,
+        required: true,
     },
     status: {
         type: String,

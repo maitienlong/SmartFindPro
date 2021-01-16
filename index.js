@@ -463,6 +463,8 @@ app.post('/update-user-password', async function (request, response) {
                         let confirm = await ConfirmPost({
                             product: null,
                             admin: null,
+                            status_code: name,
+                            user_w: user._id,
                             user: user._id,
                             status: "Bạn đã đổi mật khẩu thành công",
                             createAt: updateAt
@@ -572,6 +574,8 @@ app.post('/update-user', async function (request, response) {
                                 let confirm = await ConfirmPost({
                                     product: null,
                                     admin: null,
+                                    status_code: name + "-LEVEL-1",
+                                    user_w: userId,
                                     user: userId,
                                     status: "Tài khoản của bạn đã được nâng cấp lên thành viên Đồng(tài khoản cấp 1)",
                                     createAt: updateAt
@@ -584,6 +588,8 @@ app.post('/update-user', async function (request, response) {
                                 let confirm = await ConfirmPost({
                                     product: null,
                                     admin: null,
+                                    status_code: name,
+                                    user_w: userId,
                                     user: userId,
                                     status: "Bạn đã cập nhật thông tin tài khoản thành công",
                                     createAt: updateAt
@@ -700,6 +706,8 @@ app.post('/upgrade-user', async function (request, response) {
                                     let confirm = await ConfirmPost({
                                         product: null,
                                         admin: null,
+                                        status_code: name,
+                                        user_w: userId,
                                         user: userId,
                                         status: "Bạn đã cập nhật lại thông tin để nâng cấp lên thành Viên bạc(tài khoản cấp 2)",
                                         createAt: createAt
@@ -729,6 +737,8 @@ app.post('/upgrade-user', async function (request, response) {
                                         let confirm = await ConfirmPost({
                                             product: null,
                                             admin: null,
+                                            status_code: name,
+                                            user_w: userId,
                                             user: userId,
                                             status: "Bạn đã gửi thông tin để nâng cấp tài khoản lên thành Viên bạc(tài khoản cấp 2). Vui lòng chờ xác nhận từ người quản lý",
                                             createAt: createAt
@@ -852,11 +862,14 @@ app.post('/disable-user', async function (request, response) {
                 if (checkData(adminId)) {
                     let createAt = moment(Date.now()).format(formatDate);
                     let uSTT = user.status;
+                    let statusCode = null;
                     if (user.status == true) {
                         uSTT = false;
+                        statusCode = 'DISABLE-USER';
                         name = "Tài khoản của bạn đã bị khóa bởi tài khoản quản lý vì bạn đã vi phạm trong các điều khoản khi sử dụng ứng dụng"
                     } else {
                         uSTT = true;
+                        statusCode = 'ENABLE-USER';
                         name = "Tài khoản của bạn đã được khôi phục"
                     }
                     let disableUser = await User.findByIdAndUpdate(user._id, {
@@ -868,6 +881,8 @@ app.post('/disable-user', async function (request, response) {
                             product: null,
                             admin: adminId,
                             user: id,
+                            status_code: statusCode,
+                            user_w: id,
                             status: name,
                             createAt: createAt
                         });
@@ -901,7 +916,7 @@ app.post('/find-history', async function (request, response) {
     try {
         let id = request.body.user;
         if (checkData(id)) {
-            var confirmPost = await ConfirmPost.find({user: id})
+            var confirmPost = await ConfirmPost.find({user_w: id})
                 .populate(['admin'])
                 .populate({
                     path: 'product',
@@ -1034,6 +1049,8 @@ app.post('/init-product', async function (request, response) {
                         let confirm = await ConfirmPost({
                             product: initProduct._id,
                             admin: null,
+                            status_code: name,
+                            user_w: id,
                             user: id,
                             status: "Phòng của bạn đã được gửi cho bên duyệt bài của chúng tôi. Vui lòng chờ phản hồi từ chúng tôi",
                             createAt: createAt
@@ -1122,6 +1139,8 @@ app.post('/update-product', async function (request, response) {
                                 product: id,
                                 admin: null,
                                 user: userId,
+                                status_code: name,
+                                user_w: userId,
                                 status: "Bạn đã cập nhật thông tin của bài đăng " + updateProduct[0].content,
                                 createAt: updateAt
                             });
@@ -1191,6 +1210,8 @@ app.post('/total-people-lease-product', async function (request, response) {
                                     product: id,
                                     admin: null,
                                     user: userId,
+                                    status_code: name,
+                                    user_w: userId,
                                     status: "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct[0].content + " là: " + updateProduct[0].total_people_lease,
                                     createAt: updateAt
                                 });
@@ -1252,6 +1273,8 @@ app.post('/delete-product', async function (request, response) {
                                 product: id,
                                 admin: null,
                                 user: userId,
+                                status_code: name + "-USER",
+                                user_w: userId,
                                 status: "Bài đăng " + product.content + " đã được xóa thành công",
                                 createAt: createAt
                             });
@@ -1278,6 +1301,8 @@ app.post('/delete-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
+                            status_code: name + "-ADMIN",
+                            user_w: null,
                             status: "Bài đăng " + product.content + " đã được xóa bởi quản lý",
                             createAt: createAt
                         });
@@ -1490,6 +1515,8 @@ app.post('/init-comment', async function (request, response) {
                     product: product,
                     admin: null,
                     user: user,
+                    status_code: name + "-" + status,
+                    user_w: userDevices,
                     status: notifi,
                     createAt: createAt
                 });
@@ -1588,6 +1615,7 @@ app.post('/init-favorite', async function (request, response) {
             console.log(findUser[0])
             if (initFavorite) {
                 var notifi = '';
+                let userDevices = null;
                 if (status == "POST") {
                     let findF = await Favorite.find({product: product, status: status}).lean();
                     if (findF.length > 1) {
@@ -1595,6 +1623,7 @@ app.post('/init-favorite', async function (request, response) {
                     } else {
                         notifi = findUser[0].full_name + " đã thích bài đăng " + findProduct[0].content + " của bạn";
                     }
+                    userDevices = findProduct[0].user._id;
                 } else if (status == "COMMENT") {
                     let findF = await Favorite.find({comment: comment, status: status}).lean();
                     if (findF.length > 1) {
@@ -1602,20 +1631,23 @@ app.post('/init-favorite', async function (request, response) {
                     } else {
                         notifi = findUser[0].full_name + " đã thích bình luận " + findComment.title + " của bạn";
                     }
+                    userDevices = findF[0].user;
                 }
                 let confirm = await ConfirmPost({
                     product: product,
                     admin: null,
                     user: user,
+                    status_code: name,
+                    user_w: userDevices,
                     status: notifi,
                     createAt: createAt
                 });
                 let confirPrd = await confirm.save();
 
-                let id1 = findProduct[0].user._id;
+                let id1 = userDevices;
                 let id2 = findUser[0]._id
                 if (id1.toString() != id2.toString()) {
-                    sendNotification(request, response, findProduct[0].user._id, notifi);
+                    sendNotification(request, response, userDevices, notifi);
                 }
                 res_body = {status: sttOK}
                 response.json(getResponse(name, 200, sttOK, res_body))
@@ -3013,6 +3045,8 @@ app.post('/confirm-product', async function (request, response) {
                         let confirm = await ConfirmPost({
                             product: id,
                             admin: adminId,
+                            status_code: name,
+                            user_w: null,
                             user: null,
                             status: "Bài đăng " + updateProduct.content + " đã được duyệt bởi quản lý. Giờ đây bạn có thể thấy bài đăng này trong mục tìm kiếm",
                             createAt: updateAt
@@ -3068,6 +3102,8 @@ app.post('/cancel-product', async function (request, response) {
                             product: id,
                             admin: adminId,
                             user: null,
+                            status_code: name,
+                            user_w: null,
                             status: "Bài đăng " + updateProduct.content + " không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166",
                             createAt: updateAt
                         })
@@ -3145,6 +3181,8 @@ app.post('/confirm-upgrade', async function (request, response) {
                                     product: null,
                                     admin: adminId,
                                     user: id,
+                                    status_code: name,
+                                    user_w: id,
                                     status: notifi,
                                     createAt: updatedAt
                                 });
@@ -3200,6 +3238,8 @@ app.post('/cancel-upgrade', async function (request, response) {
                         product: null,
                         admin: adminId,
                         user: id,
+                        status_code: name,
+                        user_w: id,
                         status: 'Tài khoản của bạn không được duyệt vì một vài lý do trong quá trình duyệt. Chúng tôi sẽ sớm liên hệ với bạn để giải thích về vấn đề này hoặc bạn có thể liên hệ với chúng tôi qua số điện thoại 0399551166',
                         createAt: deleteAt
                     });
