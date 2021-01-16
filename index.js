@@ -228,6 +228,7 @@ app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), fu
             jsonResult.push(req.files[i].path)
         }
         let res_body = {addressImage: jsonResult}
+        console.log(res_body)
         return res.status(200).json(getResponse(name, 200, sttOK, res_body))
     } catch (e) {
         console.log('loi ne: \n' + e)
@@ -2817,6 +2818,7 @@ app.get('/confirmPost', async function (request, response) {
         //them cho moi image 1 truong id
         let listImages = product[0].product.information.image;
         let countListImages = listImages.length;
+        console.log("countListImages: " + countListImages)
         let listObjectImages = [];
         for (let i = 0; i < countListImages; i++) {
             listObjectImages.push({
