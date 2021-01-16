@@ -186,7 +186,15 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_PICK_CODE_AVATAR && resultCode == Activity.RESULT_OK && data != null) {
             if (data.getClipData() != null) {
-                showMessage("Bạn chỉ được lựa chọn 1 ảnh");
+                int totalItem = data.getClipData().getItemCount();
+                for (int i = 0; i < totalItem; i++) {
+                    if (i == 0) {
+                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                        String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
+                        mPresenter.initPhoto(0, realPath);
+                        break;
+                    }
+                }
             } else if (data.getData() != null) {
 
                 Uri imageUri = data.getData();
@@ -197,7 +205,15 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
             }
         } else if (requestCode == IMAGE_PICK_CODE_COVER && resultCode == Activity.RESULT_OK && data != null) {
             if (data.getClipData() != null) {
-                showMessage("Bạn chỉ được lựa chọn 1 ảnh");
+                int totalItem = data.getClipData().getItemCount();
+                for (int i = 0; i < totalItem; i++) {
+                    if (i == 0) {
+                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                        String realPath = RealPathUtil.getRealPath(mActivity, imageUri);
+                        mPresenter.initPhoto(1, realPath);
+                        break;
+                    }
+                }
             } else if (data.getData() != null) {
 
                 Uri imageUri = data.getData();
