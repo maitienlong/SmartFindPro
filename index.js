@@ -1205,6 +1205,7 @@ app.post('/total-people-lease-product', async function (request, response) {
                                 total_people_lease: total_people_lease,
                                 updateAt: updateAt
                             })
+                            console.log(updateProduct)
                             if (updateProduct) {
                                 let confirm = await ConfirmPost({
                                     product: id,
@@ -1212,12 +1213,12 @@ app.post('/total-people-lease-product', async function (request, response) {
                                     user: userId,
                                     status_code: name,
                                     user_w: userId,
-                                    status: "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct[0].content + " là: " + updateProduct[0].total_people_lease,
+                                    status: "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct.content + " là: " + updateProduct.total_people_lease,
                                     createAt: updateAt
                                 });
                                 let confirPrd = await confirm.save();
 
-                                sendNotification(request, response, userId, "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct[0].content + " là: " + updateProduct[0].total_people_lease);
+                                sendNotification(request, response, userId, "Bạn đã cập nhật số lượng người đã thuê của bài đăng " + updateProduct.content + " là: " + updateProduct.total_people_lease);
                                 let res_body = {status: sttOK};
                                 response.json(getResponse(name, 200, sttOK, res_body))
                             } else {
