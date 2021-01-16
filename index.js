@@ -577,6 +577,11 @@ app.post('/update-user', async function (request, response) {
                             status: user.status
                         })
                         if (updateUser) {
+                            console.log("update user")
+                            console.log(avatar)
+                            console.log(converImage)
+                            console.log(lvUp)
+                            console.log("------------")
                             if (!checkData(avatar) && lvUp === 1 || !checkData(converImage) && lvUp === 1) {
                                 res_body = {status: 'Successfully upgraded account level 1'};
 
