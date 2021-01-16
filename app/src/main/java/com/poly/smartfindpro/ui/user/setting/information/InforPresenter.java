@@ -142,7 +142,7 @@ public class InforPresenter implements InforContact.Presenter {
                     showData(mProfile);
 
                 } else {
-
+                    mViewModel.showMessage("Cập nhật người dùng lỗi");
                 }
             }
 
