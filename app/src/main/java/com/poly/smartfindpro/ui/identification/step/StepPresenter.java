@@ -10,6 +10,9 @@ import com.poly.smartfindpro.data.model.identification.RequestIndentifi;
 import com.poly.smartfindpro.databinding.FragmentIdentificationStepBinding;
 import com.poly.smartfindpro.ui.identification.tutorial.TutorialContract;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StepPresenter implements StepContract.Presenter {
 
     private Context mContext;
@@ -106,8 +109,8 @@ public class StepPresenter implements StepContract.Presenter {
         } else if (mBinding.edtNumberIdentifi.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập số CMND/CCCD");
         } else if (mBinding.edtNumberIdentifi.getText().toString().length() != maxLength.get()) {
-            mViewmodel.showMessage("Số CMND/CCCD phải là "+maxLength.get()+" số");
-        }  else if (mBinding.edtDateSupply.getText().toString().isEmpty()) {
+            mViewmodel.showMessage("Số CMND/CCCD phải là " + maxLength.get() + " số");
+        } else if (mBinding.edtDateSupply.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập ngày cấp");
         } else if (mBinding.edtAddressSupply.getText().toString().isEmpty()) {
             mViewmodel.showMessage("Vui lòng nhập nơi cấp");
@@ -125,9 +128,13 @@ public class StepPresenter implements StepContract.Presenter {
             mViewmodel.showMessage("Ảnh mặt trước không được để trống");
         } else if (imageCardSau.isEmpty()) {
             mViewmodel.showMessage("Ảnh mặt sau không được để trống");
+        } else if (!checkDate(mBinding.edtDateSupply.getText().toString().trim())) {
+            mViewmodel.showMessage("Ngày cấp không đúng định dạng");
+        } else if (!checkDate(mBinding.edtBirthDay.getText().toString().trim())) {
+            mViewmodel.showMessage("Ngày sinh không đúng định dạng");
         } else {
 
-            mProduct.setUserId(Config.TOKEN_USER );
+            mProduct.setUserId(Config.TOKEN_USER);
 
             mProduct.setType(typeCard);
 
@@ -157,6 +164,15 @@ public class StepPresenter implements StepContract.Presenter {
 
         }
 
+    }
+
+    private boolean checkDate(String value) {
+        try {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(value);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
