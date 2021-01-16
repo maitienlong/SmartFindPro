@@ -225,6 +225,7 @@ app.post("/upload-photo-array", multer({storage: storage}).array('photo', 5), fu
         var jsonResult = [];
         console.log(req.files)
         for (var i in req.files) {
+            console.log("path i: "+i)
             jsonResult.push(req.files[i].path)
         }
         let res_body = {addressImage: jsonResult}
@@ -529,8 +530,6 @@ app.post('/update-user', async function (request, response) {
                 if (user.length > 0) {
                     user = user[0];
                     if (user.status == true) {
-                        console.log("USER_ADDRESS_ID: " + user.address._id);
-                        console.log(mAddress)
                         if (checkData(mAddress)) {
                             let updateAddress = await Address.findByIdAndUpdate(user.address._id, {
                                 provinceCity: checkData(mAddress.provinceCity) ? mAddress.provinceCity : user.address.provinceCity,
@@ -542,12 +541,6 @@ app.post('/update-user', async function (request, response) {
                                     longitude: user.address.location.longitude
                                 }
                             });
-                            if (updateAddress) {
-                                console.log("updateAddress:SUCCESS")
-                                console.log(updateAddress)
-                            } else {
-                                console.log("updateAddress:Fail")
-                            }
                         }
                         // update data vao bang chinh
                         let updateAt = moment(Date.now()).format(formatDate);
