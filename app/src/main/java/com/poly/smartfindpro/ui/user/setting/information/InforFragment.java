@@ -1,9 +1,13 @@
 package com.poly.smartfindpro.ui.user.setting.information;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 
@@ -23,9 +27,9 @@ import com.poly.smartfindpro.databinding.FragmentSettingUserBinding;
 import com.poly.smartfindpro.ui.user.setting.SettingPresenter;
 
 import java.lang.reflect.Type;
+import java.util.Calendar;
 
 public class InforFragment extends BaseDataBindFragment<FragmentInformationProfileBinding, InforPresenter> implements InforContact.ViewModel, OnFragmentCloseCallback {
-
 
     @Override
     protected int getLayoutId() {
@@ -45,6 +49,20 @@ public class InforFragment extends BaseDataBindFragment<FragmentInformationProfi
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
+        mBinding.btnDialogDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mActivity,
+                        (view, year, monthOfYear, dayOfMonth) -> mPresenter.birthday.set(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
     }
 
