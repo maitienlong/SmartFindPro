@@ -1703,7 +1703,7 @@ app.post('/product-comment', async function (request, response) {
         let product = request.body.product;
         if (checkData(product)) {
             if (!checkData(user)) {
-                user = "5fe4c04feb44312fe83f3418"
+                user = "60031c77a04bf20ca412d41a"
             }
             let findUser = await User.find({_id: user}).lean();
             if (findUser.length <= 0) {
@@ -1838,7 +1838,7 @@ app.post('/product-favorite', async function (request, response) {
         let product = request.body.product;
         if (checkData(product)) {
             if (!checkData(user)) {
-                user = "5fe4c04feb44312fe83f3418"
+                user = "60031c77a04bf20ca412d41a"
             }
             let findUser = await User.find({_id: user}).lean();
             if (findUser.length <= 0) {
@@ -3306,6 +3306,10 @@ app.get('/applinks', async function (request, response) {
 });
 
 async function sendNotification(req, res, userId, text) {
+    console.log("sendNotification-------------START")
+    console.log("userId: " + userId)
+    console.log("text: " + text)
+    console.log("--------------------------END")
     let name = 'SEND-NOTIFICATION'
     try {
         let findLogin = await Login.find({user: userId}).lean();
