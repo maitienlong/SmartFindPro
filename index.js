@@ -611,7 +611,7 @@ app.post('/update-user', async function (request, response) {
                                 createAt: updateAt
                             });
                             let confirPrd = await confirm.save();
-                            sendNotification(request, response, userId, "Bạn đã cập nhật thông tin tài khoản thành công");
+                            sendNotification(request, response, userId, status);
                             response.json(getResponse(name, 200, sttOK, res_body));
                         } else {
                             res_body = {status: "Fail"};
