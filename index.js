@@ -692,42 +692,9 @@ app.post('/upgrade-user', async function (request, response) {
 
                             let findUpgradeUser = await UpgradeUser.find({code: code}).lean();
                             if (findUpgradeUser.length > 0) {
-                                findUpgradeUser = findUpgradeUser[0];
-                                let initIdentityCard = await identityCard.save();
-                                let updateIdentityCard = await UpgradeUser.findByIdAndUpdate(findUpgradeUser._id, {
-                                    type: type,
-                                    code: code,
-                                    name: full_name,
-                                    date: date,
-                                    gender: gender,
-                                    issuedBy: issuedBy,
-                                    expiryDate: expiryDate,
-                                    image: image,
-                                    homeTown: homeTown,
-                                    resident: resident,
-                                    nationality: nationality,
-                                    createAt: findUpgradeUser.createAt,
-                                    updateAt: createAt
-                                });
-                                if (initIdentityCard) {
-                                    let confirm = await ConfirmPost({
-                                        product: null,
-                                        admin: null,
-                                        status_code: name,
-                                        user_w: userId,
-                                        user: userId,
-                                        status: "Bạn đã cập nhật lại thông tin để nâng cấp lên thành Viên bạc(tài khoản cấp 2)",
-                                        createAt: createAt
-                                    });
-                                    let confirPrd = await confirm.save();
-                                    sendNotification(request, response, userId, "Bạn đã cập nhật lại thông tin để nâng cấp lên thành Viên bạc(tài khoản cấp 2)");
-                                    res_body = {status: sttOK};
-                                    response.json(getResponse(name, 200, sttOK, res_body));
-                                } else {
-                                    res_body = {status: "Fail"};
-                                    response.json(getResponse(name, 200, 'Fail', res_body))
-                                }
-                                return
+                                res_body = "Information has been used"
+                                response.json(getResponse(name, 200, 'Fail', res_body));
+                                return;
                             } else {
                                 name = "INIT-UPGRADE-USER";
                                 let initIdentityCard = await identityCard.save();
