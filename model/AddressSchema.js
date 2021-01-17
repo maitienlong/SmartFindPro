@@ -2,19 +2,19 @@ let mongoose = require('mongoose');
 const AddressSchema = mongoose.Schema({
     provinceCity: {
         type: String,
-        required: true
+        required: false
     },
     districtsTowns: {
         type: String,
-        required: true
+        required: false
     },
     communeWardTown: {
         type: String,
-        required: true
+        required: false
     },
     detailAddress: {
         type: String,
-        required: true
+        required: false
     },
     location: {
         latitude: {
