@@ -407,13 +407,13 @@ app.post('/init-user', async function (request, response) {
             checkData(password) &&
             checkData(phoneNumber)) {
             let newProductAddress = new Address({
-                provinceCity: "Hà Nội",
-                districtsTowns: "Ba Đình",
-                communeWardTown: "Điện Bàn",
-                detailAddress: "2 Hùng Vương",
+                provinceCity: "",
+                districtsTowns: "",
+                communeWardTown: "",
+                detailAddress: "",
                 location: {
-                    latitude: "21.0228161",
-                    longitude: "105.8019438"
+                    latitude: "",
+                    longitude: ""
                 }
             });
             let address = await newProductAddress.save();
@@ -551,6 +551,12 @@ app.post('/update-user', async function (request, response) {
                             checkData(user.birth) &&
                             checkData(user.full_name) &&
                             checkData(user.gender)) {
+                            lvUp = 1;
+                        } else if (user.level === 0 &&
+                            checkData(mAddress) &&
+                            checkData(birth) &&
+                            checkData(fullName) &&
+                            checkData(gender)) {
                             lvUp = 1;
                         } else {
                             lvUp = user.level
