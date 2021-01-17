@@ -1,8 +1,10 @@
 package com.poly.smartfindpro.ui.searchProduct.filterProduct;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Build;
 import android.text.Editable;
@@ -86,6 +88,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
     }
 
+    @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void initView() {
@@ -129,6 +132,21 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
         bottomSheetBehavior = bottomSheetBehavior.from(bottomSheet);
 
+        onShowLayount(1, true);
+        onShowLayount(2, true);
+        onShowLayount(3, true);
+        onShowLayount(4, true);
+        mPriority = new ArrayList<>();
+        mPriorityList = new ArrayList<>();
+        Priority theLoai = new Priority(0, "");
+        Priority giatien = new Priority(2, "");
+        Priority gioitinh = new Priority(3, "");
+        Priority soluong = new Priority(4, "");
+        mPriorityList.add(theLoai);
+        mPriorityList.add(giatien);
+        mPriorityList.add(gioitinh);
+        mPriorityList.add(soluong);
+
         //
         mBinding.btnFilterOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +158,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.btn_filter_all:
+                                onClear();
                                 onShowLayount(1, true);
                                 onShowLayount(2, true);
                                 onShowLayount(3, true);
@@ -158,6 +177,7 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                                 break;
                             case R.id.btn_filter_custom:
+                                onClear();
                                 onShowLayount(1, false);
                                 onShowLayount(2, false);
                                 onShowLayount(3, false);
@@ -449,9 +469,11 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
 
     @Override
     public void onShow(List<Products> products) {
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
         adapter.setListItem(products);
         BindingUtils.setAdapter(mBinding.rvResult, adapter, true);
-        Log.d("checkCount", String.valueOf(products.size()));
     }
 
     @Override
@@ -528,6 +550,23 @@ public class FilterProductActivity extends BaseDataBindActivity<ActivityFilterPr
                 mPriorityList.remove(i);
             }
         }
+    }
+
+    private void onClear(){
+        spnTheLoai.setSelection(0);
+        if(btnNam.isChecked()){
+            btnNam.setChecked(false);
+        }
+        if (btnNu.isChecked()){
+            btnNu.setChecked(false);
+        }
+        if (btnTatCa.isChecked()){
+            btnTatCa.setChecked(false);
+        }
+
+        edt_amount_person.setText("");
+        snb_price.setProgress(0);
+        tv_maxTien.setText("empty");
     }
 
 
