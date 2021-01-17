@@ -82,9 +82,11 @@ public class CreatePasswordPresenter implements CreatePasswordContract.Presenter
     public void onClickRegister() {
         if (mBinding.edtPassword.getText().toString().equals("") && mBinding.edtConfirmPassword.getText().toString().equals("")) {
             mViewModel.showMessage("Vui lòng nhập đủ thông tin");
-
+        } else if (!mBinding.edtPassword.getText().toString().trim().equals(mBinding.edtConfirmPassword.getText().toString().trim())) {
+            mViewModel.showMessage("Mật khẩu không khớp, thử lại");
         } else {
             getRegister();
+
         }
 
     }

@@ -363,7 +363,6 @@ public class ProfilePresenter implements ProfileContact.Presenter {
     }
 
     private void onChangeAvatar(String urlImage) {
-        Log.d("MyTask", "Ảnh đại diện");
         RequestUpdateAvatar requestUpdateAvatar = new RequestUpdateAvatar(Config.TOKEN_USER, urlImage);
         MyRetrofitSmartFind.getInstanceSmartFind().updateAvatar(requestUpdateAvatar).enqueue(new Callback<DeleteProductResponse>() {
             @Override
@@ -385,13 +384,12 @@ public class ProfilePresenter implements ProfileContact.Presenter {
 
             @Override
             public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
-
+                mViewModel.hideLoading();
             }
         });
     }
 
     private void onChangeCover(String urlImage) {
-        Log.d("MyTask", "Ảnh bìa");
         RequestUpdateCover requestUpdateAvatar = new RequestUpdateCover(Config.TOKEN_USER, urlImage);
         MyRetrofitSmartFind.getInstanceSmartFind().updateCover(requestUpdateAvatar).enqueue(new Callback<DeleteProductResponse>() {
             @Override

@@ -65,7 +65,6 @@ public class ProfileFragment extends BaseDataBindFragment<FragmentProfileBinding
         mPresenter = new ProfilePresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
         mBinding.cmtb.setTitle("Trang cá nhân");
-//        mBinding.btnApproved.setBackgroundColor(R.drawable.btn_category_pressed);
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

@@ -129,7 +129,7 @@ public class IntroPresenter implements IntroContract.Presenter {
                                 }
 
                             } else {
-                                mViewModel.onAccountNotAvail("Tài khoản không đúng hoặc không còn tồn tại");
+                                mViewModel.onAccountNotAvail("Chào mừng bạn đến với SmartFind, Vui lòng chọn chức năng để tiếp tục");
                             }
 
                         } else {

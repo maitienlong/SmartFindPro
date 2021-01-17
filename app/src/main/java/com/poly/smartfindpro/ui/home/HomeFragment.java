@@ -52,11 +52,10 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
         mPresenter = new HomePresenter(mActivity, this, mBinding);
         mBinding.setPresenter(mPresenter);
         mListImage = new ArrayList<>();
-        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/59df69e4e8bddc38a5af5f7337a481db.png");
-        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/0cfdaa31a2c408d038b2cea7c8ca86a6.png");
-        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/3242b6ad6e1e4966c9db0158161b2429.png");
-        mListImage.add("https://cf.shopee.vn/file/049bb54d60a160bdfc5803bde9449651");
-        mListImage.add("https://cf.shopee.vn/file/5fbfe216c22d42c11ada30c90d734c2b");
+        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/6689d038a175f89e7e2acdac07e39be2.png");
+        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/afe901450f332ffcee0155dab866bab7.png");
+        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/875170c056430db21853fdb746900bcc.png");
+        mListImage.add(MyRetrofitSmartFind.smartFind + "public/uploads/c4192b690f75b2abea7a2c90f8a57d01.png");
         mListImage.add("https://cf.shopee.vn/file/b11156b9ac3994c99dcd87d69d601ce1");
 
         PicassoImageLoadingService picassoImageLoadingService = new PicassoImageLoadingService(mActivity);
@@ -91,17 +90,18 @@ public class HomeFragment extends BaseDataBindFragment<FragmentHomeBinding, Home
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onCheckStatus(int status) {
         if (status == 1) {
-            mBinding.btnShareRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.white));
-            mBinding.tvShareRoom.setTextColor(mActivity.getColorStateList(R.color.background));
 
-            mBinding.btnRentalRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.background));
-            mBinding.tvRentalRoom.setTextColor(mActivity.getColorStateList(R.color.white));
+            mBinding.btnRentalRoom.setBackground(getResources().getDrawable(R.drawable.btn_category_pressed));
+            mBinding.btnRentalRoom.setTextColor(getResources().getColor(R.color.white));
+
+            mBinding.btnShareRoom.setBackground(getResources().getDrawable(R.drawable.btn_category));
+            mBinding.btnShareRoom.setTextColor(getResources().getColor(R.color.blue));
         } else if (status == 2) {
-            mBinding.btnRentalRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.white));
-            mBinding.tvRentalRoom.setTextColor(mActivity.getColorStateList(R.color.background));
+            mBinding.btnRentalRoom.setBackground(getResources().getDrawable(R.drawable.btn_category));
+            mBinding.btnRentalRoom.setTextColor(getResources().getColor(R.color.blue));
 
-            mBinding.btnShareRoom.setBackgroundTintList(mActivity.getColorStateList(R.color.background));
-            mBinding.tvShareRoom.setTextColor(mActivity.getColorStateList(R.color.white));
+            mBinding.btnShareRoom.setBackground(getResources().getDrawable(R.drawable.btn_category_pressed));
+            mBinding.btnShareRoom.setTextColor(getResources().getColor(R.color.white));
         }
     }
 

@@ -120,7 +120,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         Intent intent = getIntent();
         mProduct = new Products();
         mProduct = new Gson().fromJson(intent.getStringExtra(Config.POST_BUNDEL_RES), type);
-        if(getIntent().hasExtra(Config.DATA_CALL_BACK)){
+        if (getIntent().hasExtra(Config.DATA_CALL_BACK)) {
             deepLink = getIntent().getStringExtra(Config.DATA_CALL_BACK);
         }
 
@@ -128,12 +128,12 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
 
     @Override
     public void onBackClick() {
-        if(deepLink.equals("ok")){
+        if (deepLink.equals("ok")) {
             openActivity(MainActivity.class);
             finish();
-        }else if(deepLink.isEmpty()){
+        } else if (deepLink.isEmpty()) {
             finish();
-        }else {
+        } else {
             finish();
         }
 
@@ -168,9 +168,7 @@ public class DetailPostActivity extends BaseDataBindActivity<ActivityInformation
         btnShareButton = alert.findViewById(R.id.btn_share_on_facebook);
         ShareButton btnShareStory = alert.findViewById(R.id.btn_share_on_facebook_story);
 
-        //  String urlShare = "https://smartfindpro.page.link/?link=http://www.smartfind.me/applinks/?id=" + mProduct.getId() + "&apn=com.poly.smartfindpro";
-        String urlShare = "http://www.smartfind.me/applinks/?id=" + mProduct.getId();
-
+        String urlShare = "https://smartfindpro.page.link/?link=http://www.smartfind.me/applinks/?id=" + mProduct.getId() + "&apn=com.poly.smartfindpro";
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.banner_share);
 
         SharePhoto photo = new SharePhoto.Builder()

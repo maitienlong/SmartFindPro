@@ -100,6 +100,8 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
             surveyImagesParts[i] = MultipartBody.Part.createFormData("photo", file.getAbsolutePath(), resBody);
         }
 
+        Log.d("CheckLog", new Gson().toJson(surveyImagesParts));
+
         MyRetrofitSmartFind.getInstanceSmartFind().postImageMulti(surveyImagesParts).enqueue(new Callback<ResponsePostPhoto>() {
             @Override
             public void onResponse(Call<ResponsePostPhoto> call, Response<ResponsePostPhoto> response) {
@@ -108,6 +110,7 @@ public class FaceDetectorPresenter implements FaceDetectorContract.Presenter {
                     onUploadPhotoIdentifi(mSelfieImages);
                 } else {
                     mViewModel.hideLoading();
+                    Log.d("CheckLog", response.message());
                     mViewModel.showMessage(mContext.getString(R.string.services_not_avail) + " - " + response.code() + " - msg: Đăng ảnh không thành công");
                 }
             }

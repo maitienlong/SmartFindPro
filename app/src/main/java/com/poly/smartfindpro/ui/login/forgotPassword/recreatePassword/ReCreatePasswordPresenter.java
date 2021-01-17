@@ -53,7 +53,7 @@ public class ReCreatePasswordPresenter implements ReCreatePasswordContract.Prese
     public void onCreatePass() {
         if (mBinding.edtOtp.getText().toString().trim().length() != 6) {
             mViewModel.showMessage("Mã OTP không hợp lệ");
-        } else if (mBinding.edtCreatePassword.getText().toString().trim().length() > 7) {
+        } else if (mBinding.edtCreatePassword.getText().toString().trim().length() < 7) {
             mViewModel.showMessage("Mật khẩu ít nhất 8 kỹ tự");
         } else if (!mBinding.edtRecreatePassword.getText().toString().trim().equals(mBinding.edtCreatePassword.getText().toString().trim())) {
             mViewModel.showMessage("Mật khẩu không khớp");

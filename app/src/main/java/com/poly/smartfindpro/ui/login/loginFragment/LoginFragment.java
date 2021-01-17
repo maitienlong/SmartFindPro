@@ -106,7 +106,6 @@ public class LoginFragment extends BaseDataBindFragment<FragmentLoginBinding, Lo
     private boolean onSaveLogin(String username, String password, String token, int level, boolean isSave) {
         SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putString(ConfigSharedPreferences.USERNAME, username);
         editor.putString(ConfigSharedPreferences.PASSWORD, password);
         editor.putString(ConfigSharedPreferences.TOKEN, token);

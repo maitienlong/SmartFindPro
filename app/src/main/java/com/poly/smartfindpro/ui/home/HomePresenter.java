@@ -36,8 +36,6 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     private void initData() {
-
-//        getProduct();
         getProductRental();
     }
 

@@ -116,13 +116,14 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
 
     @Override
     public void onConfirm() {
-        if (mBinding.viewPagerRank.getCurrentItem() != 0) {
+        if (mBinding.viewPagerRank.getCurrentItem() == 1) {
             Intent intent = new Intent(mActivity, IdentificationActivity.class);
             startActivityForResult(intent, Config.RESULT_REQUEST);
+        } else if (mBinding.viewPagerRank.getCurrentItem() == 2) {
+            showAlertDialog("Theo chính sách của SmartFind, để nâng cấp lên cấp tài khoản vàng, người dùng cần đến văn phòng để có thể cấp. Vào mục trợ giúp và phản đổi đễ được hỗ trợ");
         } else {
             getBaseActivity().goToFragment(R.id.fl_native, new InforFragment(), null, this::onClose);
         }
-
     }
 
     @Override
@@ -163,7 +164,7 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
 
     @Override
     public void onClose(int resultCode, Intent data) {
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             mPresenter.getInfor();
         }
     }
@@ -171,7 +172,7 @@ public class ConfirmAccountFragment extends BaseDataBindFragment<FragmentConfirm
     public boolean onSaveLevel(String username, String password, String token, int level, String tokenDevice) {
         SharedPreferences sharedPreferences = mActivity.getSharedPreferences(Config.NAME_FILE_PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
+        Config.LEVEL_ACCOUNT = level;
         editor.putString(ConfigSharedPreferences.USERNAME, username);
         editor.putString(ConfigSharedPreferences.PASSWORD, password);
         editor.putString(ConfigSharedPreferences.TOKEN, token);

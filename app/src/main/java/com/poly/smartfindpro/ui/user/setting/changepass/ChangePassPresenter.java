@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
 
+import com.poly.smartfindpro.R;
 import com.poly.smartfindpro.data.Config;
 import com.poly.smartfindpro.data.model.forgotpasswrd.ForgotPasswordRequest;
 import com.poly.smartfindpro.data.model.product.deleteProduct.req.res.DeleteProductResponse;
@@ -53,12 +54,10 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
     public void onChangePass() {
         Log.d("check", mProfile.getResponseBody().getUser().getPassword());
         if (!mBinding.edtPassOld.getText().toString().trim().equals(mProfile.getResponseBody().getUser().getPassword())) {
-            Toast.makeText(context, "Mật khẩu cũ không chính xác", Toast.LENGTH_SHORT).show();
-            Log.d("check", mBinding.edtPassOld.getText().toString().trim());
-
+            mViewModel.showMessage("Mật khẩu cũ không chính xác");
         } else {
-            if(!mBinding.edtPassNew.getText().toString().trim().equals(mBinding.edtPassConfirm.getText().toString().trim())){
-                Toast.makeText(context, "Xác nhận mật khẩu không giống mật khẩu mới", Toast.LENGTH_SHORT).show();
+            if (!mBinding.edtPassNew.getText().toString().trim().equals(mBinding.edtPassConfirm.getText().toString().trim())) {
+                mViewModel.showMessage("Xác nhận mật khẩu không giống mật khẩu mới");
             } else {
                 updatePassword();
             }
@@ -66,7 +65,7 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
         }
     }
 
-    public void updatePassword(){
+    public void updatePassword() {
         ForgotPasswordRequest request = new ForgotPasswordRequest();
         request.setPhone_number(mProfile.getResponseBody().getUser().getPhoneNumber());
         request.setPassword(mBinding.edtPassNew.getText().toString().trim());
@@ -74,19 +73,19 @@ public class ChangePassPresenter implements ChangePassContact.Presenter {
             @Override
             public void onResponse(Call<DeleteProductResponse> call, Response<DeleteProductResponse> response) {
                 if (response.body().getResponseHeader().getResCode() == 200
-                        && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")){
-                    Toast.makeText(context, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                        && response.body().getResponseBody().getStatus().equalsIgnoreCase("Success")) {
+                    mViewModel.showMessage("Đổi mật khẩu thành công");
                     mBinding.edtPassOld.setText("");
                     mBinding.edtPassNew.setText("");
                     mBinding.edtPassConfirm.setText("");
                 } else {
-                    Toast.makeText(context, "Đổi mật khẩu không thành công", Toast.LENGTH_SHORT).show();
+                    mViewModel.showMessage("Đổi mật khẩu không thành công");
                 }
             }
 
             @Override
             public void onFailure(Call<DeleteProductResponse> call, Throwable t) {
-
+                mViewModel.showMessage(context.getString(R.string.services_not_avail));
             }
         });
     }
