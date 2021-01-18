@@ -146,21 +146,15 @@ public class MainActivity extends BaseDataBindActivity<ActivityMainBinding,
 
     @Override
     public void onSelectMessager() {
-        if (Config.LEVEL_ACCOUNT > 0) {
-            if (position < 2) {
-                goToFragmentReplaceLeft(R.id.fl_native, new NotificationFragment(), null);
-            } else if (position > 2) {
-                goToFragmentReplaceRight(R.id.fl_native, new NotificationFragment(), null);
+        if (position < 2) {
+            goToFragmentReplaceLeft(R.id.fl_native, new NotificationFragment(), null);
+        } else if (position > 2) {
+            goToFragmentReplaceRight(R.id.fl_native, new NotificationFragment(), null);
 
-            }
-            position = 2;
-            checkAnimation(position);
-            setBottomNaviChange(1);
-        } else {
-            showMessage(getString(R.string.msg_đinhanh));
-            CheckLevelAccount.onShowMessage(0);
         }
-
+        position = 2;
+        checkAnimation(position);
+        setBottomNaviChange(1);
     }
 
     @Override

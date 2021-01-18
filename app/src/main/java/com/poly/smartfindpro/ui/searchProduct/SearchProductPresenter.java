@@ -118,7 +118,7 @@ public class SearchProductPresenter implements SearchProductContract.Presenter {
             List<Products> mListAddress = new ArrayList<>();
             if (checkNumber(key)) {
                 for (Products item : mListProduct) {
-                    if (item.getProduct().getInformation().getPrice() < Integer.valueOf(key)) {
+                    if (item.getProduct().getInformation().getPrice() <= Integer.valueOf(key)) {
                         mListAddress.add(item);
                     }
                 }

@@ -380,7 +380,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16sdp"
-                        android:text="Địa chỉ hiện tại" />
+                        android:text="Địa chỉ thường trú" />
 
                     <EditText
                         android:id="@+id/edt_address_now"
@@ -405,7 +405,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16sdp"
-                        android:text="Quên quán" />
+                        android:text="Quê quán" />
 
                     <EditText
                         android:id="@+id/edt_home_town"

@@ -163,9 +163,15 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
             @Override
             public void onClick(View v) {
                 if (Config.isClick()) {
-                    CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
+                    if (Config.LEVEL_ACCOUNT >= 1) {
 
-                    mViewmodel.onCallBackAdapter(commentDetailRequest);
+
+                        CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
+
+                        mViewmodel.onCallBackAdapter(commentDetailRequest);
+                    }else {
+                        mViewmodel.showMessage(context.getString(R.string.msg_đinhanh));
+                    }
                 } else {
                     Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
                 }
@@ -175,9 +181,13 @@ public class CommentPostAdapter extends RecyclerView.Adapter<CommentPostAdapter.
             @Override
             public void onClick(View view) {
                 if (Config.isClick()) {
-                    CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
+                    if (Config.LEVEL_ACCOUNT >= 1) {
+                        CommentDetailRequest commentDetailRequest = new CommentDetailRequest(Config.TOKEN_USER, item.getComment().getId());
 
-                    mViewmodel.onCallBackAdapter(commentDetailRequest);
+                        mViewmodel.onCallBackAdapter(commentDetailRequest);
+                    }else {
+                        mViewmodel.showMessage(context.getString(R.string.msg_đinhanh));
+                    }
                 } else {
                     Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
                 }

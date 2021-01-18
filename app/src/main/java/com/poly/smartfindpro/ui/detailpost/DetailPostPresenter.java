@@ -139,7 +139,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
         categoryDetail.set(product.getProduct().getCategory() + "  ");
         total_people_lease.set("Đã thuê " + "\n" + product.getTotal_people_lease() + "/" + product.getProduct().getInformation().getAmountPeople());
         Log.d("CheckPeople", product.getTotal_people_lease());
-        if (Config.LEVEL_ACCOUNT > 0) {
+        if (Config.LEVEL_ACCOUNT >= 1) {
             phoneNumberDetail.set(product.getUser().getPhoneNumber());
         }
         if (!product.getStatus().equals("1")) {
@@ -281,20 +281,28 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     @Override
     public void onClickCall() {
-        if (Config.LEVEL_ACCOUNT > 0) {
-            mViewModel.onClickCall();
+        if (Config.isClick()) {
+            if (Config.LEVEL_ACCOUNT > 0) {
+                mViewModel.onClickCall();
+            } else {
+                mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
+            }
         } else {
-            mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
+            mViewModel.showMessage("Vui lòng đăng nhập để sử dụng chức năng này");
         }
 
     }
 
     @Override
     public void onClickInbox() {
-        if (Config.LEVEL_ACCOUNT > 0) {
-            mViewModel.onClickInbox();
+        if (Config.isClick()) {
+            if (Config.LEVEL_ACCOUNT > 0) {
+                mViewModel.onClickInbox();
+            } else {
+                mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
+            }
         } else {
-            mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
+            mViewModel.showMessage("Vui lòng đăng nhập để sử dụng chức năng này");
         }
     }
 
@@ -331,7 +339,7 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
                 }
             });
         } else {
-            Toast.makeText(context, context.getString(R.string.pl_login), Toast.LENGTH_SHORT).show();
+            mViewModel.showMessage(context.getString(R.string.pl_login));
         }
     }
 
@@ -361,31 +369,37 @@ public class DetailPostPresenter implements DetailPostContact.Presenter {
 
     @Override
     public void onComment() {
+        if (Config.isClick()) {
+            if (Config.LEVEL_ACCOUNT >= 1) {
+                InitComment request = new InitComment();
+                request.setUser(Config.TOKEN_USER);
+                request.setProduct(mProduct.getId());
+                request.setOldComment(null);
+                request.setTitle(mBinding.edtComment.getText().toString());
 
+                MyRetrofitSmartFind.getInstanceSmartFind().initComment(request).enqueue(new Callback<CheckPhoneResponse>() {
+                    @Override
+                    public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
+                        if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
+                            onRequestComment(mProduct.getId());
+                            Toast.makeText(context, "Bình luận thành công", Toast.LENGTH_SHORT).show();
+                            mBinding.edtComment.setText("");
+                        } else {
+                            mViewModel.showMessage("Hiện tại bạn không thể bình luận bài viết này, vui lòng thử lại sau");
+                        }
+                    }
 
-        InitComment request = new InitComment();
-        request.setUser(Config.TOKEN_USER);
-        request.setProduct(mProduct.getId());
-        request.setOldComment(null);
-        request.setTitle(mBinding.edtComment.getText().toString());
-
-        MyRetrofitSmartFind.getInstanceSmartFind().initComment(request).enqueue(new Callback<CheckPhoneResponse>() {
-            @Override
-            public void onResponse(Call<CheckPhoneResponse> call, Response<CheckPhoneResponse> response) {
-                if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
-                    onRequestComment(mProduct.getId());
-                    Toast.makeText(context, "Bình luận thành công", Toast.LENGTH_SHORT).show();
-                    mBinding.edtComment.setText("");
-                } else {
-                    mViewModel.showMessage("Hiện tại bạn không thể bình luận bài viết này, vui lòng thử lại sau");
-                }
+                    @Override
+                    public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
+                        mViewModel.showMessage(context.getString(R.string.services_not_avail));
+                    }
+                });
+            } else {
+                mViewModel.showMessage(context.getString(R.string.msg_đinhanh));
             }
-
-            @Override
-            public void onFailure(Call<CheckPhoneResponse> call, Throwable t) {
-                mViewModel.showMessage(context.getString(R.string.services_not_avail));
-            }
-        });
+        } else {
+            mViewModel.showMessage("Vui lòng đăng nhập để sử dụng chức năng");
+        }
     }
 
     @Override

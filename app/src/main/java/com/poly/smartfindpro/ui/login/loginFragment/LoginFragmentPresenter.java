@@ -98,13 +98,17 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
 
                 if (response.code() == 200 && response.body().getResponseHeader().getResCode() == 200) {
                     mViewmodel.hideLoading();
+                    if (response.body().getResponseBody().getUser().isStatus()) {
+                        String token = response.body().getResponseBody().getUser().getId();
+                        int level = response.body().getResponseBody().getUser().getLevel();
+                        Config.PROFILE = response.body().getResponseBody().getUser();
+                        Config.TOKEN_USER = token;
+                        Config.LEVEL_ACCOUNT = level;
+                        mViewmodel.saveLogin(mBinding.edtAccountNumber.getText().toString().trim(), mBinding.edtPassword.getText().toString().trim(), token, level);
+                    } else {
+                        mViewmodel.showMessage("Tài khoản của bạn tạm thời bị khóa, Vui lòng liên hệ tới quản trị viên để mở lại tài khoản");
+                    }
 
-                    String token = response.body().getResponseBody().getUser().getId();
-                    int level = response.body().getResponseBody().getUser().getLevel();
-                    Config.PROFILE = response.body().getResponseBody().getUser();
-                    Config.TOKEN_USER = token;
-                    Config.LEVEL_ACCOUNT = level;
-                    mViewmodel.saveLogin(mBinding.edtAccountNumber.getText().toString().trim(), mBinding.edtPassword.getText().toString().trim(), token, level);
                 } else {
                     mViewmodel.hideLoading();
                     mViewmodel.showMessage("Tài khoản hoặc mật khẩu không chính xác");

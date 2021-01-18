@@ -41,19 +41,23 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void openPost() {
-        switch (Config.LEVEL_ACCOUNT) {
-            case 0:
-                mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
-                break;
-            case 1:
-                mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
-                break;
-            case 2:
-                mViewmodel.showMessagePost("Tài khoản của bạn bị giới hạn lượt đăng là 1 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
-                break;
-            case 3:
-                mViewmodel.openPost();
-                break;
+        if (Config.isClick()) {
+            switch (Config.LEVEL_ACCOUNT) {
+                case 0:
+                    mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
+                    break;
+                case 1:
+                    mViewmodel.showMessage(mContext.getString(R.string.msg_đinhanh));
+                    break;
+                case 2:
+                    mViewmodel.showMessagePost("Tài khoản của bạn bị giới hạn lượt đăng là 1 bài/ngày. Vui lòng nâng cấp tài khoản để trải nghiệm ứng dụng tốt hơn");
+                    break;
+                case 3:
+                    mViewmodel.openPost();
+                    break;
+            }
+        } else {
+            mViewmodel.showMessage("Vui lòng đăng nhập để sử dụng chức năng");
         }
 
     }
@@ -114,7 +118,6 @@ public class HomePresenter implements HomeContract.Presenter {
             }
         });
     }
-
 
     private void getProductShare() {
         mViewmodel.showLoading();

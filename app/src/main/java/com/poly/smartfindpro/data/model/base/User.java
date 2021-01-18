@@ -26,7 +26,7 @@ public class User {
     private String phoneNumber;
     @SerializedName("status")
     @Expose
-    private String status;
+    private boolean status;
     @SerializedName("birth")
     @Expose
     private String birth;
@@ -87,11 +87,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

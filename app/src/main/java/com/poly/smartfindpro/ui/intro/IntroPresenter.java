@@ -116,18 +116,22 @@ public class IntroPresenter implements IntroContract.Presenter {
                         if (response.code() == 200) {
                             if (response.body().getResponseHeader().getResCode() == 200) {
 
-                                Config.PROFILE = response.body().getResponseBody().getUser();
+                                if (response.body().getResponseBody().getUser().isStatus()) {
 
-                                Config.TOKEN_USER = response.body().getResponseBody().getUser().getId();
+                                    Config.PROFILE = response.body().getResponseBody().getUser();
 
-                                Config.LEVEL_ACCOUNT = response.body().getResponseBody().getUser().getLevel();
+                                    Config.TOKEN_USER = response.body().getResponseBody().getUser().getId();
 
-                                if (isLogin) {
-                                    mViewModel.onNextHome();
+                                    Config.LEVEL_ACCOUNT = response.body().getResponseBody().getUser().getLevel();
+
+                                    if (isLogin) {
+                                        mViewModel.onNextHome();
+                                    } else {
+                                        mViewModel.onNextLogin();
+                                    }
                                 } else {
-                                    mViewModel.onNextLogin();
+                                    mViewModel.onAccountNotAvail("Tài khoản của bạn tạm thời bị khóa, Vui lòng liên hệ tới quản trị viên để mở lại tài khoản");
                                 }
-
                             } else {
                                 mViewModel.onAccountNotAvail("Chào mừng bạn đến với SmartFind, Vui lòng chọn chức năng để tiếp tục");
                             }
