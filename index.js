@@ -1337,13 +1337,8 @@ app.post('/user-product', async function (request, response) {
                     let products = [];
                     if (allProduct) {
                         if (allProduct.length > 0) {
-                            allProduct = allProduct.reverse();
-                            console.log(allProduct.length)
-                            for (let i = 0; i < allProduct.length; i++) {
-                                if (allProduct[i].total_people_lease < allProduct[i].product.information.amountPeople) {
-                                    products.push(allProduct[i]);
-                                }
-                            }
+                            products = allProduct.reverse();
+
                         }
                         res_body = {products: products};
                         response.json(getResponse(name, 200, sttOK, res_body));
@@ -2098,6 +2093,10 @@ let nameDN = '', allAdmin = '', adminID = '', deviceID = '';
 //404
 app.get('/404', function (request, response) {
     response.render('error');
+});
+//download
+app.get('/download', function (request, response) {
+    response.render('download');
 });
 //start
 app.get('/', function (request, response) {
