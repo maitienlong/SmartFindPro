@@ -7,14 +7,19 @@ public interface InforContact {
 
     interface ViewModel extends BaseView {
         void onBackClick();
+
         void onCLickUpdate();
+
         void onClickAddress();
 
+        void onSuccess();
     }
 
     interface Presenter extends BasePresenter {
         void onBackClick();
+
         void onCLickUpdate();
+
         void onClickAddress();
     }
 }
