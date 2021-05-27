@@ -119,6 +119,7 @@ public class ProfilePresenter implements ProfileContact.Presenter {
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 if (response.code() == 200) {
                     mProfile = response.body();
+                    Log.d("TAG", "onResponse: " + );
                     showData(mProfile);
                 } else {
 
